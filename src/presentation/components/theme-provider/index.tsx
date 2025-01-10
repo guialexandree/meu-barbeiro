@@ -1,4 +1,4 @@
-import { theme } from '@/main/configs/theme'
+import { theme } from '@/main/configs'
 import { ThemeProvider as ThemeProviderMUI } from '@mui/material'
 import React from 'react'
 
