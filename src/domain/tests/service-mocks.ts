@@ -1,32 +1,70 @@
 import { ServiceModel } from '@/domain/models'
+import faker from 'faker'
+
+export const mockService: ServiceModel = {
+  id: faker.datatype.number(),
+  name: faker.name.findName(),
+  description: faker.random.words(8),
+  price: faker.datatype.number(),
+  timeExecution: faker.datatype.number(100),
+  status: 'ativo',
+}
 
 export const _mockServices: ServiceModel[] = [
   {
     id: 1,
     name: 'Corte',
-    decription: '',
+    description: 'Corte + Escovação',
     price: 30,
-    time: 40,
+    timeExecution: 40,
+    status: 'ativo',
   },
   {
     id: 2,
     name: 'Progressiva',
-    decription: 'Progressiva + Corte',
+    description: 'Progressiva + Hidratação',
     price: 90,
-    time: 120,
+    timeExecution: 120,
+    status: 'inativo',
   },
   {
     id: 3,
     name: 'Reflexo',
-    decription: 'Reflexo + Hidratação',
+    description: 'Reflexo + Hidratação',
     price: 60,
-    time: 120,
+    timeExecution: 120,
+    status: 'ativo',
   },
   {
     id: 4,
-    name: 'Hidratação',
-    decription: 'Hidratação',
+    name: 'Barba',
+    description: '',
     price: 20,
-    time: 120,
+    timeExecution: 15,
+    status: 'ativo',
+  },
+  {
+    id: 5,
+    name: 'Hidratação',
+    description: 'Hidratação',
+    price: 20,
+    timeExecution: 15,
+    status: 'ativo',
+  },
+  {
+    id: 6,
+    name: 'Alisamento',
+    description: 'Hidratação',
+    price: 35,
+    timeExecution: 120,
+    status: 'ativo',
+  },
+  {
+    id: 7,
+    name: 'Botox',
+    description: 'Botox + Hidratação',
+    price: 40,
+    timeExecution: 60,
+    status: 'ativo',
   },
 ]

@@ -1,10 +1,8 @@
 import React from 'react'
 import { Grid2, Stack } from '@mui/material'
-import { PageHeader } from '../page-header'
 
 type PageContainerProps = {
   children: React.ReactNode
-  title?: string
 }
 
 export const PageContainer: React.FC<PageContainerProps> = (props) => {
@@ -13,15 +11,15 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
       container
       component="section"
       sx={{
+        pt: 'calc(16vh + 16px)',
+        pb: 6,
         minHeight: '100vh',
-        backgroundColor: 'background.default',
         color: 'white',
-        pt: 2,
         flexDirection: 'column',
+        position: 'relative'
       }}
     >
-      {props.title && <PageHeader title={props.title} />}
-      <Stack sx={{ p: { xs: 4, sm: 6 }, flex: 1 }}>{props.children}</Stack>
+      <Stack sx={{ flex: 1 }}>{props.children}</Stack>
     </Grid2>
   )
 }

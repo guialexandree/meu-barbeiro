@@ -1,7 +1,8 @@
 export type ServiceModel = {
-    id: number
-    name: string
-    decription: string
-    price: number
-    time: number
+  id: number
+  name: string
+  description: string
+  status: 'ativo' | 'inativo'
+  price: number
+  timeExecution: number
 }

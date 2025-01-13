@@ -10,8 +10,17 @@ export const theme = createTheme({
       main: '#ffa726',
     },
     background: {
-      default: '#010205',
+      default: '#303030',
       paper: '#151515',
     },
   },
+  components: {
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 4,
+        },
+      },
+    }
+  }
 })

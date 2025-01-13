@@ -3,6 +3,7 @@ import { RecoilRoot } from 'recoil'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AdminTemplate } from '@/presentation/templates'
 import { Loadable } from '@/presentation/components'
+import * as Factories from '@/main/factories/usecases'
 
 const LoginPage = lazy(() => import('@/presentation/pages/login'))
 const AttendanceQueuePage = lazy(
@@ -10,7 +11,7 @@ const AttendanceQueuePage = lazy(
 )
 const ServicesPage = lazy(() => import('@/presentation/pages/services'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts'))
-
+const ClientsPage = lazy(() => import('@/presentation/pages/clients'))
 
 const router = createBrowserRouter([
   {
@@ -26,12 +27,31 @@ const router = createBrowserRouter([
         element: <Loadable children={<AttendanceQueuePage />} />,
       },
       {
+        path: '/clientes',
+        element: <Loadable children={<ClientsPage />} />,
+      },
+      {
         path: '/servicos',
-        element: <Loadable children={<ServicesPage />} />,
+        element: (
+          <Loadable
+            children={
+              <ServicesPage
+                getServices={Factories.makeRemoteGetServices()}
+                updateService={Factories.makeRemoteUpdateService()}
+              />
+            }
+          />
+        ),
       },
       {
         path: '/avisos',
-        element: <Loadable children={<AlertsPage />} />,
+        element: (
+          <Loadable
+            children={
+              <AlertsPage getAlerts={Factories.makeRemoteGetAlerts()} />
+            }
+          />
+        ),
       },
     ],
   },

@@ -3,6 +3,7 @@ import {
   AppBar as AppBarMUI,
   Icon,
   IconButton,
+  Slide,
   Toolbar,
   Typography,
   useScrollTrigger,
@@ -36,20 +37,47 @@ export const AppBar: React.FC = () => {
 
   return (
     <ElevationScroll>
-      <AppBarMUI sx={{ backgroundColor: 'primary.main' }}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: { xs: 2, sm: 0 } }}
-            onClick={() => { setOpenDrawer(true) }}
-          >
-            <Icon>menu</Icon>
-          </IconButton>
+      <AppBarMUI
+        sx={{
+          backgroundColor: 'primary.main',
+          minHeight: '16vh',
+          borderRadius: '0 0 32px 32px',
+          alignItems: 'flex-start',
+        }}
+      >
+        <Toolbar sx={{ width: '100%', mt: 1 }}>
+          <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: { xs: 2, sm: 0 } }}
+              onClick={() => {
+                setOpenDrawer(true)
+              }}
+            >
+              <Icon>store</Icon>
+            </IconButton>
+          </Slide>
 
-          <Typography>Barber Admin</Typography>
+          <Slide direction="right" in={true} mountOnEnter unmountOnExit>
+            <Typography sx={{ flex: 1 }}>Susu Barbearia</Typography>
+          </Slide>
+
+          <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+            <IconButton
+              size="large"
+              edge="start"
+              aria-label="menu"
+              sx={{ backgroundColor: 'primary.light' }}
+              onClick={() => {
+                setOpenDrawer(true)
+              }}
+            >
+              <Icon>menu</Icon>
+            </IconButton>
+          </Slide>
         </Toolbar>
       </AppBarMUI>
     </ElevationScroll>
