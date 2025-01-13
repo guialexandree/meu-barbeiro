@@ -13,7 +13,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
       <Card sx={{ mx: 3, mb: 2, pb: 0, boxShadow: 3 }}>
         <CardContent>
           <Stack direction="row" spacing={2} alignItems="center" pl='18%'>
-            <Avatar src={props.icon} sx={{ width: 110, height: 110, position: 'absolute', left: -8 }} />
+            <Avatar src={props.icon} sx={{ width: 100, height: 100, position: 'absolute', left: -8 }} />
 
             <Stack direction="column">
               <Typography variant="h6">{props.title}</Typography>
