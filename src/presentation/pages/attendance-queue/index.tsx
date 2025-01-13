@@ -3,7 +3,7 @@ import React from 'react'
 
 const AttendanceQueuePage: React.FC = () => {
   return (
-    <PageContainer title='fila de atendimento'>
+    <PageContainer>
       teu tentei
     </PageContainer>
   )

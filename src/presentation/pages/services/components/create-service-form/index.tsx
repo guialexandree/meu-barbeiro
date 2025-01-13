@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import {
   Button,
   Dialog,
@@ -23,7 +23,6 @@ export const CreateServiceForm: React.FC = () => {
   const [description, setDescription] = useRecoilState(State.newServiceDescriptionState)
   const [price, setPrice] = useRecoilState(State.newServicePriceState)
   const [timeExecution, setTimeExecution] = useRecoilState(State.newServiceTimeExecutionState)
-  const newService = useRecoilValue(State.newServiceState)
 
   const handleSubmit = (): void => {
     setOpen(false)
