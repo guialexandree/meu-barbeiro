@@ -108,7 +108,7 @@ export const AppBar: React.FC = () => {
               <Stack direction="column" alignItems="flex-end" pl={1}>
                 <Typography variant='subtitle2' sx={{ lineHeight: 1, fontWeight: '300', textAlign: 'right' }}>Saldo do dia</Typography>
                 <Stack direction="row" justifyContent="flex-end">
-                  <Typography variant="subtitle1" sx={{ fontWeight: '600', textAlign: 'right' }}>R$ ****</Typography>
+                  <Typography variant="subtitle1" sx={{ fontWeight: '600', textAlign: 'right' }}>R$ ***</Typography>
                   <IconButton size='small'>
                     <Icon sx={{ fontSize: 18 }}>visibility</Icon>
                   </IconButton>
