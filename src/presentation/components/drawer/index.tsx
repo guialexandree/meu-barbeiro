@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { AppNavigation } from '@/main/configs'
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Drawer as DrawerMUI, Icon } from '@mui/material'
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Drawer as DrawerMUI, Icon, useTheme, useMediaQuery } from '@mui/material'
 import { isOpenDrawer } from './atoms'
 
 export type DrawerProps = {
@@ -10,6 +10,8 @@ export type DrawerProps = {
 }
 
 export const Drawer:React.FC<DrawerProps> = (props) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [open, setOpen] = useRecoilState(isOpenDrawer)
   const navigate = useNavigate()
 
@@ -32,7 +34,7 @@ export const Drawer:React.FC<DrawerProps> = (props) => {
     </Box>
 
   return (
-    <DrawerMUI open={open} onClose={() => { setOpen(false) }}>
+    <DrawerMUI open={open} anchor={isMobile ? 'top' : 'left'} onClose={() => { setOpen(false) }}>
       <DrawerList />
     </DrawerMUI>
   )
