@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
-import {
-  Avatar,
-  Card,
-  CardContent,
-  Slide,
-  Stack,
-  Typography,
-} from '@mui/material'
 import { GetAlerts } from '@/domain/usecases'
-import { PageContainer } from '@/presentation/components'
+import { PageContainer, PageTitle } from '@/presentation/components'
 import {
   CreateAlertForm,
   PageAlertPanel,
@@ -37,23 +29,11 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
 
   return (
     <PageContainer>
-      <Slide direction="left" in mountOnEnter unmountOnExit>
-        <Card sx={{ mx: 2, mb: 2, pb: 0, boxShadow: 3 }}>
-          <CardContent>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Avatar src={notificationImg} sx={{ width: 56, height: 56 }} />
-
-              <Stack direction="column">
-                <Typography variant="h6">Avisos</Typography>
-                <Typography variant="body2" color="grey.500" lineHeight={1}>
-                  Cadastre avisos para serem exibidos nas telas do app do
-                  cliente
-                </Typography>
-              </Stack>
-            </Stack>
-          </CardContent>
-        </Card>
-      </Slide>
+      <PageTitle
+        title="Avisos"
+        subtitle="Cadastre avisos para serem exibidos nas principais telas do app do cliente"
+        icon={notificationImg}
+      />
 
       <PageAlertPanel
         message=""

@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { Alert, Fab, Icon, Stack, Zoom } from '@mui/material'
 import { GetServices, UpdateService } from '@/domain/usecases'
-import { PageContainer } from '@/presentation/components'
+import { PageContainer, PageTitle } from '@/presentation/components'
 import {
   CreateServiceForm,
   ServiceList,
   UpdateServiceForm,
 } from '@/presentation/pages/services/components'
 import * as State from '@/presentation/pages/services/components/atoms'
+import servicesHeaderImg from '@/presentation/assets/services-header.png'
 
 type ServicesPageProps = {
   getServices: GetServices
@@ -31,7 +32,17 @@ const ServicesPage: React.FC<ServicesPageProps> = (props) => {
 
   return (
     <PageContainer>
-      <Alert severity="info" variant='outlined' sx={{ mb: 1, mx: 2, alignItems: 'center' }}>
+      <PageTitle
+        title="Serviços"
+        subtitle="Cadastro de serviços e tabela de preços"
+        icon={servicesHeaderImg}
+      />
+
+      <Alert
+        severity="info"
+        variant="outlined"
+        sx={{ mb: 1, mx: 2, px: 1, py: 0, alignItems: 'center' }}
+      >
         Somente serviços ativos serão exibidos para o cliente no app{' '}
         <Icon sx={{ fontSize: 12 }}>phone_iphone</Icon>
       </Alert>

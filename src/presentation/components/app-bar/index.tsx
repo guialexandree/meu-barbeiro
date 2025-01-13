@@ -1,9 +1,12 @@
 import React from 'react'
 import {
   AppBar as AppBarMUI,
+  Avatar,
+  Chip,
   Icon,
   IconButton,
   Slide,
+  Stack,
   Toolbar,
   Typography,
   useScrollTrigger,
@@ -78,6 +81,26 @@ export const AppBar: React.FC = () => {
               <Icon>menu</Icon>
             </IconButton>
           </Slide>
+        </Toolbar>
+        <Toolbar sx={{ width: '100%'}}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" flexGrow={1} pr={2}>
+            <Chip
+              color='default'
+              sx={{ borderRadius: 16, backgroundColor: 'primary.dark', color: 'primary.main' }}
+              avatar={<Avatar sx={{ backgroundColor: 'primary.light' }} alt="5" src="5" />}
+              label="NA FILA"
+            />
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Stack direction="column" alignItems="flex-end">
+                <Typography variant='subtitle1' sx={{ lineHeight: 1 }}>Saldo do dia</Typography>
+                <Typography variant="subtitle2" >R$ 450</Typography>
+              </Stack>
+
+              <IconButton>
+                <Icon>visibility</Icon>
+              </IconButton>
+            </Stack>
+          </Stack>
         </Toolbar>
       </AppBarMUI>
     </ElevationScroll>

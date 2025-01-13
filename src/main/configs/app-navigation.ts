@@ -11,26 +11,32 @@ export type AppNavigation = {
 export const appNavigation: AppNavigation[] = [
   {
     icon: 'diamond',
-    title: 'fila de atendimento',
-    subtitle: 'projetos pessoais publicados',
+    title: 'atendimento',
+    subtitle: 'fila de atendimento',
     pathTo: 'fila-atendimento',
   },
   {
     icon: 'group',
     title: 'clientes',
-    subtitle: 'Lista de clientes',
+    subtitle: 'gerenciamento de clientes',
+    pathTo: 'clientes',
+  },
+  {
+    icon: 'bar_chart',
+    title: 'relatórios',
+    subtitle: 'relatórios de atendimento e financeiro',
     pathTo: 'clientes',
   },
   {
     icon: 'content_cut',
     title: 'serviços',
-    subtitle: 'detalhes da carreira e formação',
+    subtitle: 'cadastro de serviços e tabela de preços',
     pathTo: 'servicos',
   },
   {
-    icon: 'sports_score',
+    icon: 'notification_add',
     title: 'avisos',
-    subtitle: 'desafios profissionais dev',
+    subtitle: 'cadastro de avisos para clientes',
     pathTo: 'avisos',
   },
 ]
