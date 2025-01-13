@@ -9,7 +9,7 @@ type PageTitleProps = {
 
 export const PageTitle: React.FC<PageTitleProps> = (props) => {
   return (
-    <Slide direction="left" in mountOnEnter unmountOnExit>
+    <Slide direction="down" in mountOnEnter unmountOnExit>
       <Card sx={{ mx: 3, mb: 2, pb: 0, boxShadow: 3 }}>
         <CardContent>
           <Stack direction="row" spacing={2} alignItems="center" pl='18%'>
