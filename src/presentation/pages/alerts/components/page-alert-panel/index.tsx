@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Chip, Icon, Link, Paper } from '@mui/material'
+import { Alert, Chip, Icon, Link, Paper, Stack } from '@mui/material'
 import { AlertType } from '@/domain/models'
 
 type PageAlertPanelProps = {
@@ -58,10 +58,15 @@ export const PageAlertPanel: React.FC<PageAlertPanelProps> = (props) => {
           color: 'grey.500',
           borderColor: 'grey.800',
           py: 0,
+          '.MuiAlert-message': {
+            flex: 1
+          }
         }}
       >
-        Nenhuma mensagem ativa
-        <Link href="#" sx={{ ml: 0.5, color: 'info.main'}} onClick={props.onAdd}>Adicionar nova</Link>
+        <Stack flex={1} direction="row" alignItems="center" justifyContent="space-between">
+          Nenhuma mensagem ativa
+          <Link href="#" sx={{ ml: 0.5, color: 'info.main'}} onClick={props.onAdd}>Adicionar nova</Link>
+        </Stack>
       </Alert>
     </Paper>
   )
