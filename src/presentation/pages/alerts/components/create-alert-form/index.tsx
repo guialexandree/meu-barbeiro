@@ -18,7 +18,6 @@ import * as State from '@/presentation/pages/alerts/components/atoms'
 export const CreateAlertForm: React.FC = () => {
   const [open, setOpen] = useRecoilState(State.isOpenState)
   const [message, setMessage] = useRecoilState(State.newAlertMessageState)
-  const [type, setType] = useRecoilState(State.newAlertTypeState)
 
   const handleSubmit = (): void => {
     setOpen(false)
@@ -68,20 +67,6 @@ export const CreateAlertForm: React.FC = () => {
             fullWidth
           />
 
-          <ToggleButtonGroup
-            sx={{ pb: 1 }}
-            size="small"
-            fullWidth
-            color="secondary"
-            value={type}
-            exclusive
-            onChange={(_, value) => { setType(value) }}
-            aria-label="Platform"
-          >
-            <ToggleButton value="home">Home</ToggleButton>
-            <ToggleButton value="services">Serviços</ToggleButton>
-            <ToggleButton value="history">Histórico</ToggleButton>
-          </ToggleButtonGroup>
         </Stack>
       </DialogContent>
       <DialogActions>
