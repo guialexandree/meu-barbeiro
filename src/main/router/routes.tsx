@@ -12,6 +12,7 @@ const AttendanceQueuePage = lazy(
 const ServicesPage = lazy(() => import('@/presentation/pages/services'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts'))
 const ClientsPage = lazy(() => import('@/presentation/pages/clients'))
+const ReportsPage = lazy(() => import('@/presentation/pages/reports'))
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/clientes',
         element: <Loadable children={<ClientsPage />} />,
+      },
+      {
+        path: '/relatorios',
+        element: <Loadable children={<ReportsPage />} />,
       },
       {
         path: '/servicos',

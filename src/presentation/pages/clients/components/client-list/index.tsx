@@ -1,7 +1,8 @@
 import React from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { _mockClients } from '@/domain/tests'
-import { Icon, IconButton } from '@mui/material'
+import { Icon, IconButton, Stack } from '@mui/material'
+import { InputSearch } from '@/presentation/components'
 
 const columns: GridColDef[] = [
   {
@@ -31,17 +32,27 @@ const columns: GridColDef[] = [
 
 const ClientList: React.FC = () => {
   return (
-    <DataGrid
-      rows={_mockClients}
-      columns={columns}
-      pageSizeOptions={[5, 10]}
-      sx={{ border: 0, px: 2 }}
-      disableColumnResize
-      disableColumnMenu
-      columnVisibilityModel={{
-        id: false,
-      }}
-    />
+    <Stack>
+      <InputSearch placeholder='Buscar por cliente' />
+
+      <DataGrid
+        rows={_mockClients}
+        columns={columns}
+        pageSizeOptions={[5, 10]}
+        sx={{
+          border: 0,
+          px: 2,
+          '& .MuiDataGrid-columnHeaders': {
+            display: 'none',
+          },
+        }}
+        disableColumnResize
+        disableColumnMenu
+        columnVisibilityModel={{
+          id: false,
+        }}
+      />
+    </Stack>
   )
 }
 
