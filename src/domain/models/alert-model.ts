@@ -5,5 +5,5 @@ export type AlertModel = {
   status: AlertStatus
 }
 
-export type AlertType = 'home' | 'services' | 'history'
+export type AlertType = 'home' | 'services' | 'history' | 'prices'
 export type AlertStatus = 'ativo' | 'inativo'
