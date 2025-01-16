@@ -1,42 +1,26 @@
+import { _mockClients } from '@/domain/tests'
 import { atom, selector } from 'recoil'
-import { AlertModel, AlertStatus, AlertType } from '@/domain/models'
 
-export const isOpenState = atom({
-  key: 'isOpenCreateAlertState',
-  default: false,
+export const clientsState = atom({
+  key: 'clientsState',
+  default: _mockClients,
 })
 
-export const isLoadingState = atom({
-  key: 'isLoadingCreateAlertState',
-  default: false,
-})
-
-export const newAlertMessageState = atom({
-  key: 'newAlertMessageState',
+export const textClientsSearchState = atom({
+  key: 'textClientsSearchState',
   default: '',
 })
 
-export const newAlertTypeState = atom<AlertType>({
-  key: 'newAlertTypeState',
-  default: 'home',
-})
-
-export const newAlertStatusState = atom<AlertStatus>({
-  key: 'newAlertStatusState',
-  default: 'ativo',
-})
-
-export const newAlertState = selector<Omit<AlertModel, 'id'> | null>({
-  key: 'newAlertState',
+export const clientsSearchedState = selector({
+  key: 'clientsSearchedState',
   get: ({ get }) => {
-    const message = get(newAlertMessageState)
-    const type = get(newAlertTypeState)
-    const status = get(newAlertStatusState)
+    const textSearched = get(textClientsSearchState)
+    const clients = get(clientsState)
 
-    return {
-      message,
-      type,
-      status,
+    if (textSearched) {
+      return clients?.filter(client => client.name.toLowerCase().includes(textSearched.toLowerCase())) ?? []
     }
-  },
+
+    return clients
+  }
 })

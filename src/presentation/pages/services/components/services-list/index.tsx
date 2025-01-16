@@ -6,7 +6,6 @@ import {
   CircularProgress,
   Fade,
   List,
-  ListSubheader,
 } from '@mui/material'
 import { ServiceListItem } from '@/presentation/pages/services/components'
 import * as State from '@/presentation/pages/services/components/atoms'
@@ -31,12 +30,8 @@ export const ServiceList: React.FC = () => {
   return (
     <Fade in timeout={700}>
       <Box sx={{ mx: 2 }}>
+
         <List disablePadding sx={{}}>
-          <ListSubheader
-            sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
-          >
-            SERVIÇOS
-          </ListSubheader>
           {services.map((service) => (
             <ServiceListItem key={service.id} service={service} />
           ))}

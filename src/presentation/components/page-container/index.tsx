@@ -11,7 +11,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
       container
       component="section"
       sx={{
-        pt: 'calc(16vh + 16px)',
+        pt: 'calc(120px + 16px)',
         pb: 6,
         minHeight: '80vh',
         color: 'white',

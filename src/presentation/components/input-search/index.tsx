@@ -1,8 +1,10 @@
 import React from 'react'
-import { Icon, IconButton, InputBase, Paper } from '@mui/material'
+import { Divider, Icon, IconButton, InputBase, Paper } from '@mui/material'
 
 type InputSearchProps = {
   placeholder: string
+  onChange: (text: string) => void
+  value: string
 }
 
 export const InputSearch: React.FC<InputSearchProps> = (props) => {
@@ -21,12 +23,20 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         size="small"
+        value={props.value}
         placeholder={props.placeholder}
+        onChange={(e) => props.onChange(e.target.value)}
         inputProps={{ 'aria-label': props.placeholder }}
       />
 
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
         <Icon>search</Icon>
+      </IconButton>
+
+      <Divider orientation="vertical" flexItem />
+
+      <IconButton>
+        <Icon>filter_list</Icon>
       </IconButton>
     </Paper>
   )
