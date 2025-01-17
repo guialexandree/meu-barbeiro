@@ -11,11 +11,11 @@ import {
 
 type ValueIndicatorProps = {
   title: string
-  value: string
+  value: string | number
   subvalue?: string
   descriptionSubvalue?: string
   entryDirection: 'up' | 'down' | 'left' | 'right'
-  icon: 'peoples' | 'grade'
+  icon: string
 }
 
 export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {

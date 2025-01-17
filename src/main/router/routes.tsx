@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/clientes',
-        element: <Loadable children={<ClientsPage />} />,
+        element: <Loadable children={<ClientsPage getClients={Factories.makeRemoteGetClients()} />} />,
       },
       {
         path: '/relatorios',

@@ -1,11 +1,16 @@
 import React from 'react'
+import { Fab, Icon, Stack, Zoom } from '@mui/material'
+import { GetClients } from '@/domain/usecases'
 import { PageContainer, PageTitle, ValueIndicator } from '@/presentation/components'
 import { CreateAlertForm } from '@/presentation/pages/alerts/components'
-import ClientList from './components/client-list'
+import { ClientList } from '@/presentation/pages/clients/components'
 import clientesHeaderImg from '@/presentation/assets/clients-header3.png'
-import { Fab, Icon, Stack, Zoom } from '@mui/material'
 
-const ClientsPage: React.FC = () => {
+type ClientsPageProps = {
+  getClients: GetClients
+}
+
+const ClientsPage: React.FC<ClientsPageProps> = (props) => {
   return (
     <PageContainer>
       <PageTitle
@@ -32,7 +37,7 @@ const ClientsPage: React.FC = () => {
         />
       </Stack>
 
-      <ClientList />
+      <ClientList getClients={props.getClients} />
 
       <Stack direction="row" justifyContent="center">
         <Zoom in>

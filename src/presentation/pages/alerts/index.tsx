@@ -38,6 +38,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
 
       <Box mx={2}>
         <PageAlertPanel
+          entryDirection='right'
           message=""
           type="home"
           onAdd={() => {
@@ -48,6 +49,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
           }}
         />
         <PageAlertPanel
+          entryDirection='left'
           message="Os serviços terão um acréscimo de 10% a partir de 01/01/2025"
           type="prices"
           onAdd={() => {
@@ -58,6 +60,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
           }}
         />
         <PageAlertPanel
+          entryDirection='right'
           message=""
           type="history"
           onAdd={() => {

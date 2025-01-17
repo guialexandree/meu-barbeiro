@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { DataGrid } from '@mui/x-data-grid'
 import { Stack } from '@mui/material'
+import { GetClients } from '@/domain/usecases'
 import { InputSearch } from '@/presentation/components'
 import { listClientsColumns } from './schema'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import * as State from '@/presentation/pages/clients/components/atoms'
 
-const ClientList: React.FC = () => {
+type ClientListProps = {
+  getClients: GetClients
+}
+
+export const ClientList: React.FC<ClientListProps> = (props) => {
   const clients = useRecoilValue(State.clientsSearchedState)
-  const [textClientsSearch, setTextSearch] = useRecoilState(State.textClientsSearchState)
+  const setClients = useSetRecoilState(State.clientsState)
+  const [textClientsSearch, setTextSearch] = useRecoilState(
+    State.textClientsSearchState,
+  )
+
+  useEffect(() => {
+    loadClients()
+  }, [])
+
+  const loadClients = async () => {
+    await props.getClients
+      .get()
+      .then(setClients)
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {})
+  }
 
   return (
     <Stack sx={{ height: 436 }}>
@@ -46,5 +68,3 @@ const ClientList: React.FC = () => {
     </Stack>
   )
 }
-
-export default ClientList
