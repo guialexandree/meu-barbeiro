@@ -42,7 +42,7 @@ export const CreateAlertForm: React.FC = () => {
         },
       }}
     >
-      <Stack direction="row" alignItems="center" ml={2} spacing={2} p={1}>
+      <Stack direction="row" alignItems="center" mx={2} spacing={2} p={1}>
         <Icon sx={{ m: 0 }} color="secondary">
           notification_add
         </Icon>
@@ -105,7 +105,7 @@ export const CreateAlertForm: React.FC = () => {
           type="submit"
           endIcon={<Icon>check</Icon>}
         >
-          Criar
+          Salvar
         </Button>
       </DialogActions>
     </Dialog>
