@@ -24,8 +24,8 @@ const dataValues = [
   { name: 'Dia 7', ['R$']: 1580 },
 ]
 
-const renderCustomizedLabel = (props) => {
-  const { x, y, width, height, value } = props
+const renderCustomizedLabel = (props: any) => {
+  const { x, y, width, value } = props
   const radius = 10;
 
   return (
