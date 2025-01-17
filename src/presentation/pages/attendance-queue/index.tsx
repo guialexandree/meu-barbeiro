@@ -3,7 +3,7 @@ import React from 'react'
 import attendanceHeaderImg from '@/presentation/assets/aparador.png'
 import { Avatar, List, ListItem, ListItemAvatar } from '@mui/material'
 import { _mockClients } from '@/domain/tests'
-import avatarImg from '@/presentation/assets/avatars/avataaars.svg'
+import avatarImg from '@/presentation/assets/avatars/avataaars1.svg'
 
 const AttendanceQueuePage: React.FC = () => {
   return (
