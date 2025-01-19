@@ -4,7 +4,7 @@ import faker from 'faker'
 export const mockAlert = (): AlertModel => ({
   id: faker.datatype.uuid(),
   message: faker.random.words(15),
-  type: faker.random.arrayElement(['home', 'services', 'history', 'prices']),
+  type: faker.random.arrayElement(['home', 'services', 'history']),
   status: faker.random.arrayElement(['ativo', 'inativo']),
 })
 
