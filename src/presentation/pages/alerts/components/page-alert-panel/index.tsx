@@ -17,7 +17,7 @@ type PageAlertPanelProps = {
   message: string
   type: AlertType
   onAdd: VoidFunction
-  onRemove: VoidFunction
+  onEdit: VoidFunction
   entryDirection: 'up' | 'down' | 'left' | 'right'
 }
 
@@ -53,6 +53,7 @@ export const PageAlertPanel: React.FC<PageAlertPanelProps> = (props) => {
   return (
     <Slide direction={props.entryDirection} in mountOnEnter unmountOnExit>
       <Accordion
+        component='article'
         defaultExpanded
         sx={{
           '.MuiAccordionSummary-root': {
@@ -89,6 +90,9 @@ export const PageAlertPanel: React.FC<PageAlertPanelProps> = (props) => {
               '.MuiAlert-message': {
                 flex: 1,
               },
+              '&.MuiPaper-elevation': {
+                pr: 0,
+              },
             }}
           >
             <Stack
@@ -96,13 +100,13 @@ export const PageAlertPanel: React.FC<PageAlertPanelProps> = (props) => {
               direction="row"
               alignItems="center"
               justifyContent="space-between"
-              sx={{ color: props.message ? 'grey.200' : 'grey.500' }}
+              sx={{ pr: props.message ? 0.5 : 1, color: props.message ? 'grey.200' : 'grey.500' }}
             >
               {props.message ? props.message : 'Nenhuma mensagem ativa'}
 
               {props.message ? (
-                <IconButton size="small" onClick={props.onRemove}>
-                  <Icon sx={{ fontSize: 18, color: 'grey.500' }}>delete</Icon>
+                <IconButton size="small" onClick={props.onEdit}>
+                  <Icon sx={{ fontSize: 16, color: 'grey.500' }}>edit</Icon>
                 </IconButton>
               ) : (
                 <Link
@@ -110,7 +114,7 @@ export const PageAlertPanel: React.FC<PageAlertPanelProps> = (props) => {
                   sx={{ ml: 0.5, color: 'info.main', textDecoration: 'none' }}
                   onClick={props.onAdd}
                 >
-                  Adicionar nova
+                  Configurar
                 </Link>
               )}
             </Stack>

@@ -29,7 +29,13 @@ const router = createBrowserRouter([
       },
       {
         path: '/clientes',
-        element: <Loadable children={<ClientsPage getClients={Factories.makeRemoteGetClients()} />} />,
+        element: (
+          <Loadable
+            children={
+              <ClientsPage getClients={Factories.makeRemoteGetClients()} />
+            }
+          />
+        ),
       },
       {
         path: '/relatorios',
@@ -53,7 +59,12 @@ const router = createBrowserRouter([
         element: (
           <Loadable
             children={
-              <AlertsPage getAlerts={Factories.makeRemoteGetAlerts()} />
+              <AlertsPage
+                getAlerts={Factories.makeRemoteGetAlerts()}
+                createAlert={Factories.makeRemoteCreateAlert()}
+                updateAlert={Factories.makeRemoteUpdateAlert()}
+                removeAlert={Factories.makeRemoteRemoveAlert()}
+              />
             }
           />
         ),

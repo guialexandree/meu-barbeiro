@@ -1,5 +1,4 @@
 import { UnexpectedError } from '@/domain/errors'
-import { _mockAlerts } from '@/domain/tests'
 import { GetAlerts, GetAlertsResult } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols'
 
@@ -10,14 +9,14 @@ export class RemoteGetAlerts implements GetAlerts {
   ) {}
 
   async get(): Promise<GetAlertsResult> {
-    const { statusCode } = await this.httpClient.request({
+    const { statusCode, body } = await this.httpClient.request({
       url: `${this.url}/alerts`,
       method: 'get',
     })
 
     switch (statusCode) {
       case HttpStatusCode.ok:
-        return _mockAlerts as GetAlertsResult
+        return body as GetAlertsResult
       default:
         throw new UnexpectedError()
     }

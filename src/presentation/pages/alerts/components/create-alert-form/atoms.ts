@@ -1,42 +1,27 @@
-import { atom, selector } from 'recoil'
-import { AlertModel, AlertStatus, AlertType } from '@/domain/models'
+import { AlertModel } from '@/domain/models'
+import { atom } from 'recoil'
+
+export const isLoadingSaveAlertState = atom({
+  key: 'isLoadingSaveAlertState',
+  default: false,
+})
+
+export const isLoadingLoadAlertsState = atom({
+  key: 'isLoadingLoadAlertsState',
+  default: false,
+})
 
 export const isOpenState = atom({
   key: 'isOpenCreateAlertState',
   default: false,
 })
 
-export const isLoadingState = atom({
-  key: 'isLoadingCreateAlertState',
-  default: false,
-})
-
-export const newAlertMessageState = atom({
-  key: 'newAlertMessageState',
-  default: '',
-})
-
-export const newAlertTypeState = atom<AlertType>({
-  key: 'newAlertTypeState',
-  default: 'home',
-})
-
-export const newAlertStatusState = atom<AlertStatus>({
-  key: 'newAlertStatusState',
-  default: 'ativo',
-})
-
-export const newAlertState = selector<Omit<AlertModel, 'id'> | null>({
+export const newAlertState = atom<AlertModel>({
   key: 'newAlertState',
-  get: ({ get }) => {
-    const message = get(newAlertMessageState)
-    const type = get(newAlertTypeState)
-    const status = get(newAlertStatusState)
-
-    return {
-      message,
-      type,
-      status,
-    }
+  default: {
+    id: '',
+    message: '',
+    type: 'home',
+    status: 'ativo',
   },
 })

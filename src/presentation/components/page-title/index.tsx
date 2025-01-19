@@ -49,7 +49,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
               variant="body2"
               sx={{ fontSize: 13 }}
               color="grey.500"
-              lineHeight={1}
+              lineHeight={1.1}
             >
               {props.subtitle}
             </Typography>

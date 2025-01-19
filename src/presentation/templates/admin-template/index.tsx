@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { AppBar, Drawer, ThemeProvider } from '@/presentation/components'
 import { appNavigation } from '@/main/configs'
 import { Box } from '@mui/material'
+import { ToastContainer } from 'react-toastify'
 
 export const AdminTemplate: React.FC = () => {
   return (
@@ -17,6 +18,12 @@ export const AdminTemplate: React.FC = () => {
         <Drawer items={appNavigation} />
         <Outlet />
       </Box>
+      <ToastContainer
+        autoClose={7000}
+        hideProgressBar={false}
+        theme='dark'
+        position='bottom-right'
+      />
     </ThemeProvider>
   )
 }

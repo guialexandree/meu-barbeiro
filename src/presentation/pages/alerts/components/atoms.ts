@@ -6,9 +6,34 @@ export const alertsPanelState = atom({
   default: 'home' as 'home' | 'services' | 'history',
 })
 
-export const alertsState = atom<AlertModel[]>({
-  key: 'alertsState',
-  default: [],
+export const homeAlertState = atom<AlertModel>({
+  key: 'homeAlertState',
+  default: {
+    id: '',
+    message: '',
+    type: 'home',
+    status: 'ativo',
+  },
+})
+
+export const servicesAlertState = atom<AlertModel>({
+  key: 'servicesAlertState',
+  default: {
+    id: '',
+    message: '',
+    type: 'services',
+    status: 'ativo',
+  },
+})
+
+export const historyAlertState = atom<AlertModel>({
+  key: 'historyAlertState',
+  default: {
+    id: '',
+    message: '',
+    type: 'history',
+    status: 'ativo',
+  },
 })
 
 export * from './create-alert-form/atoms'
