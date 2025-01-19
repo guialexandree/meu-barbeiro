@@ -2,7 +2,6 @@ import React from 'react'
 import { Fab, Icon, Stack, Zoom } from '@mui/material'
 import { GetClients } from '@/domain/usecases'
 import { PageContainer, PageTitle, ValueIndicator } from '@/presentation/components'
-import { CreateAlertForm } from '@/presentation/pages/alerts/components'
 import { ClientList } from '@/presentation/pages/clients/components'
 import clientesHeaderImg from '@/presentation/assets/clients-header3.png'
 
@@ -58,8 +57,6 @@ const ClientsPage: React.FC<ClientsPageProps> = (props) => {
           </Fab>
         </Zoom>
       </Stack>
-
-      <CreateAlertForm />
     </PageContainer>
   )
 }
