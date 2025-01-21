@@ -11,5 +11,9 @@ export const servicesState = atom<ServiceModel[]>({
   default: [],
 })
 
-export * from './create-service-form/atoms'
-export * from './update-service-form/atoms'
+export const errorServicesState = atom({
+  key: 'errorServicesState',
+  default: '',
+})
+
+export * from './create-update-service-form/atoms'

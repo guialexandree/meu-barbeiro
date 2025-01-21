@@ -25,13 +25,13 @@ import {
 import { useNotify } from '@/presentation/hooks'
 import { AlertModel } from '@/domain/models'
 
-type CreateAlertFormProps = {
+type CreateUpdateAlertFormProps = {
   createAlert: CreateAlert
   updateAlert: UpdateAlert
   removeAlert: RemoveAlert
 }
 
-export const CreateAlertForm: React.FC<CreateAlertFormProps> = (props) => {
+export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (props) => {
   const { notify } = useNotify()
   const [, setLoading] = useRecoilState(State.isLoadingSaveAlertState)
   const [open, setOpen] = useRecoilState(State.isOpenState)
@@ -48,6 +48,7 @@ export const CreateAlertForm: React.FC<CreateAlertFormProps> = (props) => {
       history: setHistorylert,
     }[alert.type]
     setAlert(alert)
+
     resetNewAlert()
     handleClose()
   }

@@ -27,7 +27,7 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
         variant="outlined"
         sx={{
           p: { xs: 1, sm: 2 },
-          flexGrow: 0.5,
+          flexGrow: 1,
           display: 'flex',
           justifyContent: 'space-between',
           flexDirection: 'column',

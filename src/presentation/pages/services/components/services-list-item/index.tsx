@@ -1,16 +1,7 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
-import {
-  Box,
-  Chip,
-  Icon,
-  IconButton,
-  ListItem,
-  ListItemText,
-  Paper,
-  Stack,
-} from '@mui/material'
+import { Box, Chip, Icon, IconButton, ListItem, ListItemText, Paper, Stack } from '@mui/material'
 import * as State from '@/presentation/pages/services/components/atoms'
 
 type ServiceListItemProps = {
@@ -18,7 +9,13 @@ type ServiceListItemProps = {
 }
 
 export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
-  const setSelectedUpdate = useSetRecoilState(State.updateServiceState)
+  const setNewService = useSetRecoilState(State.newServiceState)
+  const setOpenForm = useSetRecoilState(State.isOpenFormServiceState)
+
+  const handleEdit = () => {
+    setNewService(props.service)
+    setOpenForm(true)
+  }
 
   return (
     <ListItem
@@ -48,23 +45,18 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           }}
         />
         <ListItemText
-          sx={{ mr: 'auto', flexGrow: 0.1 }}
+          sx={{ flexGrow: 0.1 }}
           primary={`R$ ${props.service.price}`}
           secondary={`${props.service.timeExecution} min`}
         />
         <Box sx={{ mr: 1 }}>
-          <IconButton
-            sx={{ backgroundColor: '#42424240' }}
-            edge="end"
-            aria-label="delete"
-            onClick={() => setSelectedUpdate(props.service)}
-          >
+          <IconButton sx={{ backgroundColor: '#42424240' }} edge="end" aria-label="delete" onClick={handleEdit}>
             <Icon sx={{ color: 'grey.600' }}>edit</Icon>
           </IconButton>
         </Box>
       </Stack>
 
-      <Box sx={{ display: 'block', width: '100%' }}>
+      <Stack direction="row" sx={{ width: '100%', justifyContent: 'space-between' }}>
         <Chip
           variant="outlined"
           icon={
@@ -81,7 +73,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
             height: 24,
           }}
         />
-      </Box>
+      </Stack>
     </ListItem>
   )
 }

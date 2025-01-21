@@ -1,5 +1,5 @@
 export type ServiceModel = {
-  id: number
+  id: string
   name: string
   description: string
   status: 'ativo' | 'inativo'

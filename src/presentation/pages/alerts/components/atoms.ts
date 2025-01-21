@@ -36,4 +36,4 @@ export const historyAlertState = atom<AlertModel>({
   },
 })
 
-export * from './create-alert-form/atoms'
+export * from './create-update-alert-form/atoms'

@@ -47,8 +47,10 @@ const router = createBrowserRouter([
           <Loadable
             children={
               <ServicesPage
-                getServices={Factories.makeRemoteGetServices()}
+                getServices={Factories.makeRemoteLoadServices()}
                 updateService={Factories.makeRemoteUpdateService()}
+                createService={Factories.makeRemoteCreateService()}
+                removeService={Factories.makeRemoteRemoveService()}
               />
             }
           />

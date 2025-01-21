@@ -1,17 +1,17 @@
-import { CreateAlert, CreateAlertParams, CreateAlertResult } from '@/domain/usecases'
+import { CreateService, CreateServiceParams, CreateServiceResult } from '@/domain/usecases'
 import { HttpClient } from '@/data/protocols'
-import { _mockAlerts } from '@/domain/tests'
+import { _mockServices } from '@/domain/tests'
 
-export class RemoteCreateAlert implements CreateAlert {
+export class RemoteCreateService implements CreateService {
   constructor(
     private readonly url: string,
-    private readonly httpClient: HttpClient<CreateAlertResult>,
+    private readonly httpClient: HttpClient<CreateServiceResult>,
   ) {}
 
-  async create(params: CreateAlertParams): Promise<CreateAlertResult> {
-    return _mockAlerts[0]
+  async create(params: CreateServiceParams): Promise<CreateServiceResult> {
+    return _mockServices
     // const { statusCode, body } = await this.httpClient.request({
-    //   url: `${this.url}/alerts`,
+    //   url: `${this.url}/services`,
     //   method: 'post',
     //   body: params
     // })

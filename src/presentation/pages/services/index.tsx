@@ -1,33 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { Alert, Fab, Icon, Stack, Zoom } from '@mui/material'
-import { GetServices, UpdateService } from '@/domain/usecases'
+import { CreateService, LoadServices, RemoveService, UpdateService } from '@/domain/usecases'
 import { PageContainer, PageTitle } from '@/presentation/components'
 import {
-  CreateServiceForm,
   ServiceList,
-  UpdateServiceForm,
+  CreateUpdateServiceForm,
 } from '@/presentation/pages/services/components'
 import * as State from '@/presentation/pages/services/components/atoms'
 import servicesHeaderImg from '@/presentation/assets/services-header.png'
 
 type ServicesPageProps = {
-  getServices: GetServices
+  getServices: LoadServices
   updateService: UpdateService
+  createService: CreateService
+  removeService: RemoveService
 }
 
 const ServicesPage: React.FC<ServicesPageProps> = (props) => {
-  const setOpen = useSetRecoilState(State.isOpenState)
+  const setOpen = useSetRecoilState(State.isOpenFormServiceState)
   const setLoading = useSetRecoilState(State.isLoadingState)
   const setServices = useSetRecoilState(State.servicesState)
+  const setError = useSetRecoilState(State.errorServicesState)
 
-  useEffect(() => {
+  const loadServices = useCallback(() => {
     setLoading(true)
     props.getServices
-      .get()
+      .load()
       .then(setServices)
-      .catch(console.error)
+      .catch(error => {
+        setError(error.message)
+        console.error(error)
+      })
       .finally(() => setLoading(false))
+  }, [])
+
+  useEffect(() => {
+    loadServices()
   }, [])
 
   return (
@@ -47,7 +56,7 @@ const ServicesPage: React.FC<ServicesPageProps> = (props) => {
         <Icon sx={{ fontSize: 12 }}>phone_iphone</Icon>
       </Alert>
 
-      <ServiceList />
+      <ServiceList loadServices={loadServices} />
 
       <Stack direction="row" justifyContent="center">
         <Zoom in>
@@ -69,8 +78,11 @@ const ServicesPage: React.FC<ServicesPageProps> = (props) => {
         </Zoom>
       </Stack>
 
-      <CreateServiceForm />
-      <UpdateServiceForm updateService={props.updateService} />
+      <CreateUpdateServiceForm
+        createService={props.createService}
+        updateService={props.updateService}
+        removeService={props.removeService}
+      />
     </PageContainer>
   )
 }

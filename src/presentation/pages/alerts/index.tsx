@@ -9,7 +9,7 @@ import {
 } from '@/domain/usecases'
 import { PageContainer, PageTitle } from '@/presentation/components'
 import {
-  CreateAlertForm,
+  CreateUpdateAlertForm,
   PageAlertPanel,
 } from '@/presentation/pages/alerts/components'
 import * as State from '@/presentation/pages/alerts/components/atoms'
@@ -110,7 +110,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
         />
       </Box>
 
-      <CreateAlertForm
+      <CreateUpdateAlertForm
         removeAlert={props.removeAlert}
         createAlert={props.createAlert}
         updateAlert={props.updateAlert}

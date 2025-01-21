@@ -1,6 +1,6 @@
-import { UnexpectedError } from '@/domain/errors'
 import { RemoveAlert, RemoveAlertParams, RemoveAlertResult } from '@/domain/usecases'
-import { HttpClient, HttpStatusCode } from '@/data/protocols'
+import { HttpClient } from '@/data/protocols'
+import { _mockAlerts } from '@/domain/tests'
 
 export class RemoteRemoveAlert implements RemoveAlert {
   constructor(
@@ -9,20 +9,21 @@ export class RemoteRemoveAlert implements RemoveAlert {
   ) {}
 
   async remove(params: RemoveAlertParams): Promise<RemoveAlertResult> {
-    const { statusCode, body } = await this.httpClient.request({
-      url: `${this.url}/alerts/${params.id}`,
-      method: 'delete'
-    })
+    return _mockAlerts[0]
+    // const { statusCode, body } = await this.httpClient.request({
+    //   url: `${this.url}/alerts/${params.id}`,
+    //   method: 'delete'
+    // })
 
-    switch (statusCode) {
-      case HttpStatusCode.ok:
-        if (!body) {
-          throw new UnexpectedError()
-        }
-        body.message = ''
-        return body
-      default:
-        throw new UnexpectedError()
-    }
+    // switch (statusCode) {
+    //   case HttpStatusCode.ok:
+    //     if (!body) {
+    //       throw new UnexpectedError()
+    //     }
+    //     body.message = ''
+    //     return body
+    //   default:
+    //     throw new UnexpectedError()
+    // }
   }
 }

@@ -1,6 +1,6 @@
-import { UnexpectedError } from '@/domain/errors'
 import { UpdateAlert, UpdateAlertParams, UpdateAlertResult } from '@/domain/usecases'
-import { HttpClient, HttpStatusCode } from '@/data/protocols'
+import { HttpClient } from '@/data/protocols'
+import { _mockAlerts } from '@/domain/tests'
 
 export class RemoteUpdateAlert implements UpdateAlert {
   constructor(
@@ -9,21 +9,22 @@ export class RemoteUpdateAlert implements UpdateAlert {
   ) {}
 
   async update(params: UpdateAlertParams): Promise<UpdateAlertResult> {
-    const { id, ...bodyParams } = params
-    const { statusCode, body } = await this.httpClient.request({
-      url: `${this.url}/alerts/${id}`,
-      method: 'patch',
-      body: bodyParams
-    })
+    return _mockAlerts[0]
+    // const { id, ...bodyParams } = params
+    // const { statusCode, body } = await this.httpClient.request({
+    //   url: `${this.url}/alerts/${id}`,
+    //   method: 'patch',
+    //   body: bodyParams
+    // })
 
-    switch (statusCode) {
-      case HttpStatusCode.ok:
-        if (!body) {
-          throw new UnexpectedError()
-        }
-        return body
-      default:
-        throw new UnexpectedError()
-    }
+    // switch (statusCode) {
+    //   case HttpStatusCode.ok:
+    //     if (!body) {
+    //       throw new UnexpectedError()
+    //     }
+    //     return body
+    //   default:
+    //     throw new UnexpectedError()
+    // }
   }
 }
