@@ -49,8 +49,8 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           primary={`R$ ${props.service.price}`}
           secondary={`${props.service.timeExecution} min`}
         />
-        <Box sx={{ mr: 1 }}>
-          <IconButton sx={{ backgroundColor: '#42424240' }} edge="end" aria-label="delete" onClick={handleEdit}>
+        <Box>
+          <IconButton size='small' sx={{ backgroundColor: '#42424240' }} edge="end" aria-label="delete" onClick={handleEdit}>
             <Icon sx={{ color: 'grey.600' }}>edit</Icon>
           </IconButton>
         </Box>

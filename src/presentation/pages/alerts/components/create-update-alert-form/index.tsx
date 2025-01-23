@@ -39,15 +39,29 @@ export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (prop
   const setHomeAlert = useSetRecoilState(State.homeAlertState)
   const setServicesAlert = useSetRecoilState(State.servicesAlertState)
   const setHistorylert = useSetRecoilState(State.historyAlertState)
+  const resetHomeAlert = useResetRecoilState(State.homeAlertState)
+  const resetServicesAlert = useResetRecoilState(State.servicesAlertState)
+  const resetHistorylert = useResetRecoilState(State.historyAlertState)
   const resetNewAlert = useResetRecoilState(State.newAlertState)
 
+  const edditing = newAlert?.id ? true : false
+
   const onSuccess = (alert: AlertModel): void => {
-    const setAlert = {
-      home: setHomeAlert,
-      services: setServicesAlert,
-      history: setHistorylert,
-    }[alert.type]
-    setAlert(alert)
+    if (alert.id) {
+      const setAlert = {
+        home: setHomeAlert,
+        services: setServicesAlert,
+        history: setHistorylert,
+      }[alert.type]
+      setAlert(alert)
+    } else {
+      const resetAlert = {
+        home: resetHomeAlert,
+        services: resetServicesAlert,
+        history: resetHistorylert,
+      }[alert.type]
+      resetAlert()
+    }
 
     resetNewAlert()
     handleClose()
@@ -55,7 +69,6 @@ export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (prop
 
   const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
     event.preventDefault()
-    const edditing = newAlert?.id ? true : false
 
     if (edditing) {
       updateAlert()
@@ -96,14 +109,11 @@ export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (prop
 
     props.removeAlert
       .remove(params)
-      .then(alert => {
+      .then(() => {
         notify('Aviso removido com sucesso', { type: 'success' })
-        onSuccess(alert)
+        onSuccess({ ...newAlert, id: '' })
       })
-      .catch((error) => {
-        notify('Não foi possível remover o aviso', { type: 'error' })
-        console.error(error)
-      })
+      .catch(console.error)
       .finally(() => setLoading(false))
   }
 
@@ -119,9 +129,9 @@ export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (prop
 
     props.createAlert
       .create(params)
-      .then(alert => {
-        notify('Aviso criado com sucesso', { type: 'success' })
-        onSuccess(alert)
+      .then(() => {
+        notify(`Aviso ${edditing ? 'editado' : 'criado'} com sucesso`, { type: 'success' })
+        onSuccess({ ...newAlert, id: `${Math.random() * 10}` })
       })
       .catch((error) => {
         notify('Erro ao atualizar aviso', { type: 'error' })
@@ -158,7 +168,7 @@ export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (prop
           notification_add
         </Icon>
         <Stack>
-          <DialogTitle sx={{ p: 0 }}>{'Configurar aviso'}</DialogTitle>
+          <DialogTitle sx={{ p: 0 }}>{`${edditing ? 'Editar' : 'Configurar'} aviso`}</DialogTitle>
           <DialogTitle
             variant="body2"
             color="grey.500"

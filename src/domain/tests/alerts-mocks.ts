@@ -16,11 +16,6 @@ export const _mockAlerts: AlertModel[] = [
   },
   {
     ...mockAlert(),
-    type: 'history',
-    message: 'A partir de janeiro, os preços dos serviços serão reajustados',
-  },
-  {
-    ...mockAlert(),
     type: 'services',
     message: 'No mês de novembro, todos os serviços com 10% de desconto',
   },

@@ -1,17 +1,9 @@
 import React, { useEffect } from 'react'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { Box } from '@mui/material'
-import {
-  CreateAlert,
-  GetAlerts,
-  RemoveAlert,
-  UpdateAlert,
-} from '@/domain/usecases'
+import { CreateAlert, GetAlerts, GetAlertsResult, RemoveAlert, UpdateAlert } from '@/domain/usecases'
 import { PageContainer, PageTitle } from '@/presentation/components'
-import {
-  CreateUpdateAlertForm,
-  PageAlertPanel,
-} from '@/presentation/pages/alerts/components'
+import { CreateUpdateAlertForm, PageAlertContainer, PageAlertContent } from '@/presentation/pages/alerts/components'
 import * as State from '@/presentation/pages/alerts/components/atoms'
 import notificationImg from '@/presentation/assets/notification-header.png'
 
@@ -28,25 +20,23 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
   const setNewAlert = useSetRecoilState(State.newAlertState)
   const resetNewAlert = useResetRecoilState(State.newAlertState)
   const [homeAlert, setHomeAlert] = useRecoilState(State.homeAlertState)
-  const [servicesAlert, setServicesAlert] = useRecoilState(
-    State.servicesAlertState,
-  )
-  const [historyAlert, setHistoryAlert] = useRecoilState(
-    State.historyAlertState,
-  )
+  const [servicesAlert, setServicesAlert] = useRecoilState(State.servicesAlertState)
+  const [historyAlert, setHistoryAlert] = useRecoilState(State.historyAlertState)
+
+  const startAlerts = (alerts: GetAlertsResult) => {
+    const homeAlert = alerts.find((alert) => alert.type === 'home')
+    if (homeAlert) setHomeAlert(homeAlert)
+    const servicesAlert = alerts.find((alert) => alert.type === 'services')
+    if (servicesAlert) setServicesAlert(servicesAlert)
+    const historyAlert = alerts.find((alert) => alert.type === 'history')
+    if (historyAlert) setHistoryAlert(historyAlert)
+  }
 
   useEffect(() => {
     setLoading(true)
     props.getAlerts
       .get()
-      .then((alerts) => {
-        const homeAlert = alerts.find((alert) => alert.type === 'home')
-        if (homeAlert) setHomeAlert(homeAlert)
-        const servicesAlert = alerts.find((alert) => alert.type === 'services')
-        if (servicesAlert) setServicesAlert(servicesAlert)
-        const historyAlert = alerts.find((alert) => alert.type === 'history')
-        if (historyAlert) setHistoryAlert(historyAlert)
-      })
+      .then(startAlerts)
       .catch(console.error)
       .finally(() => setLoading(false))
   }, [])
@@ -60,54 +50,50 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
       />
 
       <Box mx={2}>
-        <PageAlertPanel
-          entryDirection="right"
-          message={homeAlert.message}
-          type="home"
-          onAdd={() => {
-            resetNewAlert()
-            setNewAlert((currentState) => ({ ...currentState, type: 'home' }))
-            setOpen(true)
-          }}
-          onEdit={() => {
-            if (homeAlert) setNewAlert(homeAlert)
-            setOpen(true)
-          }}
-        />
-        <PageAlertPanel
-          entryDirection="left"
-          message={servicesAlert.message}
-          type="services"
-          onAdd={() => {
-            resetNewAlert()
-            setNewAlert((currentState) => ({
-              ...currentState,
-              type: 'services',
-            }))
-            setOpen(true)
-          }}
-          onEdit={() => {
-            if (servicesAlert) setNewAlert(servicesAlert)
-            setOpen(true)
-          }}
-        />
-        <PageAlertPanel
-          entryDirection="right"
-          message={historyAlert.message}
-          type="history"
-          onAdd={() => {
-            resetNewAlert()
-            setNewAlert((currentState) => ({
-              ...currentState,
-              type: 'history',
-            }))
-            setOpen(true)
-          }}
-          onEdit={() => {
-            if (historyAlert) setNewAlert(historyAlert)
-            setOpen(true)
-          }}
-        />
+        <PageAlertContainer entryDirection="right" type="home">
+          <PageAlertContent
+            message={homeAlert.message}
+            onAdd={() => {
+              resetNewAlert()
+              setNewAlert((currentState) => ({ ...currentState, type: 'home' }))
+              setOpen(true)
+            }}
+            onEdit={() => {
+              if (homeAlert) setNewAlert(homeAlert)
+              setOpen(true)
+            }}
+          />
+        </PageAlertContainer>
+
+        <PageAlertContainer entryDirection="left" type="services">
+          <PageAlertContent
+            message={servicesAlert.message}
+            onAdd={() => {
+              resetNewAlert()
+              setNewAlert((currentState) => ({ ...currentState, type: 'services' }))
+              setOpen(true)
+            }}
+            onEdit={() => {
+              if (servicesAlert) setNewAlert(servicesAlert)
+              setOpen(true)
+            }}
+          />
+        </PageAlertContainer>
+
+        <PageAlertContainer entryDirection="right" type="history">
+          <PageAlertContent
+            message={historyAlert.message}
+            onAdd={() => {
+              resetNewAlert()
+              setNewAlert((currentState) => ({ ...currentState, type: 'history' }))
+              setOpen(true)
+            }}
+            onEdit={() => {
+              if (historyAlert) setNewAlert(historyAlert)
+              setOpen(true)
+            }}
+          />
+        </PageAlertContainer>
       </Box>
 
       <CreateUpdateAlertForm
