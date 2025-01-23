@@ -12,7 +12,7 @@ const AttendanceQueuePage = lazy(
 const ServicesPage = lazy(() => import('@/presentation/pages/services'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts'))
 const ClientsPage = lazy(() => import('@/presentation/pages/clients'))
-const ReportsPage = lazy(() => import('@/presentation/pages/reports'))
+const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
 
 const router = createBrowserRouter([
   {
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/relatorios',
-        element: <Loadable children={<ReportsPage />} />,
+        element: <Loadable children={<FinancialPage />} />,
       },
       {
         path: '/servicos',
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
           <Loadable
             children={
               <AlertsPage
-                getAlerts={Factories.makeRemoteGetAlerts()}
+                getAlerts={Factories.makeRemoteLoadAlerts()}
                 createAlert={Factories.makeRemoteCreateAlert()}
                 updateAlert={Factories.makeRemoteUpdateAlert()}
                 removeAlert={Factories.makeRemoteRemoveAlert()}

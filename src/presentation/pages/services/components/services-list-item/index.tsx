@@ -3,12 +3,14 @@ import { useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
 import { Box, Chip, Icon, IconButton, ListItem, ListItemText, Paper, Stack } from '@mui/material'
 import * as State from '@/presentation/pages/services/components/atoms'
+import { useFormat } from '@/presentation/hooks'
 
 type ServiceListItemProps = {
   service: ServiceModel
 }
 
 export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
+  const { formatCoins } = useFormat()
   const setNewService = useSetRecoilState(State.newServiceState)
   const setOpenForm = useSetRecoilState(State.isOpenFormServiceState)
 
@@ -37,16 +39,16 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
     >
       <Stack direction="row" sx={{ flex: 1 }}>
         <ListItemText
-          sx={{ flexGrow: 1 }}
+          sx={{ flexGrow: 1, textTransform: 'uppercase' }}
           primary={props.service.name}
           secondary={props.service.description}
           slotProps={{
-            secondary: { fontSize: 11 },
+            secondary: { fontSize: 11},
           }}
         />
         <ListItemText
           sx={{ flexGrow: 0.1 }}
-          primary={`R$ ${props.service.price}`}
+          primary={formatCoins(props.service.price)}
           secondary={`${props.service.timeExecution} min`}
         />
         <Box>

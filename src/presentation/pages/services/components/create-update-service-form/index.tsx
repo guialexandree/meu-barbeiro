@@ -18,7 +18,7 @@ import {
   Typography,
 } from '@mui/material'
 import * as State from '@/presentation/pages/services/components/atoms'
-import { useNotify } from '@/presentation/hooks'
+import { useFormat, useNotify } from '@/presentation/hooks'
 
 type CreateUpdateServiceFormProps = {
   updateService: UpdateService
@@ -28,6 +28,7 @@ type CreateUpdateServiceFormProps = {
 
 export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (props) => {
   const { notify } = useNotify()
+  const { formatCoins } = useFormat()
   const [newService, setNewService] = useRecoilState(State.newServiceState)
   const [open, setOpen] = useRecoilState(State.isOpenFormServiceState)
   const setServices = useSetRecoilState(State.servicesState)
@@ -39,7 +40,7 @@ export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (
   const onSuccess = (service: ServiceModel): void => {
     setServices((services) => {
       if (edditing) {
-        const serviceIndex = services.findIndex(currentService => currentService.id === service.id)
+        const serviceIndex = services.findIndex((currentService) => currentService.id === service.id)
         if (serviceIndex > -1) {
           const newServices = [...services]
           newServices[serviceIndex] = service
@@ -105,7 +106,7 @@ export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (
       .remove(params)
       .then(() => {
         notify('Serviço removido com sucesso', { type: 'success' })
-        setServices(services => services.filter(currentService => currentService.id !== newService.id))
+        setServices((services) => services.filter((currentService) => currentService.id !== newService.id))
         handleClose()
       })
       .catch((error) => {
@@ -119,6 +120,13 @@ export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (
     event.preventDefault()
     const { name, value } = event.target
     setNewService((currentState) => ({ ...currentState, [name]: value }))
+  }
+
+  const handleChangeNumber = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault()
+    const { name, value } = event.target
+    const inputValue = value.replace(/\D/g, '')
+    setNewService((currentState) => ({ ...currentState, [name]: inputValue }))
   }
 
   const handleClose = (): void => {
@@ -142,11 +150,7 @@ export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (
       <Divider />
       <DialogContent sx={{ width: '100%' }}>
         <Stack spacing={1}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
             <ToggleButtonGroup
               sx={{ pb: 1 }}
               size="small"
@@ -169,26 +173,43 @@ export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (
               </ToggleButton>
             </ToggleButtonGroup>
             {newService?.id && (
-              <Button
-                color="error"
-                sx={{ color: 'error.light' }}
-                onClick={removeService}
-                size="small"
-              >
+              <Button color="error" sx={{ color: 'error.light' }} onClick={removeService} size="small">
                 Remover serviço
               </Button>
             )}
           </Stack>
 
-          <TextField size="small" value={newService.name} onChange={handleChange} label="Nome do serviço" name="name" />
+          <TextField
+            size="small"
+            value={newService.name}
+            onChange={handleChange}
+            inputProps={{ style: { textTransform: 'uppercase' } }}
+            slotProps={{
+              input: { style: { textTransform: 'uppercase' } },
+            }}
+            inputMode="text"
+            label="Nome do serviço"
+            name="name"
+          />
           <TextField
             size="small"
             value={newService.description}
             onChange={handleChange}
             label="Descrição"
             name="description"
+            inputProps={{ style: { textTransform: 'uppercase' } }}
+            slotProps={{
+              input: { style: { textTransform: 'uppercase' } },
+            }}
           />
-          <TextField size="small" value={newService.price} onChange={handleChange} label="Preço" name="price" />
+          <TextField
+            size="small"
+            inputMode="decimal"
+            value={formatCoins(newService.price)}
+            onChange={handleChangeNumber}
+            label="Preço"
+            name="price"
+          />
 
           <Stack px={1} pt={1}>
             <Typography id="input-slider" color="grey.500">

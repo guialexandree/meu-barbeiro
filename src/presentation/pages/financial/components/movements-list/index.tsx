@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Button,
   Chip,
   Divider,
   Icon,
@@ -34,6 +35,13 @@ const movements = [
     type: 'saída',
     value: 'R$ 45,00',
   },
+  {
+    id: 3,
+    name: 'CORTE + BARBA',
+    date: '11:10',
+    type: 'entrada',
+    value: 'R$ 55,00',
+  },
 ]
 
 export const MovementsList: React.FC = () => {
@@ -52,7 +60,10 @@ export const MovementsList: React.FC = () => {
                   <Icon>person</Icon>
                 </IconButton>
               </ListItemIcon>
-              <ListItemText primary={movement.name} secondary={movement.date} />
+              <ListItemText primary={movement.name} secondary={movement.date} slotProps={{
+                primary: { sx: { fontSize: 13 } },
+                secondary: { sx: { fontSize: 11 } },
+              }}/>
               <ListItemText
                 primary={
                   <Chip
@@ -84,6 +95,11 @@ export const MovementsList: React.FC = () => {
           </Stack>
         ))}
       </List>
+      <Stack direction="row" justifyContent="center" alignItems="center" spacing={1} mt={1} mr={2}>
+        <Button sx={{ backgroundColor: 'grey.900' }} endIcon={<Icon>expand_more</Icon>}>
+          ver mais
+        </Button>
+      </Stack>
     </Stack>
   )
 }

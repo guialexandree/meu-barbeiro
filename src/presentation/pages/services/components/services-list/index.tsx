@@ -36,7 +36,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   if (loading || loadingUpdate) {
     return (
       <Backdrop open={loading}>
-        <CircularProgress color="inherit" />
+        <CircularProgress color="secondary" />
       </Backdrop>
     )
   }

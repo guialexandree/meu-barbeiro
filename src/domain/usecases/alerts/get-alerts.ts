@@ -1,7 +1,7 @@
 import { AlertModel } from '@/domain/models'
 
-export interface GetAlerts {
-  get: () => Promise<GetAlertsResult>
+export interface LoadAlerts {
+  get: () => Promise<LoadAlertsResult>
 }
 
-export type GetAlertsResult = AlertModel[]
+export type LoadAlertsResult = AlertModel[]

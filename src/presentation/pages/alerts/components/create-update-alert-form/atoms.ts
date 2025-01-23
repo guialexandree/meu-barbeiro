@@ -6,6 +6,11 @@ export const isLoadingSaveAlertState = atom({
   default: false,
 })
 
+export const errorAlertsState = atom({
+  key: 'errorAlertState',
+  default: '',
+})
+
 export const isLoadingLoadAlertsState = atom({
   key: 'isLoadingLoadAlertsState',
   default: false,

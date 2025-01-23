@@ -34,6 +34,20 @@ export const MovementsIndicator: React.FC = () => {
           spacing={1}
           sx={{
             position: 'absolute',
+            bottom: '50%',
+            transform: 'translateY(50%)',
+            right: 0,
+            mr: 1,
+          }}
+        >
+         <Icon sx={{ color: 'grey.600', fontSize: 46, opacity: .4 }}>local_atm</Icon>
+        </Stack>
+
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{
+            position: 'absolute',
             bottom: -18,
             right: 0,
             mr: 1,

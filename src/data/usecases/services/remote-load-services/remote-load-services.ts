@@ -6,7 +6,9 @@ export class RemoteLoadServices implements LoadServices {
   constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadServicesResult>) {}
 
   async load(): Promise<LoadServicesResult> {
-    return _mockServices
+    return new Promise<LoadServicesResult>((resolve) => {
+      setTimeout(() => resolve(_mockServices), 3000)
+    })
     // const { statusCode, body } = await this.httpClient.request({
     //   url: `${this.url}/services`,
     //   method: 'get',

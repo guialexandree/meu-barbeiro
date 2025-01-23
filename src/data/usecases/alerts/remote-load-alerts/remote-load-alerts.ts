@@ -1,15 +1,17 @@
-import { GetAlerts, GetAlertsResult } from '@/domain/usecases'
+import { LoadAlerts, LoadAlertsResult } from '@/domain/usecases'
 import { HttpClient } from '@/data/protocols'
 import { _mockAlerts } from '@/domain/tests'
 
-export class RemoteGetAlerts implements GetAlerts {
+export class RemoteLoadAlerts implements LoadAlerts {
   constructor(
     private readonly url: string,
-    private readonly httpClient: HttpClient<GetAlertsResult>,
+    private readonly httpClient: HttpClient<LoadAlertsResult>,
   ) {}
 
-  async get(): Promise<GetAlertsResult> {
-    return _mockAlerts
+  async get(): Promise<LoadAlertsResult> {
+    return new Promise<LoadAlertsResult>((resolve) => {
+      setTimeout(() => resolve(_mockAlerts), 3000)
+    })
     // const { statusCode, body } = await this.httpClient.request({
     //   url: `${this.url}/alerts`,
     //   method: 'get',
