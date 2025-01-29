@@ -1,18 +1,38 @@
 import React from 'react'
+import { RecoilState, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { Alert, Icon, IconButton, Link, Stack } from '@mui/material'
+import { AlertModel } from '@/domain/models'
+import * as State from '@/presentation/pages/alerts/components/atoms'
 
 type PageAlertContentProps = {
-  message: string
-  onAdd: VoidFunction
-  onEdit: VoidFunction
+  alertState: RecoilState<AlertModel>
+  type: 'home' | 'services' | 'history'
 }
 
 export const PageAlertContent: React.FC<PageAlertContentProps> = (props) => {
+  const [alert, setAlert] = useRecoilState(props.alertState)
+  const setOpenForm = useSetRecoilState(State.isOpenState)
+  const resetNewAlert = useResetRecoilState(State.newAlertState)
+  const setNewAlert = useSetRecoilState(State.newAlertState)
+
+  const handleAdd = () => {
+    resetNewAlert()
+    setAlert((currentState) => ({ ...currentState, type: props.type }))
+    setOpenForm(true)
+  }
+
+  const handleEdit = () => {
+    if (alert) {
+      setNewAlert(alert)
+    }
+    setOpenForm(true)
+  }
+
   const FillPanel: React.FC = () => {
     return (
       <>
-        {props.message}
-        <IconButton size="small" onClick={props.onEdit}>
+        {alert.message}
+        <IconButton size="small" onClick={handleEdit}>
           <Icon sx={{ fontSize: 16, color: 'grey.500' }}>edit</Icon>
         </IconButton>
       </>
@@ -23,7 +43,7 @@ export const PageAlertContent: React.FC<PageAlertContentProps> = (props) => {
     return (
       <>
         {'Nenhuma mensagem ativa'}
-        <Link href="#" sx={{ ml: 0.5, color: 'info.main', textDecoration: 'none' }} onClick={props.onAdd}>
+        <Link href="#" sx={{ ml: 0.5, color: 'info.main', textDecoration: 'none' }} onClick={handleAdd}>
           Configurar
         </Link>
       </>
@@ -32,9 +52,9 @@ export const PageAlertContent: React.FC<PageAlertContentProps> = (props) => {
 
   return (
     <Alert
-      severity={props.message ? 'success' : 'warning'}
+      severity={alert.message ? 'success' : 'warning'}
       variant="outlined"
-      onClick={props.onEdit}
+      onClick={handleEdit}
       sx={{
         fontSize: 12,
         mt: 1,
@@ -54,9 +74,9 @@ export const PageAlertContent: React.FC<PageAlertContentProps> = (props) => {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        sx={{ pr: props.message ? 0.5 : 1, color: props.message ? 'grey.200' : 'grey.500' }}
+        sx={{ pr: alert.message ? 0.5 : 1, color: alert.message ? 'grey.200' : 'grey.500' }}
       >
-        {props.message ? <FillPanel /> : <EmptyPanel />}
+        {alert.message ? <FillPanel /> : <EmptyPanel />}
       </Stack>
     </Alert>
   )
