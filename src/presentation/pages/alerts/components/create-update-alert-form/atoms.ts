@@ -1,5 +1,5 @@
-import { AlertModel } from '@/domain/models'
-import { atom } from 'recoil'
+import { AlertModel, AlertStatus, AlertType } from '@/domain/models'
+import { atom, selector } from 'recoil'
 
 export const isLoadingSaveAlertState = atom({
   key: 'isLoadingSaveAlertState',
@@ -11,12 +11,33 @@ export const isOpenState = atom({
   default: false,
 })
 
-export const newAlertState = atom<AlertModel>({
-  key: 'newAlertState',
+export const createUpdateAlertState = atom({
+  key: 'createUpdateAlertState',
   default: {
     id: '',
-    message: '',
-    type: 'home',
-    status: 'ativo',
+    type: 'home' as AlertType,
   },
+})
+
+export const newAlertState = selector<AlertModel>({
+  key: 'newAlertState',
+  get: ({ get }) => {
+    const alert = get(createUpdateAlertState)
+    return {
+      id: alert.id,
+      type: alert.type,
+      status: get(statusNewAlertState),
+      message: get(messageNewAlertState),
+    }
+  }
+})
+
+export const messageNewAlertState = atom({
+  key: 'messageNewAlertState',
+  default: '',
+})
+
+export const statusNewAlertState = atom<AlertStatus>({
+  key: 'statusNewAlertState',
+  default: 'ativo'
 })

@@ -12,8 +12,8 @@ type PageAlertContentProps = {
 export const PageAlertContent: React.FC<PageAlertContentProps> = (props) => {
   const [alert, setAlert] = useRecoilState(props.alertState)
   const setOpenForm = useSetRecoilState(State.isOpenState)
-  const resetNewAlert = useResetRecoilState(State.newAlertState)
-  const setNewAlert = useSetRecoilState(State.newAlertState)
+  const resetNewAlert = useResetRecoilState(State.createUpdateAlertState)
+  const setNewAlert = useSetRecoilState(State.createUpdateAlertState)
 
   const handleAdd = () => {
     resetNewAlert()
