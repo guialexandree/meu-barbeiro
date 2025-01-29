@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil'
 import { Box } from '@mui/material'
 import { CreateAlert, LoadAlerts, LoadAlertsResult, RemoveAlert, UpdateAlert } from '@/domain/usecases'
 import { PageContainer, PageTitle } from '@/presentation/components'
-import { CreateUpdateAlertForm, PageAlertContainer, PageAlertContent } from '@/presentation/pages/alerts/components'
+import { CreateUpdateAlertForm, PageAlert } from '@/presentation/pages/alerts/components'
 import * as State from '@/presentation/pages/alerts/components/atoms'
 import notificationImg from '@/presentation/assets/notification-header.png'
 
@@ -42,17 +42,9 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
       />
 
       <Box mx={2}>
-        <PageAlertContainer entryDirection="right" type="home">
-          <PageAlertContent alertState={State.homeAlertState} type="home" />
-        </PageAlertContainer>
-
-        <PageAlertContainer entryDirection="left" type="services">
-          <PageAlertContent alertState={State.servicesAlertState} type="services" />
-        </PageAlertContainer>
-
-        <PageAlertContainer entryDirection="right" type="history">
-          <PageAlertContent alertState={State.historyAlertState} type="history" />
-        </PageAlertContainer>
+        <PageAlert alertState={State.homeAlertState} entryDirection="right" type="home" />
+        <PageAlert alertState={State.servicesAlertState} entryDirection="left" type="services" />
+        <PageAlert alertState={State.historyAlertState} entryDirection="right" type="history" />
       </Box>
 
       <CreateUpdateAlertForm

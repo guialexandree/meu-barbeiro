@@ -1,14 +1,16 @@
 import React from 'react'
+import { RecoilState } from 'recoil'
 import { Accordion, AccordionDetails, AccordionSummary, Chip, Icon, Slide } from '@mui/material'
-import { AlertType } from '@/domain/models'
+import { AlertModel, AlertType } from '@/domain/models'
+import { PageAlertContent } from '@/presentation/pages/alerts/components'
 
-type PageAlertContainerProps = {
+type PageAlertProps = {
   type: AlertType
   entryDirection: 'up' | 'down' | 'left' | 'right'
-  children: React.ReactNode
+  alertState: RecoilState<AlertModel>
 }
 
-export const PageAlertContainer: React.FC<PageAlertContainerProps> = (props) => {
+export const PageAlert: React.FC<PageAlertProps> = (props) => {
   const labelType = {
     home: 'home',
     services: 'serviços',
@@ -53,7 +55,7 @@ export const PageAlertContainer: React.FC<PageAlertContainerProps> = (props) => 
           <Chip icon={<Icon>{iconType}</Icon>} color={colorType} label={labelType} size="small" />
         </AccordionSummary>
         <AccordionDetails sx={{ p: 2, pt: 0 }}>
-          {props.children}
+          <PageAlertContent alertState={props.alertState} type={props.type} />
         </AccordionDetails>
       </Accordion>
     </Slide>
