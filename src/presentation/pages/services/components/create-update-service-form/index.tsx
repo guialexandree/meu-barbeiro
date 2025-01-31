@@ -1,137 +1,28 @@
 import React from 'react'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { ServiceModel } from '@/domain/models'
-import { CreateService, RemoveService, RemoveServiceParams, UpdateService } from '@/domain/usecases'
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Icon,
-  Slider,
-  Stack,
-  TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { Dialog, DialogContent, DialogTitle, Divider, Stack } from '@mui/material'
+import { TimeExecutionSlider, CreateUpdateServiceActions, CreateUpdateServiceRemoveAction, CreateUpdateServiceStatus } from '@/presentation/pages/services/components'
+import { InputPrice, InputText } from '@/presentation/components'
 import * as State from '@/presentation/pages/services/components/atoms'
-import { useFormat, useNotify } from '@/presentation/hooks'
 
-type CreateUpdateServiceFormProps = {
-  updateService: UpdateService
-  createService: CreateService
-  removeService: RemoveService
-}
-
-export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (props) => {
-  const { notify } = useNotify()
-  const { formatCoins } = useFormat()
-  const [newService, setNewService] = useRecoilState(State.newServiceState)
+export const CreateUpdateServiceForm: React.FC = () => {
+  const serviceId = useRecoilValue(State.idNewServiceState)
   const [open, setOpen] = useRecoilState(State.isOpenFormServiceState)
-  const setServices = useSetRecoilState(State.servicesState)
-  const setLoading = useSetRecoilState(State.isLoadingCreateUpdateState)
-  const resetNewService = useResetRecoilState(State.newServiceState)
+    const resetName = useResetRecoilState(State.nameNewServiceState)
+    const resetPrice = useResetRecoilState(State.priceNewServiceState)
+    const resetTimeExecution = useResetRecoilState(State.timeExecutionNewServiceState)
+    const resetDescription = useResetRecoilState(State.descriptionNewServiceState)
+    const resetStatus = useResetRecoilState(State.statusNewServiceState)
 
-  const edditing = newService?.id ? true : false
-
-  const onSuccess = (service: ServiceModel): void => {
-    setServices((services) => {
-      if (edditing) {
-        const serviceIndex = services.findIndex((currentService) => currentService.id === service.id)
-        if (serviceIndex > -1) {
-          const newServices = [...services]
-          newServices[serviceIndex] = service
-          return newServices
-        }
-      }
-
-      return [service, ...services]
-    })
-    handleClose()
-  }
-
-  const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
-    event.preventDefault()
-
-    if (edditing) {
-      updateService()
-    } else {
-      createService()
-    }
-  }
-
-  const updateService = (): void => {
-    setLoading(true)
-
-    props.updateService
-      .update(newService)
-      .then(() => {
-        notify('Serviço atualizado com sucesso', { type: 'success' })
-        onSuccess(newService)
-      })
-      .catch((error) => {
-        notify('Não foi possível atualizar serviço', { type: 'error' })
-        console.error(error)
-      })
-      .finally(() => setLoading(false))
-  }
-
-  const createService = (): void => {
-    setLoading(true)
-
-    props.createService
-      .create(newService)
-      .then((service) => {
-        notify('Serviço criado com sucesso', { type: 'success' })
-        onSuccess(service)
-      })
-      .catch((error) => {
-        notify('Erro ao atualizar serviço', { type: 'error' })
-        console.error(error)
-      })
-      .finally(() => setLoading(false))
-  }
-
-  const removeService = (): void => {
-    setLoading(true)
-
-    const params: RemoveServiceParams = {
-      id: newService.id,
-    }
-
-    props.removeService
-      .remove(params)
-      .then(() => {
-        notify('Serviço removido com sucesso', { type: 'success' })
-        setServices((services) => services.filter((currentService) => currentService.id !== newService.id))
-        handleClose()
-      })
-      .catch((error) => {
-        notify('Erro ao atualizar serviço', { type: 'error' })
-        console.error(error)
-      })
-      .finally(() => setLoading(false))
-  }
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    event.preventDefault()
-    const { name, value } = event.target
-    setNewService((currentState) => ({ ...currentState, [name]: value }))
-  }
-
-  const handleChangeNumber = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    event.preventDefault()
-    const { name, value } = event.target
-    const inputValue = value.replace(/\D/g, '')
-    setNewService((currentState) => ({ ...currentState, [name]: inputValue }))
-  }
+  const edditing = !!serviceId
 
   const handleClose = (): void => {
     setOpen(false)
-    resetNewService()
+    resetName()
+    resetPrice()
+    resetTimeExecution()
+    resetDescription()
+    resetStatus()
   }
 
   return (
@@ -146,115 +37,45 @@ export const CreateUpdateServiceForm: React.FC<CreateUpdateServiceFormProps> = (
         },
       }}
     >
-      <DialogTitle>{`${edditing ? 'Editando' : 'Criando'} serviço`}</DialogTitle>
-      <Divider />
+      <DialogTitle>{`${edditing ? 'Editando' : 'Criando'} serviço`}</DialogTitle><Divider />
       <DialogContent sx={{ width: '100%' }}>
         <Stack spacing={1}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <ToggleButtonGroup
-              sx={{ pb: 1 }}
-              size="small"
-              color="primary"
-              value={newService.status}
-              exclusive
-              onChange={(_, value) => {
-                setNewService((currentState) => ({
-                  ...currentState,
-                  status: value,
-                }))
-              }}
-              aria-label="status do serviço"
-            >
-              <ToggleButton value="ativo" defaultChecked sx={{ fontSize: 10 }}>
-                Ativo
-              </ToggleButton>
-              <ToggleButton value="inativo" sx={{ fontSize: 10 }}>
-                Ocultar
-              </ToggleButton>
-            </ToggleButtonGroup>
-            {newService?.id && (
-              <Button color="error" sx={{ color: 'error.light' }} onClick={removeService} size="small">
-                Remover serviço
-              </Button>
-            )}
+            <CreateUpdateServiceStatus />
+            <CreateUpdateServiceRemoveAction />
           </Stack>
 
-          <TextField
-            size="small"
-            value={newService.name}
-            onChange={handleChange}
-            inputProps={{ style: { textTransform: 'uppercase' } }}
-            slotProps={{
-              input: { style: { textTransform: 'uppercase' } },
+          <InputText
+            state={State.nameNewServiceState}
+            inputProps={{
+              inputMode: 'text',
+              label: 'Nome do serviço',
+              name: 'name',
             }}
-            inputMode="text"
-            label="Nome do serviço"
-            name="name"
-          />
-          <TextField
-            size="small"
-            value={newService.description}
-            onChange={handleChange}
-            label="Descrição"
-            name="description"
-            inputProps={{ style: { textTransform: 'uppercase' } }}
-            slotProps={{
-              input: { style: { textTransform: 'uppercase' } },
-            }}
-          />
-          <TextField
-            size="small"
-            inputMode="decimal"
-            value={formatCoins(newService.price)}
-            onChange={handleChangeNumber}
-            label="Preço"
-            name="price"
           />
 
-          <Stack px={1} pt={1}>
-            <Typography id="input-slider" color="grey.500">
-              Tempo de execução
-            </Typography>
-            <Slider
-              aria-label="Always visible"
-              defaultValue={80}
-              getAriaValueText={(value) => `${value} minutos`}
-              step={5}
-              name="timeExecution"
-              value={newService.timeExecution}
-              onChange={(_, value) => {
-                setNewService((currentState) => ({
-                  ...currentState,
-                  timeExecution: value as number,
-                }))
-              }}
-              valueLabelDisplay="on"
-              min={10}
-              max={120}
-              sx={{
-                '& .MuiSlider-valueLabel': {
-                  top: '52px',
-                },
-              }}
-            />
-          </Stack>
+          <InputText
+            state={State.descriptionNewServiceState}
+            inputProps={{
+              inputMode: 'text',
+              label: 'Descrição',
+              name: 'description',
+            }}
+          />
+
+          <InputPrice
+            state={State.priceNewServiceState}
+            inputProps={{
+              inputMode: 'decimal',
+              label: 'Preço',
+              name: 'price',
+            }}
+          />
+
+          <TimeExecutionSlider />
         </Stack>
       </DialogContent>
-      <DialogActions>
-        <Button color="info" onClick={handleClose}>
-          Cancelar
-        </Button>
-        <Button
-          size="large"
-          variant="contained"
-          color="error"
-          onClick={handleSubmit}
-          endIcon={<Icon>check</Icon>}
-          href="#"
-        >
-          Criar
-        </Button>
-      </DialogActions>
+      <CreateUpdateServiceActions />
     </Dialog>
   )
 }

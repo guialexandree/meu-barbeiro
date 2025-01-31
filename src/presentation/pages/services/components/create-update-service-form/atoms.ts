@@ -1,5 +1,4 @@
-import { atom } from 'recoil'
-import { ServiceModel } from '@/domain/models'
+import { atom, selector } from 'recoil'
 
 export const isLoadingCreateUpdateState = atom({
   key: 'isLoadingCreateUpdateState',
@@ -11,14 +10,46 @@ export const isOpenFormServiceState = atom({
   default: false,
 })
 
-export const newServiceState = atom<ServiceModel>({
+export const idNewServiceState = atom({
+  key: 'idNewServiceState',
+  default: ''
+})
+
+export const nameNewServiceState = atom({
+  key: 'nameNewServiceState',
+  default: ''
+})
+
+export const descriptionNewServiceState = atom({
+  key: 'descriptionNewServiceState',
+  default: ''
+})
+
+export const statusNewServiceState = atom<'ativo' | 'inativo'>({
+  key: 'statusNewServiceState',
+  default: 'ativo'
+})
+
+export const priceNewServiceState = atom({
+  key: 'priceNewServiceState',
+  default: 0
+})
+
+export const timeExecutionNewServiceState = atom({
+  key: 'timeExecutionNewServiceState',
+  default: 20
+})
+
+export const newServiceState = selector({
   key: 'newServiceState',
-  default: {
-    id: '',
-    name: '',
-    description: '',
-    status: 'ativo',
-    price: 0,
-    timeExecution: 20,
+  get: ({ get }) => {
+    return {
+      id: get(idNewServiceState),
+      name: get(nameNewServiceState),
+      description: get(descriptionNewServiceState),
+      status: get(statusNewServiceState),
+      price: get(priceNewServiceState),
+      timeExecution: get(timeExecutionNewServiceState)
+    }
   }
 })

@@ -2,8 +2,8 @@ import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
 import { Box, Chip, Icon, IconButton, ListItem, ListItemText, Paper, Stack } from '@mui/material'
-import * as State from '@/presentation/pages/services/components/atoms'
 import { useFormat } from '@/presentation/hooks'
+import * as State from '@/presentation/pages/services/components/atoms'
 
 type ServiceListItemProps = {
   service: ServiceModel
@@ -11,11 +11,20 @@ type ServiceListItemProps = {
 
 export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
   const { formatCoins } = useFormat()
-  const setNewService = useSetRecoilState(State.newServiceState)
   const setOpenForm = useSetRecoilState(State.isOpenFormServiceState)
+  const setName = useSetRecoilState(State.nameNewServiceState)
+  const setDescription = useSetRecoilState(State.descriptionNewServiceState)
+  const setPrice = useSetRecoilState(State.priceNewServiceState)
+  const setTimeExecution = useSetRecoilState(State.timeExecutionNewServiceState)
+  const setStatus = useSetRecoilState(State.statusNewServiceState)
 
   const handleEdit = () => {
-    setNewService(props.service)
+    setName(props.service.name)
+    setDescription(props.service.description)
+    setPrice(props.service.price)
+    setTimeExecution(props.service.timeExecution)
+    setStatus(props.service.status)
+
     setOpenForm(true)
   }
 
