@@ -7,7 +7,7 @@ import avatarImg from '@/presentation/assets/avatars/avataaars1.svg'
 
 const AttendanceQueuePage: React.FC = () => {
   return (
-    <PageContainer>
+    <PageContainer loadPage={async () => {}}>
       <PageTitle
         title="Fila de Atedimento"
         subtitle="Acompanhe a fila de atendimento"

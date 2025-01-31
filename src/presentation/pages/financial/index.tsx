@@ -25,7 +25,7 @@ const FinancialPage: React.FC = () => {
   }
 
   return (
-    <PageContainer>
+    <PageContainer loadPage={async () => {}}>
       <PageTitle title="Financeiro" subtitle="Atendimentos e movimentos de valores" icon={reportsHeaderImg} />
 
       <Stack direction="row" mx={2} spacing={1}>
@@ -45,17 +45,16 @@ const FinancialPage: React.FC = () => {
       </Grid2>
 
       <Zoom in timeout={transitionDuration} unmountOnExit>
-
-          <SpeedDial
-            ariaLabel="SpeedDial basic example"
-            sx={{ position: 'fixed', bottom: 16, right: 16 }}
-            icon={<SpeedDialIcon />}
-            color={theme.palette.secondary.main}
-          >
-            {actions.map((action) => (
-              <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} />
-            ))}
-          </SpeedDial>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+          color={theme.palette.secondary.main}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} />
+          ))}
+        </SpeedDial>
       </Zoom>
     </PageContainer>
   )

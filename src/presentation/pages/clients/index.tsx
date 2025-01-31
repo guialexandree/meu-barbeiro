@@ -11,7 +11,7 @@ type ClientsPageProps = {
 
 const ClientsPage: React.FC<ClientsPageProps> = (props) => {
   return (
-    <PageContainer>
+    <PageContainer loadPage={async () => {}}>
       <PageTitle
         title="Clientes"
         subtitle="Visualizar cadastro de clientes com informações de contato"
@@ -41,9 +41,7 @@ const ClientsPage: React.FC<ClientsPageProps> = (props) => {
       <Stack direction="row" justifyContent="center">
         <Zoom in>
           <Fab
-            onClick={() => {
-              // setOpen(true)
-            }}
+            onClick={() => {}}
             sx={{
               position: 'fixed',
               bottom: '16px',

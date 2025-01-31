@@ -5,7 +5,8 @@ export class RemoteGetClients implements GetClients {
   constructor() {}
 
   async get(): Promise<GetClientsResult> {
-    console.log('RemoteGetClients.get()')
-    return _mockClients
+   return new Promise<GetClientsResult>((resolve) => {
+      setTimeout(() => resolve(_mockClients), 1500)
+    })
   }
 }

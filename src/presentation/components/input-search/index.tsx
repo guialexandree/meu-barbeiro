@@ -1,13 +1,15 @@
 import React from 'react'
 import { Divider, Icon, IconButton, InputBase, Paper } from '@mui/material'
+import { RecoilState, useRecoilState } from 'recoil'
 
 type InputSearchProps = {
   placeholder: string
-  onChange: (text: string) => void
-  value: string
+  valueState: RecoilState<string>
 }
 
 export const InputSearch: React.FC<InputSearchProps> = (props) => {
+  const [text, setText] = useRecoilState(props.valueState)
+
   return (
     <Paper
       sx={{
@@ -23,9 +25,9 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         size="small"
-        value={props.value}
+        value={text}
         placeholder={props.placeholder}
-        onChange={(e) => props.onChange(e.target.value)}
+        onChange={(e) => setText(e.target.value)}
         inputProps={{ 'aria-label': props.placeholder }}
       />
 

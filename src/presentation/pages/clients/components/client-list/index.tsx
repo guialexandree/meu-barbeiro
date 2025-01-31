@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { DataGrid } from '@mui/x-data-grid'
 import { Stack } from '@mui/material'
 import { GetClients } from '@/domain/usecases'
@@ -14,9 +14,6 @@ type ClientListProps = {
 export const ClientList: React.FC<ClientListProps> = (props) => {
   const clients = useRecoilValue(State.clientsSearchedState)
   const setClients = useSetRecoilState(State.clientsState)
-  const [textClientsSearch, setTextSearch] = useRecoilState(
-    State.textClientsSearchState,
-  )
 
   useEffect(() => {
     loadClients()
@@ -34,14 +31,10 @@ export const ClientList: React.FC<ClientListProps> = (props) => {
 
   return (
     <Stack sx={{ height: 436 }}>
-      <InputSearch
-        placeholder="Buscar por cliente"
-        value={textClientsSearch}
-        onChange={setTextSearch}
-      />
+      <InputSearch placeholder='Buscar por cliente' valueState={State.textClientsSearchState} />
 
       <DataGrid
-        density="compact"
+        density='compact'
         rows={clients}
         columns={listClientsColumns}
         pageSizeOptions={[8]}
