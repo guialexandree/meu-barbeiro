@@ -1,3 +1,4 @@
+export { default as AvatarRandom } from './avatar-random'
 export * from './app-bar'
 export * from './drawer'
 export * from './drawer/atoms'
