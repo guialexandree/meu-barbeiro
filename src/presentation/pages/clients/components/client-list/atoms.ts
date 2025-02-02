@@ -17,7 +17,7 @@ export const clientsSearchedState = selector({
     const textSearched = get(textClientsSearchState)
     const clients = get(clientsState)
 
-    if (textSearched) {
+    if (textSearched.trim()) {
       return clients?.filter(client => client.name.toLowerCase().includes(textSearched.toLowerCase())) ?? []
     }
 

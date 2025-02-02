@@ -70,9 +70,9 @@ export const CreateUpdateServiceActions: React.FC = () => {
 
     createService
       .create(newService)
-      .then((service) => {
+      .then(() => {
         notify('Serviço criado com sucesso', { type: 'success' })
-        onSuccess(service)
+        onSuccess({ ...newService, id: (Math.random() * 100).toString() })
       })
       .catch((error) => {
         notify('Erro ao atualizar serviço', { type: 'error' })
@@ -96,14 +96,12 @@ export const CreateUpdateServiceActions: React.FC = () => {
         Cancelar
       </Button>
       <Button
-        size="large"
         variant="contained"
-        color="error"
         onClick={handleSubmit}
         endIcon={<Icon>check</Icon>}
         href="#"
       >
-        Criar
+        {edditing ? 'Editar' : 'Criar'}
       </Button>
     </DialogActions>
   )

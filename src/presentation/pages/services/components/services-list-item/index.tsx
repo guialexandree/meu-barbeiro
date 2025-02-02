@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
-import { Box, Chip, Icon, IconButton, ListItem, ListItemText, Paper, Stack } from '@mui/material'
+import { Box, Chip, Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
 import { useFormat } from '@/presentation/hooks'
 import * as State from '@/presentation/pages/services/components/atoms'
 
@@ -12,6 +12,7 @@ type ServiceListItemProps = {
 export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
   const { formatCoins } = useFormat()
   const setOpenForm = useSetRecoilState(State.isOpenFormServiceState)
+  const setServiceId = useSetRecoilState(State.idNewServiceState)
   const setName = useSetRecoilState(State.nameNewServiceState)
   const setDescription = useSetRecoilState(State.descriptionNewServiceState)
   const setPrice = useSetRecoilState(State.priceNewServiceState)
@@ -24,26 +25,25 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
     setPrice(props.service.price)
     setTimeExecution(props.service.timeExecution)
     setStatus(props.service.status)
-
+    setServiceId(props.service.id)
     setOpenForm(true)
   }
 
   return (
     <ListItem
       key={`service-${props.service.id}`}
-      component={Paper}
       sx={{
         borderRadius: 0,
         display: 'flex',
         flexWrap: 'wrap',
         borderBottom: 'solid 1px',
-        borderColor: 'grey.800',
-        boxShadow: 4,
+        borderColor: 'divider',
         ':last-child': {
           borderBottom: 'none',
           borderBottomLeftRadius: 8,
           borderBottomRightRadius: 8,
         },
+        '& .MuiListItemText-root': { mb: 0 }
       }}
     >
       <Stack direction="row" sx={{ flex: 1 }}>
@@ -52,7 +52,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           primary={props.service.name}
           secondary={props.service.description}
           slotProps={{
-            secondary: { fontSize: 11},
+            secondary: { fontSize: 11, color: 'grey.600' },
           }}
         />
         <ListItemText
@@ -61,7 +61,13 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           secondary={`${props.service.timeExecution} min`}
         />
         <Box>
-          <IconButton size='small' sx={{ backgroundColor: '#42424240' }} edge="end" aria-label="delete" onClick={handleEdit}>
+          <IconButton
+            size="small"
+            sx={{ backgroundColor: '#42424240' }}
+            edge="end"
+            aria-label="delete"
+            onClick={handleEdit}
+          >
             <Icon sx={{ color: 'grey.600' }}>edit</Icon>
           </IconButton>
         </Box>
@@ -79,8 +85,8 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           sx={{
             px: 0.5,
             borderRadius: 1,
+            color: 'grey.400',
             backgroundColor: '#42424240',
-            boxShadow: 2,
             height: 24,
           }}
         />

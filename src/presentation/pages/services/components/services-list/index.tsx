@@ -2,6 +2,7 @@ import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Backdrop, Box, Button, CircularProgress, Fade, List, Stack, Typography } from '@mui/material'
 import { ServiceListItem } from '@/presentation/pages/services/components'
+import { InputSearch } from '@/presentation/components'
 import * as State from '@/presentation/pages/services/components/atoms'
 import emptyListImg from '@/presentation/assets/empty-list.svg'
 import errorListImg from '@/presentation/assets/error-list.svg'
@@ -12,7 +13,7 @@ type ServiceListProps = {
 
 export const ServiceList: React.FC<ServiceListProps> = (props) => {
   const [error, setError] = useRecoilState(State.errorServicesState)
-  const services = useRecoilValue(State.servicesState)
+  const services = useRecoilValue(State.servicesSearchedState)
   const loading = useRecoilValue(State.isLoadingState)
   const loadingUpdate = useRecoilValue(State.isLoadingCreateUpdateState)
 
@@ -23,10 +24,14 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
         <Typography variant="h6" align="center">
           Erro ao carregar serviços
         </Typography>
-        <Button variant="outlined" color="primary" onClick={() => {
-          setError('')
-          props.loadServices()
-          }}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            setError('')
+            props.loadServices()
+          }}
+        >
           tentar novamente
         </Button>
       </Stack>
@@ -56,14 +61,17 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   }
 
   return (
-    <Fade in timeout={700}>
-      <Box sx={{ mx: 2 }}>
-        <List disablePadding sx={{}}>
-          {services.map((service) => (
-            <ServiceListItem key={service.id} service={service} />
-          ))}
-        </List>
-      </Box>
-    </Fade>
+    <>
+      <InputSearch placeholder="Buscar por serviço" valueState={State.servicesSearchState} />
+      <Fade in timeout={700}>
+        <Box>
+          <List dense disablePadding>
+            {services.map((service) => (
+              <ServiceListItem key={service.id} service={service} />
+            ))}
+          </List>
+        </Box>
+      </Fade>
+    </>
   )
 }
