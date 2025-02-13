@@ -1,23 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  Button,
-  Grid2,
-  Icon,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
-import { useRecoilState } from 'recoil'
-import {
-  userState,
-  passwordState,
-} from '@/presentation/pages/login/components/atoms'
+import { Box, Button, Grid2, Icon, Stack, Typography } from '@mui/material'
+import { InputText } from '@/presentation/components'
+import * as State from '@/presentation/pages/login/components/atoms'
+import logoImg from '@/presentation/assets/logo.png'
 
 const LoginPage: React.FC = () => {
-  const [user, setUser] = useRecoilState(userState)
-  const [password, setPassword] = useRecoilState(passwordState)
   const navigate = useNavigate()
 
   return (
@@ -25,51 +13,25 @@ const LoginPage: React.FC = () => {
       container
       sx={{
         minHeight: '100vh',
-        backgroundColor: 'background.default',
+        backgroundColor: theme => theme.palette.background.paper,
         color: 'white',
       }}
     >
-      <Grid2 size={{ xs: 12, md: 4 }}>
-        <Stack
-          justifyContent="center"
-          alignItems="center"
-          sx={{ minHeight: '100vh' }}
-        >
-          <Stack
-            component="form"
-            sx={{ width: { xs: '80%', sm: '50%' } }}
-            margin={'auto'}
-            spacing={2}
-          >
+      <Grid2 size={{ xs: 12, md: 4 }} sx={{ minWidth: 220}}>
+        <Stack justifyContent="flex-start" alignItems="center" sx={{ minHeight: '100vh' }} spacing={4} pt={4}>
+          <Box
+            component='img'
+            src={logoImg}
+            alt='Logo'
+            height={200}
+          />
+          <Stack component="form" sx={{ width: { xs: '80%', sm: '70%' }, minWidth: 180 }} marginX={'auto'} spacing={2}>
             <Typography variant="h6">Login</Typography>
-            <TextField
-              id="login-user"
-              label="Usuário"
-              fullWidth
-              value={user}
-              onChange={(event) => {
-                setUser(event.target.value)
-              }}
-            />
-            <TextField
-              id="login-password"
-              label="Senha"
-              type="password"
-              fullWidth
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value)
-              }}
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <IconButton slot="end">
-                      <Icon>visibility</Icon>
-                    </IconButton>
-                  ),
-                },
-              }}
-            />
+
+            <InputText state={State.userState} inputProps={{ id: 'login-user', label: 'Usuário', fullWidth: true }} />
+
+            <InputText state={State.passwordState} inputProps={{ id: 'login-password', label: 'Senha', type: 'password', fullWidth: true }} />
+
             <Button
               type="submit"
               variant="contained"

@@ -2,13 +2,11 @@ import { lazy } from 'react'
 import { RecoilRoot } from 'recoil'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AdminTemplate } from '@/presentation/templates'
-import { Loadable } from '@/presentation/components'
+import { Loadable, ThemeProvider } from '@/presentation/components'
 import * as Factories from '@/main/factories/usecases'
 
 const LoginPage = lazy(() => import('@/presentation/pages/login'))
-const AttendanceQueuePage = lazy(
-  () => import('@/presentation/pages/attendance-queue'),
-)
+const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-queue'))
 const ServicesPage = lazy(() => import('@/presentation/pages/services'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts'))
 const ClientsPage = lazy(() => import('@/presentation/pages/clients'))
@@ -29,13 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/clientes',
-        element: (
-          <Loadable
-            children={
-              <ClientsPage getClients={Factories.makeRemoteGetClients()} />
-            }
-          />
-        ),
+        element: <Loadable children={<ClientsPage getClients={Factories.makeRemoteGetClients()} />} />,
       },
       {
         path: '/relatorios',
@@ -43,18 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/servicos',
-        element: (
-          <Loadable
-            children={
-              <ServicesPage
-                getServices={Factories.makeRemoteLoadServices()}
-                updateService={Factories.makeRemoteUpdateService()}
-                createService={Factories.makeRemoteCreateService()}
-                removeService={Factories.makeRemoteRemoveService()}
-              />
-            }
-          />
-        ),
+        element: <Loadable children={<ServicesPage />} />,
       },
       {
         path: '/avisos',
@@ -77,8 +58,10 @@ const router = createBrowserRouter([
 
 export const Router = () => {
   return (
-    <RecoilRoot>
-      <RouterProvider router={router} />
-    </RecoilRoot>
+    <ThemeProvider>
+      <RecoilRoot>
+        <RouterProvider router={router} />
+      </RecoilRoot>
+    </ThemeProvider>
   )
 }

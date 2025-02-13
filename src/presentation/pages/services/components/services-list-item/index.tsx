@@ -60,7 +60,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           primary={formatCoins(props.service.price)}
           secondary={`${props.service.timeExecution} min`}
         />
-        <Box>
+        <Stack justifyContent='flex-end'>
           <IconButton
             size="small"
             sx={{ backgroundColor: '#42424240' }}
@@ -70,14 +70,14 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           >
             <Icon sx={{ color: 'grey.600' }}>edit</Icon>
           </IconButton>
-        </Box>
+        </Stack>
       </Stack>
 
       <Stack direction="row" sx={{ width: '100%', justifyContent: 'space-between' }}>
         <Chip
           variant="outlined"
           icon={
-            <Icon color="success" sx={{ fontSize: 10 }}>
+            <Icon color={props.service.status === 'ativo' ? 'success' : 'error'} sx={{ fontSize: 10 }}>
               circle
             </Icon>
           }
@@ -86,7 +86,8 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
             px: 0.5,
             borderRadius: 1,
             color: 'grey.400',
-            backgroundColor: '#42424240',
+            borderColor: 'grey.800',
+            backgroundColor: theme => `${theme.palette[props.service.status === 'ativo' ? 'success' : 'error'].main}13`,
             height: 24,
           }}
         />

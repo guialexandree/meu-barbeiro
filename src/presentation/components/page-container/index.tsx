@@ -10,7 +10,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import emptyListImg from '@/presentation/assets/empty-list.svg'
 import errorListImg from '@/presentation/assets/error-list.svg'
 
 type PageContainerProps = {
