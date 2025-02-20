@@ -1,6 +1,6 @@
 import { CreateService, CreateServiceParams, CreateServiceResult } from '@/domain/usecases'
-import { HttpClient } from '@/data/protocols'
-import { _mockServices } from '@/domain/tests'
+import { HttpClient, HttpStatusCode } from '@/data/protocols'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteCreateService implements CreateService {
   constructor(
@@ -9,21 +9,26 @@ export class RemoteCreateService implements CreateService {
   ) {}
 
   async create(params: CreateServiceParams): Promise<CreateServiceResult> {
-    return _mockServices
-    // const { statusCode, body } = await this.httpClient.request({
-    //   url: `${this.url}/services`,
-    //   method: 'post',
-    //   body: params
-    // })
+    const { statusCode, body } = await this.httpClient.request({
+      url: `${this.url}/api/services`,
+      method: 'post',
+      body: params
+    })
 
-    // switch (statusCode) {
-    //   case HttpStatusCode.created:
-    //     if (!body) {
-    //       throw new UnexpectedError()
-    //     }
-    //     return body
-    //   default:
-    //     throw new UnexpectedError()
-    // }
+    if (process.env.NODE_ENV !== 'development') {
+       // return new Promise<LoadServicesResult>((resolve) => {
+      //   setTimeout(() => resolve(_mockServices), 1500)
+      // })
+    }
+
+    if (statusCode === HttpStatusCode.unauthorized) {
+      throw new AccessDeniedError()
+    }
+
+    if (!body) {
+      throw new UnexpectedError()
+    }
+
+    return body
   }
 }

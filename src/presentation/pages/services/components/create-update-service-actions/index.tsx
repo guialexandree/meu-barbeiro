@@ -5,6 +5,7 @@ import { Button, DialogActions, Icon } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import * as State from '@/presentation/pages/services/components/atoms'
 import * as Factories from '@/main/factories/usecases'
+import { serviceCreateValidation } from './validations'
 
 export const CreateUpdateServiceActions: React.FC = () => {
   const { notify } = useNotify()
@@ -13,6 +14,7 @@ export const CreateUpdateServiceActions: React.FC = () => {
   const setOpen = useSetRecoilState(State.isOpenFormServiceState)
   const setServices = useSetRecoilState(State.servicesState)
   const setLoading = useSetRecoilState(State.isLoadingCreateUpdateState)
+  const setName = useSetRecoilState(State.nameNewServiceState)
   const resetName = useResetRecoilState(State.nameNewServiceState)
   const resetPrice = useResetRecoilState(State.priceNewServiceState)
   const resetTimeExecution = useResetRecoilState(State.timeExecutionNewServiceState)
@@ -36,7 +38,17 @@ export const CreateUpdateServiceActions: React.FC = () => {
 
       return [service, ...services]
     })
+    notify('Serviço criado com sucesso', { type: 'success' })
     handleClose()
+  }
+
+  const onError = (error: string, inputName: string): void => {
+    if (inputName === 'name') {
+      setName(currentState => ({ ...currentState, error }))
+      return
+    }
+
+    notify(error, { type: 'error' })
   }
 
   const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -66,17 +78,35 @@ export const CreateUpdateServiceActions: React.FC = () => {
   }
 
   const handleCreateService = (): void => {
+    const result = serviceCreateValidation.safeParse({
+      name: newService.name,
+      description: newService.description,
+      price: newService.price,
+      timeExecution: newService.timeExecution,
+      status: newService.status,
+    })
+
+    if (!result.success) {
+      const error = result.error.errors.at(0) || { message: 'Erro ao criar serviço', path: [] }
+      const inputName = error.path.at(0) as string
+      onError(error.message, inputName)
+      return
+    }
+
     setLoading(true)
 
     createService
       .create(newService)
-      .then(() => {
-        notify('Serviço criado com sucesso', { type: 'success' })
-        onSuccess({ ...newService, id: (Math.random() * 100).toString() })
+      .then(result => {
+        if (result.success) {
+          onSuccess({ ...newService, id: result.data.id })
+          return
+        }
+
+        onError(result.error, 'name')
       })
-      .catch((error) => {
-        notify('Erro ao atualizar serviço', { type: 'error' })
-        console.error(error)
+      .catch(() => {
+        notify('Erro ao criar serviço', { type: 'error' })
       })
       .finally(() => setLoading(false))
   }
@@ -92,13 +122,14 @@ export const CreateUpdateServiceActions: React.FC = () => {
 
   return (
     <DialogActions>
-      <Button color="info" onClick={handleClose}>
+      <Button id='close-service-form-button' color="info" onClick={handleClose}>
         Cancelar
       </Button>
       <Button
         variant="contained"
         onClick={handleSubmit}
         endIcon={<Icon>check</Icon>}
+        id='save-service-button'
         href="#"
       >
         {edditing ? 'Editar' : 'Criar'}

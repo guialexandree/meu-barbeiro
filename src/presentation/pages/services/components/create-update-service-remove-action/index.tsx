@@ -56,7 +56,7 @@ export const CreateUpdateServiceRemoveAction: React.FC = () => {
 
   return (
     <Button color="error" sx={{ color: 'error.light' }} onClick={handleRemoveService} size="small">
-      Remover serviço
+      Remover
     </Button>
   )
 }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@/data/protocols'
-import { _mockServices } from '@/domain/tests'
+import { _mockLoadServicesResult } from '@/domain/tests'
 import { UpdateService, UpdateServiceParams, UpdateServiceResult } from '@/domain/usecases'
 
 export class RemoteUpdateService implements UpdateService {
@@ -9,7 +9,7 @@ export class RemoteUpdateService implements UpdateService {
   ) {}
 
   async update(params: UpdateServiceParams): Promise<UpdateServiceResult> {
-    return _mockServices[0]
+    return _mockLoadServicesResult.data[0]
     // const { id, ...bodyParams } = params
 
     // const { statusCode, body } = await this.httpClient.request({

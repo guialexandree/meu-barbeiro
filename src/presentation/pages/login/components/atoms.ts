@@ -1,11 +1,27 @@
 import { atom } from 'recoil'
 
-export const userState = atom({
-  key: 'userState',
-  default: '',
+export const loadingLoginState = atom({
+  key: 'loadingLoginState',
+  default: false
+})
+
+export const usernameState = atom({
+  key: 'usernameState',
+  default: {
+    text: '',
+    error: '',
+  }
 })
 
 export const passwordState = atom({
   key: 'passwordState',
-  default: '',
+  default: {
+    text: '',
+    error: '',
+  }
+})
+
+export const openRecoveryPasswordState = atom({
+  key: 'openRecoveryPasswordState',
+  default: false
 })

@@ -11,6 +11,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
   return (
     <Slide direction="down" in mountOnEnter unmountOnExit>
       <Paper
+        component='header'
         sx={{
           ml: 4,
           mr: 2,
@@ -36,6 +37,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
           <Stack direction="column">
             <Typography
               variant="h6"
+              id='page-title'
               sx={{
                 letterSpacing: 0.5,
                 mt: 0.5,
@@ -46,6 +48,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
               {props.title}
             </Typography>
             <Typography
+              id='page-subtitle'
               variant="body2"
               sx={{ fontSize: 13 }}
               color="grey.500"

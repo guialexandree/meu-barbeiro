@@ -17,6 +17,7 @@ export const TimeExecutionSlider: React.FC = () => {
         getAriaValueText={(value) => `${value} minutos`}
         step={5}
         name='timeExecution'
+        id='service-time-execution'
         value={timeExecution}
         onChange={(_, value) => {
           setTimeExecution(value as number)

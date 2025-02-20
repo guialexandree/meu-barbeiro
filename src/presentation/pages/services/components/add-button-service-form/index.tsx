@@ -15,6 +15,7 @@ export const AddButtonServiceForm: React.FC = () => {
             onClick={() => {
               setOpenForm(true)
             }}
+            id='create-service-button'
             sx={{
               position: 'fixed',
               bottom: '16px',

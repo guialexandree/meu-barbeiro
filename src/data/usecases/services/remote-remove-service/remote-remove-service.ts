@@ -1,5 +1,5 @@
 import { HttpClient } from '@/data/protocols'
-import { _mockServices } from '@/domain/tests'
+import { _mockLoadServicesResult } from '@/domain/tests'
 import { RemoveService, RemoveServiceParams, RemoveServiceResult } from '@/domain/usecases'
 
 export class RemoteRemoveService implements RemoveService {
@@ -9,7 +9,7 @@ export class RemoteRemoveService implements RemoveService {
   ) {}
 
   async remove(params: RemoveServiceParams): Promise<RemoveServiceResult> {
-    return _mockServices[0]
+    return _mockLoadServicesResult.data[0]
     // const { statusCode, body } = await this.httpClient.request({
     //   url: `${this.url}/services/${params.id}`,
     //   method: 'delete',

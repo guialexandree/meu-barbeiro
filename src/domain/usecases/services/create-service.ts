@@ -1,3 +1,4 @@
+import { HttpDefaultResponse } from '@/data/protocols'
 import { ServiceModel } from '@/domain/models'
 
 export interface CreateService {
@@ -5,4 +6,4 @@ export interface CreateService {
 }
 
 export type CreateServiceParams = Omit<ServiceModel, 'id'>
-export type CreateServiceResult = ServiceModel
+export type CreateServiceResult = HttpDefaultResponse<ServiceModel>

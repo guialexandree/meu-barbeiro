@@ -49,7 +49,8 @@ export const CreateUpdateServiceForm: React.FC = () => {
             state={State.nameNewServiceState}
             inputProps={{
               inputMode: 'text',
-              label: 'Nome do serviço',
+              label: 'Nome',
+              id: 'service-name',
               name: 'name',
             }}
           />
@@ -59,6 +60,7 @@ export const CreateUpdateServiceForm: React.FC = () => {
             inputProps={{
               inputMode: 'text',
               label: 'Descrição',
+              id: 'service-description',
               name: 'description',
             }}
           />
@@ -68,6 +70,7 @@ export const CreateUpdateServiceForm: React.FC = () => {
             inputProps={{
               inputMode: 'decimal',
               label: 'Preço',
+              id: 'service-price',
               name: 'price',
             }}
           />

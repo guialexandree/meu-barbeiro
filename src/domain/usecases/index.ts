@@ -1,3 +1,4 @@
+export * from './authentication'
 export * from './attendances'
 export * from './alerts'
 export * from './services'

@@ -28,3 +28,10 @@ export type HttpResponse<T = any> = {
   statusCode: HttpStatusCode
   body?: T
 }
+
+export type HttpDefaultResponse<T = any> = {
+  success: boolean
+  message: string
+  error: string
+  data: T
+}

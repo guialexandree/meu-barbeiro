@@ -1,11 +1,11 @@
 import { AttendanceModel, AttendanceStatus } from '@/domain/models'
 import faker from 'faker'
-import { _mockServices } from './service-mocks'
+import { _mockLoadServicesResult } from './service-mocks'
 
 export const mockAttendance = (): AttendanceModel => ({
   id: faker.datatype.uuid(),
   createdAt: faker.date.recent().toISOString(),
-  services: _mockServices.slice(0, faker.datatype.number({ min: 1, max: 3 })),
+  services: _mockLoadServicesResult.data.slice(0, faker.datatype.number({ min: 1, max: 3 })),
   client: {
     id: faker.datatype.uuid(),
     name: faker.name.findName(),

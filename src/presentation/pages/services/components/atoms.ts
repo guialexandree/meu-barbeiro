@@ -1,8 +1,13 @@
 import { atom } from 'recoil'
 
-export const isLoadingState = atom({
-  key: 'isLoadingServiceState',
-  default: false,
+export const loadingServicesState = atom({
+  key: 'loadingServicesState',
+  default: true,
+})
+
+export const emptyServicesState = atom({
+  key: 'emptyServicesState',
+  default: false
 })
 
 export const errorServicesState = atom({

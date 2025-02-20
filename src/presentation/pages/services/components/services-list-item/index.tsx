@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
-import { Box, Chip, Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
+import { Chip, Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
 import { useFormat } from '@/presentation/hooks'
 import * as State from '@/presentation/pages/services/components/atoms'
 
@@ -20,8 +20,8 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
   const setStatus = useSetRecoilState(State.statusNewServiceState)
 
   const handleEdit = () => {
-    setName(props.service.name)
-    setDescription(props.service.description)
+    setName({ error: '', text: props.service.name })
+    setDescription({ error: '', text: props.service.description })
     setPrice(props.service.price)
     setTimeExecution(props.service.timeExecution)
     setStatus(props.service.status)
@@ -32,6 +32,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
   return (
     <ListItem
       key={`service-${props.service.id}`}
+      id={`service-${props.service.id}`}
       sx={{
         borderRadius: 0,
         display: 'flex',

@@ -12,16 +12,17 @@ export const CreateUpdateServiceStatus: React.FC = () => {
       size="small"
       color="primary"
       value={status}
+      id='service-status'
       exclusive
       onChange={(_, value) => {
         setStatus(value)
       }}
       aria-label="status do serviço"
     >
-      <ToggleButton value="ativo" defaultChecked sx={{ fontSize: 10 }}>
-        Ativo
+      <ToggleButton value="ativo" defaultChecked sx={{ fontSize: 12 }}>
+        Exibir
       </ToggleButton>
-      <ToggleButton value="inativo" sx={{ fontSize: 10 }}>
+      <ToggleButton value="inativo" sx={{ fontSize: 12 }}>
         Ocultar
       </ToggleButton>
     </ToggleButtonGroup>

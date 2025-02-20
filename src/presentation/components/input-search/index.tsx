@@ -3,6 +3,7 @@ import { Divider, Icon, IconButton, InputBase, Paper } from '@mui/material'
 import { RecoilState, useRecoilState } from 'recoil'
 
 type InputSearchProps = {
+  id: string
   placeholder: string
   valueState: RecoilState<string>
 }
@@ -28,7 +29,8 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         value={text}
         placeholder={props.placeholder}
         onChange={(e) => setText(e.target.value)}
-        inputProps={{ 'aria-label': props.placeholder }}
+        inputProps={{ 'aria-label': props.placeholder, id: props.id }}
+        id={props.id}
       />
 
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">

@@ -22,6 +22,8 @@ const InputPrice: React.FC<InputPriceProps> = (props) => {
 
   return (
     <TextField
+      id={props.inputProps.id}
+      slotProps={{ input: { id: props.inputProps.id } }}
       size={isMobile ? 'small' : 'medium'}
       inputMode="decimal"
       value={formatCoins(price)}

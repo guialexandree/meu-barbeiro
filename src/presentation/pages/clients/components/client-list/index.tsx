@@ -31,10 +31,10 @@ export const ClientList: React.FC<ClientListProps> = (props) => {
 
   return (
     <Stack sx={{ height: 436 }}>
-      <InputSearch placeholder='Buscar por cliente' valueState={State.textClientsSearchState} />
+      <InputSearch id="clients-search" placeholder="Buscar por cliente" valueState={State.textClientsSearchState} />
 
       <DataGrid
-        density='compact'
+        density="compact"
         rows={clients}
         columns={listClientsColumns}
         pageSizeOptions={[8]}

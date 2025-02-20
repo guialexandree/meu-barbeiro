@@ -17,12 +17,18 @@ export const idNewServiceState = atom({
 
 export const nameNewServiceState = atom({
   key: 'nameNewServiceState',
-  default: ''
+  default: {
+    text: '',
+    error: ''
+  }
 })
 
 export const descriptionNewServiceState = atom({
   key: 'descriptionNewServiceState',
-  default: ''
+  default: {
+    text: '',
+    error: ''
+  }
 })
 
 export const statusNewServiceState = atom<'ativo' | 'inativo'>({
@@ -45,8 +51,8 @@ export const newServiceState = selector({
   get: ({ get }) => {
     return {
       id: get(idNewServiceState),
-      name: get(nameNewServiceState),
-      description: get(descriptionNewServiceState),
+      name: get(nameNewServiceState).text,
+      description: get(descriptionNewServiceState).text,
       status: get(statusNewServiceState),
       price: get(priceNewServiceState),
       timeExecution: get(timeExecutionNewServiceState)
