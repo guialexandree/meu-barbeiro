@@ -28,6 +28,7 @@
   },
   "include": [
     "src",
+    "src/main/test/cypress",
     "./src/main/**/*.d.ts"
   ]
 }
