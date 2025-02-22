@@ -1,6 +1,6 @@
 import React from 'react'
 import { Stack, Typography } from '@mui/material'
-import { InputUsername, InputPassword, FormActions } from '@/presentation/pages/login/components'
+import { FormActions, InputPassword, InputUsername } from '@/presentation/pages/login/components'
 
 export const FormAuthentication: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

@@ -11,7 +11,7 @@ export class RemoteAuthentication implements Authentication {
 
   async login(params: AuthenticationParams): Promise<AuthenticationResult> {
     const { statusCode, body } = await this.httpClient.request({
-      url: `${this.url}/api/login`,
+      url: `${this.url}/api/auth`,
       method: 'post',
       body: params,
     })

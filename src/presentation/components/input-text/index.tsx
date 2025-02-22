@@ -29,6 +29,7 @@ const InputText: React.FC<InputTextProps> = (props) => {
       slotProps={{
         input: {
           inputProps: {
+            id: props.inputProps.id,
             style: {
               textTransform: 'uppercase',
             },
@@ -36,6 +37,7 @@ const InputText: React.FC<InputTextProps> = (props) => {
           endAdornment: props.toogleVisibility && (
             <InputAdornment position="end">
               <IconButton
+                id="toggle-password-visibility"
                 aria-label="toggle password visibility"
                 onClick={() => setVisible((currentValue) => !currentValue)}
                 edge="end"

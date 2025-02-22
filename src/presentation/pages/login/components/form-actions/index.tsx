@@ -63,6 +63,7 @@ export const FormActions: React.FC = () => {
     <Stack spacing={4}>
       <Button
         loading={loading}
+        disabled={!!username.error || !!password.error || loading}
         id="login-button"
         type="submit"
         variant="contained"
@@ -73,8 +74,8 @@ export const FormActions: React.FC = () => {
         Entrar
       </Button>
       <Button
-        disabled={loading}
         size="small"
+        disabled={!!username.error || !!password.error || loading}
         id="recovery-password-button"
         color="inherit"
         sx={{ color: 'grey.600' }}

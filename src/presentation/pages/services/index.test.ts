@@ -95,7 +95,7 @@ describe('Página de Serviços', () => {
       cy.get('#service-name-helper-text').should('contain', 'O nome deve ter no mínimo 3 caracteres')
     })
 
-    it('Não deve ser possível cadastrar serviço com o mesmo nome', () => {
+    it('Não deve ser possível cadastrar serviço com um nome já existente', () => {
       Http.mockBadRequestError('POST', '/api/services', {
         success: false,
         error: 'Já existe um serviço com esse nome',
