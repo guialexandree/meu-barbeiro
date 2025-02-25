@@ -10,6 +10,11 @@ export const emptyServicesState = atom({
   default: false
 })
 
+export const noResultsServicesState = atom({
+  key: 'noResultsServicesState',
+  default: false
+})
+
 export const errorServicesState = atom({
   key: 'errorServicesState',
   default: '',

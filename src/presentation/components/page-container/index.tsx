@@ -3,7 +3,7 @@ import { Backdrop, CircularProgress, Grid2, Stack, useMediaQuery, useTheme } fro
 
 type PageContainerProps = {
   children: React.ReactNode
-  loadPage: () => Promise<void>
+  onInit: () => Promise<void>
 }
 
 export const PageContainer: React.FC<PageContainerProps> = (props) => {
@@ -13,7 +13,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
 
   React.useEffect(() => {
     props
-      .loadPage()
+      .onInit()
       .finally(() => setLoading(false))
   }, [])
 

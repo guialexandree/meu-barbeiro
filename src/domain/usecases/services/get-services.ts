@@ -1,8 +1,12 @@
 import { HttpDefaultResponse } from '@/data/protocols'
-import { ServiceModel } from '@/domain/models'
+import { ServiceModel, ServiceStatus } from '@/domain/models'
 
 export interface LoadServices {
-  load: () => Promise<LoadServicesResult>
+  load: (params: LoodServicesParams) => Promise<LoadServicesResult>
 }
 
+export type LoodServicesParams = {
+  search?: string
+  status?: ServiceStatus
+}
 export type LoadServicesResult = HttpDefaultResponse<ServiceModel[]>

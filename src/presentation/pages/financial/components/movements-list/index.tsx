@@ -35,35 +35,31 @@ const movements = [
     type: 'saída',
     value: 'R$ 45,00',
   },
-  {
-    id: 3,
-    name: 'CORTE + BARBA',
-    date: '11:10',
-    type: 'entrada',
-    value: 'R$ 55,00',
-  },
 ]
 
 export const MovementsList: React.FC = () => {
-
   return (
     <Stack sx={{ height: 'max-content' }}>
       <Typography variant="h6" sx={{ px: 2, mt: 2 }}>
         Hoje
       </Typography>
-      <List>
+      <List dense disablePadding>
         {movements.map((movement) => (
           <Stack key={movement.id}>
-            <ListItem sx={{ m: 0, p: 0 }}>
+            <ListItem sx={{ m: 0, p: 0 }} disablePadding>
               <ListItemIcon sx={{ height: 40 }}>
                 <IconButton disabled sx={{ backgroundColor: 'background.paper' }}>
                   <Icon>person</Icon>
                 </IconButton>
               </ListItemIcon>
-              <ListItemText primary={movement.name} secondary={movement.date} slotProps={{
-                primary: { sx: { fontSize: 13 } },
-                secondary: { sx: { fontSize: 11 } },
-              }}/>
+              <ListItemText
+                primary={movement.name}
+                secondary={movement.date}
+                slotProps={{
+                  primary: { sx: { fontSize: 13 } },
+                  secondary: { sx: { fontSize: 11 } },
+                }}
+              />
               <ListItemText
                 primary={
                   <Chip
@@ -95,7 +91,17 @@ export const MovementsList: React.FC = () => {
           </Stack>
         ))}
       </List>
-      <Stack direction="row" justifyContent="center" alignItems="center" spacing={1} mt={1} mr={2}>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+        zIndex={1}
+        mt={-4.5}
+        sx={{
+          background: 'linear-gradient(0deg, rgba(48,48,48,1) 52%, rgba(48,48,48,0.2) 93%, rgba(48,48,48,0) 100%, rgba(48,48,48,0) 100%)'
+        }}
+      >
         <Button sx={{ backgroundColor: 'grey.900' }} endIcon={<Icon>expand_more</Icon>}>
           ver mais
         </Button>

@@ -19,7 +19,7 @@ const AttendanceQueuePage: React.FC = () => {
   }
 
   return (
-    <PageContainer loadPage={async () => {}}>
+    <PageContainer onInit={async () => {}}>
       <PageTitle
         title="Fila de Atedimento"
         subtitle="Acompanhe a fila de atendimento"

@@ -2,7 +2,9 @@ export type ServiceModel = {
   id: string
   name: string
   description: string
-  status: 'ativo' | 'inativo'
+  status: ServiceStatus
   price: number
   timeExecution: number
 }
+
+export type ServiceStatus = 'ativo' | 'inativo'

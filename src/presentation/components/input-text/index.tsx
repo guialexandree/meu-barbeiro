@@ -26,9 +26,11 @@ const InputText: React.FC<InputTextProps> = (props) => {
       onChange={handleChange}
       error={!!input.error}
       helperText={input.error}
+      autoFocus={props.inputProps.autoFocus}
       slotProps={{
         input: {
           inputProps: {
+            autoFocus: props.inputProps.autoFocus,
             id: props.inputProps.id,
             style: {
               textTransform: 'uppercase',

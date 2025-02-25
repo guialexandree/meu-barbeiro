@@ -128,6 +128,7 @@ export const CreateUpdateServiceActions: React.FC = () => {
       <Button
         variant="contained"
         onClick={handleSubmit}
+        type='submit'
         endIcon={<Icon>check</Icon>}
         id='save-service-button'
         href="#"

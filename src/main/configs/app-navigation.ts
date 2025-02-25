@@ -23,7 +23,7 @@ export const appNavigation: AppNavigation[] = [
   },
   {
     icon: 'bar_chart',
-    title: 'relatórios',
+    title: 'financeiro',
     subtitle: 'relatórios de atendimento e financeiro',
     pathTo: 'relatorios',
   },

@@ -11,7 +11,7 @@ type ClientsPageProps = {
 
 const ClientsPage: React.FC<ClientsPageProps> = (props) => {
   return (
-    <PageContainer loadPage={async () => {}}>
+    <PageContainer onInit={async () => {}}>
       <PageTitle
         title="Clientes"
         subtitle="Visualizar cadastro de clientes com informações de contato"

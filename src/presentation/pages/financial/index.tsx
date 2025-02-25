@@ -25,7 +25,7 @@ const FinancialPage: React.FC = () => {
   }
 
   return (
-    <PageContainer loadPage={async () => {}}>
+    <PageContainer onInit={async () => {}}>
       <PageTitle title="Financeiro" subtitle="Atendimentos e movimentos de valores" icon={reportsHeaderImg} />
 
       <Stack direction="row" mx={2} spacing={1}>

@@ -1,14 +1,15 @@
-import { LoadServices, LoadServicesResult } from '@/domain/usecases'
+import { LoadServices, LoadServicesResult, LoodServicesParams } from '@/domain/usecases'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 import { HttpClient, HttpStatusCode } from '@/data/protocols'
 
 export class RemoteLoadServices implements LoadServices {
   constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadServicesResult>) {}
 
-  async load(): Promise<LoadServicesResult> {
+  async load(params: LoodServicesParams): Promise<LoadServicesResult> {
     const { statusCode, body } = await this.httpClient.request({
       url: `${this.url}/api/services`,
       method: 'get',
+      params
     })
 
     if (process.env.NODE_ENV !== 'development') {

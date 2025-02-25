@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Router } from '@/main/router'
+import '@/main/configs/clarity'
 import '@/presentation/styles/global.css'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'

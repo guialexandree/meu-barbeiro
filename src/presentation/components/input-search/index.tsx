@@ -1,15 +1,26 @@
 import React from 'react'
-import { Divider, Icon, IconButton, InputBase, Paper } from '@mui/material'
+import { Icon, IconButton, InputBase, Paper } from '@mui/material'
 import { RecoilState, useRecoilState } from 'recoil'
 
 type InputSearchProps = {
   id: string
   placeholder: string
   valueState: RecoilState<string>
+  loadServices: (search: string) => void
 }
 
 export const InputSearch: React.FC<InputSearchProps> = (props) => {
   const [text, setText] = useRecoilState(props.valueState)
+
+  const handleSearch = () => {
+    props.loadServices(text)
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
 
   return (
     <Paper
@@ -27,20 +38,15 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         sx={{ ml: 1, flex: 1 }}
         size="small"
         value={text}
+        onKeyDown={handleKeyDown}
         placeholder={props.placeholder}
         onChange={(e) => setText(e.target.value)}
         inputProps={{ 'aria-label': props.placeholder, id: props.id }}
         id={props.id}
       />
 
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+      <IconButton type="button" sx={{ p: '10px' }} onClick={handleSearch} aria-label="search">
         <Icon>search</Icon>
-      </IconButton>
-
-      <Divider orientation="vertical" flexItem />
-
-      <IconButton>
-        <Icon>filter_list</Icon>
       </IconButton>
     </Paper>
   )

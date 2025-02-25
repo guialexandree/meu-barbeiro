@@ -34,7 +34,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
   }, [])
 
   return (
-    <PageContainer loadPage={loadAlerts}>
+    <PageContainer onInit={loadAlerts}>
       <PageTitle
         title="Avisos"
         subtitle="Configure avisos para exibir nas principais telas do app do cliente"

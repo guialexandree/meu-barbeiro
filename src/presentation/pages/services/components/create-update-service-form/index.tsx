@@ -48,6 +48,7 @@ export const CreateUpdateServiceForm: React.FC = () => {
           <InputText
             state={State.nameNewServiceState}
             inputProps={{
+              autoFocus: true,
               inputMode: 'text',
               label: 'Nome',
               id: 'service-name',

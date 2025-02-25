@@ -21,7 +21,7 @@ export const AttendanceIndicator: React.FC = () => {
         <Stack direction="row" sx={{ color: 'grey.400' }} alignItems="flex-start" spacing={1}>
           <Box
             sx={{
-              backgroundColor: 'grey.700',
+              backgroundColor: theme => `${theme.palette.grey[700]}54`,
               p: 0.7,
               borderRadius: 1,
             }}

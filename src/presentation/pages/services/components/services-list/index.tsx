@@ -7,14 +7,16 @@ import emptyListImg from '@/presentation/assets/empty-list.svg'
 import errorListImg from '@/presentation/assets/error-list.svg'
 
 type ServiceListProps = {
-  loadServices: VoidFunction
+  onReload: VoidFunction
 }
 
 export const ServiceList: React.FC<ServiceListProps> = (props) => {
   const [error, setError] = useRecoilState(State.errorServicesState)
   const empty = useRecoilValue(State.emptyServicesState)
-  const services = useRecoilValue(State.servicesSearchedState)
+  const services = useRecoilValue(State.servicesState)
+  const noResults = useRecoilValue(State.noResultsServicesState)
   const loading = useRecoilValue(State.loadingServicesState)
+  const search = useRecoilValue(State.servicesSearchState)
 
   if (loading) {
     return (
@@ -37,7 +39,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
           id="reload-services"
           onClick={() => {
             setError('')
-            props.loadServices()
+            props.onReload()
           }}
         >
           tentar novamente
@@ -55,6 +57,20 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
         </Typography>
         <Button id="empty-action-services-list" variant="outlined" color="primary">
           criar novo
+        </Button>
+      </Stack>
+    )
+  }
+
+  if (noResults) {
+    return (
+      <Stack id="no-results-services-list" sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }} px={2} alignItems="center" spacing={1}>
+        <Box component="img" src={emptyListImg} alt="Nenhum serviço cadastrado" width={160} height={160} />
+        <Typography variant="h6" align="center">
+          {`Nenhum serviço foi encontrado com o filtros ${search?.toLocaleUpperCase()}`}
+        </Typography>
+        <Button id="empty-action-services-list" variant="outlined" color="primary">
+          remover filtros
         </Button>
       </Stack>
     )
