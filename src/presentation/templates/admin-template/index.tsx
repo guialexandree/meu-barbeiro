@@ -6,6 +6,13 @@ import { Box } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 
 export const AdminTemplate: React.FC = () => {
+  React.useEffect(() => {
+    const metaThemeColor = document.querySelector('meta[name=theme-color]')
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', '#2c82d8')
+    }
+  }, [])
+
   return (
     <Box
       sx={{
