@@ -19,10 +19,10 @@ export const AdminTemplate: React.FC = () => {
         backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'background.default' : 'inherit'),
         height: '100vh',
         minHeight: '100vh',
-        '@supports (-webkit-touch-callout: none)': {
-          height: 'calc(100vh - env(safe-area-inset-top))',
-          minHeight: 'calc(100vh - env(safe-area-inset-top))',
-        },
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
       }}
     >
       <AppBar />
