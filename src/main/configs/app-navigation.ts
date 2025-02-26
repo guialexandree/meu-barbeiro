@@ -1,5 +1,5 @@
 
-export type Navigation = 'fila-atendimento' | 'servicos' | 'avisos' | 'clientes' | 'relatorios'
+export type Navigation = '/' | 'servicos' | 'avisos' | 'clientes' | 'relatorios'
 
 export type AppNavigation = {
     icon: string
@@ -13,7 +13,7 @@ export const appNavigation: AppNavigation[] = [
     icon: 'diamond',
     title: 'atendimento',
     subtitle: 'fila de atendimento',
-    pathTo: 'fila-atendimento',
+    pathTo: '/',
   },
   {
     icon: 'group',
