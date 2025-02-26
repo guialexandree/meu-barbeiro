@@ -55,10 +55,10 @@ export const LoginTemplate: React.FC = () => {
           }}
         />
         <Logo
-          size={220}
+          size={180}
           showMobile={mobile}
           sx={{
-            ...pulseAnimation(15, 1.05),
+            ...pulseAnimation(10, 1.05),
             position: 'absolute',
             bottom: 60,
             left: 0,
