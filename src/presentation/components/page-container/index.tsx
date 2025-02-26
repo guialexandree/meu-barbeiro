@@ -31,7 +31,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
       sx={{
         pt: `calc(${isMobile ? 120 : 136}px + 16px)`,
         pb: 6,
-        minHeight: '80vh',
+        minHeight: '100%',
         color: 'white',
         flexDirection: 'column',
         position: 'relative',

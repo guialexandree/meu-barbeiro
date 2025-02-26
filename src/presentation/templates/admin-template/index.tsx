@@ -10,6 +10,12 @@ export const AdminTemplate: React.FC = () => {
     <Box
       sx={{
         backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'background.default' : 'inherit'),
+        height: '100vh',
+        minHeight: '100vh',
+        '@supports (-webkit-touch-callout: none)': {
+          height: 'calc(100vh - env(safe-area-inset-top))',
+          minHeight: 'calc(100vh - env(safe-area-inset-top))',
+        },
       }}
     >
       <AppBar />
