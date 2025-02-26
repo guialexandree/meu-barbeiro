@@ -1,6 +1,6 @@
 import React from 'react'
 import { RecoilState, useRecoilState } from 'recoil'
-import { Icon, IconButton, InputAdornment, TextField, TextFieldProps, useMediaQuery, useTheme } from '@mui/material'
+import { Fade, Icon, IconButton, InputAdornment, TextField, TextFieldProps, useMediaQuery, useTheme } from '@mui/material'
 
 type InputTextProps = {
   state: RecoilState<{ text: string; error: string }>
@@ -20,40 +20,44 @@ const InputText: React.FC<InputTextProps> = (props) => {
   }
 
   return (
-    <TextField
-      size={isMobile ? 'small' : 'medium'}
-      value={input.text}
-      onChange={handleChange}
-      error={!!input.error}
-      helperText={input.error}
-      autoFocus={props.inputProps.autoFocus}
-      slotProps={{
-        input: {
-          inputProps: {
+    <Fade in timeout={500} unmountOnExit mountOnEnter>
+      <TextField
+        size={isMobile ? 'small' : 'medium'}
+        value={input.text}
+        onChange={handleChange}
+        ref={props.inputProps.ref}
+        error={!!input.error}
+        helperText={input.error}
+        autoFocus={props.inputProps.autoFocus}
+        slotProps={{
+          input: {
             autoFocus: props.inputProps.autoFocus,
-            id: props.inputProps.id,
-            style: {
-              textTransform: 'uppercase',
+            inputProps: {
+              autoFocus: props.inputProps.autoFocus,
+              id: props.inputProps.id,
+              style: {
+                textTransform: 'uppercase',
+              },
             },
+            endAdornment: props.toogleVisibility && (
+              <InputAdornment position="end">
+                <IconButton
+                  id="toggle-password-visibility"
+                  aria-label="toggle password visibility"
+                  onClick={() => setVisible((currentValue) => !currentValue)}
+                  edge="end"
+                >
+                  <Icon sx={{ color: 'grey.600', fontSize: 22 }}>{visible ? 'visibility_off' : 'visibility'}</Icon>
+                </IconButton>
+              </InputAdornment>
+            ),
           },
-          endAdornment: props.toogleVisibility && (
-            <InputAdornment position="end">
-              <IconButton
-                id="toggle-password-visibility"
-                aria-label="toggle password visibility"
-                onClick={() => setVisible((currentValue) => !currentValue)}
-                edge="end"
-              >
-                <Icon sx={{ color: 'grey.600', fontSize: 22 }}>{visible ? 'visibility_off' : 'visibility'}</Icon>
-              </IconButton>
-            </InputAdornment>
-          ),
-        },
-      }}
-      {...props.inputProps}
-      type={visible ? 'text' : props.inputProps.type}
-    />
+        }}
+        {...props.inputProps}
+        type={visible ? 'text' : props.inputProps.type}
+      />
+    </Fade>
   )
 }
 
-export default React.memo(InputText)
+export default InputText

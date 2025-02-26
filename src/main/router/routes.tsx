@@ -1,11 +1,12 @@
 import { lazy } from 'react'
 import { RecoilRoot } from 'recoil'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { AdminTemplate } from '@/presentation/templates'
+import { AdminTemplate, LoginTemplate } from '@/presentation/templates'
 import { Loadable, ThemeProvider } from '@/presentation/components'
 import * as Factories from '@/main/factories/usecases'
 
-const LoginPage = lazy(() => import('@/presentation/pages/login'))
+import LoginPage from '@/presentation/pages/login'
+import RecoveryPasswordPage from '@/presentation/pages/recovery-password'
 const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-queue'))
 const ServicesPage = lazy(() => import('@/presentation/pages/services'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts'))
@@ -15,14 +16,10 @@ const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <LoginPage />,
-  },
-  {
-    path: '/',
     element: <AdminTemplate />,
     children: [
       {
-        path: '/fila-atendimento',
+        path: '/',
         element: <Loadable children={<AttendanceQueuePage />} />,
       },
       {
@@ -51,6 +48,20 @@ const router = createBrowserRouter([
             }
           />
         ),
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: <LoginTemplate />,
+    children: [
+      {
+        path: '/login',
+        element: <LoginPage />,
+      },
+      {
+        path: '/login/esqueci-minha-senha',
+        element: <RecoveryPasswordPage />,
       },
     ],
   },

@@ -1,7 +1,7 @@
 import React from 'react'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
-import { Button, Icon, Stack } from '@mui/material'
+import { Button, Icon, Slide, Stack } from '@mui/material'
 import { authenticationValidation } from './validations'
 import * as Factories from '@/main/factories/usecases'
 import * as State from '@/presentation/pages/login/components/atoms'
@@ -11,14 +11,13 @@ export const FormActions: React.FC = () => {
   const [username, setUsername] = useRecoilState(State.usernameState)
   const [password, setPassword] = useRecoilState(State.passwordState)
   const [loading, setLoading] = useRecoilState(State.loadingLoginState)
-  const setOpenRecoveryPassword = useSetRecoilState(State.openRecoveryPasswordState)
   const resetUserName = useResetRecoilState(State.usernameState)
   const resetPassword = useResetRecoilState(State.passwordState)
 
   const authenticationUseCase = React.useMemo(() => Factories.makeRemoteAuthentication(), [])
 
   const onSuccess = () => {
-    navigate('/fila-atendimento')
+    navigate('/')
     resetUserName()
     resetPassword()
   }
@@ -60,31 +59,32 @@ export const FormActions: React.FC = () => {
   }
 
   return (
-    <Stack spacing={4}>
-      <Button
-        loading={loading}
-        disabled={!!username.error || !!password.error || loading}
-        id="login-button"
-        type="submit"
-        variant="contained"
-        size="large"
-        onClick={handleLogin}
-        endIcon={<Icon>login</Icon>}
-      >
-        Entrar
-      </Button>
-      <Button
-        size="small"
-        disabled={!!username.error || !!password.error || loading}
-        id="recovery-password-button"
-        color="inherit"
-        sx={{ color: 'grey.600' }}
-        onClick={() => {
-          setOpenRecoveryPassword(true)
-        }}
-      >
-        Esqueci minha senha
-      </Button>
+    <Stack spacing={3}>
+      <Slide direction="left" timeout={300} in mountOnEnter unmountOnExit>
+        <Button
+          loading={loading}
+          disabled={!!username.error || !!password.error || loading}
+          id="login-button"
+          type="submit"
+          variant="contained"
+          size="large"
+          onClick={handleLogin}
+          endIcon={<Icon>login</Icon>}
+        >
+          Entrar
+        </Button>
+      </Slide>
+      <Slide direction="right" timeout={300} in mountOnEnter unmountOnExit>
+        <Button
+          size="small"
+          disabled={loading}
+          id="recovery-password-button"
+          color="primary"
+          onClick={() => { navigate('/login/esqueci-minha-senha') }}
+        >
+          Esqueci minha senha
+        </Button>
+      </Slide>
     </Stack>
   )
 }

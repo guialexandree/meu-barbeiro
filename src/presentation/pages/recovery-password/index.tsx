@@ -1,8 +1,8 @@
 import React from 'react'
-import { Divider, Slide, Stack, Typography } from '@mui/material'
-import { FormActions, InputPassword, InputUsername } from '@/presentation/pages/login/components'
+import { Slide, Stack, Typography } from '@mui/material'
+import { FormActions, InputAuthCode } from '@/presentation/pages/recovery-password/components'
 
-const LoginPage: React.FC = () => {
+const RecoveryPasswordPage: React.FC = () => {
   return (
     <Stack
       onSubmit={(event) => {
@@ -14,15 +14,13 @@ const LoginPage: React.FC = () => {
       spacing={2}
     >
       <Slide direction="down" in={true} mountOnEnter unmountOnExit>
-        <Typography variant="h6">Login</Typography>
+        <Typography variant="h6">Informe o número de celular para receber o código de login</Typography>
       </Slide>
 
-      <InputUsername />
-      <InputPassword />
+      <InputAuthCode />
       <FormActions />
-      <Divider />
     </Stack>
   )
 }
 
-export default LoginPage
+export default RecoveryPasswordPage

@@ -1,10 +1,11 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { Backdrop, Box, Button, CircularProgress, Fade, List, Stack, Typography } from '@mui/material'
+import { Box, Button, Fade, List, Stack, Typography } from '@mui/material'
 import { ServiceListItem } from '@/presentation/pages/services/components'
 import * as State from '@/presentation/pages/services/components/atoms'
 import emptyListImg from '@/presentation/assets/empty-list.svg'
 import errorListImg from '@/presentation/assets/error-list.svg'
+import { PageLoader } from '@/presentation/components'
 
 type ServiceListProps = {
   onReload: VoidFunction
@@ -20,9 +21,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
 
   if (loading) {
     return (
-      <Backdrop open={loading}>
-        <CircularProgress color="secondary" />
-      </Backdrop>
+      <PageLoader />
     )
   }
 

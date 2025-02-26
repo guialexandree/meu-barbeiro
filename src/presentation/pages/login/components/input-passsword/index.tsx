@@ -14,6 +14,7 @@ export const InputPassword: React.FC = () => {
       inputProps={{
         name: 'password',
         disabled: loading,
+        variant: 'filled',
         id: 'login-password',
         label: 'Senha',
         type: 'password',

@@ -20,8 +20,3 @@ export const passwordState = atom({
     error: '',
   }
 })
-
-export const openRecoveryPasswordState = atom({
-  key: 'openRecoveryPasswordState',
-  default: false
-})

@@ -27,7 +27,7 @@ describe('Página de Serviços', () => {
       cy.get('#reload-services').should('be.visible')
     })
 
-    it('Deve exibir painel de lista vazia caso não tenha retornado resultado na pesquisa', () => {
+    it('Deve exibir painel de lista vazia caso não tenha retornado resultado da API', () => {
       Http.mockOk('GET', '/api/services', { success: true, data: [] }).as('loadServicesEmpty')
 
       cy.visit('/servicos')
@@ -37,11 +37,12 @@ describe('Página de Serviços', () => {
       cy.get('#empty-action-services-list').should('be.visible')
     })
 
-    it.skip('Quando filtro de pesquisa não retornar resultados exibir painel de resultado vazio', () => {
+    it('Quando filtro de pesquisa não retornar resultados exibir painel de filtros não encontrado', () => {
       cy.intercept('GET', '/api/services?search=xyz', {
         statusCode: 200,
-        body: [],
+        body: _mockLoadServicesResult,
       }).as('searchNoResults')
+      cy.visit('/servicos')
 
       cy.get('#services-input-search').type('xyz')
       cy.wait('@searchNoResults')

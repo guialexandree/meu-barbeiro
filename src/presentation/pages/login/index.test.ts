@@ -129,7 +129,7 @@ describe('Página de Login', () => {
         cy.window().then((windows) => {
           const parsedToken = JSON.parse(windows.localStorage.accessToken)
           expect(parsedToken.accessToken).to.eq(accessToken)
-          cy.url().should('include', '/fila-atendimento')
+          cy.url().should('include', '/')
         })
       })
     })

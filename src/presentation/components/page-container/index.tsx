@@ -1,5 +1,6 @@
 import React from 'react'
-import { Backdrop, CircularProgress, Grid2, Stack, useMediaQuery, useTheme } from '@mui/material'
+import { Grid2, Stack, useMediaQuery, useTheme } from '@mui/material'
+import { PageLoader } from '../page-loader'
 
 type PageContainerProps = {
   children: React.ReactNode
@@ -8,20 +9,18 @@ type PageContainerProps = {
 
 export const PageContainer: React.FC<PageContainerProps> = (props) => {
   const theme = useTheme()
-  const [loading, setLoading] = React.useState(true)
+  const [loadingInit, setLoadingInit] = React.useState(true)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   React.useEffect(() => {
     props
       .onInit()
-      .finally(() => setLoading(false))
+      .finally(() => setLoadingInit(false))
   }, [])
 
-  if (loading) {
+  if (loadingInit) {
     return (
-      <Backdrop open={loading}>
-        <CircularProgress color="secondary" />
-      </Backdrop>
+      <PageLoader loading />
     )
   }
 

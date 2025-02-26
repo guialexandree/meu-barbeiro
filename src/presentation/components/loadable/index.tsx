@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react'
+import { PageLoader } from '@/presentation/components'
 
 type LoadableProps = {
   children: React.ReactNode
@@ -6,7 +7,7 @@ type LoadableProps = {
 
 export const Loadable: React.FC<LoadableProps> = (props) => {
   return (
-    <Suspense fallback={<>ai papai</>}>
+    <Suspense fallback={<PageLoader loading />}>
       {props.children}
     </Suspense>
   )
