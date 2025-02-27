@@ -25,14 +25,13 @@ export const LoginTemplate: React.FC = () => {
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { isPWA } = useMobile()
   const pwa = isPWA()
-  
 
   return (
     <Grid2
       container
       sx={{
-        minHeight: `calc(100vh - ${pwa ? 0 : 60}px)`,
-        maxHeight: `calc(100vh - ${pwa ? 0 : 60}px)`,
+        minHeight: `calc(100vh - ${pwa ? 0 : 72}px)`,
+        maxHeight: `calc(100vh - ${pwa ? 0 : 72}px)`,
         overflow: 'hidden',
         backgroundColor: (theme) => theme.palette.background.paper,
         backgroundImage: backgroundImg,
