@@ -21,8 +21,8 @@ export const AdminTemplate: React.FC = () => {
       <Box
         sx={{
           backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'background.default' : 'inherit'),
-          height: `calc(100vh - ${isPWA && !isMobile ? 0 : 72}px)`,
-          minHeight: `calc(100vh - ${isPWA && !isMobile ? 0 : 72}px)`,
+          height: `calc(100vh - ${isPWA && !isMobile ? 0 : 84}px)`,
+          minHeight: `calc(100vh - ${isPWA && !isMobile ? 0 : 84}px)`,
         }}
       >
         <AppBar />
