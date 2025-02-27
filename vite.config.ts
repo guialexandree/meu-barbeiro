@@ -12,9 +12,6 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-  optimizeDeps: {
-    include: ['zod'],
-  },
   plugins: [
     react(),
     VitePWA({
