@@ -11,6 +11,11 @@ export default defineConfig({
   optimizeDeps: {
     include: ['zod']
   },
+  build: {
+    rollupOptions: {
+      external: ['zod']
+    }
+  },
   define: {
     'process.env': process.env,
   },
