@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite -m production",
-    "dev": "vite --host",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint ./src --max-warnings=0",
     "cypress:web": "npx cypress open",
