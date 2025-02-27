@@ -40,16 +40,13 @@ const AttendanceQueuePage: React.FC = () => {
       </ToggleButtonGroup>
 
       <List disablePadding>
-        {_mockAttendances.map(attendance => (
+        {/* {_mockAttendances.map(attendance => (
           <ListItem key={attendance.id} sx={{ gap: 2 }}>
             <Paper sx={{ p: 1 }}>
               <Typography variant="body2" sx={{ fontWeight: '900' }}>
                 {attendance.createdAt.split('T')[1].split('.')[0].substring(0, 5)}
               </Typography>
             </Paper>
-            {/* <ListItemAvatar>
-              <AvatarRandom />
-            </ListItemAvatar> */}
             <ListItemText
               primary={attendance.client.name}
               secondary={attendance.services.map(service => service.name).join(', ')}
@@ -67,7 +64,7 @@ const AttendanceQueuePage: React.FC = () => {
               }}}
             />
           </ListItem>
-        ))}
+        ))} */}
       </List>
 
       <Zoom in timeout={transitionDuration} unmountOnExit>

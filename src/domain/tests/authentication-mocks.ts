@@ -1,23 +1,22 @@
-import faker from 'faker'
 import { AuthenticationParams, AuthenticationResult } from '@/domain/usecases'
 import { AuthenticationModel } from '@/domain/models'
 
 export const mockAuthenticationParams = (): AuthenticationParams => ({
-  username: faker.internet.userName(),
-  password: faker.internet.password(),
+  username: 'any_username',
+  password: 'any_password',
 })
 
 export const mockAuthenticationResult = (): AuthenticationResult => ({
   success: true,
-  message: faker.random.words(),
+  message: 'Success',
   data: {
-    accessToken: faker.datatype.uuid(),
+    accessToken: 'any_token',
   },
   error: ''
 })
 
 export const mockAuthenticationModel = (): AuthenticationModel => ({
-  name: faker.name.findName(),
-  sub: faker.datatype.uuid(),
-  username: faker.internet.userName(),
+  name: 'any_name',
+  sub: 'any_sub',
+  username: 'any_username',
 })

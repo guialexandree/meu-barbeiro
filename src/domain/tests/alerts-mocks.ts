@@ -1,11 +1,10 @@
 import { AlertModel } from '@/domain/models'
-import faker from 'faker'
 
 export const mockAlert = (): AlertModel => ({
-  id: faker.datatype.uuid(),
-  message: faker.random.words(15),
-  type: faker.random.arrayElement(['home', 'services', 'history']),
-  status: faker.random.arrayElement(['ativo', 'inativo']),
+  id: 'any_id',
+  message: 'any_message',
+  type: 'home',
+  status: 'ativo',
 })
 
 export const _mockAlerts: AlertModel[] = [
