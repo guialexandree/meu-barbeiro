@@ -56,20 +56,16 @@ export const LoginTemplate: React.FC = () => {
             opacity: 0.3,
           }}
         />
+          <Outlet />
         <Logo
           size={180}
           showMobile={mobile}
           sx={{
             ...pulseAnimation(10, 1.05),
-            position: 'absolute',
-            bottom: 60,
-            left: 0,
-            zIndex: 1,
             width: '100%',
           }}
         />
 
-        <Outlet />
         <RedirectProductLink />
       </Grid2>
 
