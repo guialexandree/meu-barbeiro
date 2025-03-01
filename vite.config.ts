@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import css from 'vite-plugin-css'
 
+// https://vite.dev/config/
 // https://vite.dev/config/
 export default defineConfig({
   resolve: {
@@ -26,5 +28,5 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-  plugins: [react()],
+  plugins: [react(), css()],
 })
