@@ -1,28 +1,31 @@
-import { HttpClient } from '@/data/protocols'
-import { _mockLoadServicesResult } from '@/domain/tests'
+import { HttpClient, HttpStatusCode } from '@/data/protocols'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 import { UpdateService, UpdateServiceParams, UpdateServiceResult } from '@/domain/usecases'
 
 export class RemoteUpdateService implements UpdateService {
-  constructor(
-    private readonly url: string,
-    private readonly httpClient: HttpClient<UpdateServiceResult>,
-  ) {}
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<UpdateServiceResult>) {}
 
   async update(params: UpdateServiceParams): Promise<UpdateServiceResult> {
-    return _mockLoadServicesResult.data[0]
-    // const { id, ...bodyParams } = params
+    const { statusCode, body } = await this.httpClient.request({
+      url: `${this.url}/api/services/${params.id}`,
+      method: 'patch',
+      body: params,
+    })
 
-    // const { statusCode, body } = await this.httpClient.request({
-    //   url: `${this.url}/services/${id}`,
-    //   method: 'patch',
-    //   body: bodyParams,
-    // })
+    if (process.env.NODE_ENV !== 'development') {
+      // return new Promise<LoadServicesResult>((resolve) => {
+      //   setTimeout(() => resolve(_mockServices), 1500)
+      // })
+    }
 
-    // switch (statusCode) {
-    //   case HttpStatusCode.ok:
-    //     return body as UpdateServiceResult
-    //   default:
-    //     throw new UnexpectedError()
-    // }
+    if (statusCode === HttpStatusCode.unauthorized) {
+      throw new AccessDeniedError()
+    }
+
+    if (!body) {
+      throw new UnexpectedError()
+    }
+
+    return body
   }
 }

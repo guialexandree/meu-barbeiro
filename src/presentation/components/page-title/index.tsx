@@ -20,6 +20,9 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
           position: 'relative',
           pl: 8,
           pr: 1,
+          borderBottomWidth: 2,
+          borderBottomStyle: 'solid',
+          borderBottomColor: 'secondary.main',
         }}
       >
         <Stack direction="row" spacing={2} alignItems="center">

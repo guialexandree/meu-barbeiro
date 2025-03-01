@@ -34,56 +34,6 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
     navigate('/login')
   }
 
-  const DrawerList = (): React.ReactNode => (
-    <Box
-      sx={{ width: { xs: 'auto', sm: 380 } }}
-      role="presentation"
-      onClick={() => {
-        setOpen(false)
-      }}
-    >
-      <List disablePadding sx={{ flexDirection: 'column', py: 4 }}>
-        {props.items.map((appNavigate) => (
-          <ListItem key={`item-drawer-${appNavigate.icon}`}>
-            <ListItemButton
-              onClick={() => {
-                navigate(appNavigate.pathTo)
-              }}
-            >
-              <ListItemIcon>
-                <Icon>{appNavigate.icon}</Icon>
-              </ListItemIcon>
-              <ListItemText
-                primary={appNavigate.title}
-                secondary={appNavigate.subtitle}
-                slotProps={{
-                  secondary: { sx: { color: 'grey.600', lineHeight: 1 } },
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
-
-        <Divider />
-
-        <ListItem key={`item-drawer-logout`}>
-          <ListItemButton onClick={handleLogout}>
-            <ListItemIcon>
-              <Icon>logout</Icon>
-            </ListItemIcon>
-            <ListItemText
-              primary="sair"
-              secondary="realizar logout do app"
-              slotProps={{
-                secondary: { sx: { color: 'grey.600', lineHeight: 1 } },
-              }}
-            />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
-  )
-
   return (
     <DrawerMUI
       open={open}
@@ -92,7 +42,53 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
         setOpen(false)
       }}
     >
-      <DrawerList />
+      <Box
+        sx={{ width: { xs: 'auto', sm: 380 } }}
+        role="presentation"
+        onClick={() => {
+          setOpen(false)
+        }}
+      >
+        <List disablePadding sx={{ flexDirection: 'column', py: 4 }}>
+          {props.items.map((appNavigate) => (
+            <ListItem key={`item-drawer-${appNavigate.icon}`}>
+              <ListItemButton
+                onClick={() => {
+                  navigate(appNavigate.pathTo)
+                }}
+              >
+                <ListItemIcon>
+                  <Icon>{appNavigate.icon}</Icon>
+                </ListItemIcon>
+                <ListItemText
+                  primary={appNavigate.title}
+                  secondary={appNavigate.subtitle}
+                  slotProps={{
+                    secondary: { sx: { color: 'grey.600', lineHeight: 1 } },
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+
+          <Divider sx={{ borderColor: 'grey.800' }} />
+
+          <ListItem key={`item-drawer-logout`}>
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon>
+                <Icon>logout</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary="sair"
+                secondary="realizar logout do app"
+                slotProps={{
+                  secondary: { sx: { color: 'grey.600', lineHeight: 1 } },
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
     </DrawerMUI>
   )
 }

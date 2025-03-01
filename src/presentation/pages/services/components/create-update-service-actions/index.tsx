@@ -44,7 +44,7 @@ export const CreateUpdateServiceActions: React.FC = () => {
 
   const onError = (error: string, inputName: string): void => {
     if (inputName === 'name') {
-      setName(currentState => ({ ...currentState, error }))
+      setName((currentState) => ({ ...currentState, error }))
       return
     }
 
@@ -55,15 +55,34 @@ export const CreateUpdateServiceActions: React.FC = () => {
     event.preventDefault()
 
     if (edditing) {
-      handleUpdateService()
+      return handleUpdateService()
     } else {
-      handleCreateService()
+      return handleCreateService()
     }
   }
 
-  const handleUpdateService = (): void => {
-    setLoading(true)
+  const validateForm = (): boolean => {
+    const result = serviceCreateValidation.safeParse({
+      name: newService.name,
+      description: newService.description,
+      price: newService.price,
+      timeExecution: newService.timeExecution,
+      status: newService.status,
+    })
 
+    if (!result.success) {
+      const error = result.error.errors.at(0)!
+      const inputName = error.path.at(0) as string
+      onError(error.message, inputName)
+    }
+
+    return result.success
+  }
+
+  const handleUpdateService = (): void => {
+    if (!validateForm()) return
+
+    setLoading(true)
     updateService
       .update(newService)
       .then(() => {
@@ -78,26 +97,12 @@ export const CreateUpdateServiceActions: React.FC = () => {
   }
 
   const handleCreateService = (): void => {
-    const result = serviceCreateValidation.safeParse({
-      name: newService.name,
-      description: newService.description,
-      price: newService.price,
-      timeExecution: newService.timeExecution,
-      status: newService.status,
-    })
-
-    if (!result.success) {
-      const error = result.error.errors.at(0) || { message: 'Erro ao criar serviço', path: [] }
-      const inputName = error.path.at(0) as string
-      onError(error.message, inputName)
-      return
-    }
+    if (!validateForm()) return
 
     setLoading(true)
-
     createService
       .create(newService)
-      .then(result => {
+      .then((result) => {
         if (result.success) {
           onSuccess({ ...newService, id: result.data.id })
           return
@@ -122,15 +127,15 @@ export const CreateUpdateServiceActions: React.FC = () => {
 
   return (
     <DialogActions>
-      <Button id='close-service-form-button' color="info" onClick={handleClose}>
+      <Button id="close-service-form-button" color="info" onClick={handleClose}>
         Cancelar
       </Button>
       <Button
         variant="contained"
         onClick={handleSubmit}
-        type='submit'
+        type="submit"
         endIcon={<Icon>check</Icon>}
-        id='save-service-button'
+        id="save-service-button"
         href="#"
       >
         {edditing ? 'Editar' : 'Criar'}

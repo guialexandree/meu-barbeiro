@@ -2,7 +2,6 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Box, Grid2, useMediaQuery, useTheme } from '@mui/material'
 import { Logo, RedirectProductLink } from '@/presentation/components'
-import { useMobile } from '@/presentation/hooks'
 import backgroundImg from '@/presentation/assets/login-bg.webp'
 
 const pulseAnimation = (timeout: number, scale: number) => ({
@@ -23,14 +22,13 @@ const pulseAnimation = (timeout: number, scale: number) => ({
 export const LoginTemplate: React.FC = () => {
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { isPWA, isMobile } = useMobile()
 
   return (
     <Grid2
       container
       sx={{
-        minHeight: `calc(100vh - ${isPWA && !isMobile ? 0 : 84}px)`,
-        maxHeight: `calc(100vh - ${isPWA && !isMobile ? 0 : 84}px)`,
+        minHeight: '100vh',
+        maxHeight: '100vh',
         overflow: 'hidden',
         backgroundColor: (theme) => theme.palette.background.paper,
         backgroundImage: backgroundImg,

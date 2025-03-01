@@ -1,25 +1,30 @@
-import { HttpClient } from '@/data/protocols'
-import { _mockLoadServicesResult } from '@/domain/tests'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 import { RemoveService, RemoveServiceParams, RemoveServiceResult } from '@/domain/usecases'
+import { HttpClient, HttpStatusCode } from '@/data/protocols'
 
 export class RemoteRemoveService implements RemoveService {
-  constructor(
-    private readonly url: string,
-    private readonly httpClient: HttpClient<RemoveServiceResult>,
-  ) {}
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<RemoveServiceResult>) {}
 
   async remove(params: RemoveServiceParams): Promise<RemoveServiceResult> {
-    return _mockLoadServicesResult.data[0]
-    // const { statusCode, body } = await this.httpClient.request({
-    //   url: `${this.url}/services/${params.id}`,
-    //   method: 'delete',
-    // })
+    const { statusCode, body } = await this.httpClient.request({
+      url: `${this.url}/api/services/${params.id}`,
+      method: 'delete',
+    })
 
-    // switch (statusCode) {
-    //   case HttpStatusCode.ok:
-    //     return body as RemoveServiceResult
-    //   default:
-    //     throw new UnexpectedError()
-    // }
+    if (process.env.NODE_ENV !== 'development') {
+      // return new Promise<LoadServicesResult>((resolve) => {
+      //   setTimeout(() => resolve(_mockServices), 1500)
+      // })
+    }
+
+    if (statusCode === HttpStatusCode.unauthorized) {
+      throw new AccessDeniedError()
+    }
+
+    if (!body) {
+      throw new UnexpectedError()
+    }
+
+    return body
   }
 }

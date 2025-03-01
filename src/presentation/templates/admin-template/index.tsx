@@ -4,11 +4,8 @@ import { ToastContainer } from 'react-toastify'
 import { Box } from '@mui/material'
 import { appNavigation } from '@/main/configs'
 import { AppBar, Drawer, PrivateRoute } from '@/presentation/components'
-import { useMobile } from '@/presentation/hooks'
 
 export const AdminTemplate: React.FC = () => {
-  const { isPWA, isMobile } = useMobile()
-
   React.useEffect(() => {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     if (metaThemeColor) {
@@ -21,8 +18,8 @@ export const AdminTemplate: React.FC = () => {
       <Box
         sx={{
           backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'background.default' : 'inherit'),
-          height: `calc(100vh - ${isPWA && !isMobile ? 0 : 84}px)`,
-          minHeight: `calc(100vh - ${isPWA && !isMobile ? 0 : 84}px)`,
+          height: '100%',
+          minHeight: '100%',
         }}
       >
         <AppBar />
