@@ -9,7 +9,7 @@ describe('Página de Login', () => {
     it('Deve iniciar a página com os valores corretos', () => {
       cy.visit('/')
       cy.get('img#logo').should('be.visible')
-      cy.get('h6').should('contain', 'Login')
+      cy.get('#title-page').should('be.visible')
       cy.get('#login-user').should('have.value', '')
       cy.get('#login-password').should('have.value', '')
       cy.get('#recovery-password-button').should('be.visible')

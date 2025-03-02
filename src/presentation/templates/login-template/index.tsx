@@ -25,7 +25,9 @@ export const LoginTemplate: React.FC = () => {
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { isPWA } = useMobile()
 
-  const subtractPaddingToolbar = typeof theme.mixins.toolbar.minHeight === 'number' ? theme.mixins.toolbar.minHeight + 24 : 0
+  const subtractPaddingToolbar = typeof theme.mixins.toolbar.minHeight === 'number'
+    ? process.env.NODE_ENV === 'development' ? 0 : theme.mixins.toolbar.minHeight + 24
+    : 0
 
   React.useLayoutEffect(() => {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
@@ -39,7 +41,7 @@ export const LoginTemplate: React.FC = () => {
       container
       sx={{
         minHeight: `calc(100vh - ${isPWA ? 0 : subtractPaddingToolbar}px)`,
-        maxHeight: `calc(100vh - ${isPWA ? 0 : subtractPaddingToolbar}px)`,
+        height: `calc(100vh - ${isPWA ? 0 : subtractPaddingToolbar}px)`,
         overflow: 'hidden',
         backgroundColor: (theme) => theme.palette.background.paper,
         backgroundImage: backgroundImg,

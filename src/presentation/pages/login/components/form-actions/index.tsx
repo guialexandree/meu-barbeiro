@@ -59,10 +59,11 @@ export const FormActions: React.FC = () => {
   }
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} width='100%'>
       <Slide direction="left" timeout={300} in mountOnEnter unmountOnExit>
         <Button
           loading={loading}
+          fullWidth
           disabled={!!username.error || !!password.error || loading}
           id="login-button"
           type="submit"

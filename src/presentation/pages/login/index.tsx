@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Slide, Stack, Typography } from '@mui/material'
+import { Chip, Divider, Icon, Slide, Stack } from '@mui/material'
 import { FormActions, InputPassword, InputUsername } from '@/presentation/pages/login/components'
 
 const LoginPage: React.FC = () => {
@@ -12,9 +12,11 @@ const LoginPage: React.FC = () => {
       sx={{ width: { xs: '80%', sm: '70%' }, minWidth: 180, mt: 4 }}
       marginX={'auto'}
       spacing={2}
+      justifyContent='center'
+      alignItems='center'
     >
       <Slide direction="down" in={true} mountOnEnter unmountOnExit>
-        <Typography variant="h6">Login</Typography>
+        <Chip id='title-page' sx={{ fontWeight: '600' }} icon={<Icon>lock_open</Icon>} label="PAINEL DO BARBEIRO" color="secondary" />
       </Slide>
 
       <InputUsername />
