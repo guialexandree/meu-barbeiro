@@ -70,7 +70,7 @@ export const FormActions: React.FC = () => {
           variant="contained"
           size="large"
           onClick={handleLogin}
-          endIcon={<Icon>login</Icon>}
+          endIcon={<Icon>content_cut</Icon>}
         >
           Entrar
         </Button>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Box, Grid2, useMediaQuery, useTheme } from '@mui/material'
-import { Logo, RedirectProductLink } from '@/presentation/components'
+import { Logo, RedirectProductLink, SocialMidias } from '@/presentation/components'
 import backgroundImg from '@/presentation/assets/login-bg.webp'
 import { useMobile } from '@/presentation/hooks'
 
@@ -54,7 +54,7 @@ export const LoginTemplate: React.FC = () => {
           component="img"
           src={backgroundImg}
           sx={{
-            ...pulseAnimation(30, 1.2),
+            ...pulseAnimation(25, 1.2),
             display: { xs: 'block', sm: 'none' },
             position: 'absolute',
             top: 0,
@@ -67,15 +67,19 @@ export const LoginTemplate: React.FC = () => {
             opacity: 0.3,
           }}
         />
+        <Box sx={{ zIndex: 1, position: 'relative' }}>
           <Outlet />
+        </Box>
         <Logo
           size={180}
           showMobile={mobile}
           sx={{
-            ...pulseAnimation(10, 1.05),
+            ...pulseAnimation(15, 1.05),
             width: '100%',
           }}
         />
+
+        <SocialMidias />
 
         <RedirectProductLink />
       </Grid2>
