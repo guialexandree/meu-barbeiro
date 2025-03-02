@@ -21,7 +21,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
 
   useEffect(() => {
     const validToken = validateToken()
-    navigate(validToken ? '/' : '/login')
+    if (!validToken) navigate('/login')
   }, [navigate])
 
   return validateToken() ? <>{props.children}</> : null

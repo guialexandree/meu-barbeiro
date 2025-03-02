@@ -2,8 +2,8 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Box, Grid2, useMediaQuery, useTheme } from '@mui/material'
 import { Logo, RedirectProductLink, SocialMidias } from '@/presentation/components'
-import backgroundImg from '@/presentation/assets/login-bg.webp'
 import { useMobile } from '@/presentation/hooks'
+import backgroundImg from '@/presentation/assets/login-bg.webp'
 
 const pulseAnimation = (timeout: number, scale: number) => ({
   animation: `pulse ${timeout}s infinite ease-in-out`,

@@ -6,6 +6,7 @@ type InputTextProps = {
   state: RecoilState<{ text: string; error: string }>
   inputProps: TextFieldProps
   toogleVisibility?: boolean
+  onClearError?: () => void
 }
 
 const InputText: React.FC<InputTextProps> = (props) => {
@@ -17,6 +18,7 @@ const InputText: React.FC<InputTextProps> = (props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault()
     setInput({ error: '', text: event.target.value })
+    props.onClearError?.()
   }
 
   return (
@@ -35,9 +37,6 @@ const InputText: React.FC<InputTextProps> = (props) => {
             inputProps: {
               autoFocus: props.inputProps.autoFocus,
               id: props.inputProps.id,
-              style: {
-                textTransform: 'uppercase',
-              },
             },
             endAdornment: props.toogleVisibility && (
               <InputAdornment position="end">

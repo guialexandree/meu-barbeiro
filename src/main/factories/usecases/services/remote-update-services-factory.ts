@@ -3,6 +3,7 @@ import { RemoteUpdateService } from '@/data/usecases'
 import { makeAxiosHttpClient } from '@/main/factories/adapters'
 
 export const makeRemoteUpdateService = (): UpdateService => {
-  const apiUrl = process.env.API_URL || 'http://localhost:3000'
+  const apiUrl = process.env.API_URL as string
+  console.log(apiUrl)
   return new RemoteUpdateService(apiUrl, makeAxiosHttpClient())
 }

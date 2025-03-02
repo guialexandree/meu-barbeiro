@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { InputText } from '@/presentation/components'
 import * as State from '@/presentation/pages/login/components/atoms'
 
 export const InputUsername: React.FC = () => {
   const username = useRecoilValue(State.usernameState)
+  const setPassword = useSetRecoilState(State.passwordState)
   const loading = useRecoilValue(State.loadingLoginState)
   const inputRef = React.useRef<HTMLInputElement>(null)
 
@@ -17,6 +18,7 @@ export const InputUsername: React.FC = () => {
   return (
     <InputText
       state={State.usernameState}
+      onClearError={() => { setPassword(currentState => ({ ...currentState, error: '' })) }}
       inputProps={{
         ref: inputRef,
         name: 'user',

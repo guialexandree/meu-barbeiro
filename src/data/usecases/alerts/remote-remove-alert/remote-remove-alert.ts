@@ -1,29 +1,31 @@
 import { RemoveAlert, RemoveAlertParams, RemoveAlertResult } from '@/domain/usecases'
-import { HttpClient } from '@/data/protocols'
-import { _mockAlerts } from '@/domain/tests'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+import { HttpClient, HttpStatusCode } from '@/data/protocols'
 
 export class RemoteRemoveAlert implements RemoveAlert {
-  constructor(
-    private readonly url: string,
-    private readonly httpClient: HttpClient<RemoveAlertResult>,
-  ) {}
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<RemoveAlertResult>) {}
 
   async remove(params: RemoveAlertParams): Promise<RemoveAlertResult> {
-    return _mockAlerts[0]
-    // const { statusCode, body } = await this.httpClient.request({
-    //   url: `${this.url}/alerts/${params.id}`,
-    //   method: 'delete'
-    // })
+    const { statusCode, body } = await this.httpClient.request({
+      url: `${this.url}/api/alerts/${params.id}`,
+      method: 'delete',
+      body: params,
+    })
 
-    // switch (statusCode) {
-    //   case HttpStatusCode.ok:
-    //     if (!body) {
-    //       throw new UnexpectedError()
-    //     }
-    //     body.message = ''
-    //     return body
-    //   default:
-    //     throw new UnexpectedError()
-    // }
+    if (process.env.NODE_ENV !== 'development') {
+      // return new Promise<LoadServicesResult>((resolve) => {
+      //   setTimeout(() => resolve(_mockServices), 1500)
+      // })
+    }
+
+    if (statusCode === HttpStatusCode.unauthorized) {
+      throw new AccessDeniedError()
+    }
+
+    if (!body) {
+      throw new UnexpectedError()
+    }
+
+    return body
   }
 }

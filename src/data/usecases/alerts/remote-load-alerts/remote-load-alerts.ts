@@ -1,27 +1,30 @@
 import { LoadAlerts, LoadAlertsResult } from '@/domain/usecases'
-import { HttpClient } from '@/data/protocols'
-import { _mockAlerts } from '@/domain/tests'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+import { HttpClient, HttpStatusCode } from '@/data/protocols'
 
 export class RemoteLoadAlerts implements LoadAlerts {
-  constructor(
-    private readonly url: string,
-    private readonly httpClient: HttpClient<LoadAlertsResult>,
-  ) {}
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadAlertsResult>) {}
 
   async get(): Promise<LoadAlertsResult> {
-    return new Promise<LoadAlertsResult>((resolve) => {
-      setTimeout(() => resolve(_mockAlerts), 1500)
+    const { statusCode, body } = await this.httpClient.request({
+      url: `${this.url}/api/alerts`,
+      method: 'get',
     })
-    // const { statusCode, body } = await this.httpClient.request({
-    //   url: `${this.url}/alerts`,
-    //   method: 'get',
-    // })
 
-    // switch (statusCode) {
-    //   case HttpStatusCode.ok:
-    //     return body as GetAlertsResult
-    //   default:
-    //     throw new UnexpectedError()
-    // }
+    if (process.env.NODE_ENV !== 'development') {
+      // return new Promise<LoadServicesResult>((resolve) => {
+      //   setTimeout(() => resolve(_mockServices), 1500)
+      // })
+    }
+
+    if (statusCode === HttpStatusCode.unauthorized) {
+      throw new AccessDeniedError()
+    }
+
+    if (!body) {
+      throw new UnexpectedError()
+    }
+
+    return body
   }
 }
