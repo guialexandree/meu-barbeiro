@@ -6,7 +6,7 @@ import { appNavigation } from '@/main/configs'
 import { AppBar, Drawer, PrivateRoute } from '@/presentation/components'
 
 export const AdminTemplate: React.FC = () => {
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     if (metaThemeColor) {
       metaThemeColor.setAttribute('content', '#2c82d8')

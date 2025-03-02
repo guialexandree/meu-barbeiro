@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { Box, Grid2, useMediaQuery, useTheme } from '@mui/material'
 import { Logo, RedirectProductLink } from '@/presentation/components'
 import backgroundImg from '@/presentation/assets/login-bg.webp'
+import { useMobile } from '@/presentation/hooks'
 
 const pulseAnimation = (timeout: number, scale: number) => ({
   animation: `pulse ${timeout}s infinite ease-in-out`,
@@ -22,13 +23,23 @@ const pulseAnimation = (timeout: number, scale: number) => ({
 export const LoginTemplate: React.FC = () => {
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isPWA } = useMobile()
+
+  const subtractPaddingToolbar = typeof theme.mixins.toolbar.minHeight === 'number' ? theme.mixins.toolbar.minHeight + 24 : 0
+
+  React.useLayoutEffect(() => {
+    const metaThemeColor = document.querySelector('meta[name=theme-color]')
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', '#131313')
+    }
+  }, [])
 
   return (
     <Grid2
       container
       sx={{
-        minHeight: theme => `calc(100vh - ${typeof theme.mixins.toolbar.minHeight === 'number' ? theme.mixins.toolbar.minHeight + 24 : 0}px)`,
-        maxHeight: `calc(100vh - ${typeof theme.mixins.toolbar.minHeight === 'number' ? theme.mixins.toolbar.minHeight + 24 : 0}px)`,
+        minHeight: `calc(100vh - ${isPWA ? 0 : subtractPaddingToolbar}px)`,
+        maxHeight: `calc(100vh - ${isPWA ? 0 : subtractPaddingToolbar}px)`,
         overflow: 'hidden',
         backgroundColor: (theme) => theme.palette.background.paper,
         backgroundImage: backgroundImg,
