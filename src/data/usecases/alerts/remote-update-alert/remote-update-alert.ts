@@ -12,7 +12,7 @@ export class RemoteUpdateAlert implements UpdateAlert {
       body: params,
     })
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (import.meta.env.DEV) {
       // return new Promise<LoadServicesResult>((resolve) => {
       //   setTimeout(() => resolve(_mockAlerts), 1500)
       // })

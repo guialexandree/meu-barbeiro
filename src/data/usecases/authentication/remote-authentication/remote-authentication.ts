@@ -16,7 +16,7 @@ export class RemoteAuthentication implements Authentication {
       body: params,
     })
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (import.meta.env.DEV) {
      // return new Promise<AuthenticationResult>((resolve) => {    
       //   setTimeout(() => resolve(_mockAuthenticationResult), 1500)
       // })

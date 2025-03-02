@@ -23,7 +23,7 @@ describe('Página de Login', () => {
       cy.get('#login-user-helper-text').should('contain', 'O nome de usuário deve ser informado')
     })
 
-    it('Deve limpar a mensagem de erro ao alterar o valor do input', () => {
+    it('Deve limpar a mensagem de erro ao alterar o valor do username', () => {
       cy.get('#login-user-helper-text').should('contain', 'O nome de usuário deve ser informado')
 
       cy.get('#login-user').type('ADMINISTRATOR')
@@ -54,6 +54,12 @@ describe('Página de Login', () => {
       cy.get('#login-button').click()
 
       cy.get('#login-password-helper-text').should('contain', 'As credenciais fornecidas estão incorretas')
+    })
+
+    it('Deve limpar a mensagem de erro ao alterar o username', () => {
+      cy.get('#login-user').type('6')
+
+      cy.get('#login-password-helper-text').should('not.exist')
     })
 
     it('Deve ser possível alterar a visualização da senha', () => {

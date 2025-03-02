@@ -12,7 +12,7 @@ export class RemoteLoadServices implements LoadServices {
       params
     })
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (import.meta.env.DEV) {
       // return new Promise<LoadServicesResult>((resolve) => {
       //   setTimeout(() => resolve(_mockLoadServicesResult), 1500)
       // })

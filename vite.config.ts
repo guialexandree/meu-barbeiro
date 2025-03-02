@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import EnvironmentPlugin from 'vite-plugin-environment'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
@@ -9,7 +10,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['zod']
+    include: ['zod'],
   },
   build: {
     rollupOptions: {
@@ -26,5 +27,5 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-  plugins: [react()],
+  plugins: [react(), EnvironmentPlugin(['API_URL', 'NODE_ENV', 'CLARITY_KEY'])],
 })

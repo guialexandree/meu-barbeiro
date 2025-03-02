@@ -15,7 +15,7 @@ export class RemoteCreateService implements CreateService {
       body: params
     })
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (import.meta.env.DEV) {
        // return new Promise<LoadServicesResult>((resolve) => {
       //   setTimeout(() => resolve(_mockServices), 1500)
       // })
