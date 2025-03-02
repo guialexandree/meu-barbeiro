@@ -27,8 +27,8 @@ export const LoginTemplate: React.FC = () => {
     <Grid2
       container
       sx={{
-        minHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
-        maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+        minHeight: theme => `calc(100vh - ${typeof theme.mixins.toolbar.minHeight === 'number' ? theme.mixins.toolbar.minHeight + 12 : 0}px)`,
+        maxHeight: `calc(100vh - ${typeof theme.mixins.toolbar.minHeight === 'number' ? theme.mixins.toolbar.minHeight + 12 : 0}px)`,
         overflow: 'hidden',
         backgroundColor: (theme) => theme.palette.background.paper,
         backgroundImage: backgroundImg,
