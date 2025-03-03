@@ -1,23 +1,16 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { Dialog, DialogContent, DialogTitle, Stack, Divider, Icon } from '@mui/material'
-import { CreateAlert, RemoveAlert, UpdateAlert } from '@/domain/usecases'
 import {
   InputAlertForm,
   ActionsAlertForm,
   StatusAlertForm,
   ActionRemoveAlertForm,
 } from '@/presentation/pages/alerts/components'
-import * as State from '@/presentation/pages/alerts/components/atoms'
+import { State } from '@/presentation/pages/alerts/components/atoms'
 
-type CreateUpdateAlertFormProps = {
-  createAlert: CreateAlert
-  updateAlert: UpdateAlert
-  removeAlert: RemoveAlert
-}
-
-export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (props) => {
-  const [open, setOpen] = useRecoilState(State.isOpenState)
+export const CreateUpdateAlertForm: React.FC = () => {
+  const [open, setOpen] = useRecoilState(State.CreateUpdateForm.isOpenState)
 
   const handleClose = (): void => {
     setOpen(false)
@@ -52,14 +45,14 @@ export const CreateUpdateAlertForm: React.FC<CreateUpdateAlertFormProps> = (prop
         <Stack spacing={1}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <StatusAlertForm />
-            <ActionRemoveAlertForm removeAlert={props.removeAlert} />
+            <ActionRemoveAlertForm />
           </Stack>
 
           <InputAlertForm />
         </Stack>
       </DialogContent>
 
-      <ActionsAlertForm createAlert={props.createAlert} updateAlert={props.updateAlert} />
+      <ActionsAlertForm />
     </Dialog>
   )
 }

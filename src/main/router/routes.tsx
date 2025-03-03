@@ -9,6 +9,7 @@ import LoginPage from '@/presentation/pages/login'
 import RecoveryPasswordPage from '@/presentation/pages/recovery-password'
 const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-queue'))
 const ServicesPage = lazy(() => import('@/presentation/pages/services'))
+const ServiceCreatePage = lazy(() => import('@/presentation/pages/service-create'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts'))
 const ClientsPage = lazy(() => import('@/presentation/pages/clients'))
 const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
@@ -35,19 +36,12 @@ const router = createBrowserRouter([
         element: <Loadable children={<ServicesPage />} />,
       },
       {
+        path: '/novo-servico',
+        element: <Loadable children={<ServiceCreatePage />} />,
+      },
+      {
         path: '/avisos',
-        element: (
-          <Loadable
-            children={
-              <AlertsPage
-                getAlerts={Factories.makeRemoteLoadAlerts()}
-                createAlert={Factories.makeRemoteCreateAlert()}
-                updateAlert={Factories.makeRemoteUpdateAlert()}
-                removeAlert={Factories.makeRemoteRemoveAlert()}
-              />
-            }
-          />
-        ),
+        element: <Loadable children={<AlertsPage />} />,
       },
     ],
   },

@@ -5,8 +5,8 @@ export interface CreateAlert {
   create: (params: CreateAlertParams) => Promise<CreateAlertResult>
 }
 
-export type CreateAlertResult = AlertModel
+export type CreateAlertResult = HttpDefaultResponse<AlertModel>
 
-export type CreateAlertParams = HttpDefaultResponse<Omit<AlertModel, 'id'> & {
+export type CreateAlertParams = Omit<AlertModel, 'id'> & {
   id?: string
-}>
+}

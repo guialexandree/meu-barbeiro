@@ -1,10 +1,10 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
-import * as State from '@/presentation/pages/alerts/components/atoms'
+import { State } from '@/presentation/pages/alerts/components/atoms'
 
 export const StatusAlertForm: React.FC = () => {
-  const [status, setStatus] = useRecoilState(State.statusNewAlertState)
+  const [status, setStatus] = useRecoilState(State.CreateUpdateForm.statusNewAlertState)
 
   return (
     <ToggleButtonGroup

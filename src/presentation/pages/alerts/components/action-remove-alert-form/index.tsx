@@ -1,23 +1,22 @@
 import React from 'react'
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { Button } from '@mui/material'
-import { RemoveAlert, RemoveAlertParams } from '@/domain/usecases'
-import * as State from '@/presentation/pages/alerts/components/atoms'
+import { RemoveAlertParams } from '@/domain/usecases'
+import { State } from '@/presentation/pages/alerts/components/atoms'
 import { useNotify } from '@/presentation/hooks'
+import { Factories } from '@/main/factories/usecases'
 
-type ActionRemoveAlertFormProps = {
-  removeAlert: RemoveAlert
-}
-
-export const ActionRemoveAlertForm: React.FC<ActionRemoveAlertFormProps> = (props) => {
+export const ActionRemoveAlertForm: React.FC = () => {
   const { notify } = useNotify()
-  const setOpenForm = useSetRecoilState(State.isOpenState)
-  const newAlert = useRecoilValue(State.newAlertState)
-  const setLoading = useSetRecoilState(State.isLoadingSaveAlertState)
+  const setOpenForm = useSetRecoilState(State.CreateUpdateForm.isOpenState)
+  const newAlert = useRecoilValue(State.CreateUpdateForm.newAlertState)
+  const setLoading = useSetRecoilState(State.CreateUpdateForm.isLoadingSaveAlertState)
   const resetHomeAlert = useResetRecoilState(State.homeAlertState)
   const resetServicesAlert = useResetRecoilState(State.servicesAlertState)
   const resetHistorylert = useResetRecoilState(State.historyAlertState)
-  const resetForm = useResetRecoilState(State.createUpdateAlertState)
+  const resetForm = useResetRecoilState(State.CreateUpdateForm.createUpdateAlertState)
+
+  const removeAlert = React.useMemo(() => Factories.makeRemoteRemoveAlert(), [])
 
   const onSuccess = (): void => {
     notify('Aviso removido com sucesso', { type: 'success' })
@@ -33,14 +32,14 @@ export const ActionRemoveAlertForm: React.FC<ActionRemoveAlertFormProps> = (prop
     setOpenForm(false)
   }
 
-  const removeAlert = (): void => {
+  const handleRemoveAlert = (): void => {
     setLoading(true)
 
     const params: RemoveAlertParams = {
       id: newAlert.id,
     }
 
-    props.removeAlert
+    removeAlert
       .remove(params)
       .then(onSuccess)
       .catch(console.error)
@@ -49,7 +48,7 @@ export const ActionRemoveAlertForm: React.FC<ActionRemoveAlertFormProps> = (prop
 
   return (
     newAlert?.id && (
-      <Button color="error" sx={{ color: 'error.light' }} onClick={removeAlert} size="small">
+      <Button color="error" sx={{ color: 'error.light' }} onClick={handleRemoveAlert} size="small">
         Remover alerta
       </Button>
     )

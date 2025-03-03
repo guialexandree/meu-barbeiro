@@ -1,10 +1,10 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { TextField } from '@mui/material'
-import * as State from '@/presentation/pages/alerts/components/atoms'
+import { State } from '@/presentation/pages/alerts/components/atoms'
 
 export const InputAlertForm: React.FC = () => {
-  const [message, setMessage] = useRecoilState(State.messageNewAlertState)
+  const [message, setMessage] = useRecoilState(State.CreateUpdateForm.messageNewAlertState)
 
   return (
     <TextField

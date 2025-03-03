@@ -2,29 +2,26 @@ import React from 'react'
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { Button, DialogActions, Icon } from '@mui/material'
 import { AlertModel } from '@/domain/models'
-import { CreateAlert, UpdateAlert } from '@/domain/usecases'
 import { useNotify } from '@/presentation/hooks'
-import * as State from '@/presentation/pages/alerts/components/atoms'
+import { State } from '@/presentation/pages/alerts/components/atoms'
+import { Factories } from '@/main/factories/usecases'
 
-type ActionsAlertFormProps = {
-  createAlert: CreateAlert
-  updateAlert: UpdateAlert
-}
-
-export const ActionsAlertForm: React.FC<ActionsAlertFormProps> = (props) => {
+export const ActionsAlertForm: React.FC = () => {
   const { notify } = useNotify()
-  const newAlert = useRecoilValue(State.newAlertState)
-  const setLoading = useSetRecoilState(State.isLoadingSaveAlertState)
-  const setOpen = useSetRecoilState(State.isOpenState)
+  const newAlert = useRecoilValue(State.CreateUpdateForm.newAlertState)
+  const setLoading = useSetRecoilState(State.CreateUpdateForm.isLoadingSaveAlertState)
+  const setOpen = useSetRecoilState(State.CreateUpdateForm.isOpenState)
   const setHomeAlert = useSetRecoilState(State.homeAlertState)
   const setServicesAlert = useSetRecoilState(State.servicesAlertState)
   const setHistorylert = useSetRecoilState(State.historyAlertState)
   const resetHomeAlert = useResetRecoilState(State.homeAlertState)
   const resetServicesAlert = useResetRecoilState(State.servicesAlertState)
   const resetHistorylert = useResetRecoilState(State.historyAlertState)
-  const resetForm = useResetRecoilState(State.createUpdateAlertState)
+  const resetForm = useResetRecoilState(State.CreateUpdateForm.createUpdateAlertState)
 
   const edditing = newAlert?.id ? true : false
+  const updateAlert = React.useMemo(() => Factories.makeRemoteUpdateAlert(), [])
+  const createAlert = React.useMemo(() => Factories.makeRemoteCreateAlert(), [])
 
   const onSuccess = (alert: AlertModel): void => {
     if (alert.id) {
@@ -51,16 +48,16 @@ export const ActionsAlertForm: React.FC<ActionsAlertFormProps> = (props) => {
     event.preventDefault()
 
     if (edditing) {
-      updateAlert()
+      handleUpdateAlert()
     } else {
-      createAlert()
+      handleCreateAlert()
     }
   }
 
-  const updateAlert = (): void => {
+  const handleUpdateAlert = (): void => {
     setLoading(true)
 
-    props.updateAlert
+    updateAlert
       .update(newAlert)
       .then(() => {
         notify('Aviso atualizado com sucesso', { type: 'success' })
@@ -73,10 +70,10 @@ export const ActionsAlertForm: React.FC<ActionsAlertFormProps> = (props) => {
       .finally(() => setLoading(false))
   }
 
-  const createAlert = (): void => {
+  const handleCreateAlert = (): void => {
     setLoading(true)
 
-    props.createAlert
+    createAlert
       .create(newAlert)
       .then(() => {
         notify(`Aviso ${edditing ? 'editado' : 'criado'} com sucesso`, { type: 'success' })

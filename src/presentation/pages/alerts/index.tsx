@@ -1,24 +1,19 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { Box } from '@mui/material'
-import { CreateAlert, LoadAlerts, LoadAlertsResult, RemoveAlert, UpdateAlert } from '@/domain/usecases'
 import { PageContainer, PageTitle } from '@/presentation/components'
 import { CreateUpdateAlertForm, PageAlert } from '@/presentation/pages/alerts/components'
-import * as State from '@/presentation/pages/alerts/components/atoms'
 import notificationImg from '@/presentation/assets/notification-header.png'
 import { AlertModel } from '@/domain/models'
+import { State } from '@/presentation/pages/alerts/components/atoms'
+import { Factories } from '@/main/factories/usecases'
 
-type AlertsPageProps = {
-  getAlerts: LoadAlerts
-  createAlert: CreateAlert
-  updateAlert: UpdateAlert
-  removeAlert: RemoveAlert
-}
-
-const AlertsPage: React.FC<AlertsPageProps> = (props) => {
+const AlertsPage: React.FC = () => {
   const setHomeAlert = useSetRecoilState(State.homeAlertState)
   const setServicesAlert = useSetRecoilState(State.servicesAlertState)
   const setHistoryAlert = useSetRecoilState(State.historyAlertState)
+
+  const getAlerts = React.useMemo(() => Factories.makeRemoteLoadAlerts(), [])
 
   const startAlerts = (alerts: AlertModel[]) => {
     const homeAlert = alerts.find((alert) => alert.type === 'home')
@@ -30,7 +25,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
   }
 
   const loadAlerts = React.useCallback(async (): Promise<void> => {
-    const alerts = await props.getAlerts.get()
+    const alerts = await getAlerts.get()
     startAlerts(alerts.data)
   }, [])
 
@@ -48,11 +43,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
         <PageAlert alertState={State.historyAlertState} entryDirection="right" type="history" />
       </Box>
 
-      <CreateUpdateAlertForm
-        removeAlert={props.removeAlert}
-        createAlert={props.createAlert}
-        updateAlert={props.updateAlert}
-      />
+      <CreateUpdateAlertForm />
     </PageContainer>
   )
 }

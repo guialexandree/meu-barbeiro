@@ -1,12 +1,12 @@
 import { atom } from 'recoil'
 import { AlertModel } from '@/domain/models'
 
-export const alertsPanelState = atom({
+const alertsPanelState = atom({
   key: 'alertsPanelState',
   default: 'home' as 'home' | 'services' | 'history',
 })
 
-export const homeAlertState = atom<AlertModel>({
+const homeAlertState = atom<AlertModel>({
   key: 'homeAlertState',
   default: {
     id: '',
@@ -16,7 +16,7 @@ export const homeAlertState = atom<AlertModel>({
   },
 })
 
-export const servicesAlertState = atom<AlertModel>({
+const servicesAlertState = atom<AlertModel>({
   key: 'servicesAlertState',
   default: {
     id: '',
@@ -26,7 +26,7 @@ export const servicesAlertState = atom<AlertModel>({
   },
 })
 
-export const historyAlertState = atom<AlertModel>({
+const historyAlertState = atom<AlertModel>({
   key: 'historyAlertState',
   default: {
     id: '',
@@ -36,4 +36,12 @@ export const historyAlertState = atom<AlertModel>({
   },
 })
 
-export * from './create-update-alert-form/atoms'
+import * as CreateUpdateForm from './create-update-alert-form/atoms'
+
+export const State = {
+  alertsPanelState,
+  homeAlertState,
+  servicesAlertState,
+  historyAlertState,
+  CreateUpdateForm,
+}

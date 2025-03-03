@@ -2,7 +2,7 @@ import React from 'react'
 import { RecoilState, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { Alert, Icon, IconButton, Link, Stack } from '@mui/material'
 import { AlertModel } from '@/domain/models'
-import * as State from '@/presentation/pages/alerts/components/atoms'
+import { State } from '@/presentation/pages/alerts/components/atoms'
 
 type PageAlertContentProps = {
   alertState: RecoilState<AlertModel>
@@ -11,9 +11,9 @@ type PageAlertContentProps = {
 
 export const PageAlertContent: React.FC<PageAlertContentProps> = (props) => {
   const [alert, setAlert] = useRecoilState(props.alertState)
-  const setOpenForm = useSetRecoilState(State.isOpenState)
-  const resetNewAlert = useResetRecoilState(State.createUpdateAlertState)
-  const setNewAlert = useSetRecoilState(State.createUpdateAlertState)
+  const setOpenForm = useSetRecoilState(State.CreateUpdateForm.isOpenState)
+  const resetNewAlert = useResetRecoilState(State.CreateUpdateForm.createUpdateAlertState)
+  const setNewAlert = useSetRecoilState(State.CreateUpdateForm.createUpdateAlertState)
 
   const handleAdd = () => {
     resetNewAlert()

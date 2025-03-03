@@ -4,7 +4,7 @@ import { PageLoader } from '../page-loader'
 
 type PageContainerProps = {
   children: React.ReactNode
-  onInit: () => Promise<void>
+  onInit?: () => Promise<void>
 }
 
 export const PageContainer: React.FC<PageContainerProps> = (props) => {
@@ -14,7 +14,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
 
   React.useEffect(() => {
     props
-      .onInit()
+      .onInit?.()
       .finally(() => setLoadingInit(false))
   }, [])
 
