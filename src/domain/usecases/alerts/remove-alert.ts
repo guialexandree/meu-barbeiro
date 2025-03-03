@@ -1,3 +1,4 @@
+import { HttpDefaultResponse } from '@/data/protocols'
 import { AlertModel } from '@/domain/models'
 
 export interface RemoveAlert {
@@ -7,4 +8,4 @@ export interface RemoveAlert {
 export type RemoveAlertParams = {
   id: string
 }
-export type RemoveAlertResult = AlertModel
+export type RemoveAlertResult = HttpDefaultResponse<AlertModel>

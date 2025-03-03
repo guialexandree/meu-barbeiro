@@ -1,3 +1,4 @@
+import { HttpDefaultResponse } from '@/data/protocols'
 import { AlertModel } from '@/domain/models'
 
 export interface UpdateAlert {
@@ -5,4 +6,4 @@ export interface UpdateAlert {
 }
 
 export type UpdateAlertParams = AlertModel
-export type UpdateAlertResult = AlertModel
+export type UpdateAlertResult = HttpDefaultResponse<AlertModel>

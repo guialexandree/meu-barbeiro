@@ -6,6 +6,7 @@ import { PageContainer, PageTitle } from '@/presentation/components'
 import { CreateUpdateAlertForm, PageAlert } from '@/presentation/pages/alerts/components'
 import * as State from '@/presentation/pages/alerts/components/atoms'
 import notificationImg from '@/presentation/assets/notification-header.png'
+import { AlertModel } from '@/domain/models'
 
 type AlertsPageProps = {
   getAlerts: LoadAlerts
@@ -19,7 +20,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
   const setServicesAlert = useSetRecoilState(State.servicesAlertState)
   const setHistoryAlert = useSetRecoilState(State.historyAlertState)
 
-  const startAlerts = (alerts: LoadAlertsResult) => {
+  const startAlerts = (alerts: AlertModel[]) => {
     const homeAlert = alerts.find((alert) => alert.type === 'home')
     if (homeAlert) setHomeAlert(homeAlert)
     const servicesAlert = alerts.find((alert) => alert.type === 'services')
@@ -30,7 +31,7 @@ const AlertsPage: React.FC<AlertsPageProps> = (props) => {
 
   const loadAlerts = React.useCallback(async (): Promise<void> => {
     const alerts = await props.getAlerts.get()
-    startAlerts(alerts)
+    startAlerts(alerts.data)
   }, [])
 
   return (
