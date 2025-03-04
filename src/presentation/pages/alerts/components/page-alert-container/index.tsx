@@ -36,6 +36,7 @@ export const PageAlert: React.FC<PageAlertProps> = (props) => {
     <Slide direction={props.entryDirection} in mountOnEnter unmountOnExit>
       <Accordion
         component="article"
+        id={`${props.type}-alert-panel`}
         defaultExpanded
         sx={{
           '.MuiAccordionSummary-root': {

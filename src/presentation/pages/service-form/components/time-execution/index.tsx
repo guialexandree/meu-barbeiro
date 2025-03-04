@@ -1,10 +1,10 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { Slider, Stack, Typography } from '@mui/material'
-import * as State from '@/presentation/pages/services/components/atoms'
+import { State } from '@/presentation/pages/service-form/components/atoms'
 
-export const TimeExecutionSlider: React.FC = () => {
-  const [timeExecution, setTimeExecution] = useRecoilState(State.timeExecutionNewServiceState)
+export const ServiceFormTimeExecution: React.FC = () => {
+  const [timeExecution, setTimeExecution] = useRecoilState(State.timeExecutionState)
 
   return (
     <Stack px={1} pt={1}>

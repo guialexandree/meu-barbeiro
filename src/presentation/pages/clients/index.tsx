@@ -1,9 +1,8 @@
 import React from 'react'
 import { Fab, Icon, Stack, Zoom } from '@mui/material'
 import { GetClients } from '@/domain/usecases'
-import { PageContainer, PageTitle, ValueIndicator } from '@/presentation/components'
+import { PageContainer, ValueIndicator } from '@/presentation/components'
 import { ClientList } from '@/presentation/pages/clients/components'
-import clientesHeaderImg from '@/presentation/assets/clients-header3.png'
 
 type ClientsPageProps = {
   getClients: GetClients
@@ -11,13 +10,7 @@ type ClientsPageProps = {
 
 const ClientsPage: React.FC<ClientsPageProps> = (props) => {
   return (
-    <PageContainer onInit={async () => {}}>
-      <PageTitle
-        title="Clientes"
-        subtitle="Visualizar cadastro de clientes com informações de contato"
-        icon={clientesHeaderImg}
-      />
-
+    <PageContainer title='Clientes' subtitle='Visualizar cadastro de clientes com informações de contato'>
       <Stack direction='row' spacing={1} mx={2} mb={1}>
         <ValueIndicator
           title='Total de clientes'

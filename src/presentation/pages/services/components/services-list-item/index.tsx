@@ -3,21 +3,22 @@ import { useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
 import { Chip, Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
 import { useFormat } from '@/presentation/hooks'
-import * as State from '@/presentation/pages/services/components/atoms'
+import { State as ServiceFormState } from '@/presentation/pages/service-form/components/atoms'
+import { useNavigate } from 'react-router-dom'
 
 type ServiceListItemProps = {
   service: ServiceModel
 }
 
 export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
+  const navigate = useNavigate()
   const { formatCoins } = useFormat()
-  const setOpenForm = useSetRecoilState(State.isOpenFormServiceState)
-  const setServiceId = useSetRecoilState(State.idNewServiceState)
-  const setName = useSetRecoilState(State.nameNewServiceState)
-  const setDescription = useSetRecoilState(State.descriptionNewServiceState)
-  const setPrice = useSetRecoilState(State.priceNewServiceState)
-  const setTimeExecution = useSetRecoilState(State.timeExecutionNewServiceState)
-  const setStatus = useSetRecoilState(State.statusNewServiceState)
+  const setServiceId = useSetRecoilState(ServiceFormState.idServiceCreateState)
+  const setName = useSetRecoilState(ServiceFormState.nameState)
+  const setDescription = useSetRecoilState(ServiceFormState.descriptionState)
+  const setPrice = useSetRecoilState(ServiceFormState.priceState)
+  const setTimeExecution = useSetRecoilState(ServiceFormState.timeExecutionState)
+  const setStatus = useSetRecoilState(ServiceFormState.statusState)
 
   const handleEdit = () => {
     setName({ error: '', text: props.service.name })
@@ -26,7 +27,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
     setTimeExecution(props.service.timeExecution)
     setStatus(props.service.status)
     setServiceId(props.service.id)
-    setOpenForm(true)
+    navigate('/novo-servico')
   }
 
   return (

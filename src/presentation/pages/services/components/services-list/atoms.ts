@@ -6,6 +6,11 @@ export const servicesSearchState = atom({
   default: '',
 })
 
+export const statusSearchState = atom({
+  key: 'statusSearchState',
+  default: 'ativo' as 'ativo' | 'inativo',
+})
+
 export const servicesState = atom<ServiceModel[]>({
   key: 'servicesState',
   default: [],

@@ -1,6 +1,5 @@
 import React from 'react'
-import { PageContainer, PageTitle } from '@/presentation/components'
-import reportsHeaderImg from '@/presentation/assets/reports-header.png'
+import { PageContainer } from '@/presentation/components'
 import { Grid2, Icon, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, useTheme, Zoom } from '@mui/material'
 import {
   AttendanceIndicator,
@@ -25,9 +24,7 @@ const FinancialPage: React.FC = () => {
   }
 
   return (
-    <PageContainer onInit={async () => {}}>
-      <PageTitle title="Financeiro" subtitle="Atendimentos e movimentos de valores" icon={reportsHeaderImg} />
-
+    <PageContainer title="Financeiro" subtitle="Atendimentos e movimentos de valores">
       <Stack direction="row" mx={2} spacing={1}>
         <AttendanceIndicator />
         <MovementsIndicator />

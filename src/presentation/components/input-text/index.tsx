@@ -30,6 +30,7 @@ const InputText: React.FC<InputTextProps> = (props) => {
         ref={props.inputProps.ref}
         error={!!input.error}
         helperText={input.error}
+        disabled={props.inputProps.disabled}
         autoFocus={props.inputProps.autoFocus}
         slotProps={{
           input: {

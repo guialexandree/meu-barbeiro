@@ -5,7 +5,7 @@ import { HttpClient, HttpStatusCode } from '@/data/protocols'
 export class RemoteLoadAlerts implements LoadAlerts {
   constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadAlertsResult>) {}
 
-  async get(): Promise<LoadAlertsResult> {
+  async load(): Promise<LoadAlertsResult> {
     const { statusCode, body } = await this.httpClient.request({
       url: `${this.url}/api/alerts`,
       method: 'get',
@@ -21,7 +21,7 @@ export class RemoteLoadAlerts implements LoadAlerts {
       throw new AccessDeniedError()
     }
 
-    if (!body) {
+    if (!body?.data) {
       throw new UnexpectedError()
     }
 

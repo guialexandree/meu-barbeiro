@@ -25,6 +25,7 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
   return (
     <Paper
       sx={{
+        flex: 1,
         p: '2px 4px',
         borderRadius: 1,
         borderColor: 'grey.300',

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
-import * as State from '@/presentation/pages/services/components/atoms'
+import { State } from '@/presentation/pages/service-form/components/atoms'
 
-export const CreateUpdateServiceStatus: React.FC = () => {
-  const [status, setStatus] = useRecoilState(State.statusNewServiceState)
+export const ServiceFormStatus: React.FC = () => {
+  const [status, setStatus] = useRecoilState(State.statusState)
 
   return (
     <ToggleButtonGroup

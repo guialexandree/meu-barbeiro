@@ -1,15 +1,19 @@
 import React from 'react'
 import { Grid2, Stack, useMediaQuery, useTheme } from '@mui/material'
 import { PageLoader } from '../page-loader'
+import { PageTitle } from '../page-title'
 
 type PageContainerProps = {
   children: React.ReactNode
   onInit?: () => Promise<void>
+  loading?: boolean
+  title: string
+  subtitle: string
 }
 
 export const PageContainer: React.FC<PageContainerProps> = (props) => {
   const theme = useTheme()
-  const [loadingInit, setLoadingInit] = React.useState(true)
+  const [loadingInit, setLoadingInit] = React.useState(props?.onInit && true)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   React.useEffect(() => {
@@ -18,7 +22,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
       .finally(() => setLoadingInit(false))
   }, [])
 
-  if (loadingInit) {
+  if (loadingInit || props?.loading) {
     return (
       <PageLoader loading />
     )
@@ -39,6 +43,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
         margin: '0 auto',
       }}
     >
+      <PageTitle title={props.title} subtitle={props.subtitle} />
       <Stack sx={{ flex: 1 }}>{props.children}</Stack>
     </Grid2>
   )

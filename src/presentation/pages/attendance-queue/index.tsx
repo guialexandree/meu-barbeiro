@@ -1,8 +1,6 @@
-import { PageContainer, PageTitle } from '@/presentation/components'
+import { PageContainer } from '@/presentation/components'
 import React from 'react'
-import attendanceHeaderImg from '@/presentation/assets/aparador.png'
-import { Icon, List, ListItem, ListItemText, Paper, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup, Typography, useTheme, Zoom } from '@mui/material'
-import { _mockAttendances } from '@/domain/tests/attendances-mocks'
+import { Icon, List, SpeedDial, SpeedDialAction, SpeedDialIcon, useTheme, Zoom } from '@mui/material'
 
 const actions = [
   { icon: <Icon>file_copy</Icon>, name: 'Copy' },
@@ -19,26 +17,7 @@ const AttendanceQueuePage: React.FC = () => {
   }
 
   return (
-    <PageContainer onInit={async () => {}}>
-      <PageTitle
-        title="Fila de Atedimento"
-        subtitle="Acompanhe a fila de atendimento"
-        icon={attendanceHeaderImg}
-      />
-
-      <ToggleButtonGroup
-       fullWidth
-       sx={{ mx: 1 }}
-        color="primary"
-        value={'opened'}
-        exclusive
-        onChange={() => {}}
-        aria-label="Status Atendimento"
-      >
-        <ToggleButton value="opened">Aberto</ToggleButton>
-        <ToggleButton value="closed">Fechado</ToggleButton>
-      </ToggleButtonGroup>
-
+    <PageContainer title='Fila de Atedimento' subtitle='Acompanhe a fila de atendimento'>
       <List disablePadding>
         {/* {_mockAttendances.map(attendance => (
           <ListItem key={attendance.id} sx={{ gap: 2 }}>

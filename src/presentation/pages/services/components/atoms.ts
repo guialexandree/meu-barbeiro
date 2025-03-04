@@ -1,24 +1,31 @@
 import { atom } from 'recoil'
 
-export const loadingServicesState = atom({
+const loadingServicesState = atom({
   key: 'loadingServicesState',
   default: true,
 })
 
-export const emptyServicesState = atom({
+const emptyServicesState = atom({
   key: 'emptyServicesState',
   default: false
 })
 
-export const noResultsServicesState = atom({
+const noResultsServicesState = atom({
   key: 'noResultsServicesState',
   default: false
 })
 
-export const errorServicesState = atom({
+const errorServicesState = atom({
   key: 'errorServicesState',
   default: '',
 })
 
-export * from './create-update-service-form/atoms'
-export * from './services-list/atoms'
+import * as List from './services-list/atoms'
+
+export const State = {
+  loadingServicesState,
+  emptyServicesState,
+  noResultsServicesState,
+  errorServicesState,
+  List
+}

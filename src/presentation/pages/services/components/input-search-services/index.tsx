@@ -3,16 +3,16 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { LoadServicesResult } from '@/domain/usecases'
 import { ServiceStatus } from '@/domain/models'
 import { InputSearch } from '@/presentation/components'
-import * as State from '@/presentation/pages/services/components/atoms'
+import { State } from '@/presentation/pages/services/components/atoms'
 
 type InputSearchServicesProps = {
   loadServices: (search?: string, status?: ServiceStatus) => Promise<LoadServicesResult>
 }
 
 export const InputSearchServices: React.FC<InputSearchServicesProps> = (props) => {
-  const [services, setServices] = useRecoilState(State.servicesState)
-  const search = useRecoilValue(State.servicesSearchState)
-  const status = useRecoilValue(State.statusNewServiceState)
+  const [services, setServices] = useRecoilState(State.List.servicesState)
+  const search = useRecoilValue(State.List.servicesSearchState)
+  const status = useRecoilValue(State.List.statusSearchState)
   const setNoResut = useSetRecoilState(State.noResultsServicesState)
 
   React.useEffect(() => {
@@ -36,7 +36,7 @@ export const InputSearchServices: React.FC<InputSearchServicesProps> = (props) =
       id="services-input-search"
       placeholder="Buscar por serviço"
       loadServices={handleLoadServices}
-      valueState={State.servicesSearchState}
+      valueState={State.List.servicesSearchState}
     />
   )
 }

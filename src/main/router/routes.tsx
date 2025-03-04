@@ -5,12 +5,12 @@ import { AdminTemplate, LoginTemplate } from '@/presentation/templates'
 import { Loadable, ThemeProvider } from '@/presentation/components'
 import * as Factories from '@/main/factories/usecases'
 
-import LoginPage from '@/presentation/pages/login'
+import LoginPage from '@/presentation/pages/login/login-page'
 import RecoveryPasswordPage from '@/presentation/pages/recovery-password'
 const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-queue'))
-const ServicesPage = lazy(() => import('@/presentation/pages/services'))
-const ServiceCreatePage = lazy(() => import('@/presentation/pages/service-create'))
-const AlertsPage = lazy(() => import('@/presentation/pages/alerts'))
+const ServicesPage = lazy(() => import('@/presentation/pages/services/services-page'))
+const ServiceFormPage = lazy(() => import('@/presentation/pages/service-form/service-form-page'))
+const AlertsPage = lazy(() => import('@/presentation/pages/alerts/alerts-page'))
 const ClientsPage = lazy(() => import('@/presentation/pages/clients'))
 const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
 
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/novo-servico',
-        element: <Loadable children={<ServiceCreatePage />} />,
+        element: <Loadable children={<ServiceFormPage />} />,
       },
       {
         path: '/avisos',

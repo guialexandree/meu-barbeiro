@@ -1,6 +1,6 @@
 import { LoadServicesResult } from '../usecases'
 
-export const _mockLoadServicesResult: LoadServicesResult = {
+export const mockLoadServicesResult: LoadServicesResult = {
   success: true,
   message: 'Serviços carregados com sucesso',
   error: '',

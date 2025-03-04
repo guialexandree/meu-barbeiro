@@ -1,6 +1,11 @@
 import { atom } from 'recoil'
 import { AlertModel } from '@/domain/models'
 
+const loadingAlertsState = atom({
+  key: 'loadingAlertsState',
+  default: true,
+})
+
 const alertsPanelState = atom({
   key: 'alertsPanelState',
   default: 'home' as 'home' | 'services' | 'history',
@@ -36,12 +41,19 @@ const historyAlertState = atom<AlertModel>({
   },
 })
 
+const errorAlertsState = atom({
+  key: 'errorAlertsState',
+  default: '',
+})
+
 import * as CreateUpdateForm from './create-update-alert-form/atoms'
 
 export const State = {
+  loadingAlertsState,
   alertsPanelState,
   homeAlertState,
   servicesAlertState,
   historyAlertState,
+  errorAlertsState,
   CreateUpdateForm,
 }

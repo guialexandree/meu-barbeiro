@@ -1,10 +1,10 @@
 import React from 'react'
 import { Avatar, Paper, Slide, Stack, Typography } from '@mui/material'
+import logoImg from '@/presentation/assets/logo.png'
 
 type PageTitleProps = {
   title: string
   subtitle: string
-  icon: string
 }
 
 export const PageTitle: React.FC<PageTitleProps> = (props) => {
@@ -18,22 +18,19 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
           mb: 2,
           height: 65,
           position: 'relative',
-          pl: 8,
+          pl: 7,
           pr: 1,
-          borderBottomWidth: 2,
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'secondary.main',
         }}
       >
         <Stack direction="row" spacing={2} alignItems="center">
           <Avatar
-            src={props.icon}
+            src={logoImg}
             sx={{
-              width: 100,
-              height: 100,
+              width: 80,
+              height: 80,
               position: 'absolute',
-              left: -30,
-              top: -15,
+              left: -20,
+              top: -10,
             }}
           />
 

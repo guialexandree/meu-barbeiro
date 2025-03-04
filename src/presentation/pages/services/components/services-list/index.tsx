@@ -2,10 +2,10 @@ import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Box, Button, Fade, List, Stack, Typography } from '@mui/material'
 import { ServiceListItem } from '@/presentation/pages/services/components'
-import * as State from '@/presentation/pages/services/components/atoms'
+import { PageLoader } from '@/presentation/components'
+import { State } from '@/presentation/pages/services/components/atoms'
 import emptyListImg from '@/presentation/assets/empty-list.svg'
 import errorListImg from '@/presentation/assets/error-list.svg'
-import { PageLoader } from '@/presentation/components'
 
 type ServiceListProps = {
   onReload: VoidFunction
@@ -14,10 +14,10 @@ type ServiceListProps = {
 export const ServiceList: React.FC<ServiceListProps> = (props) => {
   const [error, setError] = useRecoilState(State.errorServicesState)
   const empty = useRecoilValue(State.emptyServicesState)
-  const services = useRecoilValue(State.servicesState)
+  const services = useRecoilValue(State.List.servicesState)
   const noResults = useRecoilValue(State.noResultsServicesState)
   const loading = useRecoilValue(State.loadingServicesState)
-  const search = useRecoilValue(State.servicesSearchState)
+  const search = useRecoilValue(State.List.servicesSearchState)
 
   if (loading) {
     return (

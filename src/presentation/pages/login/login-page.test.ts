@@ -103,7 +103,9 @@ describe('Página de Login', () => {
     })
 
     it('Deve bloquear campos e exibir loading enquanto realizada o login', () => {
-      Http.mockOk('POST', '/api/auth', { success: true, data: { accessToken: 'fakeAccessToken123' } }).as(
+      const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYjZiZTVlZS1hNjViLTQwYmEtODBiOC1mY2I3NmIyMjZhNDUiLCJ1c2VybmFtZSI6Imd1aSIsIm5hbWUiOiJndWkiLCJpYXQiOjE3NDA5MzIxMjIsImV4cCI6MTc0MzUyNDEyMn0.MK9GnwNjt67_w6GmCRBJk1SgnD0j_wfRC99Snf7fmTs'
+
+      Http.mockOk('POST', '/api/auth', { success: true, data: { accessToken } }).as(
         'loginRequest',
       )
       cy.visit('/')
@@ -123,7 +125,7 @@ describe('Página de Login', () => {
     })
 
     it('Deve gravar o accessToken em localStorage quando login realizado com sucesso', () => {
-      const accessToken = 'fakeAccessToken123'
+      const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYjZiZTVlZS1hNjViLTQwYmEtODBiOC1mY2I3NmIyMjZhNDUiLCJ1c2VybmFtZSI6Imd1aSIsIm5hbWUiOiJndWkiLCJpYXQiOjE3NDA5MzIxMjIsImV4cCI6MTc0MzUyNDEyMn0.MK9GnwNjt67_w6GmCRBJk1SgnD0j_wfRC99Snf7fmTs'
       Http.mockOk('POST', '/api/auth', { success: true, data: { accessToken } }).as('loginRequest')
       cy.visit('/')
 
