@@ -1,16 +1,14 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
-import { Alert, Button, Stack } from '@mui/material'
+import { Alert } from '@mui/material'
 import { PageContainer } from '@/presentation/components'
-import { ServiceList, InputSearchServices } from '@/presentation/pages/services/components'
+import { ServiceList, ServiceFilters } from '@/presentation/pages/services/components'
 import { ServiceStatus } from '@/domain/models'
 import { State } from '@/presentation/pages/services/components/atoms'
 import { LoadServicesResult } from '@/domain/usecases'
 import { Factories } from '@/main/factories/usecases'
-import { useNavigate } from 'react-router-dom'
 
 const ServicesPage: React.FC = () => {
-  const navigate = useNavigate()
   const setLoading = useSetRecoilState(State.loadingServicesState)
   const setServices = useSetRecoilState(State.List.servicesState)
   const setError = useSetRecoilState(State.errorServicesState)
@@ -64,10 +62,7 @@ const ServicesPage: React.FC = () => {
         Somente serviços ativos serão exibidos para o cliente no app
       </Alert>
 
-      <Stack spacing={1} direction='row' mx={2} mb={2}>
-        <InputSearchServices loadServices={onLoadServices} />
-        <Button variant='contained' id='service-create-button' onClick={() => { navigate('/novo-servico') }} sx={{ borderRadius: 1 }}>Criar Novo</Button>
-      </Stack>
+      <ServiceFilters loadServices={onLoadServices}/>
 
       <ServiceList onReload={onInit} />
 

@@ -7,7 +7,7 @@ export const servicesSearchState = atom({
 })
 
 export const showFilterState = atom({
-  key: 'showFilterState',
+  key: 'showFilterServicesState',
   default: true
 })
 

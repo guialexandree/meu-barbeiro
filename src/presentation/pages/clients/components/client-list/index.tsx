@@ -31,7 +31,13 @@ export const ClientList: React.FC<ClientListProps> = (props) => {
 
   return (
     <Stack sx={{ height: 436 }}>
-      <InputSearch id="clients-search" placeholder="Buscar por cliente" valueState={State.textClientsSearchState} />
+      <InputSearch
+        id="clients-search"
+        placeholder="Buscar por cliente"
+        inputSearchState={State.textClientsSearchState}
+        showFilters={State.showFilterState}
+        loadData={loadClients}
+      />
 
       <DataGrid
         density="compact"

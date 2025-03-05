@@ -56,7 +56,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
         <InputSearch
           id="services-input-search"
           placeholder="Buscar por serviço"
-          loadServices={handleLoadServices}
+          loadData={handleLoadServices}
           inputSearchState={State.List.servicesSearchState}
           showFilters={State.List.showFilterState}
         />
@@ -103,6 +103,9 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
               handleChangeStatusFilter(event.target.value as ServiceStatus)
             }}
             autoWidth
+            slotProps={{
+              input: { sx: { color: 'grey.400' } },
+            }}
             label="Status"
             sx={{ minWidth: 240 }}
           >

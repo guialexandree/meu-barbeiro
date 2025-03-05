@@ -21,16 +21,12 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
       key={`service-${props.service.id}`}
       id={`service-${props.service.id}`}
       sx={{
-        borderRadius: 0,
+        mt: 1,
+        borderRadius: 1,
         display: 'flex',
         flexWrap: 'wrap',
-        borderBottom: 'solid 1px',
-        borderColor: 'divider',
-        ':last-child': {
-          borderBottom: 'none',
-          borderBottomLeftRadius: 8,
-          borderBottomRightRadius: 8,
-        },
+        backgroundColor:  theme => `${theme.palette.background.paper}80`,
+        boxShadow: 1,
         '& .MuiListItemText-root': { mb: 0 }
       }}
     >

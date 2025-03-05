@@ -6,6 +6,11 @@ export const clientsState = atom({
   default: _mockClients,
 })
 
+export const showFilterState = atom({
+  key: 'showFilterClientsState',
+  default: true
+})
+
 export const textClientsSearchState = atom({
   key: 'textClientsSearchState',
   default: '',

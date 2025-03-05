@@ -20,9 +20,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   const search = useRecoilValue(State.List.servicesSearchState)
 
   if (loading) {
-    return (
-      <PageLoader />
-    )
+    return <PageLoader />
   }
 
   if (error) {
@@ -63,7 +61,13 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
 
   if (noResults) {
     return (
-      <Stack id="no-results-services-list" sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }} px={2} alignItems="center" spacing={1}>
+      <Stack
+        id="no-results-services-list"
+        sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }}
+        px={2}
+        alignItems="center"
+        spacing={1}
+      >
         <Box component="img" src={emptyListImg} alt="Nenhum serviço cadastrado" width={160} height={160} />
         <Typography variant="h6" align="center">
           {`Nenhum serviço foi encontrado com o filtros ${search?.toLocaleUpperCase()}`}
@@ -76,14 +80,16 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   }
 
   return (
-    <Fade in timeout={700}>
-      <Box>
-        <List dense disablePadding id='services-list'>
-          {services.map((service) => (
-            <ServiceListItem key={service.id} service={service} />
-          ))}
-        </List>
-      </Box>
-    </Fade>
+    <Box mx={2}>
+      <List dense disablePadding id="services-list">
+        {services.map((service, index) => (
+          <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={service.id}>
+            <Box component='section'>
+              <ServiceListItem service={service} />
+            </Box>
+          </Fade>
+        ))}
+      </List>
+    </Box>
   )
 }

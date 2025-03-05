@@ -7,7 +7,7 @@ type InputSearchProps = {
   placeholder: string
   inputSearchState: RecoilState<string>
   showFilters: RecoilState<boolean>
-  loadServices: (search: string) => void
+  loadData: (search: string) => void
 }
 
 export const InputSearch: React.FC<InputSearchProps> = (props) => {
@@ -15,7 +15,7 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
   const [showFilters, setShowFilters] = useRecoilState(props.showFilters)
 
   const handleSearch = () => {
-    props.loadServices(text)
+    props.loadData(text)
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
