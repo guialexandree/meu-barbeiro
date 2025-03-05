@@ -6,6 +6,11 @@ const loadingAlertsState = atom({
   default: true,
 })
 
+const openDialogConfirmState = atom({
+  key: 'openDialogConfirmAlertFormState',
+  default: true,
+})
+
 const alertsPanelState = atom({
   key: 'alertsPanelState',
   default: 'home' as 'home' | 'services' | 'history',
@@ -50,6 +55,7 @@ import * as CreateUpdateForm from './create-update-alert-form/atoms'
 
 export const State = {
   loadingAlertsState,
+  openDialogConfirmState,
   alertsPanelState,
   homeAlertState,
   servicesAlertState,

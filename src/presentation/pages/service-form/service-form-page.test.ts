@@ -9,7 +9,7 @@ describe('Página de Serviços', () => {
 
   describe('Validações de estados da página', () => {
     it('Deve iniciar a pagina com os valores corretos', () => {
-      cy.visit('/novo-servico')
+      cy.visit('/servico/criar-novo')
 
       cy.get('#page-title').should('have.text', 'Cadastro de Serviço')
       cy.get('#page-subtitle').should('have.text', 'Crie serviços e ajuste preços para serem exibidos no app do cliente')
@@ -47,7 +47,7 @@ describe('Página de Serviços', () => {
     })
 
     it('Deve exibir erro no helper do input nome do Serviço caso ocorram erros com o nome', () => {
-      cy.visit('/novo-servico')
+      cy.visit('/servico/criar-novo')
       cy.get('#service-name').type('AB')
 
       cy.get('#save-service-button').click()
@@ -71,7 +71,7 @@ describe('Página de Serviços', () => {
         message: 'Serviço criado com sucesso',
         data: { id: 'd9755e37-4470-416a-b5bd-b02fa73e1748', name: 'any_name', status: 'ativo' },
       }).as('createService')
-      cy.visit('/novo-servico')
+      cy.visit('/servico/criar-novo')
 
       cy.get('#service-name').type('any_name')
       cy.get('#save-service-button').click()

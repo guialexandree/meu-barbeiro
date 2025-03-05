@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { Button } from '@mui/material'
 import { RemoveServiceParams } from '@/domain/usecases'
@@ -6,14 +7,16 @@ import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/service-form/components/atoms'
 import { State as ServicesState } from '@/presentation/pages/services/components/atoms'
 import { Factories } from '@/main/factories/usecases'
-import { useNavigate } from 'react-router-dom'
+import { DialogConfirm } from '@/presentation/components'
 
 export const ServiceFormRemoveAction: React.FC = () => {
   const navigate = useNavigate()
   const { notify } = useNotify()
-  const serviceId = useRecoilValue(State.idServiceCreateState)
   const setServices = useSetRecoilState(ServicesState.List.servicesState)
-  const setLoading = useSetRecoilState(State.loadingState)
+  const setDialogConfirm = useSetRecoilState(State.openRemoveConfirmState)
+  const serviceCreate = useRecoilValue(State.serviceCreateState)
+  const setLoading = useSetRecoilState(State.loadingFormState)
+  const { id } = useParams<{ id: string }>()
 
   const removeService = React.useMemo(() => Factories.makeRemoteRemoveService(), [])
 
@@ -23,16 +26,17 @@ export const ServiceFormRemoveAction: React.FC = () => {
     navigate('/servicos')
   }
 
-  const handleRemoveService = (): void => {
-    setLoading(true)
+  const handleRemoveService = React.useCallback((): void => {
+    if (!id) return
 
     const params: RemoveServiceParams = {
-      id: serviceId,
+      id,
     }
 
+    setLoading(true)
     removeService
       .remove(params)
-      .then(removeResult => {
+      .then((removeResult) => {
         if (removeResult.success) {
           return onSuccess(removeResult.data.id)
         }
@@ -44,15 +48,24 @@ export const ServiceFormRemoveAction: React.FC = () => {
         console.error(error)
       })
       .finally(() => setLoading(false))
-  }
+  }, [id])
 
-  if (!serviceId.length) {
+  if (!id) {
     return undefined
   }
 
   return (
-    <Button color="error" sx={{ color: 'error.light' }} onClick={handleRemoveService} size="small">
-      Remover
-    </Button>
+    <>
+      <Button color="error" sx={{ color: 'error.light' }} onClick={() => { setDialogConfirm(true) }} size="small">
+        Remover
+      </Button>
+
+      <DialogConfirm
+        title="Eliminação de serviço"
+        answer={`O serviço ${serviceCreate.name.toUpperCase()} será eliminado, deseja continuar com a eliminação?`}
+        onConfirm={handleRemoveService}
+        openState={State.openRemoveConfirmState}
+      />
+    </>
   )
 }

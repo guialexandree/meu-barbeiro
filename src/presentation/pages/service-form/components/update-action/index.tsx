@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
 import { Button, Icon } from '@mui/material'
@@ -7,15 +8,17 @@ import { State } from '@/presentation/pages/service-form/components/atoms'
 import { State as ServiceState } from '@/presentation/pages/services/components/atoms'
 import { serviceUpdateValidation } from './validations'
 import { Factories } from '@/main/factories/usecases'
-import { useNavigate } from 'react-router-dom'
+import { DialogConfirm } from '@/presentation/components'
 
 export const UpdateFormAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
-  const newService = useRecoilValue(State.serviceCreateState)
+  const serviceCreate = useRecoilValue(State.serviceCreateState)
   const setServices = useSetRecoilState(ServiceState.List.servicesState)
-  const setLoading = useSetRecoilState(State.loadingState)
+  const setLoading = useSetRecoilState(State.loadingFormState)
   const setName = useSetRecoilState(State.nameState)
+  const setOpenUpdateConfirm = useSetRecoilState(State.openUpdateConfirmState)
+  const { id } = useParams<{ id: string }>()
 
   const updateService = React.useMemo(() => Factories.makeRemoteUpdateService(), [])
 
@@ -34,13 +37,8 @@ export const UpdateFormAction: React.FC = () => {
     notify(error, { type: 'error' })
   }
 
-  const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
-    event.preventDefault()
-    handleServiceUpdate()
-  }
-
   const validateForm = (): boolean => {
-    const result = serviceUpdateValidation.safeParse(newService)
+    const result = serviceUpdateValidation.safeParse(serviceCreate)
 
     if (!result.success) {
       const error = result.error.errors.at(0)!
@@ -51,15 +49,22 @@ export const UpdateFormAction: React.FC = () => {
     return result.success
   }
 
-  const handleServiceUpdate = (): void => {
+  const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+    event.preventDefault()
     if (!validateForm()) return
+
+    setOpenUpdateConfirm(true)
+  }
+
+  const handleServiceUpdate = (): void => {
+    if(!id) return
 
     setLoading(true)
     updateService
-      .update(newService)
+      .update({ ...serviceCreate, id })
       .then((result) => {
         if (result.success) {
-          return onSuccess(newService)
+          return onSuccess({ ...serviceCreate, id })
         }
 
         onError(result.error, 'name')
@@ -70,16 +75,29 @@ export const UpdateFormAction: React.FC = () => {
       .finally(() => setLoading(false))
   }
 
+  if (!id) {
+    return undefined
+  }
+
   return (
-    <Button
-      variant="contained"
-      onClick={handleSubmit}
-      type="submit"
-      endIcon={<Icon>check</Icon>}
-      id="update-service-button"
-      href="#"
-    >
-      Editar
-    </Button>
+    <>
+      <Button
+        variant="contained"
+        onClick={handleSubmit}
+        type="submit"
+        endIcon={<Icon>check</Icon>}
+        id="update-service-button"
+        href="#"
+      >
+        Editar
+      </Button>
+
+      <DialogConfirm
+        title="Atualização de serviço"
+        answer={`O serviço ${serviceCreate.name.toUpperCase()} será atualizado, deseja continuar com a eliminação?`}
+        onConfirm={handleServiceUpdate}
+        openState={State.openUpdateConfirmState}
+      />
+    </>
   )
 }

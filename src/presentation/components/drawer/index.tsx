@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { AppNavigation } from '@/main/configs'
 import {
@@ -14,6 +14,7 @@ import {
   useTheme,
   useMediaQuery,
   Divider,
+  IconButton,
 } from '@mui/material'
 import { isOpenDrawer } from './atoms'
 import * as GenericState from '@/presentation/components/atoms'
@@ -24,6 +25,7 @@ export type DrawerProps = {
 
 export const Drawer: React.FC<DrawerProps> = (props) => {
   const navigate = useNavigate()
+  const location = useLocation().pathname
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [open, setOpen] = useRecoilState(isOpenDrawer)
@@ -58,7 +60,11 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
                 }}
               >
                 <ListItemIcon>
-                  <Icon>{appNavigate.icon}</Icon>
+                  <IconButton sx={{ backgroundColor: 'grey.800' }}>
+                    <Icon color={location.endsWith(appNavigate.pathTo) ? 'primary' : 'inherit'}>
+                    {appNavigate.icon}
+                    </Icon>
+                  </IconButton>
                 </ListItemIcon>
                 <ListItemText
                   primary={appNavigate.title}

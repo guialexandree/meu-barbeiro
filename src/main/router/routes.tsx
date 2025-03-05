@@ -36,7 +36,11 @@ const router = createBrowserRouter([
         element: <Loadable children={<ServicesPage />} />,
       },
       {
-        path: '/novo-servico',
+        path: '/servico/criar-novo',
+        element: <Loadable children={<ServiceFormPage />} />,
+      },
+      {
+        path: '/servico/:id',
         element: <Loadable children={<ServiceFormPage />} />,
       },
       {

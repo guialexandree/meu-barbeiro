@@ -7,4 +7,4 @@ export type ServiceModel = {
   timeExecution: number
 }
 
-export type ServiceStatus = 'ativo' | 'inativo'
+export type ServiceStatus = 'ativo' | 'inativo' | 'todos'

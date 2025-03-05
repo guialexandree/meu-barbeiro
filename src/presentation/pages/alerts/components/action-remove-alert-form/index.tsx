@@ -5,6 +5,7 @@ import { RemoveAlertParams } from '@/domain/usecases'
 import { State } from '@/presentation/pages/alerts/components/atoms'
 import { useNotify } from '@/presentation/hooks'
 import { Factories } from '@/main/factories/usecases'
+import { DialogConfirm } from '@/presentation/components'
 
 export const ActionRemoveAlertForm: React.FC = () => {
   const { notify } = useNotify()
@@ -46,11 +47,22 @@ export const ActionRemoveAlertForm: React.FC = () => {
       .finally(() => setLoading(false))
   }
 
+  if (!newAlert?.id) {
+    return undefined
+  }
+
   return (
-    newAlert?.id && (
+    <>
       <Button color="error" sx={{ color: 'error.light' }} onClick={handleRemoveAlert} size="small">
         Remover alerta
       </Button>
-    )
+
+      <DialogConfirm
+        title="Eliminação de serviço"
+        answer={`A mensagem da tela ${newAlert.type.toUpperCase()} será eliminada, deseja continuar com a eliminação?`}
+        onConfirm={() => {}}
+        openState={State.openDialogConfirmState}
+      />
+    </>
   )
 }

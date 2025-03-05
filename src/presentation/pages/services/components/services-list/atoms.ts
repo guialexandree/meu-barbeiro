@@ -1,4 +1,4 @@
-import { ServiceModel } from '@/domain/models'
+import { ServiceModel, ServiceStatus } from '@/domain/models'
 import { atom } from 'recoil'
 
 export const servicesSearchState = atom({
@@ -6,9 +6,14 @@ export const servicesSearchState = atom({
   default: '',
 })
 
-export const statusSearchState = atom({
-  key: 'statusSearchState',
-  default: 'ativo' as 'ativo' | 'inativo',
+export const showFilterState = atom({
+  key: 'showFilterState',
+  default: true
+})
+
+export const statusFilterState = atom({
+  key: 'statusServiceFilterState',
+  default: 'todos' as ServiceStatus,
 })
 
 export const servicesState = atom<ServiceModel[]>({

@@ -1,12 +1,23 @@
+import { ServiceStatus } from '@/domain/models'
 import { atom, selector } from 'recoil'
 
-const idServiceCreateState = atom({
-  key: 'idServiceCreateState',
-  default: ''
+const loadingServiceState = atom({
+  key: 'isLoadingServiceUpdateState',
+  default: false,
 })
 
-const loadingState = atom({
-  key: 'isLoadingServiceCreateState',
+const loadingFormState = atom({
+  key: 'isLoadingFormServiceCreateState',
+  default: false,
+})
+
+const openRemoveConfirmState = atom({
+  key: 'openRemoveServiceConfirmState',
+  default: false,
+})
+
+const openUpdateConfirmState = atom({
+  key: 'openUpdateServiceConfirmState',
   default: false,
 })
 
@@ -26,9 +37,9 @@ const descriptionState = atom({
   }
 })
 
-const statusState = atom<'ativo' | 'inativo'>({
+const statusState = atom({
   key: 'statusServiceCreateState',
-  default: 'ativo'
+  default: 'ativo' as ServiceStatus
 })
 
 const priceState = atom({
@@ -45,7 +56,6 @@ const serviceCreateState = selector({
   key: 'serviceCreateState',
   get: ({ get }) => {
     return {
-      id: get(idServiceCreateState),
       name: get(nameState).text,
       description: get(descriptionState).text,
       status: get(statusState),
@@ -55,10 +65,11 @@ const serviceCreateState = selector({
   }
 })
 
-
 export const State = {
-  idServiceCreateState,
-  loadingState,
+  loadingFormState,
+  loadingServiceState,
+  openRemoveConfirmState,
+  openUpdateConfirmState,
   nameState,
   descriptionState,
   statusState,

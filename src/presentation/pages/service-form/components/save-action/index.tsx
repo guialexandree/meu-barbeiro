@@ -1,21 +1,22 @@
 import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Factories } from '@/main/factories/usecases'
 import { ServiceModel } from '@/domain/models'
 import { Button, Icon } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/service-form/components/atoms'
 import { State as ServiceState } from '@/presentation/pages/services/components/atoms'
 import { serviceCreateValidation } from './validations'
-import { Factories } from '@/main/factories/usecases'
-import { useNavigate } from 'react-router-dom'
 
 export const SaveFormAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
   const newService = useRecoilValue(State.serviceCreateState)
   const setServices = useSetRecoilState(ServiceState.List.servicesState)
-  const setLoading = useSetRecoilState(State.loadingState)
+  const setLoading = useSetRecoilState(State.loadingFormState)
   const setName = useSetRecoilState(State.nameState)
+  const { id } = useParams<{ id: string }>()
 
   const createService = React.useMemo(() => Factories.makeRemoteCreateService(), [])
 
@@ -69,6 +70,10 @@ export const SaveFormAction: React.FC = () => {
         notify('Erro ao criar serviço', { type: 'error' })
       })
       .finally(() => setLoading(false))
+  }
+
+  if (id) {
+    return undefined
   }
 
   return (

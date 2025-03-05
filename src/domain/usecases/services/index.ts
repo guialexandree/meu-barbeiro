@@ -1,4 +1,5 @@
 export * from './create-service'
-export * from './get-services'
+export * from './load-services'
+export * from './load-service-by-id'
 export * from './update-service'
 export * from './remove-service'

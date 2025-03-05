@@ -1,16 +1,18 @@
 import React from 'react'
-import { Icon, IconButton, InputBase, Paper } from '@mui/material'
+import { Divider, Icon, IconButton, InputBase, Paper, Tooltip } from '@mui/material'
 import { RecoilState, useRecoilState } from 'recoil'
 
 type InputSearchProps = {
   id: string
   placeholder: string
-  valueState: RecoilState<string>
+  inputSearchState: RecoilState<string>
+  showFilters: RecoilState<boolean>
   loadServices: (search: string) => void
 }
 
 export const InputSearch: React.FC<InputSearchProps> = (props) => {
-  const [text, setText] = useRecoilState(props.valueState)
+  const [text, setText] = useRecoilState(props.inputSearchState)
+  const [showFilters, setShowFilters] = useRecoilState(props.showFilters)
 
   const handleSearch = () => {
     props.loadServices(text)
@@ -45,10 +47,27 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         inputProps={{ 'aria-label': props.placeholder, id: props.id }}
         id={props.id}
       />
-
       <IconButton type="button" sx={{ p: '10px' }} onClick={handleSearch} aria-label="search">
         <Icon>search</Icon>
       </IconButton>
+
+      {!!props.showFilters && (
+        <>
+          <Divider sx={{ borderColor: 'grey.800' }} orientation="vertical" flexItem />
+
+          <Tooltip title={`${showFilters ? 'Ocultar' : 'Exibir'} filtros`} arrow>
+            <IconButton
+              color={showFilters ? 'secondary' : 'default'}
+              type="button"
+              sx={{ p: '10px' }}
+              aria-label="search"
+              onClick={() => setShowFilters((currentState) => !currentState)}
+            >
+              <Icon>filter_list</Icon>
+            </IconButton>
+          </Tooltip>
+        </>
+      )}
     </Paper>
   )
 }

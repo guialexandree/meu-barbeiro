@@ -1,9 +1,7 @@
 import React from 'react'
-import { useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
 import { Chip, Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
 import { useFormat } from '@/presentation/hooks'
-import { State as ServiceFormState } from '@/presentation/pages/service-form/components/atoms'
 import { useNavigate } from 'react-router-dom'
 
 type ServiceListItemProps = {
@@ -13,21 +11,9 @@ type ServiceListItemProps = {
 export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
   const navigate = useNavigate()
   const { formatCoins } = useFormat()
-  const setServiceId = useSetRecoilState(ServiceFormState.idServiceCreateState)
-  const setName = useSetRecoilState(ServiceFormState.nameState)
-  const setDescription = useSetRecoilState(ServiceFormState.descriptionState)
-  const setPrice = useSetRecoilState(ServiceFormState.priceState)
-  const setTimeExecution = useSetRecoilState(ServiceFormState.timeExecutionState)
-  const setStatus = useSetRecoilState(ServiceFormState.statusState)
 
   const handleEdit = () => {
-    setName({ error: '', text: props.service.name })
-    setDescription({ error: '', text: props.service.description })
-    setPrice(props.service.price)
-    setTimeExecution(props.service.timeExecution)
-    setStatus(props.service.status)
-    setServiceId(props.service.id)
-    navigate('/novo-servico')
+    navigate(`/servico/${props.service.id}`)
   }
 
   return (
