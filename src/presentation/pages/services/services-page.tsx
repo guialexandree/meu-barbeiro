@@ -45,7 +45,7 @@ const ServicesPage: React.FC = () => {
       } finally {
         setLoading(false)
       }
-      return null as unknown as LoadServicesResult
+      return { success: false } as LoadServicesResult
     }, [])
 
   return (

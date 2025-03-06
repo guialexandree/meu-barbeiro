@@ -29,20 +29,20 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
     }
   }, [search])
 
-  const handleLoadServices = React.useCallback(async (): Promise<void> => {
-    const services = await props.loadServices(search, status)!
-    if (services.success) {
+  const handleLoadServices = React.useCallback(async (textSearch: string): Promise<void> => {
+    const services = await props.loadServices(textSearch, status !== 'todos' ? status : undefined)!
+    if (services?.success) {
       setServices(services.data)
       return
     }
-  }, [search, status])
+  }, [status])
 
   const handleChangeStatusFilter = React.useCallback(
     async (status: ServiceStatus): Promise<void> => {
       if (!status) return
       setStatus(status)
       const services = await props.loadServices(search, status !== 'todos' ? status : undefined)!
-      if (services.success) {
+      if (services?.success) {
         setServices(services.data)
         return
       }
@@ -55,7 +55,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
       <Stack spacing={1} direction="row">
         <InputSearch
           id="services-input-search"
-          placeholder="Buscar por serviço"
+          placeholder="Buscar"
           loadData={handleLoadServices}
           inputSearchState={State.List.servicesSearchState}
           showFilters={State.List.showFilterState}

@@ -38,6 +38,9 @@ const InputText: React.FC<InputTextProps> = (props) => {
             inputProps: {
               autoFocus: props.inputProps.autoFocus,
               id: props.inputProps.id,
+              style: {
+                textTransform: 'uppercase'
+              }
             },
             endAdornment: props.toogleVisibility && (
               <InputAdornment position="end">

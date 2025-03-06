@@ -18,14 +18,10 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
     props.loadData(text)
   }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleSearch()
-    }
-  }
-
   return (
     <Paper
+      component='form'
+      onSubmit={event => { event.preventDefault() }}
       sx={{
         flex: 1,
         p: '2px 4px',
@@ -41,13 +37,12 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         sx={{ ml: 1, flex: 1 }}
         size="small"
         value={text}
-        onKeyDown={handleKeyDown}
         placeholder={props.placeholder}
         onChange={(e) => setText(e.target.value)}
         inputProps={{ 'aria-label': props.placeholder, id: props.id }}
         id={props.id}
       />
-      <IconButton type="button" sx={{ p: '10px' }} onClick={handleSearch} aria-label="search">
+      <IconButton type="submit" sx={{ p: '10px' }} onClick={handleSearch} aria-label="search">
         <Icon>search</Icon>
       </IconButton>
 

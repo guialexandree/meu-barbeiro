@@ -9,7 +9,7 @@ type PageLoaderProps = {
 
 export const PageLoader: React.FC<PageLoaderProps> = (props) => {
   return (
-    <Backdrop open={!!props.loading} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <Backdrop open={!!props.loading} sx={{ zIndex: (theme) => theme.zIndex.appBar - 1 }}>
       <CircularProgress
         color="secondary"
         size={102}
