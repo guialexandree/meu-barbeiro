@@ -59,7 +59,7 @@ const ServicesPage: React.FC = () => {
         variant="outlined"
         sx={{ lineHeight: 1, mb: 2, mx: 2, px: { xs: 1, sm: 3 }, py: 0, alignItems: 'center' }}
       >
-        Somente serviços ativos serão exibidos para o cliente no app
+        somente serviços ativos serão exibidos para o cliente no app
       </Alert>
 
       <ServiceFilters loadServices={onLoadServices}/>

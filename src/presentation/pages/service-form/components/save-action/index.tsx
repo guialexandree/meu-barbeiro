@@ -81,11 +81,13 @@ export const SaveFormAction: React.FC = () => {
       variant="contained"
       onClick={handleSubmit}
       type="submit"
+      fullWidth
       endIcon={<Icon>check</Icon>}
+      sx={{ borderRadius: 0, py: 1.5 }}
       id="save-service-button"
       href="#"
     >
-      Criar
+      Gravar
     </Button>
   )
 }

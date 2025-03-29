@@ -10,7 +10,7 @@ export const ServiceFormStatus: React.FC = () => {
     <ToggleButtonGroup
       sx={{ pb: 1 }}
       size="small"
-      color="primary"
+      color="secondary"
       value={status}
       id='service-status'
       exclusive

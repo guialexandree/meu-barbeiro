@@ -75,13 +75,15 @@ const ServiceFormPage: React.FC = () => {
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <Paper
             id="service-create-form"
+            component='form'
+            onSubmit={event => { event.preventDefault() }}
             sx={{
               mx: { xs: 2, sm: 4 },
-              p: 3,
-              pb: 5,
+              pt: 3,
+              boxShadow: 3
             }}
           >
-            <Stack spacing={1}>
+            <Stack spacing={1} sx={{ mx: { xs: 3, sm: 5 } }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <ServiceFormStatus />
                 <ServiceFormRemoveAction />
@@ -120,9 +122,10 @@ const ServiceFormPage: React.FC = () => {
 
               <ServiceFormTimeExecution />
             </Stack>
+
+            <ServiceFormActions />
           </Paper>
 
-          <ServiceFormActions />
         </Grid2>
         <Grid2 size={{ xs: 12 }} sx={{ display: { xs: 'none', sm: 'block' } }}>
           // imagem para exibir na web

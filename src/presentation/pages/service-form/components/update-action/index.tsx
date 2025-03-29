@@ -38,7 +38,7 @@ export const UpdateFormAction: React.FC = () => {
   }
 
   const validateForm = (): boolean => {
-    const result = serviceUpdateValidation.safeParse(serviceCreate)
+    const result = serviceUpdateValidation.safeParse({ ...serviceCreate, id })
 
     if (!result.success) {
       const error = result.error.errors.at(0)!
@@ -85,6 +85,8 @@ export const UpdateFormAction: React.FC = () => {
         variant="contained"
         onClick={handleSubmit}
         type="submit"
+        sx={{ borderRadius: 0, py: 1.5 }}
+        fullWidth
         endIcon={<Icon>check</Icon>}
         id="update-service-button"
         href="#"

@@ -6,12 +6,13 @@ export const clientsState = atom({
   default: _mockClients,
 })
 
+
 export const showFilterState = atom({
   key: 'showFilterClientsState',
   default: true
 })
 
-export const textClientsSearchState = atom({
+export const textSearchState = atom({
   key: 'textClientsSearchState',
   default: '',
 })
@@ -19,7 +20,7 @@ export const textClientsSearchState = atom({
 export const clientsSearchedState = selector({
   key: 'clientsSearchedState',
   get: ({ get }) => {
-    const textSearched = get(textClientsSearchState)
+    const textSearched = get(textSearchState)
     const clients = get(clientsState)
 
     if (textSearched.trim()) {

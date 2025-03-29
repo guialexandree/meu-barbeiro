@@ -7,30 +7,33 @@ export const ServiceFormTimeExecution: React.FC = () => {
   const [timeExecution, setTimeExecution] = useRecoilState(State.timeExecutionState)
 
   return (
-    <Stack px={1} pt={1}>
+    <Stack px={1} pt={1} pb={5}>
       <Typography id='input-slider' color='grey.500'>
         Tempo de execução
       </Typography>
-      <Slider
-        aria-label='Always visible'
-        defaultValue={80}
-        getAriaValueText={(value) => `${value} minutos`}
-        step={5}
-        name='timeExecution'
-        id='service-time-execution'
-        value={timeExecution}
-        onChange={(_, value) => {
-          setTimeExecution(value as number)
-        }}
-        valueLabelDisplay='on'
-        min={10}
-        max={120}
-        sx={{
-          '& .MuiSlider-valueLabel': {
-            top: '52px',
-          },
-        }}
-      />
+      <Stack px={3}>
+        <Slider
+          aria-label='Always visible'
+          defaultValue={80}
+          getAriaValueText={(value) => `${value} minutos`}
+          step={5}
+          name='timeExecution'
+          color='secondary'
+          id='service-time-execution'
+          value={timeExecution}
+          onChange={(_, value) => {
+            setTimeExecution(value as number)
+          }}
+          valueLabelDisplay='on'
+          min={10}
+          max={120}
+          sx={{
+            '& .MuiSlider-valueLabel': {
+              top: '52px',
+            },
+          }}
+        />
+      </Stack>
     </Stack>
   )
 }

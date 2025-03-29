@@ -110,7 +110,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
             }}
             autoWidth
             slotProps={{
-              input: { sx: { color: 'grey.400' } },
+              input: { sx: { color: 'grey.400' }},
             }}
             label="Status"
             sx={{ minWidth: 240 }}

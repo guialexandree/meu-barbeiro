@@ -11,7 +11,7 @@ const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-q
 const ServicesPage = lazy(() => import('@/presentation/pages/services/services-page'))
 const ServiceFormPage = lazy(() => import('@/presentation/pages/service-form/service-form-page'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts/alerts-page'))
-const ClientsPage = lazy(() => import('@/presentation/pages/clients'))
+const ClientsPage = lazy(() => import('@/presentation/pages/clients/clients-page'))
 const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
 
 const router = createBrowserRouter([
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/clientes',
-        element: <Loadable children={<ClientsPage getClients={Factories.makeRemoteGetClients()} />} />,
+        element: <Loadable children={<ClientsPage getClients={Factories.makeRemoteLoadClients()} />} />,
       },
       {
         path: '/relatorios',

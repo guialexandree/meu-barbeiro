@@ -47,12 +47,12 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
 
   if (empty) {
     return (
-      <Stack id="empty-services-list" sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }} alignItems="center" spacing={1}>
+      <Stack id="empty-service-list" sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }} alignItems="center" spacing={1}>
         <Box component="img" src={emptyListImg} alt="Nenhum serviço cadastrado" width={160} height={160} />
         <Typography variant="h6" align="center">
           Nenhum serviço cadastrado
         </Typography>
-        <Button id="empty-action-services-list" variant="outlined" color="primary">
+        <Button id="empty-action-service-list" variant="outlined" color="primary">
           criar novo
         </Button>
       </Stack>
@@ -62,7 +62,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   if (noResults) {
     return (
       <Stack
-        id="no-results-services-list"
+        id="no-results-service-list"
         sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }}
         px={2}
         alignItems="center"
@@ -70,9 +70,9 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
       >
         <Box component="img" src={emptyListImg} alt="Nenhum serviço cadastrado" width={160} height={160} />
         <Typography variant="h6" align="center">
-          {`Nenhum serviço foi encontrado com o filtros ${search?.toLocaleUpperCase()}`}
+          {`Nenhum serviço foi encontrado com os filtros ${search?.toLocaleUpperCase()}`}
         </Typography>
-        <Button id="empty-action-services-list" variant="outlined" color="primary">
+        <Button id="empty-action-service-list" variant="outlined" color="primary">
           remover filtros
         </Button>
       </Stack>
@@ -81,7 +81,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
 
   return (
     <Box mx={2}>
-      <List dense disablePadding id="services-list">
+      <List dense disablePadding id="service-list">
         {services.map((service, index) => (
           <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={service.id}>
             <Box component='section'>

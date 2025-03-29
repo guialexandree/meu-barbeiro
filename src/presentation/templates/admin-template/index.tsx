@@ -32,7 +32,7 @@ export const AdminTemplate: React.FC = () => {
         <AppBar />
         <Drawer items={appNavigation} />
         <Outlet />
-        <ToastContainer autoClose={7000} hideProgressBar={false} theme="dark" position="bottom-right" />
+        <ToastContainer autoClose={7000} theme="light" position="bottom-right" />
       </Box>
     </PrivateRoute>
   )

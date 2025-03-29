@@ -1,6 +1,6 @@
-import { GetClients } from '@/domain/usecases'
+import { LoadClients } from '@/domain/usecases'
 import { RemoteGetClients } from '@/data/usecases'
 
-export const makeRemoteGetClients = (): GetClients => {
+export const makeRemoteLoadClients = (): LoadClients => {
   return new RemoteGetClients()
 }
