@@ -8,7 +8,7 @@ export const ServiceFormActions: React.FC = () => {
 
   return (
     <Slide in={true} direction="left" unmountOnExit mountOnEnter>
-      <Stack direction="row" alignItems="center" justifyContent="flex-end">
+      <Stack direction="row" alignItems="center"  justifyContent="flex-end">
         <Button
           fullWidth
           id="close-service-form-button"
@@ -16,7 +16,7 @@ export const ServiceFormActions: React.FC = () => {
           onClick={() => {
             navigate('/servicos')
           }}
-          sx={{ borderRadius: 0, py: 1.5 }}
+          sx={{ borderRadius: 0, py: 1.5, borderBottomLeftRadius: 4, ml: 0.3 }}
         >
           Cancelar
         </Button>

@@ -5,7 +5,7 @@ import { ServiceModel } from '@/domain/models'
 import { Button, Icon } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/service-form/components/atoms'
-import { State as ServiceState } from '@/presentation/pages/services/components/atoms'
+import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
 import { serviceUpdateValidation } from './validations'
 import { Factories } from '@/main/factories/usecases'
 import { DialogConfirm } from '@/presentation/components'
@@ -95,6 +95,7 @@ export const UpdateFormAction: React.FC = () => {
       </Button>
 
       <DialogConfirm
+        icon='info'
         title="Atualização de serviço"
         answer={`O serviço ${serviceCreate.name.toUpperCase()} será atualizado, deseja continuar com a eliminação?`}
         onConfirm={handleServiceUpdate}

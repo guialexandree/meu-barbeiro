@@ -39,7 +39,7 @@ const descriptionState = atom({
 
 const statusState = atom({
   key: 'statusServiceCreateState',
-  default: 'ativo' as ServiceStatus
+  default: 'actived' as ServiceStatus
 })
 
 const priceState = atom({

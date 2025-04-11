@@ -1,11 +1,10 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { LoadServicesResult } from '@/domain/usecases'
 import { ServiceStatus } from '@/domain/models'
 import { InputSearch } from '@/presentation/components'
-import { State } from '@/presentation/pages/services/components/atoms'
-import { Button, FormControl, InputLabel, MenuItem, Select, Stack, useScrollTrigger } from '@mui/material'
+import { State } from '@/presentation/pages/service-list/components/atoms'
+import { FormControl, InputLabel, MenuItem, Select, Stack } from '@mui/material'
 import { useMobile } from '@/presentation/hooks'
 
 type ServiceFiltersProps = {
@@ -13,18 +12,12 @@ type ServiceFiltersProps = {
 }
 
 export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
-  const navigate = useNavigate()
   const { isMobile } = useMobile()
   const [services, setServices] = useRecoilState(State.List.servicesState)
   const showFilter = useRecoilValue(State.List.showFilterState)
   const search = useRecoilValue(State.List.servicesSearchState)
   const [status, setStatus] = useRecoilState(State.List.statusFilterState)
   const setNoResut = useSetRecoilState(State.noResultsServicesState)
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: document.getElementById('services-input-search')?.getBoundingClientRect()?.top || 280,
-    target: window
-  })
 
   React.useEffect(() => {
     if (search && !services.length) {
@@ -32,7 +25,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
     } else {
       setNoResut(false)
     }
-  }, [search])
+  }, [search, services])
 
   const handleLoadServices = React.useCallback(async (textSearch: string): Promise<void> => {
     const services = await props.loadServices(textSearch, status !== 'todos' ? status : undefined)!
@@ -57,24 +50,14 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
 
   return (
     <Stack spacing={1} mb={1} sx={{ transition: 'height 0.3s ease' }}>
-      <Stack spacing={1} direction="row" px={2} sx={{ position: trigger ? 'fixed' : 'relative', top: trigger ? 128 : 0, left: 0 }} zIndex={1}>
+      <Stack>
         <InputSearch
           id="services-input-search"
           placeholder="Buscar"
           loadData={handleLoadServices}
           inputSearchState={State.List.servicesSearchState}
-          showFilters={State.List.showFilterState}
+          showFiltersState={State.List.showFilterState}
         />
-        <Button
-          variant="contained"
-          id="service-create-button"
-          onClick={() => {
-            navigate('/servico/criar-novo')
-          }}
-          sx={{ borderRadius: 1 }}
-        >
-          Criar Novo
-        </Button>
       </Stack>
 
       <Stack

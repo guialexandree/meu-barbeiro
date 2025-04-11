@@ -8,21 +8,22 @@ export const ServiceFormStatus: React.FC = () => {
 
   return (
     <ToggleButtonGroup
-      sx={{ pb: 1 }}
       size="small"
       color="secondary"
       value={status}
       id='service-status'
       exclusive
       onChange={(_, value) => {
-        setStatus(value)
+        if (value) {
+          setStatus(value)
+        }
       }}
       aria-label="status do serviço"
     >
-      <ToggleButton value="ativo" defaultChecked sx={{ fontSize: 12 }}>
+      <ToggleButton value="actived" id='service-status-actived' defaultChecked sx={{ fontSize: 12 }}>
         Exibir
       </ToggleButton>
-      <ToggleButton value="inativo" sx={{ fontSize: 12 }}>
+      <ToggleButton value="deactivated" id='service-status-inactived' sx={{ fontSize: 12 }}>
         Ocultar
       </ToggleButton>
     </ToggleButtonGroup>

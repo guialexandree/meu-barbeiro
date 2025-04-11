@@ -6,7 +6,7 @@ import { ServiceModel } from '@/domain/models'
 import { Button, Icon } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/service-form/components/atoms'
-import { State as ServiceState } from '@/presentation/pages/services/components/atoms'
+import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
 import { serviceCreateValidation } from './validations'
 
 export const SaveFormAction: React.FC = () => {
@@ -83,7 +83,7 @@ export const SaveFormAction: React.FC = () => {
       type="submit"
       fullWidth
       endIcon={<Icon>check</Icon>}
-      sx={{ borderRadius: 0, py: 1.5 }}
+      sx={{ borderRadius: 0, py: 1.5, borderBottomRightRadius: 4, mr: 0.3 }}
       id="save-service-button"
       href="#"
     >

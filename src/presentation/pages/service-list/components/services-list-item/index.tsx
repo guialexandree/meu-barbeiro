@@ -1,8 +1,9 @@
 import React from 'react'
 import { ServiceModel } from '@/domain/models'
-import { Chip, Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
+import { Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
 import { useFormat } from '@/presentation/hooks'
 import { useNavigate } from 'react-router-dom'
+import { StatusChip } from '@/presentation/components'
 
 type ServiceListItemProps = {
   service: ServiceModel
@@ -36,7 +37,8 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
           primary={props.service.name}
           secondary={props.service.description}
           slotProps={{
-            secondary: { fontSize: 11, color: 'grey.600' },
+            primary: { id: 'service-name' },
+            secondary: { fontSize: 11, color: 'grey.600', id: 'service-description' },
           }}
         />
         <ListItemText
@@ -58,23 +60,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
       </Stack>
 
       <Stack direction="row" sx={{ width: '100%', justifyContent: 'space-between' }}>
-        <Chip
-          variant="outlined"
-          icon={
-            <Icon color={props.service.status === 'ativo' ? 'success' : 'error'} sx={{ fontSize: 10 }}>
-              circle
-            </Icon>
-          }
-          label={props.service.status}
-          sx={{
-            px: 0.5,
-            borderRadius: 1,
-            color: 'grey.400',
-            borderColor: 'grey.800',
-            backgroundColor: theme => `${theme.palette[props.service.status === 'ativo' ? 'success' : 'error'].main}13`,
-            height: 24,
-          }}
-        />
+        <StatusChip status={props.service.status as any}/>
       </Stack>
     </ListItem>
   )

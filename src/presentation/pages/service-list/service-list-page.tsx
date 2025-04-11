@@ -1,14 +1,16 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
-import { Alert } from '@mui/material'
-import { PageContainer } from '@/presentation/components'
-import { ServiceList, ServiceFilters } from '@/presentation/pages/services/components'
+import { useNavigate } from 'react-router-dom'
+import { Alert, Fab, Icon, Stack, Zoom } from '@mui/material'
 import { ServiceStatus } from '@/domain/models'
-import { State } from '@/presentation/pages/services/components/atoms'
 import { LoadServicesResult } from '@/domain/usecases'
 import { Factories } from '@/main/factories/usecases'
+import { PageContainer } from '@/presentation/components'
+import { ServiceList, ServiceFilters } from '@/presentation/pages/service-list/components'
+import { State } from '@/presentation/pages/service-list/components/atoms'
 
 const ServicesPage: React.FC = () => {
+  const navigate = useNavigate()
   const setLoading = useSetRecoilState(State.loadingServicesState)
   const setServices = useSetRecoilState(State.List.servicesState)
   const setError = useSetRecoilState(State.errorServicesState)
@@ -46,26 +48,58 @@ const ServicesPage: React.FC = () => {
         setLoading(false)
       }
       return { success: false } as LoadServicesResult
-    }, [])
+    },
+    [],
+  )
 
   return (
-    <PageContainer
-      onInit={onInit}
-      title="Serviços"
-      subtitle="Cadastro de serviços e tabela de preços"
-    >
+    <PageContainer onInit={onInit} title="Serviços" subtitle="Cadastro de serviços e tabela de preços">
       <Alert
         severity="info"
         variant="outlined"
         sx={{ lineHeight: 1, mb: 2, mx: 2, px: { xs: 1, sm: 3 }, py: 0, alignItems: 'center' }}
       >
-        somente serviços ativos serão exibidos para o cliente no app
+        somente serviços ativos serão exibidos no app do cliente
       </Alert>
 
-      <ServiceFilters loadServices={onLoadServices}/>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignContent="center"
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          right: 0,
+          left: 0,
+          zIndex: 1,
+          height: 36,
+          background:
+            'linear-gradient(0deg, rgba(48,48,48,1) 52%, rgba(48,48,48,0.2) 93%, rgba(48,48,48,0) 100%, rgba(48,48,48,0) 100%)',
+        }}
+      >
+        <Zoom in>
+          <Fab
+            color="primary"
+            variant="extended"
+            title="Criar novo serviço"
+            id="service-create-button"
+            onClick={() => { navigate('/servico/criar-novo') }}
+            sx={{
+              bottom: 30,
+              transition: 'opacity 0.3s',
+              ':hover': { opacity: 1 },
+              ':active': { opacity: 1 },
+            }}
+          >
+            <Icon sx={{ fontSize: 36, color: 'primary.dark' }}>add</Icon>
+            criar novo
+          </Fab>
+        </Zoom>
+      </Stack>
+
+      <ServiceFilters loadServices={onLoadServices} />
 
       <ServiceList onReload={onInit} />
-
     </PageContainer>
   )
 }

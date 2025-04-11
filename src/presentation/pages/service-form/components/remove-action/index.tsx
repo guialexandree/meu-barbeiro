@@ -5,7 +5,7 @@ import { Button } from '@mui/material'
 import { RemoveServiceParams } from '@/domain/usecases'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/service-form/components/atoms'
-import { State as ServicesState } from '@/presentation/pages/services/components/atoms'
+import { State as ServicesState } from '@/presentation/pages/service-list/components/atoms'
 import { Factories } from '@/main/factories/usecases'
 import { DialogConfirm } from '@/presentation/components'
 
