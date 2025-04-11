@@ -1,43 +1,47 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { Fab, Icon, Stack, Zoom } from '@mui/material'
 import { LoadClientsResult } from '@/domain/usecases'
-import { PageContainer, ValueIndicator } from '@/presentation/components'
-import { ClientList } from '@/presentation/pages/clients/components'
+import { PageContainer } from '@/presentation/components'
+import { ClientFilters, ClientList, Totalizers } from '@/presentation/pages/client-list/components'
 import { Factories } from '@/main/factories/usecases'
-import { State } from '@/presentation/pages/clients/components/atoms'
+import { State } from '@/presentation/pages/client-list/components/atoms'
 
 const ClientsPage: React.FC = () => {
+  const navigate = useNavigate()
   const setLoading = useSetRecoilState(State.loadingClientsState)
-  const setClients = useSetRecoilState(State.List.clientsState)
   const setError = useSetRecoilState(State.errorClientsState)
   const setEmpty = useSetRecoilState(State.emptyClientsState)
+  const setClients = useSetRecoilState(State.List.clientsResultState)
   const setSearch = useSetRecoilState(State.List.textSearchState)
+  const [page] = React.useState(1)
+  const [limit] = React.useState(10)
 
   const loadClients = React.useMemo(() => Factories.makeRemoteLoadClients(), [])
 
   const onInit = React.useCallback(async () => {
     setSearch('')
-    const serviceResult = (await onLoadClients())!
-    if (serviceResult?.success) {
-      if (serviceResult.data.length) {
-        setClients(serviceResult.data)
+    const clientResult = (await onLoadClients())!
+    if (clientResult?.success) {
+      if (clientResult.data.length) {
+        setClients(clientResult)
       } else {
         setEmpty(true)
       }
       return
     }
 
-    setError(serviceResult?.error || 'Erro ao carregar serviços')
+    setError(clientResult?.error || 'Erro ao carregar serviços')
   }, [])
 
   const onLoadClients = React.useCallback(
-    async (): Promise<LoadClientsResult> => {
+    async (search?: string): Promise<LoadClientsResult> => {
       try {
         setLoading(true)
         setError('')
         setEmpty(false)
-        const clientsResult = await loadClients.load()
+        const clientsResult = await loadClients.load({ page, limit, search })
         return clientsResult
       } catch (error) {
         setError((error as Error).message)
@@ -55,25 +59,16 @@ const ClientsPage: React.FC = () => {
       title="Clientes"
       subtitle="Visualizar cadastro de clientes com informações de contato"
     >
-      <Stack direction="row" spacing={1} mx={2} mb={1}>
-        <ValueIndicator title="Total de clientes" value="682" entryDirection="right" icon="peoples" />
+      <Totalizers />
 
-        <ValueIndicator
-          title="Novos clientes"
-          value="23"
-          subvalue="10%"
-          descriptionSubvalue="10% de crescimento em relação ao mês anterior"
-          entryDirection="left"
-          icon="grade"
-        />
-      </Stack>
+      <ClientFilters loadClients={onLoadClients} />
 
       <ClientList onReload={onLoadClients}/>
 
       <Stack direction="row" justifyContent="center">
         <Zoom in>
           <Fab
-            onClick={() => {}}
+            onClick={() => { navigate('/clientes/criar-novo') }}
             sx={{
               position: 'fixed',
               bottom: '16px',

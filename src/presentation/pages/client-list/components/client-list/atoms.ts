@@ -1,11 +1,10 @@
-import { _mockClients } from '@/domain/tests'
+import { LoadClientsResult } from '@/domain/usecases'
 import { atom, selector } from 'recoil'
 
-export const clientsState = atom({
+export const clientsResultState = atom<LoadClientsResult>({
   key: 'clientsState',
-  default: _mockClients,
+  default: null as unknown as LoadClientsResult,
 })
-
 
 export const showFilterState = atom({
   key: 'showFilterClientsState',
@@ -21,12 +20,12 @@ export const clientsSearchedState = selector({
   key: 'clientsSearchedState',
   get: ({ get }) => {
     const textSearched = get(textSearchState)
-    const clients = get(clientsState)
+    const clientResult = get(clientsResultState)
 
     if (textSearched.trim()) {
-      return clients?.filter(client => client.name.toLowerCase().includes(textSearched.toLowerCase())) ?? []
+      return clientResult?.data?.filter(client => client.name.toLowerCase().includes(textSearched.toLowerCase())) ?? []
     }
 
-    return clients
+    return clientResult?.data ?? []
   }
 })
