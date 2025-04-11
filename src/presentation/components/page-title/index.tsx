@@ -20,6 +20,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
           position: 'relative',
           pl: 7,
           pr: 1,
+          width: 'calc(100% - 3rem)',
         }}
       >
         <Stack direction="row" spacing={2} alignItems="center">

@@ -6,13 +6,13 @@ type InputSearchProps = {
   id: string
   placeholder: string
   inputSearchState: RecoilState<string>
-  showFilters: RecoilState<boolean>
+  showFiltersState: RecoilState<boolean>
   loadData: (search: string) => void
 }
 
 export const InputSearch: React.FC<InputSearchProps> = (props) => {
   const [text, setText] = useRecoilState(props.inputSearchState)
-  const [showFilters, setShowFilters] = useRecoilState(props.showFilters)
+  const [showFilters, setShowFilters] = useRecoilState(props.showFiltersState)
 
   const handleSearch = () => {
     props.loadData(text)
@@ -46,7 +46,7 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         <Icon>search</Icon>
       </IconButton>
 
-      {!!props.showFilters && (
+      {!!props.showFiltersState && (
         <>
           <Divider sx={{ borderColor: 'grey.800' }} orientation="vertical" flexItem />
 

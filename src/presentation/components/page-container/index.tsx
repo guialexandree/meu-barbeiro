@@ -39,12 +39,13 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
         color: 'white',
         flexDirection: 'column',
         position: 'relative',
-        maxWidth: 1080,
+        maxWidth: '100vw',
         margin: '0 auto',
+        overflow: 'hidden',
       }}
     >
-      <PageTitle title={props.title} subtitle={props.subtitle} />
-      <Stack sx={{ flex: 1 }}>{props.children}</Stack>
+      {props.title && <PageTitle title={props.title} subtitle={props.subtitle} />}
+      <Stack sx={{ flex: 1, width: '100%' }} >{props.children}</Stack>
     </Grid2>
   )
 }
