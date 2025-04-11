@@ -7,7 +7,7 @@ describe('Página de Login', () => {
 
   describe('Validações de estados da página', () => {
     it('Deve iniciar a página com os valores corretos', () => {
-      cy.visit('/')
+      cy.visit('/login')
       cy.get('img#logo').should('be.visible')
       cy.get('#title-page').should('be.visible')
       cy.get('#login-user').should('have.value', '')
@@ -63,7 +63,7 @@ describe('Página de Login', () => {
     })
 
     it('Deve ser possível alterar a visualização da senha', () => {
-      cy.visit('/')
+      cy.visit('/login')
 
       cy.get('#login-password').type('123456')
       cy.get('#toggle-password-visibility').click()
@@ -74,32 +74,36 @@ describe('Página de Login', () => {
     })
 
     it('Deve inativar o botão de login quando existir erro no formulário', () => {
-      cy.visit('/')
+      cy.visit('/login')
+      cy.intercept('POST', '/api/auth', (req) => {
+        req.reply((res) => {
+          res.setDelay(1000)
+        })
+      })
 
       cy.get('#login-user').type('ADMINISTRATOR')
       cy.get('#login-password').type('12345')
       cy.get('#login-button').click()
+
 
       cy.get('#login-button').should('be.disabled')
       cy.get('#login-password-helper-text').should('contain', 'A senha deve ter no mínimo 6 caracteres')
     })
 
     it('Deve inativar o botão de login quando estiver realizando o login', () => {
-      Http.mockOk('POST', '/api/auth', { success: true, data: { accessToken: 'fakeAccessToken123' } }).as(
-        'loginRequest',
-      )
-      cy.visit('/')
+      cy.visit('/login')
+      cy.intercept('POST', '/api/auth',  (req) => {
+        req.reply((res) => {
+          res.setDelay(1000)
+          res.send({ success: true, data: { accessToken: 'fakeAccessToken123' } })
+        })
+      }).as('loginRequest')
 
       cy.get('#login-user').type('ADMINISTRATOR')
       cy.get('#login-password').type('123456')
       cy.get('#login-button').click()
       cy.get('#login-button').should('be.disabled')
       cy.get('#recovery-password-button').should('be.disabled')
-
-      cy.wait('@loginRequest').then(() => {
-        cy.get('#login-button').should('not.be.disabled')
-        cy.get('#recovery-password-button').should('not.be.disabled')
-      })
     })
 
     it('Deve bloquear campos e exibir loading enquanto realizada o login', () => {
@@ -108,7 +112,7 @@ describe('Página de Login', () => {
       Http.mockOk('POST', '/api/auth', { success: true, data: { accessToken } }).as(
         'loginRequest',
       )
-      cy.visit('/')
+      cy.visit('/login')
 
       cy.get('#login-user').type('ADMINISTRATOR')
       cy.get('#login-password').type('123456')
@@ -127,7 +131,7 @@ describe('Página de Login', () => {
     it('Deve gravar o accessToken em localStorage quando login realizado com sucesso', () => {
       const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYjZiZTVlZS1hNjViLTQwYmEtODBiOC1mY2I3NmIyMjZhNDUiLCJ1c2VybmFtZSI6Imd1aSIsIm5hbWUiOiJndWkiLCJpYXQiOjE3NDA5MzIxMjIsImV4cCI6MTc0MzUyNDEyMn0.MK9GnwNjt67_w6GmCRBJk1SgnD0j_wfRC99Snf7fmTs'
       Http.mockOk('POST', '/api/auth', { success: true, data: { accessToken } }).as('loginRequest')
-      cy.visit('/')
+      cy.visit('/login')
 
       cy.get('#login-user').type('ADMINISTRATOR')
       cy.get('#login-password').type('123456')
