@@ -7,10 +7,11 @@ import { Loadable, ThemeProvider } from '@/presentation/components'
 import LoginPage from '@/presentation/pages/login/login-page'
 import RecoveryPasswordPage from '@/presentation/pages/recovery-password'
 const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-queue'))
-const ServicesPage = lazy(() => import('@/presentation/pages/services/services-page'))
+const ServiceListPage = lazy(() => import('@/presentation/pages/service-list/service-list-page'))
 const ServiceFormPage = lazy(() => import('@/presentation/pages/service-form/service-form-page'))
+const ClientFormPage = lazy(() => import('@/presentation/pages/client-form/client-form-page'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts/alerts-page'))
-const ClientsPage = lazy(() => import('@/presentation/pages/clients/clients-page'))
+const ClientListPage = lazy(() => import('@/presentation/pages/client-list/client-list-page'))
 const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
 
 const router = createBrowserRouter([
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/clientes',
-        element: <Loadable children={<ClientsPage />} />,
+        element: <Loadable children={<ClientListPage />} />,
+      },
+      {
+        path: '/clientes/criar-novo',
+        element: <Loadable children={<ClientFormPage />} />,
       },
       {
         path: '/relatorios',
@@ -32,7 +37,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/servicos',
-        element: <Loadable children={<ServicesPage />} />,
+        element: <Loadable children={<ServiceListPage />} />,
       },
       {
         path: '/servico/criar-novo',
