@@ -1,1 +1,1 @@
-export * from './remote-get-clients/remote-get-clients'
+export * from './remote-load-clients/remote-load-clients'

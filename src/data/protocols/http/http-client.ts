@@ -34,4 +34,11 @@ export type HttpDefaultResponse<T = any> = {
   message: string
   error: string
   data: T
+  meta: PaginatedResult
+}
+
+export type PaginatedResult = {
+  page: number
+  limit: number
+  total: number
 }

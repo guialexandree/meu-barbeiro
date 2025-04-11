@@ -3,7 +3,6 @@ import { RecoilRoot } from 'recoil'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AdminTemplate, LoginTemplate } from '@/presentation/templates'
 import { Loadable, ThemeProvider } from '@/presentation/components'
-import * as Factories from '@/main/factories/usecases'
 
 import LoginPage from '@/presentation/pages/login/login-page'
 import RecoveryPasswordPage from '@/presentation/pages/recovery-password'
@@ -25,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/clientes',
-        element: <Loadable children={<ClientsPage getClients={Factories.makeRemoteLoadClients()} />} />,
+        element: <Loadable children={<ClientsPage />} />,
       },
       {
         path: '/relatorios',

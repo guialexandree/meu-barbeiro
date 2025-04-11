@@ -9,7 +9,7 @@ export type ClientModel = {
 }
 
 export type ClientResult = Omit<ClientModel, 'id'> & {
-  id: number
+  id: string
 }
 
 export type UserRole = 'admin' | 'barber' | 'client'

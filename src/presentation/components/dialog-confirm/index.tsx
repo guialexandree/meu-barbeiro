@@ -7,6 +7,7 @@ type DialogConfirmProps = {
   title: string
   answer: string
   onConfirm: VoidFunction
+  icon?: string
   onClose?: VoidFunction
 }
 
@@ -31,8 +32,8 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
       aria-describedby="service-dialog-description"
     >
       <Stack direction="row" alignItems="center" justifyContent='space-between' mr={2}>
-        <DialogTitle id="service-dialog-title">{props.title}</DialogTitle>
-        <Icon>delete</Icon>
+        <DialogTitle id="service-dialog-title" sx={{ textTransform: 'uppercase' }}>{props.title}</DialogTitle>
+        <Icon>{props.icon || 'delete'}</Icon>
       </Stack>
       <Divider />
       <DialogContent>
