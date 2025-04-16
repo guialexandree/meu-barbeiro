@@ -13,7 +13,9 @@ export const AppBar: React.FC = () => {
         maxWidth: '100vw',
         backgroundColor: 'primary.main',
         minHeight: 120,
-        borderRadius: '0 0 22px 22px',
+        borderRadius: 0,
+        borderBottomRightRadius: 18,
+        borderBottomLeftRadius: 18,
         alignItems: 'flex-start',
       }}
     >
@@ -24,9 +26,14 @@ export const AppBar: React.FC = () => {
           </Typography>
         </Slide>
 
-        <Stack direction="row" spacing={1} alignItems="center">
+        <Stack direction="row" alignItems="center" spacing={0.5}>
           <Slide direction="down" in={true} mountOnEnter unmountOnExit>
-            <IconButton size="large" edge="start" aria-label="menu">
+            <IconButton edge="start" aria-label="menu">
+              <Icon>settings_power</Icon>
+            </IconButton>
+          </Slide>
+          <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+            <IconButton edge="start" aria-label="menu" >
               <Badge color="secondary" badgeContent={4} invisible={false}>
                 <Icon>notifications</Icon>
               </Badge>
@@ -34,10 +41,9 @@ export const AppBar: React.FC = () => {
           </Slide>
           <Slide direction="down" in={true} mountOnEnter unmountOnExit>
             <IconButton
-              size="large"
               edge="start"
               aria-label="menu"
-              sx={{ backgroundColor: 'primary.light' }}
+              sx={{ backgroundColor: 'primary.light', }}
               onClick={() => {
                 setOpenDrawer(true)
               }}

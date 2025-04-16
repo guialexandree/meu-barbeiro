@@ -18,30 +18,24 @@ export const QueueInfo: React.FC = () => {
         mb: 0.5,
       }}
     >
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Stack
-          alignItems='center'
-          justifyContent='center'
-          sx={{
-            backgroundColor: (theme) => `${theme.palette.primary.dark}80`,
-            borderRadius: 20,
-            p: 0.5,
-            fontSize: 12,
-            width: 22,
-            height: 20,
-            textAlign: 'center',
-          }}
-        >
-          5
+      <Stack spacing={0.5}>
+          <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
+            Status
+          </Typography>
+
+          <Stack direction="row" alignItems="center" spacing={0.5}>
+          <IconButton size="small" sx={{ p: 0 }}>
+            <Icon sx={{ fontSize: 14 }}>sort</Icon>
+          </IconButton>
+          <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+            12 na fila
+          </Typography>
         </Stack>
-        <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
-          NA FILA
-        </Typography>
       </Stack>
 
       <Divider orientation="vertical" flexItem />
 
-      <Stack direction="column" sx={{ pr: 2 }} spacing={0.5}>
+      <Stack sx={{ pr: 2 }} spacing={0.5}>
         <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
           Atendimentos
         </Typography>
@@ -50,14 +44,14 @@ export const QueueInfo: React.FC = () => {
             <Icon sx={{ fontSize: 14 }}>content_cut</Icon>
           </IconButton>
           <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-            12
+            5
           </Typography>
         </Stack>
       </Stack>
 
       <Divider orientation="vertical" flexItem />
 
-      <Stack direction="column" spacing={0.5}>
+      <Stack spacing={0.5}>
         <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
           Saldo do dia
         </Typography>
