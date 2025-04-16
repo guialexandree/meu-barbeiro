@@ -1,44 +1,77 @@
 import React from 'react'
-import { Avatar, Chip, Icon, IconButton, Stack, Typography } from '@mui/material'
+import { Divider, Icon, IconButton, Paper, Stack, Typography } from '@mui/material'
 
 export const QueueInfo: React.FC = () => {
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center" flexGrow={1} pr={2}>
-      <Chip
-        color="default"
-        sx={{ borderRadius: 16, backgroundColor: 'primary.dark', color: 'primary.light' }}
-        avatar={<Avatar sx={{ backgroundColor: 'primary.main' }} alt="5" src="5" />}
-        label="NA FILA"
-      />
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <Stack direction="column" alignItems="flex-end" sx={{ borderRight: '1px solid', pr: 2 }}>
-          <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300' }}>
-            Atendimentos
-          </Typography>
-          <Stack direction="row" alignItems="center">
-            <IconButton size="small">
-              <Icon sx={{ fontSize: 18 }}>content_cut</Icon>
-            </IconButton>
-            <Typography variant="subtitle1" sx={{ fontWeight: '600' }}>
-              12
-            </Typography>
-          </Stack>
+    <Paper
+      component="header"
+      elevation={0}
+      sx={{
+        backgroundColor: (theme) => `${theme.palette.primary.light}80`,
+        borderRadius: 2,
+        flexGrow: 1,
+        alignItems: 'flex-start',
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: 1,
+        px: 2,
+        mb: 0.5,
+      }}
+    >
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Stack
+          alignItems='center'
+          justifyContent='center'
+          sx={{
+            backgroundColor: (theme) => `${theme.palette.primary.dark}80`,
+            borderRadius: 20,
+            p: 0.5,
+            fontSize: 12,
+            width: 22,
+            height: 20,
+            textAlign: 'center',
+          }}
+        >
+          5
         </Stack>
+        <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
+          NA FILA
+        </Typography>
+      </Stack>
 
-        <Stack direction="column" alignItems="flex-end" pl={1}>
-          <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', textAlign: 'right' }}>
-            Saldo do dia
+      <Divider orientation="vertical" flexItem />
+
+      <Stack direction="column" sx={{ pr: 2 }} spacing={0.5}>
+        <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
+          Atendimentos
+        </Typography>
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <IconButton size="small" sx={{ p: 0 }}>
+            <Icon sx={{ fontSize: 14 }}>content_cut</Icon>
+          </IconButton>
+          <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+            12
           </Typography>
-          <Stack direction="row" justifyContent="flex-end">
-            <Typography variant="subtitle1" sx={{ fontWeight: '600', textAlign: 'right' }}>
-              R$ ***
-            </Typography>
-            <IconButton size="small">
-              <Icon sx={{ fontSize: 18 }}>visibility</Icon>
-            </IconButton>
-          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+
+      <Divider orientation="vertical" flexItem />
+
+      <Stack direction="column" spacing={0.5}>
+        <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
+          Saldo do dia
+        </Typography>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
+            R$ ***
+          </Typography>
+          <IconButton size="small" sx={{ p: 0 }}>
+            <Icon fontSize="small" sx={{ fontSize: 14 }}>
+              visibility
+            </Icon>
+          </IconButton>
+        </Stack>
+      </Stack>
+    </Paper>
   )
 }

@@ -53,9 +53,13 @@ const ClientsPage: React.FC = () => {
     [],
   )
 
+  React.useEffect(() => {
+    onLoadClients()
+  }, [])
+
   return (
     <PageContainer
-      onInit={onInit}
+      // onInit={onInit}
       title="Clientes"
       subtitle="Visualizar cadastro de clientes com informações de contato"
     >

@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Chip,
-  Icon,
-  Paper,
-  Slide,
-  Stack,
-  Tooltip,
-  Typography,
-} from '@mui/material'
+import { Chip, Icon, Paper, Skeleton, Slide, Stack, Tooltip, Typography } from '@mui/material'
 
 type ValueIndicatorProps = {
   title: string
@@ -37,28 +29,19 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
           borderColor: (theme) => `${theme.palette.primary.main}54`,
         }}
       >
-        <Stack
-          direction="row"
-          sx={{ color: 'grey.400' }}
-          alignItems="flex-start"
-          spacing={1}
-        >
+        <Stack direction="row" sx={{ color: 'grey.400' }} alignItems="flex-start" spacing={1}>
           <Icon sx={{ fontSize: { xs: 20, sm: 26 } }}>{props.icon}</Icon>
           <Typography variant="caption">{props.title}</Typography>
         </Stack>
 
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="flex-end"
-          spacing={1}
-        >
-          <Typography
-            variant="h4"
-            sx={{ fontWeight: '500', letterSpacing: -3, lineHeight: 1 }}
-          >
-            {props.value}
-          </Typography>
+        <Stack direction="row" justifyContent="space-between" alignItems="flex-end" spacing={1}>
+          {props.value ? (
+            <Typography variant="h4" sx={{ fontWeight: '500', letterSpacing: -3, lineHeight: 1 }}>
+              {props.value}
+            </Typography>
+          ) : (
+            <Skeleton variant="rounded" width={40} height={30} />
+          )}
 
           {props.subvalue && (
             <Tooltip title={props.descriptionSubvalue}>
