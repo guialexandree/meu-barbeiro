@@ -2,37 +2,44 @@ import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Factories } from '@/main/factories/usecases'
-import { ServiceModel } from '@/domain/models'
-import { Button, Icon } from '@mui/material'
+import { ClientModel } from '@/domain/models'
+import { Button, Icon, Slide } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
-import { State } from '@/presentation/pages/service-form/components/atoms'
-import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
-import { serviceCreateValidation } from './validations'
+import { State } from '@/presentation/pages/client-form/components/atoms'
+import { State as ClientsState } from '@/presentation/pages/client-list/components/atoms'
+import { clientCreateValidation } from './validations'
 
-export const SaveFormAction: React.FC = () => {
+export const SaveAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
-  const newService = useRecoilValue(State.serviceCreateState)
-  const setServices = useSetRecoilState(ServiceState.List.servicesState)
+  const newClient = useRecoilValue(State.newClientFormState)
+  const loading = useRecoilValue(State.loadingFormState)
+  const setClientsResult = useSetRecoilState(ClientsState.List.clientsResultState)
   const setLoading = useSetRecoilState(State.loadingFormState)
+  const setError = useSetRecoilState(State.errorFormState)
+  const setFormSuccess = useSetRecoilState(State.successFormState)
   const setName = useSetRecoilState(State.nameState)
+  const setPassword = useSetRecoilState(State.passwordState)
+  const setContactNumber = useSetRecoilState(State.contactNumberState)
   const { id } = useParams<{ id: string }>()
 
-  const createService = React.useMemo(() => Factories.makeRemoteCreateService(), [])
+  const createClient = React.useMemo(() => Factories.makeRemoteCreateClient(), [])
 
-  const onSuccess = (service: ServiceModel): void => {
-    setServices(services => [service, ...services])
-    navigate('/servicos')
-    notify('Serviço criado com sucesso', { type: 'success' })
+  const onSuccess = (client: ClientModel): void => {
+    setClientsResult((currentState) => ({ ...currentState, data: [...currentState.data, client] }))
+    navigate('/clientes')
+    setFormSuccess(true)
+    notify('Cadastro criado com sucesso', { type: 'success' })
   }
 
   const onError = (error: string, inputName: string): void => {
-    if (inputName === 'name') {
-      setName((currentState) => ({ ...currentState, error }))
-      return
-    }
+    const setter = {
+      name: setName,
+      contactNumber: setContactNumber,
+      password: setPassword,
+    }[inputName]
 
-    notify(error, { type: 'error' })
+    setter?.((currentState) => ({ ...currentState, error }))
   }
 
   const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -41,9 +48,10 @@ export const SaveFormAction: React.FC = () => {
   }
 
   const validateForm = (): boolean => {
-    const result = serviceCreateValidation.safeParse(newService)
+    const result = clientCreateValidation.safeParse(newClient)
 
     if (!result.success) {
+      console.log(result.error.errors)
       const error = result.error.errors.at(0)!
       const inputName = error.path.at(0) as string
       onError(error.message, inputName)
@@ -56,15 +64,15 @@ export const SaveFormAction: React.FC = () => {
     if (!validateForm()) return
 
     setLoading(true)
-    createService
-      .create(newService)
+    createClient
+      .create(newClient)
       .then((result) => {
         if (result.success) {
-          onSuccess({ ...newService, id: result.data.id })
+          onSuccess({ ...newClient, id: result.data.id })
           return
         }
 
-        onError(result.error, 'name')
+        setError(result.error)
       })
       .catch(() => {
         notify('Erro ao criar serviço', { type: 'error' })
@@ -77,17 +85,19 @@ export const SaveFormAction: React.FC = () => {
   }
 
   return (
-    <Button
-      variant="contained"
-      onClick={handleSubmit}
-      type="submit"
-      fullWidth
-      endIcon={<Icon>check</Icon>}
-      sx={{ borderRadius: 0, py: 1.5, borderBottomRightRadius: 4, mr: 0.3 }}
-      id="save-service-button"
-      href="#"
-    >
-      Gravar
-    </Button>
+    <Slide in={true} direction="left" unmountOnExit mountOnEnter>
+      <Button
+        variant="contained"
+        onClick={handleSubmit}
+        loading={loading}
+        type="submit"
+        fullWidth
+        endIcon={<Icon fontSize='small'>check</Icon>}
+        id="save-service-button"
+        href="#"
+      >
+        Gravar
+      </Button>
+    </Slide>
   )
 }

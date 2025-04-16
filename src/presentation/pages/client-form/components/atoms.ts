@@ -1,79 +1,69 @@
-import { ServiceStatus } from '@/domain/models'
+import { UserRole } from '@/domain/models'
 import { atom, selector } from 'recoil'
 
-const loadingServiceState = atom({
-  key: 'isLoadingServiceUpdateState',
-  default: false,
-})
-
 const loadingFormState = atom({
-  key: 'isLoadingFormServiceCreateState',
+  key: 'isLoadingFormClientCreateState',
   default: false,
 })
 
-const openRemoveConfirmState = atom({
-  key: 'openRemoveServiceConfirmState',
-  default: false,
+const errorFormState = atom({
+  key: 'errorFormClientCreateState',
+  default: '',
 })
 
-const openUpdateConfirmState = atom({
-  key: 'openUpdateServiceConfirmState',
+const successFormState = atom({
+  key: 'isSuccessFormClientCreateState',
   default: false,
 })
 
 const nameState = atom({
-  key: 'nameServiceCreateState',
+  key: 'nameClientCreateState',
   default: {
     text: '',
     error: ''
   }
 })
 
-const descriptionState = atom({
-  key: 'descriptionServiceCreateState',
+const contactNumberState = atom({
+  key: 'contactNumberStateClientForm',
   default: {
     text: '',
     error: ''
   }
 })
 
-const statusState = atom({
-  key: 'statusServiceCreateState',
-  default: 'actived' as ServiceStatus
+const passwordState = atom({
+  key: 'passwordStateClientForm',
+  default: {
+    text: '',
+    error: ''
+  }
 })
 
-const priceState = atom({
-  key: 'priceServiceCreateState',
-  default: 0
+const userTypeState = atom<UserRole>({
+  key: 'typeClientStateClientForm',
+  default: 'client'
 })
 
-const timeExecutionState = atom({
-  key: 'timeExecutionServiceCreateState',
-  default: 20
-})
-
-const serviceCreateState = selector({
+const newClientFormState = selector({
   key: 'serviceCreateState',
   get: ({ get }) => {
     return {
       name: get(nameState).text,
-      description: get(descriptionState).text,
-      status: get(statusState),
-      price: get(priceState),
-      timeExecution: get(timeExecutionState)
+      contactNumber: get(contactNumberState).text,
+      password: get(passwordState).text,
+      role: get(userTypeState)
     }
   }
 })
 
 export const State = {
   loadingFormState,
-  loadingServiceState,
-  openRemoveConfirmState,
-  openUpdateConfirmState,
+  errorFormState,
+  successFormState,
   nameState,
-  descriptionState,
-  statusState,
-  priceState,
-  timeExecutionState,
-  serviceCreateState
+  contactNumberState,
+  passwordState,
+  userTypeState,
+  newClientFormState
 }

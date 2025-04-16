@@ -1,28 +1,30 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Slide, Stack } from '@mui/material'
-import { SaveFormAction, UpdateFormAction } from '@/presentation/pages/service-form/components'
+import { SaveAction, UpdateFormAction } from '@/presentation/pages/client-form/components'
 
-export const ServiceFormActions: React.FC = () => {
+export const Actions: React.FC = () => {
   const navigate = useNavigate()
 
+  const handleGoBackToList = () => {
+    navigate('/clientes')
+  }
+
   return (
-    <Slide in={true} direction="left" unmountOnExit mountOnEnter>
-      <Stack direction="row" alignItems="center"  justifyContent="flex-end">
+    <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={2} spacing={2}>
+      <Slide in={true} direction="right" unmountOnExit mountOnEnter>
         <Button
           fullWidth
           id="close-clients-form-button"
-          color="primary"
-          onClick={() => {
-            navigate('/clientes')
-          }}
-          sx={{ borderRadius: 0, py: 1.5, borderBottomLeftRadius: 4, ml: 0.3 }}
+          color="inherit"
+          variant="outlined"
+          onClick={handleGoBackToList}
         >
           Cancelar
         </Button>
-        <UpdateFormAction />
-        <SaveFormAction />
-      </Stack>
-    </Slide>
+      </Slide>
+      <UpdateFormAction />
+      <SaveAction />
+    </Stack>
   )
 }
