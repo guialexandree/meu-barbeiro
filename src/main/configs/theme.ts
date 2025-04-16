@@ -30,6 +30,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
            fontFamily: 'Inter',
+           borderRadius: 8,
         },
       },
     },
