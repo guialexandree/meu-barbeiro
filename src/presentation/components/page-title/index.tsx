@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Paper, Slide, Stack, Typography } from '@mui/material'
+import { Box, Slide, Stack, Typography, Zoom } from '@mui/material'
 import logoImg from '@/presentation/assets/logo.png'
 
 type PageTitleProps = {
@@ -9,57 +9,52 @@ type PageTitleProps = {
 
 export const PageTitle: React.FC<PageTitleProps> = (props) => {
   return (
-    <Slide direction="down" in mountOnEnter unmountOnExit>
-      <Paper
-        component='header'
-        sx={{
-          ml: 4,
-          mr: 2,
-          mb: 2,
-          height: 65,
-          position: 'relative',
-          pl: 7,
-          pr: 1,
-          width: 'calc(100% - 3rem)',
-        }}
-      >
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Avatar
+    <Stack
+      component="header"
+      sx={{
+        mb: 2,
+        height: 65,
+        px: 2,
+        mr: 2,
+      }}
+    >
+      <Stack direction="row" spacing={2} alignItems="center">
+        <Zoom timeout={400} in mountOnEnter unmountOnExit>
+          <Box
             src={logoImg}
-            sx={{
-              width: 80,
-              height: 80,
-              position: 'absolute',
-              left: -20,
-              top: -10,
-            }}
+            component={'img'}
+            sx={{ p: 0.5, width: 80, height: 80, backgroundColor: '#111111', borderRadius: 24 }}
           />
+        </Zoom>
 
-          <Stack direction="column">
+        <Slide direction="down" in mountOnEnter unmountOnExit>
+          <Stack direction="column" spacing={0.3}>
             <Typography
               variant="h6"
-              id='page-title'
+              id="page-title"
+              color="text.secondary"
               sx={{
                 letterSpacing: 0.5,
                 mt: 0.5,
                 fontSize: 16,
                 textTransform: 'uppercase',
+                fontFamily: 'Inter',
               }}
             >
               {props.title}
             </Typography>
             <Typography
-              id='page-subtitle'
+              id="page-subtitle"
               variant="body2"
-              sx={{ fontSize: 13 }}
+              sx={{ fontSize: 13, fontFamily: 'Inter', textTransform: 'lowercase' }}
               color="grey.500"
               lineHeight={1.1}
             >
               {props.subtitle}
             </Typography>
           </Stack>
-        </Stack>
-      </Paper>
-    </Slide>
+        </Slide>
+      </Stack>
+    </Stack>
   )
 }

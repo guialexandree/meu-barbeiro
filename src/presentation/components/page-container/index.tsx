@@ -33,7 +33,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
       container
       component="section"
       sx={{
-        pt: `calc(${isMobile ? 120 : 136}px + 16px)`,
+        pt: `calc(${isMobile ? 120 : 136}px + 10px)`,
         pb: 6,
         minHeight: '100%',
         color: 'white',
@@ -45,7 +45,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
       }}
     >
       {props.title && <PageTitle title={props.title} subtitle={props.subtitle} />}
-      <Stack sx={{ flex: 1, width: '100%' }} >{props.children}</Stack>
+      <Stack sx={{ flex: 1, width: '100%', pt: 1.5 }} >{props.children}</Stack>
     </Grid2>
   )
 }
