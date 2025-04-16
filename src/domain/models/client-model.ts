@@ -2,9 +2,8 @@ export type ClientModel = {
   id: string
   name: string
   status: UserStatus
-  username: string
   contactNumber: string
-  email: string
+  role: UserRole
   createdAt: Date
 }
 
