@@ -29,6 +29,7 @@ export const Form: React.FC = () => {
                 },
               },
               placeholder: '(11) 99999-9999',
+              type: 'tel',
               disabled: loading,
               id: 'client-contact-number',
               name: 'contactNumber',
