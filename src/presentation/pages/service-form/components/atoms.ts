@@ -11,6 +11,12 @@ const loadingFormState = atom({
   default: false,
 })
 
+const successFormState = atom({
+  key: 'isSuccessFormServiceCreateState',
+  default: false,
+})
+
+
 const openRemoveConfirmState = atom({
   key: 'openRemoveServiceConfirmState',
   default: false,
@@ -68,6 +74,7 @@ const serviceCreateState = selector({
 export const State = {
   loadingFormState,
   loadingServiceState,
+  successFormState,
   openRemoveConfirmState,
   openUpdateConfirmState,
   nameState,

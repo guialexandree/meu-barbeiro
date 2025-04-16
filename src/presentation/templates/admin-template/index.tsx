@@ -16,7 +16,7 @@ export const AdminTemplate: React.FC = () => {
   React.useLayoutEffect(() => {
     const metaThemeColor = document.querySelector('meta[name=theme-color]')
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', '#2c82d8')
+      metaThemeColor.setAttribute('content', theme.palette.primary.main)
     }
   }, [])
 

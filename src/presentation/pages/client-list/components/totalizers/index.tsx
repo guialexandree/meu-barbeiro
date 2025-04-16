@@ -9,7 +9,7 @@ export const Totalizers: React.FC = () => {
 
   return (
     <Stack direction="row" spacing={1} mx={2} mb={1}>
-      <ValueIndicator title="Total de clientes" value={clientResult.meta.total} entryDirection="right" icon="peoples" />
+      <ValueIndicator title="Total de clientes" value={clientResult?.meta?.total} entryDirection="right" icon="peoples" />
 
       <ValueIndicator
         title="Novos clientes"
