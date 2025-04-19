@@ -10,7 +10,7 @@ export type AppNavigation = {
 
 export const appNavigation: AppNavigation[] = [
   {
-    icon: 'diamond',
+    icon: 'sort',
     title: 'atendimento',
     subtitle: 'fila de atendimento',
     pathTo: '/',
@@ -21,12 +21,12 @@ export const appNavigation: AppNavigation[] = [
     subtitle: 'gerenciamento de clientes',
     pathTo: 'clientes',
   },
-  {
-    icon: 'bar_chart',
-    title: 'financeiro',
-    subtitle: 'relatórios de atendimento e financeiro',
-    pathTo: 'relatorios',
-  },
+  // {
+  //   icon: 'bar_chart',
+  //   title: 'financeiro',
+  //   subtitle: 'relatórios de atendimento e financeiro',
+  //   pathTo: 'relatorios',
+  // },
   {
     icon: 'content_cut',
     title: 'serviços',
