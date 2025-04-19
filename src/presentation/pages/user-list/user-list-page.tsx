@@ -17,28 +17,28 @@ const UsersListPage: React.FC = () => {
   const [page] = React.useState(1)
   const [limit] = React.useState(10)
 
-  const loadClients = React.useMemo(() => Factories.makeRemoteLoadUsers(), [])
+  const loadUsers = React.useMemo(() => Factories.makeRemoteLoadUsers(), [])
 
   const onInit = React.useCallback(async () => {
     setSearch('')
-    const clientResult = (await onLoadClients())!
-    if (clientResult?.success) {
-      if (clientResult.data) {
-        setUsers(clientResult)
+    const usersResult = (await onLoadUsers())!
+    if (usersResult?.success) {
+      if (usersResult.data) {
+        setUsers(usersResult)
       }
       return
     }
 
-    setError(clientResult?.error || 'Erro ao carregar clientes')
+    setError(usersResult?.error || 'Erro ao carregar clientes')
   }, [])
 
-  const onLoadClients = React.useCallback(
+  const onLoadUsers = React.useCallback(
     async (search?: string): Promise<LoadUsersResult> => {
       try {
         setLoading(true)
         setError('')
-        const clientsResult = await loadClients.load({ page, limit, search })
-        return clientsResult
+        const usersResult = await loadUsers.load({ page, limit, search })
+        return usersResult
       } catch (error) {
         setError((error as Error).message)
       } finally {
@@ -58,9 +58,9 @@ const UsersListPage: React.FC = () => {
     >
       <Totalizers />
 
-      <UsersFilters loadUsers={onLoadClients} />
+      <UsersFilters loadUsers={onLoadUsers} />
 
-      <UserList onReload={onLoadClients}/>
+      <UserList onReload={onLoadUsers}/>
 
       <Stack direction="row" justifyContent="center">
         <Zoom in>
