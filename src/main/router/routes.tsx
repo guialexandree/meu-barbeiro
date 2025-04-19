@@ -11,6 +11,7 @@ const ServiceListPage = lazy(() => import('@/presentation/pages/service-list/ser
 const ServiceFormPage = lazy(() => import('@/presentation/pages/service-form/service-form-page'))
 const UserFormPage = lazy(() => import('@/presentation/pages/user-form/user-form-page'))
 const UsersListPage = lazy(() => import('@/presentation/pages/user-list/user-list-page'))
+const UsersViewPage = lazy(() => import('@/presentation/pages/user-view/user-view-page'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts/alerts-page'))
 const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/clientes',
         element: <Loadable children={<UsersListPage />} />,
+      },
+      {
+        path: '/cliente/:id',
+        element: <Loadable children={<UsersViewPage />} />,
       },
       {
         path: '/clientes/criar-novo',

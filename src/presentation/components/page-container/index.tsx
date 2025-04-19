@@ -5,8 +5,8 @@ import { PageTitle } from '../page-title'
 type PageContainerProps = {
   children: React.ReactNode
   onInit?: () => Promise<void>
-  title: string
-  subtitle: string
+  title?: string
+  subtitle?: string
 }
 
 export const PageContainer: React.FC<PageContainerProps> = (props) => {
@@ -23,6 +23,7 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
         flexDirection: 'column',
         position: 'relative',
         maxWidth: '100vw',
+        backgroundColor: 'background.default',
         margin: '0 auto',
         overflow: 'hidden',
       }}

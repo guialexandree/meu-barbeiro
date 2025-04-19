@@ -4,6 +4,7 @@ import { Icon, IconButton, ListItem, ListItemText, Stack, Tooltip, Typography } 
 import { UserModel } from '@/domain/models'
 import { StatusUser } from '@/presentation/components'
 import { useFormat } from '@/presentation/hooks'
+import { useNavigate } from 'react-router-dom'
 
 type UserItemProps = {
   user: UserModel
@@ -11,6 +12,7 @@ type UserItemProps = {
 
 export const UserItem: React.FC<UserItemProps> = (props) => {
   const { formatPhoneNumber } = useFormat()
+  const navigate = useNavigate()
 
   return (
     <ListItem
@@ -44,7 +46,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
           <IconButton
             sx={{ backgroundColor: 'background.default' }}
             edge="end"
-            aria-label="whastapp"
+            aria-label="adicioanr na fila"
           >
             <Icon>data_saver_on</Icon>
           </IconButton>
@@ -53,6 +55,12 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
         <Tooltip title="Chamar o WhatsApp" placement="left" arrow>
           <IconButton sx={{ backgroundColor: 'background.default' }} edge="end" aria-label="whastapp">
             <WhatsAppIcon />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Ver detalhes do cliente" placement="left" arrow>
+          <IconButton onClick={() => { navigate(`/cliente/${props.user.id}`) }} sx={{ backgroundColor: 'background.default' }} edge="end" aria-label="detalhes do cliente">
+          <Icon>account_circle</Icon>
           </IconButton>
         </Tooltip>
       </Stack>
