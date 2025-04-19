@@ -1,3 +1,3 @@
-import { ClientResult } from '@/domain/models'
+import { UserResult } from '@/domain/models'
 
-export const _mockClients: ClientResult[] = []
+export const _mockClients: UserResult[] = []

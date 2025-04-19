@@ -1,14 +1,14 @@
+import { UserModel, UserRole } from '@/domain/models'
 import { HttpDefaultResponse } from '@/data/protocols'
-import { ClientModel, UserRole } from '@/domain/models'
 
-export interface CreateClient {
-  create: (params: CreateClientParams) => Promise<CreateClientResult>
+export interface CreateUser {
+  create: (params: CreateUserParams) => Promise<CreateUserResult>
 }
 
-export type CreateClientParams = {
+export type CreateUserParams = {
   password: string
   name: string
   contactNumber: string
   role: UserRole
 }
-export type CreateClientResult = HttpDefaultResponse<ClientModel>
+export type CreateUserResult = HttpDefaultResponse<UserModel>
