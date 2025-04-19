@@ -69,7 +69,6 @@ const AlertsPage: React.FC = () => {
   return (
     <PageContainer
       onInit={onInit}
-      loading={loading}
       title="Avisos"
       subtitle="Configure avisos para exibir nas principais telas do app do cliente"
     >
