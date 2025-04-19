@@ -60,7 +60,7 @@ const UsersViewPage: React.FC = () => {
   return (
     <PageContainer>
       <Stack alignItems="flex-start" justifyContent="center" px={2}>
-        <Stack component="header" direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+        <Stack component="header" direction="row" justifyContent="space-between" alignItems="center" width={'100%'} spacing={2}>
           <Avatar
             alt="Imagem do usuário"
             src={`/public/img/avataaars${Math.floor(Math.random() * 7) + 1}.svg`}
