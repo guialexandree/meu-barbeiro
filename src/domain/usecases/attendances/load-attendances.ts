@@ -1,7 +1,7 @@
 import { AttendanceModel } from '@/domain/models'
 
 export interface LoadAttendances {
-  get: () => Promise<LoadAttendancesResult>
+  load: () => Promise<LoadAttendancesResult>
 }
 
 export type LoadAttendancesResult = AttendanceModel[]

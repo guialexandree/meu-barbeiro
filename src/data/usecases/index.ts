@@ -1,4 +1,5 @@
 export * from './authentication'
 export * from './alerts'
+export * from './attendances'
 export * from './services'
 export * from './users'
