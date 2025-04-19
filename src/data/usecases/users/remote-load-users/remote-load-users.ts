@@ -1,22 +1,19 @@
-import { CreateClient, CreateClientParams, CreateClientResult } from '@/domain/usecases'
 import { HttpClient, HttpStatusCode } from '@/data/protocols'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+import { LoadUsers, LoadUsersParams, LoadUsersResult } from '@/domain/usecases'
 
-export class RemoteCreateClient implements CreateClient {
-  constructor(
-    private readonly url: string,
-    private readonly httpClient: HttpClient<CreateClientResult>,
-  ) {}
+export class RemoteLoadUsers implements LoadUsers {
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadUsersResult>) {}
 
-  async create(params: CreateClientParams): Promise<CreateClientResult> {
+  async load (params?: LoadUsersParams): Promise<LoadUsersResult> {
     const { statusCode, body } = await this.httpClient.request({
       url: `${this.url}/api/users`,
-      method: 'post',
-      body: params
+      method: 'get',
+      params,
     })
 
     if (import.meta.env.DEV) {
-       // return new Promise<LoadClientsResult>((resolve) => {
+      // return new Promise<LoadServicesResult>((resolve) => {
       //   setTimeout(() => resolve(_mockClients), 1500)
       // })
     }
@@ -25,7 +22,7 @@ export class RemoteCreateClient implements CreateClient {
       throw new AccessDeniedError()
     }
 
-    if (!body || !body?.data) {
+    if (!body?.data) {
       throw new UnexpectedError()
     }
 

@@ -1,15 +1,14 @@
 import { HttpClient, HttpStatusCode } from '@/data/protocols'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
-import { LoadClients, LoadClientsParams, LoadClientsResult } from '@/domain/usecases'
+import { LoadUsersTotalizer, LoadUsersTotalizerResult } from '@/domain/usecases'
 
-export class RemoteGetClients implements LoadClients {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadClientsResult>) {}
+export class RemoteLoadUsersTotalizer implements LoadUsersTotalizer {
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadUsersTotalizerResult>) {}
 
-  async load (params?: LoadClientsParams): Promise<LoadClientsResult> {
+  async load (): Promise<LoadUsersTotalizerResult> {
     const { statusCode, body } = await this.httpClient.request({
-      url: `${this.url}/api/users`,
+      url: `${this.url}/api/users/totalizer`,
       method: 'get',
-      params,
     })
 
     if (import.meta.env.DEV) {
