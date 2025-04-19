@@ -5,7 +5,6 @@ import { ValueGrowthIndicator } from '../value-growth-indicator'
 type ValueIndicatorProps = {
   title: string
   value: string | number
-  loading: boolean
   showSubvalue?: boolean
   subvalue?: number
   descriptionSubvalue?: string
@@ -33,7 +32,7 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
         </Typography>
 
         <Stack direction="row" justifyContent="space-between" alignItems="flex-end" spacing={1}>
-          {props.loading ? (
+          {props.value === undefined ? (
             <Skeleton variant="rounded" width={40} height={30} />
           ) : (
             <Typography variant="h4" sx={{ fontWeight: '500', letterSpacing: -3, lineHeight: 1 }}>
