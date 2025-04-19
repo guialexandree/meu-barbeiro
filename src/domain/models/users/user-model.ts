@@ -1,4 +1,4 @@
-export type ClientModel = {
+export type UserModel = {
   id: string
   name: string
   status: UserStatus
@@ -7,7 +7,7 @@ export type ClientModel = {
   createdAt: Date
 }
 
-export type ClientResult = Omit<ClientModel, 'id'> & {
+export type UserResult = Omit<UserModel, 'id'> & {
   id: string
 }
 
