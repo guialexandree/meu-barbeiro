@@ -45,8 +45,8 @@ const userTypeState = atom<UserRole>({
   default: 'client'
 })
 
-const newClientFormState = selector({
-  key: 'serviceCreateState',
+const newUserFormState = selector({
+  key: 'newUserFormState',
   get: ({ get }) => {
     return {
       name: get(nameState).text,
@@ -65,5 +65,5 @@ export const State = {
   contactNumberState,
   passwordState,
   userTypeState,
-  newClientFormState
+  newUserFormState
 }

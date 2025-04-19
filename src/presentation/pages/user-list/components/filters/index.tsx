@@ -13,11 +13,10 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
   const setUsers = useSetRecoilState(State.List.usersResultState)
   const setError = useSetRecoilState(State.errorClientsState)
 
-
   const handleLoadUsers = React.useCallback(async (textSearch: string): Promise<void> => {
     const usersResult = await props.loadUsers(textSearch)!
     if (usersResult?.success) {
-      if (usersResult.data?.length) {
+      if (usersResult.data) {
         setUsers(usersResult)
       }
 

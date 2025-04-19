@@ -10,7 +10,7 @@ import { State } from '@/presentation/pages/user-list/components/atoms'
 
 const UsersListPage: React.FC = () => {
   const navigate = useNavigate()
-  const setLoading = useSetRecoilState(State.loadingClientsState)
+  const setLoading = useSetRecoilState(State.loadingUsersState)
   const setError = useSetRecoilState(State.errorClientsState)
   const setUsers = useSetRecoilState(State.List.usersResultState)
   const setSearch = useSetRecoilState(State.List.textSearchState)
@@ -23,10 +23,9 @@ const UsersListPage: React.FC = () => {
     setSearch('')
     const clientResult = (await onLoadClients())!
     if (clientResult?.success) {
-      if (clientResult.data.length) {
+      if (clientResult.data) {
         setUsers(clientResult)
       }
-
       return
     }
 

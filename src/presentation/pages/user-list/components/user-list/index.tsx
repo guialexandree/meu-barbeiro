@@ -15,11 +15,11 @@ export const UserList: React.FC<UserListProps> = (props) => {
   const [error, setError] = useRecoilState(State.errorClientsState)
   const clientsResult = useRecoilValue(State.List.usersResultState)
   const noResults = useRecoilValue(State.noResultsClientsState)
-  const loading = useRecoilValue(State.loadingClientsState)
+  const loading = useRecoilValue(State.loadingUsersState)
   const search = useRecoilValue(State.List.textSearchState)
 
   if (loading) {
-    return <PageLoader />
+    return <PageLoader loading />
   }
 
   if (error) {

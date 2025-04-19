@@ -12,7 +12,7 @@ import { clientCreateValidation } from './validations'
 export const SaveAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
-  const newClient = useRecoilValue(State.newClientFormState)
+  const newUser = useRecoilValue(State.newUserFormState)
   const loading = useRecoilValue(State.loadingFormState)
   const setClientsResult = useSetRecoilState(ClientsState.List.usersResultState)
   const setLoading = useSetRecoilState(State.loadingFormState)
@@ -48,10 +48,9 @@ export const SaveAction: React.FC = () => {
   }
 
   const validateForm = (): boolean => {
-    const result = clientCreateValidation.safeParse(newClient)
+    const result = clientCreateValidation.safeParse(newUser)
 
     if (!result.success) {
-      console.log(result.error.errors)
       const error = result.error.errors.at(0)!
       const inputName = error.path.at(0) as string
       onError(error.message, inputName)
@@ -65,10 +64,10 @@ export const SaveAction: React.FC = () => {
 
     setLoading(true)
     createClient
-      .create(newClient)
+      .create(newUser)
       .then((result) => {
         if (result.success) {
-          onSuccess({ ...newClient, id: result.data.id })
+          onSuccess({ ...newUser, id: result.data.id } as any)
           return
         }
 
