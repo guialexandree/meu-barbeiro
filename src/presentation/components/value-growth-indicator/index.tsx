@@ -1,5 +1,5 @@
 import React from 'react'
-import { Chip, Icon, Tooltip } from '@mui/material'
+import { Chip, Icon, Skeleton, Tooltip } from '@mui/material'
 
 type ValueGrowthIndicatorProps = {
   value?: number
@@ -12,6 +12,10 @@ export const ValueGrowthIndicator: React.FC<ValueGrowthIndicatorProps> = (props)
 
   let colorValue: any = (props.value || 0) > 0 ? 'success' : 'error'
   colorValue = props.value === 0 ? 'info' : colorValue
+
+  if (props.value === undefined) {
+    return <Skeleton width={55} height={24} variant='rounded' sx={{ borderRadius: 4 }} />
+  }
 
   return (
     <Tooltip title={props.description}>

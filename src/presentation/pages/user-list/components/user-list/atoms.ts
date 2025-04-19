@@ -8,7 +8,7 @@ export const usersResultState = atom<LoadUsersResult>({
 
 export const loadingUsersTotalizerResultState = atom({
   key: 'loadingUsersTotalizerResultState',
-  default: false,
+  default: true,
 })
 
 export const usersTotalizerResultState = atom<LoadUsersTotalizerResult>({
