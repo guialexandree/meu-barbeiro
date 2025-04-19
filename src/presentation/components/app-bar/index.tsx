@@ -12,11 +12,10 @@ export const AppBar: React.FC = () => {
       sx={{
         maxWidth: '100vw',
         backgroundColor: 'primary.main',
-        minHeight: 120,
+        minHeight: 90,
         borderRadius: 0,
-        borderBottomRightRadius: 18,
-        borderBottomLeftRadius: 18,
         alignItems: 'flex-start',
+        position: 'relative',
       }}
     >
       <Toolbar sx={{ width: '100%', mt: 1 }}>
@@ -26,10 +25,10 @@ export const AppBar: React.FC = () => {
           </Typography>
         </Slide>
 
-        <Stack direction="row" alignItems="center" spacing={0.5}>
+        <Stack direction="row" alignItems="center" spacing={0.7}>
           <Slide direction="down" in={true} mountOnEnter unmountOnExit>
             <IconButton edge="start" aria-label="menu">
-              <Icon>settings_power</Icon>
+              <Icon>tune</Icon>
             </IconButton>
           </Slide>
           <Slide direction="down" in={true} mountOnEnter unmountOnExit>
@@ -42,8 +41,9 @@ export const AppBar: React.FC = () => {
           <Slide direction="down" in={true} mountOnEnter unmountOnExit>
             <IconButton
               edge="start"
+              size='large'
               aria-label="menu"
-              sx={{ backgroundColor: 'primary.light', }}
+              sx={{ backgroundColor: 'primary.light' }}
               onClick={() => {
                 setOpenDrawer(true)
               }}
@@ -54,7 +54,7 @@ export const AppBar: React.FC = () => {
         </Stack>
       </Toolbar>
 
-      <Toolbar sx={{ width: '100%' }}>
+      <Toolbar sx={{ width: '100%', left: 0, bottom: -30, position: 'absolute' }}>
         <QueueInfo />
       </Toolbar>
     </AppBarMUI>

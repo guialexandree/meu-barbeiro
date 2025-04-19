@@ -7,7 +7,6 @@ type ValueIndicatorProps = {
   subvalue?: string
   descriptionSubvalue?: string
   entryDirection: 'up' | 'down' | 'left' | 'right'
-  icon: string
 }
 
 export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
@@ -16,23 +15,19 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
   return (
     <Slide direction={props.entryDirection} in mountOnEnter unmountOnExit>
       <Paper
-        variant="outlined"
+        variant="elevation"
+        elevation={0}
         sx={{
-          p: { xs: 1, sm: 2 },
+          py: { xs: 1, sm: 2 },
+          px: { xs: 2 },
           flexGrow: 1,
           display: 'flex',
           justifyContent: 'space-between',
           flexDirection: 'column',
           maxWidth: 300,
-          backgroundColor: 'grey.800',
-          border: 'solid 2px',
-          borderColor: (theme) => `${theme.palette.primary.main}54`,
         }}
       >
-        <Stack direction="row" sx={{ color: 'grey.400' }} alignItems="flex-start" spacing={1}>
-          <Icon sx={{ fontSize: { xs: 20, sm: 26 } }}>{props.icon}</Icon>
-          <Typography variant="caption">{props.title}</Typography>
-        </Stack>
+        <Typography variant="caption" sx={{ color: 'grey.400' }}>{props.title}</Typography>
 
         <Stack direction="row" justifyContent="space-between" alignItems="flex-end" spacing={1}>
           {props.value ? (
@@ -46,13 +41,17 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
           {props.subvalue && (
             <Tooltip title={props.descriptionSubvalue}>
               <Chip
-                variant="outlined"
                 icon={<Icon color="success">{iconValue}</Icon>}
                 size="small"
+                color='success'
                 label={props.subvalue}
                 sx={{
+                  fontFamily: 'Inter',
                   p: 0,
                   fontSize: 11,
+                  color: 'success.main',
+                  borderRadius: 3,
+                  backgroundColor: theme => `${theme.palette.success.main}20`,
                 }}
               />
             </Tooltip>

@@ -7,26 +7,27 @@ export const QueueInfo: React.FC = () => {
       component="header"
       elevation={0}
       sx={{
-        backgroundColor: (theme) => `${theme.palette.primary.light}80`,
-        borderRadius: 2,
+        backgroundColor: 'primary.light',
+        backgroundImage: 'linear-gradient(0deg,rgba(44, 130, 216, 1) 0%, #569bdf 60%)',
+        borderRadius: 1,
         flexGrow: 1,
         alignItems: 'flex-start',
         display: 'flex',
         justifyContent: 'space-between',
         padding: 1,
-        px: 2,
+        px: 1.5,
         mb: 0.5,
       }}
     >
-      <Stack spacing={0.5}>
+      <Stack spacing={1} direction='row' alignItems="center">
+          <IconButton size="large" sx={{ p: 0 }}>
+            <Icon>sort</Icon>
+          </IconButton>
+
+          <Stack spacing={0.5}>
           <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
             Status
           </Typography>
-
-          <Stack direction="row" alignItems="center" spacing={0.5}>
-          <IconButton size="small" sx={{ p: 0 }}>
-            <Icon sx={{ fontSize: 14 }}>sort</Icon>
-          </IconButton>
           <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
             12 na fila
           </Typography>

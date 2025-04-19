@@ -28,15 +28,15 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
         </Zoom>
 
         <Slide direction="down" in mountOnEnter unmountOnExit>
-          <Stack direction="column" spacing={0.3}>
+          <Stack>
             <Typography
               variant="h6"
               id="page-title"
               color="text.secondary"
               sx={{
                 letterSpacing: 0.5,
-                mt: 0.5,
                 fontSize: 16,
+                lineHeight: 1.2,
                 textTransform: 'uppercase',
                 fontFamily: 'Inter',
               }}
