@@ -18,6 +18,7 @@ export const Actions: React.FC = () => {
           id="close-clients-form-button"
           color="inherit"
           variant="outlined"
+          sx={{  borderColor: 'grey.700' }}
           onClick={handleGoBackToList}
         >
           Cancelar
