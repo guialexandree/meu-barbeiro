@@ -70,7 +70,6 @@ const ServiceFormPage: React.FC = () => {
     <PageContainer
       title="Cadastro de Serviço"
       subtitle="Crie serviços e ajuste preços para serem exibidos no app do cliente"
-      loading={loading}
     >
       <Grid2 container>
         <Grid2 size={{ xs: 12, sm: 6 }}  sx={{ mx: { xs: 2, sm: 4 } }}>

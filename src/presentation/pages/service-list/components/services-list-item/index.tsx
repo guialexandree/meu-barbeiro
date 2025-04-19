@@ -3,7 +3,7 @@ import { ServiceModel } from '@/domain/models'
 import { Icon, IconButton, ListItem, ListItemText, Stack } from '@mui/material'
 import { useFormat } from '@/presentation/hooks'
 import { useNavigate } from 'react-router-dom'
-import { StatusChip } from '@/presentation/components'
+import { StatusUser } from '@/presentation/components'
 
 type ServiceListItemProps = {
   service: ServiceModel
@@ -60,7 +60,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
       </Stack>
 
       <Stack direction="row" sx={{ width: '100%', justifyContent: 'space-between' }}>
-        <StatusChip status={props.service.status as any}/>
+        <StatusUser status={props.service.status as any}/>
       </Stack>
     </ListItem>
   )
