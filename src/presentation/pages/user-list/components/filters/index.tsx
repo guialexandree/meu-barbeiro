@@ -1,33 +1,30 @@
 import React from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { Stack } from '@mui/material'
 import { LoadUsersResult } from '@/domain/usecases'
 import { InputSearch } from '@/presentation/components'
 import { State } from '@/presentation/pages/user-list/components/atoms'
 
 type UsersFiltersProps = {
-  loadClients: (search?: string) => Promise<LoadUsersResult>
+  loadUsers: (search?: string) => Promise<LoadUsersResult>
 }
 
 export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
-  const [clientsResult, setClientsResult] = useRecoilState(State.List.usersResultState)
-  const search = useRecoilValue(State.List.textSearchState)
-  const setNoResut = useSetRecoilState(State.noResultsClientsState)
+  const setUsers = useSetRecoilState(State.List.usersResultState)
+  const setError = useSetRecoilState(State.errorClientsState)
 
-  React.useEffect(() => {
-    if (search && !clientsResult?.data?.length) {
-      setNoResut(true)
-    } else {
-      setNoResut(false)
-    }
-  }, [search, clientsResult])
 
-  const handleLoadClients = React.useCallback(async (textSearch: string): Promise<void> => {
-    const services = await props.loadClients(textSearch)!
-    if (services?.success) {
-      setClientsResult(clientsResult)
+  const handleLoadUsers = React.useCallback(async (textSearch: string): Promise<void> => {
+    const usersResult = await props.loadUsers(textSearch)!
+    if (usersResult?.success) {
+      if (usersResult.data?.length) {
+        setUsers(usersResult)
+      }
+
       return
     }
+
+    setError(usersResult?.error || 'Erro ao carregar clientes')
   }, [])
 
   return (
@@ -35,7 +32,7 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
       <InputSearch
         id="clients-input-search"
         placeholder="Buscar"
-        loadData={handleLoadClients}
+        loadData={handleLoadUsers}
         inputSearchState={State.List.textSearchState}
         showFiltersState={State.List.showFilterState}
       />

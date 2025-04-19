@@ -1,9 +1,19 @@
-import { LoadUsersResult } from '@/domain/usecases'
+import { LoadUsersResult, LoadUsersTotalizerResult } from '@/domain/usecases'
 import { atom, selector } from 'recoil'
 
 export const usersResultState = atom<LoadUsersResult>({
   key: 'usersState',
   default: null as unknown as LoadUsersResult,
+})
+
+export const loadingUsersTotalizerResultState = atom({
+  key: 'loadingUsersTotalizerResultState',
+  default: false,
+})
+
+export const usersTotalizerResultState = atom<LoadUsersTotalizerResult>({
+  key: 'usersTotalizerState',
+  default: null as unknown as LoadUsersTotalizerResult,
 })
 
 export const showFilterState = atom({

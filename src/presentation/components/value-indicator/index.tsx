@@ -1,17 +1,18 @@
 import React from 'react'
-import { Chip, Icon, Paper, Skeleton, Slide, Stack, Tooltip, Typography } from '@mui/material'
+import { Paper, Skeleton, Slide, Stack, Typography } from '@mui/material'
+import { ValueGrowthIndicator } from '../value-growth-indicator'
 
 type ValueIndicatorProps = {
   title: string
   value: string | number
-  subvalue?: string
+  loading: boolean
+  showSubvalue?: boolean
+  subvalue?: number
   descriptionSubvalue?: string
   entryDirection: 'up' | 'down' | 'left' | 'right'
 }
 
 export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
-  const iconValue = +props.value > 0 ? 'trending_up' : 'trending_down'
-
   return (
     <Slide direction={props.entryDirection} in mountOnEnter unmountOnExit>
       <Paper
@@ -27,35 +28,20 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = (props) => {
           maxWidth: 300,
         }}
       >
-        <Typography variant="caption" sx={{ color: 'grey.400' }}>{props.title}</Typography>
+        <Typography variant="caption" sx={{ color: 'grey.400' }}>
+          {props.title}
+        </Typography>
 
         <Stack direction="row" justifyContent="space-between" alignItems="flex-end" spacing={1}>
-          {props.value ? (
+          {props.loading ? (
+            <Skeleton variant="rounded" width={40} height={30} />
+          ) : (
             <Typography variant="h4" sx={{ fontWeight: '500', letterSpacing: -3, lineHeight: 1 }}>
               {props.value}
             </Typography>
-          ) : (
-            <Skeleton variant="rounded" width={40} height={30} />
           )}
 
-          {props.subvalue && (
-            <Tooltip title={props.descriptionSubvalue}>
-              <Chip
-                icon={<Icon color="success">{iconValue}</Icon>}
-                size="small"
-                color='success'
-                label={props.subvalue}
-                sx={{
-                  fontFamily: 'Inter',
-                  p: 0,
-                  fontSize: 11,
-                  color: 'success.main',
-                  borderRadius: 3,
-                  backgroundColor: theme => `${theme.palette.success.main}20`,
-                }}
-              />
-            </Tooltip>
-          )}
+          {props.showSubvalue && <ValueGrowthIndicator value={props.subvalue} description={props.descriptionSubvalue} />}
         </Stack>
       </Paper>
     </Slide>

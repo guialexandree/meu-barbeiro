@@ -12,8 +12,7 @@ const UsersListPage: React.FC = () => {
   const navigate = useNavigate()
   const setLoading = useSetRecoilState(State.loadingClientsState)
   const setError = useSetRecoilState(State.errorClientsState)
-  const setEmpty = useSetRecoilState(State.emptyClientsState)
-  const setClients = useSetRecoilState(State.List.usersResultState)
+  const setUsers = useSetRecoilState(State.List.usersResultState)
   const setSearch = useSetRecoilState(State.List.textSearchState)
   const [page] = React.useState(1)
   const [limit] = React.useState(10)
@@ -21,13 +20,13 @@ const UsersListPage: React.FC = () => {
   const loadClients = React.useMemo(() => Factories.makeRemoteLoadUsers(), [])
 
   const onInit = React.useCallback(async () => {
+    setSearch('')
     const clientResult = (await onLoadClients())!
     if (clientResult?.success) {
       if (clientResult.data.length) {
-        setClients(clientResult)
-      } else {
-        setEmpty(true)
+        setUsers(clientResult)
       }
+
       return
     }
 
@@ -39,7 +38,6 @@ const UsersListPage: React.FC = () => {
       try {
         setLoading(true)
         setError('')
-        setEmpty(false)
         const clientsResult = await loadClients.load({ page, limit, search })
         return clientsResult
       } catch (error) {
@@ -52,10 +50,7 @@ const UsersListPage: React.FC = () => {
     [],
   )
 
-  React.useEffect(() => {
-    setSearch('')
-    onInit()
-  }, [])
+  React.useEffect(() => { onInit()}, [])
 
   return (
     <PageContainer
@@ -64,7 +59,7 @@ const UsersListPage: React.FC = () => {
     >
       <Totalizers />
 
-      <UsersFilters loadClients={onLoadClients} />
+      <UsersFilters loadUsers={onLoadClients} />
 
       <UserList onReload={onLoadClients}/>
 
