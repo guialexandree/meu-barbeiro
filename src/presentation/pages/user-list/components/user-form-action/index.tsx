@@ -17,8 +17,6 @@ export const UserFormAction: React.FC = () => {
         left: 0,
         zIndex: 1,
         height: 36,
-        background:
-          'linear-gradient(0deg, rgba(48,48,48,1) 52%, rgba(48,48,48,0.2) 93%, rgba(48,48,48,0) 100%, rgba(48,48,48,0) 100%)',
       }}
     >
       <Zoom in>
