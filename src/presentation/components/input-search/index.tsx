@@ -8,6 +8,7 @@ type InputSearchProps = {
   inputSearchState: RecoilState<string>
   showFiltersState: RecoilState<boolean>
   loadData: (search: string) => void
+  onReset: () => void
 }
 
 export const InputSearch: React.FC<InputSearchProps> = (props) => {
@@ -20,8 +21,10 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
 
   return (
     <Paper
-      component='form'
-      onSubmit={event => { event.preventDefault() }}
+      component="form"
+      onSubmit={(event) => {
+        event.preventDefault()
+      }}
       sx={{
         boxShadow: 0,
         flex: 1,
@@ -34,10 +37,13 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
       }}
     >
       <IconButton type="submit" sx={{ p: '10px' }} onClick={handleSearch} aria-label="search">
-        <Icon color='action'>search</Icon>
+        <Icon color="action">search</Icon>
       </IconButton>
       <InputBase
-        sx={{ ml: 1, flex: 1 }}
+        sx={{
+          mx: 0.5,
+          flex: 1,
+        }}
         size="small"
         value={text}
         placeholder={props.placeholder}
@@ -46,6 +52,13 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         id={props.id}
       />
 
+      {!!text && (
+        <IconButton size="small" sx={{ mr: 0.5 }} edge="end" onClick={props.onReset} aria-label="close">
+          <Icon fontSize="small" color="action">
+            close
+          </Icon>
+        </IconButton>
+      )}
       {!!props.showFiltersState && (
         <>
           <Divider sx={{ borderColor: 'grey.800' }} orientation="vertical" flexItem />

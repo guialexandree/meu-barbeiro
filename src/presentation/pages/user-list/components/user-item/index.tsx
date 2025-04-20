@@ -26,13 +26,13 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
       }}
     >
       <ListItemText
-        sx={{ flex: 1 }}
+        sx={{ flex: 1, mt: 0.5 }}
         primary={props.user.name}
         slotProps={{
-          primary: { textTransform: 'uppercase', id: 'user-name', sx: { lineHeight: 1 } },
+          primary: { textTransform: 'uppercase', id: 'user-name', sx: { lineHeight: 1, fontWeight: 500, fontFamily: 'Inter' } },
         }}
         secondary={
-          <Stack mb={0.5}alignItems="flex-start">
+          <Stack alignItems="flex-start">
             <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
               {formatPhoneNumber(props.user.contactNumber.slice(-11))}
             </Typography>

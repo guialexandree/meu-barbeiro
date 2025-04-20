@@ -12,9 +12,9 @@ export const UserHeader: React.FC = () => {
   if (loading || !userResult) {
     return (
       <Stack direction="row" spacing={2} width={'100%'}>
-        <Slide direction="right" in mountOnEnter unmountOnExit>
+        <Zoom in mountOnEnter unmountOnExit>
           <Skeleton variant="circular" width={80} height={80} />
-        </Slide>
+        </Zoom>
 
         <Slide direction="down" in mountOnEnter unmountOnExit>
           <Stack alignItems="flex-start" spacing={0.7} flex={1}>

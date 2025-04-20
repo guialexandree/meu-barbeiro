@@ -1,15 +1,12 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
-import { Fab, Icon, Stack, Zoom } from '@mui/material'
 import { LoadUsersResult } from '@/domain/usecases'
 import { PageContainer } from '@/presentation/components'
-import { UsersFilters, UserList, Totalizers } from '@/presentation/pages/user-list/components'
+import { UsersFilters, UserList, Totalizers, UserFormAction } from '@/presentation/pages/user-list/components'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/pages/user-list/components/atoms'
 
 const UsersListPage: React.FC = () => {
-  const navigate = useNavigate()
   const setLoading = useSetRecoilState(State.loadingUsersState)
   const setError = useSetRecoilState(State.errorClientsState)
   const setUsers = useSetRecoilState(State.List.usersResultState)
@@ -62,23 +59,7 @@ const UsersListPage: React.FC = () => {
 
       <UserList onReload={onLoadUsers}/>
 
-      <Stack direction="row" justifyContent="center">
-        <Zoom in>
-          <Fab
-            onClick={() => { navigate('/clientes/criar-novo') }}
-            sx={{
-              position: 'fixed',
-              bottom: '16px',
-              opacity: 0.8,
-              transition: 'opacity 0.3s',
-              ':hover': { opacity: 1 },
-              ':active': { opacity: 1 },
-            }}
-          >
-            <Icon sx={{ fontSize: 36, color: 'primary.dark' }}>add</Icon>
-          </Fab>
-        </Zoom>
-      </Stack>
+      <UserFormAction />
     </PageContainer>
   )
 }
