@@ -5,11 +5,6 @@ const loadingServicesState = atom({
   default: true,
 })
 
-const emptyServicesState = atom({
-  key: 'emptyServicesState',
-  default: false
-})
-
 const noResultsServicesState = atom({
   key: 'noResultsServicesState',
   default: false
@@ -24,7 +19,6 @@ import * as List from './services-list/atoms'
 
 export const State = {
   loadingServicesState,
-  emptyServicesState,
   noResultsServicesState,
   errorServicesState,
   List

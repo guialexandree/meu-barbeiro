@@ -13,7 +13,6 @@ type ServiceListProps = {
 
 export const ServiceList: React.FC<ServiceListProps> = (props) => {
   const [error, setError] = useRecoilState(State.errorServicesState)
-  const empty = useRecoilValue(State.emptyServicesState)
   const servicesList = useRecoilValue(State.List.servicesState)
   const noResults = useRecoilValue(State.noResultsServicesState)
   const loading = useRecoilValue(State.loadingServicesState)
@@ -40,20 +39,6 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
           }}
         >
           tentar novamente
-        </Button>
-      </Stack>
-    )
-  }
-
-  if (empty) {
-    return (
-      <Stack id="empty-service-list" sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }} alignItems="center" spacing={1}>
-        <Box component="img" src={emptyListImg} alt="Nenhum serviço cadastrado" width={160} height={160} />
-        <Typography variant="h6" align="center">
-          Nenhum serviço cadastrado
-        </Typography>
-        <Button id="empty-action-service-list" variant="outlined" color="primary">
-          criar novo
         </Button>
       </Stack>
     )

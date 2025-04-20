@@ -8,11 +8,10 @@ import { PageContainer } from '@/presentation/components'
 import { ServiceList, ServiceFilters, ServiceFormAction } from '@/presentation/pages/service-list/components'
 import { State } from '@/presentation/pages/service-list/components/atoms'
 
-const ServicesPage: React.FC = () => {
+const ServicesListPage: React.FC = () => {
   const setLoading = useSetRecoilState(State.loadingServicesState)
   const setServices = useSetRecoilState(State.List.servicesState)
   const setError = useSetRecoilState(State.errorServicesState)
-  const setEmpty = useSetRecoilState(State.emptyServicesState)
   const setSearch = useSetRecoilState(State.List.servicesSearchState)
 
   const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
@@ -21,10 +20,8 @@ const ServicesPage: React.FC = () => {
     setSearch('')
     const serviceResult = (await onLoadServices())!
     if (serviceResult?.success) {
-      if (serviceResult.data.length) {
+      if (serviceResult.data) {
         setServices(serviceResult.data)
-      } else {
-        setEmpty(true)
       }
       return
     }
@@ -37,7 +34,6 @@ const ServicesPage: React.FC = () => {
       try {
         setLoading(true)
         setError('')
-        setEmpty(false)
         const servicesResult = await loadServices.load({ search, status })
         return servicesResult
       } catch (error) {
@@ -50,8 +46,10 @@ const ServicesPage: React.FC = () => {
     [],
   )
 
+  React.useEffect(() => { onInit()}, [])
+
   return (
-    <PageContainer onInit={onInit} title="Serviços" subtitle="Cadastro de serviços e tabela de preços">
+    <PageContainer title="Serviços" subtitle="Cadastro de serviços e tabela de preços">
       <Alert
         severity="info"
         variant="outlined"
@@ -69,4 +67,4 @@ const ServicesPage: React.FC = () => {
   )
 }
 
-export default ServicesPage
+export default ServicesListPage
