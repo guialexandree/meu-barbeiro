@@ -73,7 +73,7 @@ export const AttendancesList: React.FC = () => {
         HISTÓRICO DE ATENDIMENTOS
       </Typography>
 
-      <List dense disablePadding id="attendances-by-user-list" sx={{ width: '100%' }}>
+      <List dense disablePadding id="attendances-by-user-list" sx={{ width: '100%', mt: 1 }}>
         <ListItem
           sx={{ m: 0, mt: 1, pl: 2, backgroundColor: (theme) => `${theme.palette.primary.light}10`, borderRadius: 2 }}
           disablePadding

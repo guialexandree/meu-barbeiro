@@ -1,2 +1,7 @@
-export * from './date-adapter-atom'
-export * from './local-storage-adapter-atom'
+import * as dateAdapterAtoms from './date-adapter-atom'
+import * as localStorageAtoms from './local-storage-adapter-atom'
+
+export const GenericState = {
+    ...dateAdapterAtoms,
+    ...localStorageAtoms,
+}

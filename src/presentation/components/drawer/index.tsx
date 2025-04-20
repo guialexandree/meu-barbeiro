@@ -17,7 +17,7 @@ import {
   IconButton,
 } from '@mui/material'
 import { isOpenDrawer } from './atoms'
-import * as GenericState from '@/presentation/components/atoms'
+import { GenericState } from '@/presentation/components/atoms'
 
 export type DrawerProps = {
   items: AppNavigation[]
