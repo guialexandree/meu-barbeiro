@@ -4,7 +4,7 @@ import logoImg from '@/presentation/assets/logo.png'
 
 type PageTitleProps = {
   title: string
-  subtitle: string
+  subtitle?: string
 }
 
 export const PageTitle: React.FC<PageTitleProps> = (props) => {

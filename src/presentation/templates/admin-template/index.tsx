@@ -20,6 +20,7 @@ export const AdminTemplate: React.FC = () => {
       <Box
         sx={{
           backgroundColor: 'background.default',
+          height: '100vh',
         }}
       >
         <AppBar />
