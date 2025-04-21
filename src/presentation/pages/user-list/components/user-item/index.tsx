@@ -21,7 +21,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
       sx={{
         mt: 1,
         borderRadius: 2,
-        backgroundColor: 'background.paper',
+        backgroundColor: (theme) => `${theme.palette.primary.light}10`,
         '& .MuiListItemText-root': { mb: 0 },
       }}
     >
@@ -43,7 +43,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
       />
       <Stack direction="row" spacing={1} alignItems="flex-end">
         <Tooltip title="Adicionar na fila" placement="left" arrow>
-          <IconButton
+          <IconButton size={'small'}
             sx={{ backgroundColor: 'background.default' }}
             edge="end"
             aria-label="adicioanr na fila"

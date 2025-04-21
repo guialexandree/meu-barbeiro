@@ -24,7 +24,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
       sx={{
         mt: 1,
         borderRadius: 2,
-        backgroundColor: 'background.paper',
+        backgroundColor: (theme) => `${theme.palette.primary.light}10`,
         '& .MuiListItemText-root': { mb: 0 },
       }}
     >

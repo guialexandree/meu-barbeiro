@@ -46,8 +46,8 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         size="small"
         value={text}
         placeholder={props.placeholder}
-        onChange={(e) => setText(e.target.value)}
-        inputProps={{ 'aria-label': props.placeholder, id: props.id }}
+        onChange={(e) => setText(e.target.value?.toUpperCase())}
+        inputProps={{ 'aria-label': props.placeholder, id: props.id, style: { textTransform: 'uppercase' } }}
         id={props.id}
       />
 

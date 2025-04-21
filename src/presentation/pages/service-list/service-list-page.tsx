@@ -36,7 +36,7 @@ const ServicesListPage: React.FC = () => {
       try {
         setLoading(true)
         setError('')
-        const servicesResult = await loadServices.load({ search, status })
+        const servicesResult = await loadServices.load({ search: search?.toLowerCase(), status })
         return servicesResult
       } catch (error) {
         setError((error as Error).message)
