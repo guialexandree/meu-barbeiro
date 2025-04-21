@@ -1,18 +1,17 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useResetRecoilState, useSetRecoilState } from 'recoil'
-import { Grid2, Paper, Stack } from '@mui/material'
+import { Grid2, Stack } from '@mui/material'
 import { ServiceModel } from '@/domain/models'
 import { Factories } from '@/main/factories/usecases'
-import { InputPrice, InputText, PageContainer } from '@/presentation/components'
-import { ServiceFormRemoveAction, ServiceFormActions, ServiceFormTimeExecution, StatusSwitch } from './components'
 import { State } from '@/presentation/pages/service-form/components/atoms'
-import { useMobile, useNotify } from '@/presentation/hooks'
+import { PageContainer } from '@/presentation/components'
+import { StatusSwitch, Form, Actions, TimeExecution } from '@/presentation/pages/service-form/components'
+import { useNotify } from '@/presentation/hooks'
 
 const ServiceFormPage: React.FC = () => {
   const navigate = useNavigate()
   const { notify } = useNotify()
-  const { isMobile } = useMobile()
   const setLoading = useSetRecoilState(State.loadingServiceState)
   const setName = useSetRecoilState(State.nameState)
   const setDescription = useSetRecoilState(State.descriptionState)
@@ -73,61 +72,13 @@ const ServiceFormPage: React.FC = () => {
     >
       <Grid2 container>
         <Grid2 size={{ xs: 12, sm: 6 }} sx={{ mx: { xs: 2, sm: 4 } }}>
-          <Stack spacing={2}>
+          <Stack spacing={2} component='form' onSubmit={(event) => event.preventDefault()}>
             <StatusSwitch />
-            <Paper
-              id="service-create-form"
-              component="form"
-              elevation={0}
-              onSubmit={(event) => {
-                event.preventDefault()
-              }}
-              sx={{
-                py: 2,
-              }}
-            >
-              <Stack spacing={1} sx={{ mx: { xs: 3, sm: 5 } }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <ServiceFormRemoveAction />
-                </Stack>
-
-                <InputText
-                  state={State.nameState}
-                  inputProps={{
-                    autoFocus: !isMobile,
-                    inputMode: 'text',
-                    label: 'Nome',
-                    id: 'service-name',
-                    name: 'name',
-                  }}
-                />
-
-                <InputText
-                  state={State.descriptionState}
-                  inputProps={{
-                    inputMode: 'text',
-                    label: 'Descrição',
-                    id: 'service-description',
-                    name: 'description',
-                  }}
-                />
-
-                <InputPrice
-                  state={State.priceState}
-                  inputProps={{
-                    inputMode: 'decimal',
-                    label: 'Preço',
-                    id: 'service-price',
-                    name: 'price',
-                  }}
-                />
-
-                <ServiceFormTimeExecution />
-              </Stack>
-
-              <ServiceFormActions />
-            </Paper>
+            <Form />
+            <TimeExecution />
+            <Actions />
           </Stack>
+
         </Grid2>
         <Grid2 size={{ xs: 12 }} sx={{ display: { xs: 'none', sm: 'block' } }}>
           // imagem para exibir na web

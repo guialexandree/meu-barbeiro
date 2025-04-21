@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Slide, Stack } from '@mui/material'
 import { SaveFormAction, UpdateFormAction } from '@/presentation/pages/service-form/components'
 
-export const ServiceFormActions: React.FC = () => {
+export const Actions: React.FC = () => {
   const navigate = useNavigate()
 
   const handleGoBackToList = () => {
@@ -11,11 +11,11 @@ export const ServiceFormActions: React.FC = () => {
   }
 
   return (
-    <Slide in={true} direction="left" unmountOnExit mountOnEnter>
-      <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={2} spacing={2}>
+    <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={2} spacing={2}>
+      <Slide in direction="right" unmountOnExit mountOnEnter>
         <Button
           fullWidth
-          id="close-service-form-button"
+          id="close-service-form-action"
           color="inherit"
           variant="outlined"
           sx={{ borderColor: 'grey.700' }}
@@ -23,9 +23,9 @@ export const ServiceFormActions: React.FC = () => {
         >
           Cancelar
         </Button>
-        <UpdateFormAction />
-        <SaveFormAction />
-      </Stack>
-    </Slide>
+      </Slide>
+      <UpdateFormAction />
+      <SaveFormAction />
+    </Stack>
   )
 }

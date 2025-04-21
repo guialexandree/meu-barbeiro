@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Factories } from '@/main/factories/usecases'
 import { ServiceModel } from '@/domain/models'
-import { Button, Icon } from '@mui/material'
+import { Button, Icon, Slide } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/service-form/components/atoms'
 import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
@@ -21,7 +21,7 @@ export const SaveFormAction: React.FC = () => {
   const createService = React.useMemo(() => Factories.makeRemoteCreateService(), [])
 
   const onSuccess = (service: ServiceModel): void => {
-    setServices(services => [service, ...services])
+    setServices((services) => [service, ...services])
     navigate('/servicos')
     notify('Serviço criado com sucesso', { type: 'success' })
   }
@@ -77,16 +77,18 @@ export const SaveFormAction: React.FC = () => {
   }
 
   return (
-    <Button
-      variant="contained"
-      onClick={handleSubmit}
-      type="submit"
-      fullWidth
-      endIcon={<Icon>check</Icon>}
-      id="save-service-button"
-      href="#"
-    >
-      Gravar
-    </Button>
+    <Slide in direction="left" unmountOnExit mountOnEnter>
+      <Button
+        variant="contained"
+        onClick={handleSubmit}
+        type="submit"
+        fullWidth
+        endIcon={<Icon>check</Icon>}
+        id="save-service-button"
+        href="#"
+      >
+        Gravar
+      </Button>
+    </Slide>
   )
 }

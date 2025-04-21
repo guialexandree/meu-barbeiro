@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Factories } from '@/main/factories/usecases'
 import { UserModel } from '@/domain/models'
 import { Button, Icon, Slide } from '@mui/material'
@@ -11,7 +11,6 @@ import { clientCreateValidation } from './validations'
 
 export const SaveAction: React.FC = () => {
   const { notify } = useNotify()
-  const navigate = useNavigate()
   const newUser = useRecoilValue(State.newUserFormState)
   const loading = useRecoilValue(State.loadingFormState)
   const setClientsResult = useSetRecoilState(ClientsState.List.usersResultState)
@@ -27,7 +26,6 @@ export const SaveAction: React.FC = () => {
 
   const onSuccess = (client: UserModel): void => {
     setClientsResult((currentState) => ({ ...currentState, data: [...currentState.data, client] }))
-    navigate('/clientes')
     setFormSuccess(true)
     notify('Cadastro criado com sucesso', { type: 'success' })
   }
@@ -84,7 +82,7 @@ export const SaveAction: React.FC = () => {
   }
 
   return (
-    <Slide in={true} direction="left" unmountOnExit mountOnEnter>
+    <Slide in direction="left" unmountOnExit mountOnEnter>
       <Button
         variant="contained"
         onClick={handleSubmit}

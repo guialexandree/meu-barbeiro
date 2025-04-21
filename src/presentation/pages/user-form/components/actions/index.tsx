@@ -12,10 +12,10 @@ export const Actions: React.FC = () => {
 
   return (
     <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={2} spacing={2}>
-      <Slide in={true} direction="right" unmountOnExit mountOnEnter>
+      <Slide in direction="right" unmountOnExit mountOnEnter>
         <Button
           fullWidth
-          id="close-clients-form-button"
+          id="close-clients-form-action"
           color="inherit"
           variant="outlined"
           sx={{  borderColor: 'grey.700' }}
