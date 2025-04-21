@@ -44,7 +44,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
       <Stack direction="row" spacing={1} alignItems="flex-end">
         <Tooltip title="Adicionar na fila" placement="left" arrow>
           <IconButton size={'small'}
-            sx={{ backgroundColor: 'background.default' }}
+            sx={{ backgroundColor: theme => `${theme.palette.primary.light}10` }}
             edge="end"
             aria-label="adicioanr na fila"
           >
@@ -53,13 +53,13 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
         </Tooltip>
 
         <Tooltip title="Chamar o WhatsApp" placement="left" arrow>
-          <IconButton sx={{ backgroundColor: 'background.default' }} edge="end" aria-label="whastapp">
+          <IconButton size={'small'} sx={{ backgroundColor: theme => `${theme.palette.primary.light}10` }} edge="end" aria-label="whastapp">
             <WhatsAppIcon />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Ver detalhes do cliente" placement="left" arrow>
-          <IconButton onClick={() => { navigate(`/cliente/${props.user.id}`) }} sx={{ backgroundColor: 'background.default' }} edge="end" aria-label="detalhes do cliente">
+          <IconButton size={'small'} onClick={() => { navigate(`/cliente/${props.user.id}`) }} sx={{ backgroundColor: theme => `${theme.palette.primary.light}10` }} edge="end" aria-label="detalhes do cliente">
           <Icon>account_circle</Icon>
           </IconButton>
         </Tooltip>
