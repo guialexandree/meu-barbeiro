@@ -1,8 +1,13 @@
 import { ServiceModel, ServiceStatus } from '@/domain/models'
 import { atom } from 'recoil'
 
-export const servicesSearchState = atom({
-  key: 'servicesSearchState',
+export const textInputSearchState = atom({
+  key: 'textInputSearchState',
+  default: '',
+})
+
+export const textSearchState = atom({
+  key: 'servicesTextSearchState',
   default: '',
 })
 

@@ -83,7 +83,6 @@ export const SaveFormAction: React.FC = () => {
       type="submit"
       fullWidth
       endIcon={<Icon>check</Icon>}
-      sx={{ borderRadius: 0, py: 1.5, borderBottomRightRadius: 4, mr: 0.3 }}
       id="save-service-button"
       href="#"
     >

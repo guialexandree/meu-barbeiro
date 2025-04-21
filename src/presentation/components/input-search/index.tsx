@@ -31,7 +31,6 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         p: '2px 4px',
         borderRadius: 2,
         mx: 2,
-        mb: 1,
         display: 'flex',
         backgroundColor: 'background.default',
       }}

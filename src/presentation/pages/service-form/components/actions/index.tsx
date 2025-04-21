@@ -6,17 +6,20 @@ import { SaveFormAction, UpdateFormAction } from '@/presentation/pages/service-f
 export const ServiceFormActions: React.FC = () => {
   const navigate = useNavigate()
 
+  const handleGoBackToList = () => {
+    navigate('/servicos')
+  }
+
   return (
     <Slide in={true} direction="left" unmountOnExit mountOnEnter>
-      <Stack direction="row" alignItems="center"  justifyContent="flex-end">
+      <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={2} spacing={2}>
         <Button
           fullWidth
           id="close-service-form-button"
-          color="info"
-          onClick={() => {
-            navigate('/servicos')
-          }}
-          sx={{ borderRadius: 0, py: 1.5, borderBottomLeftRadius: 4, ml: 0.3 }}
+          color="inherit"
+          variant="outlined"
+          sx={{ borderColor: 'grey.700' }}
+          onClick={handleGoBackToList}
         >
           Cancelar
         </Button>

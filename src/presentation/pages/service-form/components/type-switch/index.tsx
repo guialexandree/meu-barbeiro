@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { Fade, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { State } from '@/presentation/pages/user-form/components/atoms'
 
-export const StatusSwitch: React.FC = () => {
+export const TypeSwitch: React.FC = () => {
   const [userType, setUserType] = useRecoilState(State.userTypeState)
   const loading = useRecoilValue(State.loadingFormState)
 
@@ -27,7 +27,7 @@ export const StatusSwitch: React.FC = () => {
         }}
       >
         <Typography variant="body2" fontWeight={500} sx={{ ml: 3, fontFamily: 'Inter' }}>
-          Status do Serviço
+          Tipo de cadastro
         </Typography>
 
         <ToggleButtonGroup
@@ -46,10 +46,10 @@ export const StatusSwitch: React.FC = () => {
           aria-label="status do serviço"
         >
           <ToggleButton value="client" id="service-status-actived" defaultChecked sx={{ fontSize: 12 }}>
-            Ativo
+            Cliente
           </ToggleButton>
           <ToggleButton value="barber" id="service-status-inactived" sx={{ fontSize: 12 }}>
-            Inativo
+            Barbeiro
           </ToggleButton>
         </ToggleButtonGroup>
       </Paper>

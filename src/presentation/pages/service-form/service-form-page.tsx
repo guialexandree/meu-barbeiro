@@ -1,11 +1,11 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { Grid2, Paper, Stack, Typography } from '@mui/material'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
+import { Grid2, Paper, Stack } from '@mui/material'
 import { ServiceModel } from '@/domain/models'
 import { Factories } from '@/main/factories/usecases'
 import { InputPrice, InputText, PageContainer } from '@/presentation/components'
-import { ServiceFormRemoveAction, ServiceFormStatus, ServiceFormActions, ServiceFormTimeExecution } from './components'
+import { ServiceFormRemoveAction, ServiceFormActions, ServiceFormTimeExecution, StatusSwitch } from './components'
 import { State } from '@/presentation/pages/service-form/components/atoms'
 import { useMobile, useNotify } from '@/presentation/hooks'
 
@@ -13,7 +13,7 @@ const ServiceFormPage: React.FC = () => {
   const navigate = useNavigate()
   const { notify } = useNotify()
   const { isMobile } = useMobile()
-  const [loading, setLoading] = useRecoilState(State.loadingServiceState)
+  const setLoading = useSetRecoilState(State.loadingServiceState)
   const setName = useSetRecoilState(State.nameState)
   const setDescription = useSetRecoilState(State.descriptionState)
   const setPrice = useSetRecoilState(State.priceState)
@@ -72,39 +72,18 @@ const ServiceFormPage: React.FC = () => {
       subtitle="Crie serviços e ajuste preços para serem exibidos no app do cliente"
     >
       <Grid2 container>
-        <Grid2 size={{ xs: 12, sm: 6 }}  sx={{ mx: { xs: 2, sm: 4 } }}>
+        <Grid2 size={{ xs: 12, sm: 6 }} sx={{ mx: { xs: 2, sm: 4 } }}>
           <Stack spacing={2}>
+            <StatusSwitch />
             <Paper
               id="service-create-form"
               component="form"
+              elevation={0}
               onSubmit={(event) => {
                 event.preventDefault()
               }}
               sx={{
-                py: 1.2,
-                pr: 1.2,
-                boxShadow: 3,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Typography variant="body2" sx={{ ml: 3 }}>
-                Status do Serviço
-              </Typography>
-              <ServiceFormStatus />
-            </Paper>
-            <Paper
-              id="service-create-form"
-              component="form"
-              onSubmit={(event) => {
-                event.preventDefault()
-              }}
-              sx={{
-                mx: { xs: 2, sm: 4 },
-                pt: 3,
-                boxShadow: 3,
+                py: 2,
               }}
             >
               <Stack spacing={1} sx={{ mx: { xs: 3, sm: 5 } }}>

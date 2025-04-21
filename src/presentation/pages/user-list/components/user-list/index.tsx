@@ -47,7 +47,7 @@ export const UserList: React.FC<UserListProps> = (props) => {
   if (noResults) {
     return (
       <Stack
-        id="no-results-client-list"
+        id="no-results-list"
         sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }}
         px={2}
         alignItems="center"

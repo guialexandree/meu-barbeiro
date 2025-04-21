@@ -16,7 +16,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   const servicesList = useRecoilValue(State.List.servicesState)
   const noResults = useRecoilValue(State.noResultsServicesState)
   const loading = useRecoilValue(State.loadingServicesState)
-  const search = useRecoilValue(State.List.servicesSearchState)
+  const search = useRecoilValue(State.List.textSearchState)
 
   if (loading) {
     return <PageLoader />
@@ -47,7 +47,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   if (noResults) {
     return (
       <Stack
-        id="no-results-service-list"
+        id="no-results-list"
         sx={{ pt: { xs: 4, sm: 6 }, opacity: 0.7 }}
         px={2}
         alignItems="center"
@@ -69,9 +69,9 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
       <List dense disablePadding id="service-list">
         {servicesList.map((service, index) => (
           <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={service.id}>
-            <Box component='section'>
+            <span>
               <ServiceListItem service={service} />
-            </Box>
+            </span>
           </Fade>
         ))}
       </List>

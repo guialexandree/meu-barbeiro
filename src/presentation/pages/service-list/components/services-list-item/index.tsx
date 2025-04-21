@@ -23,45 +23,44 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = (props) => {
       id={`service-${props.service.id}`}
       sx={{
         mt: 1,
-        borderRadius: 1,
-        display: 'flex',
-        flexWrap: 'wrap',
-        backgroundColor:  theme => `${theme.palette.background.paper}80`,
-        boxShadow: 1,
-        '& .MuiListItemText-root': { mb: 0 }
+        borderRadius: 2,
+        backgroundColor: 'background.paper',
+        '& .MuiListItemText-root': { mb: 0 },
       }}
     >
-      <Stack direction="row" sx={{ flex: 1 }}>
+      <Stack flexGrow={1}>
         <ListItemText
           sx={{ flexGrow: 1, textTransform: 'uppercase' }}
           primary={props.service.name}
           secondary={props.service.description}
           slotProps={{
-            primary: { id: 'service-name' },
+            primary: { id: 'service-name', sx: { lineHeight: 1} },
             secondary: { fontSize: 11, color: 'grey.600', id: 'service-description' },
           }}
         />
-        <ListItemText
-          sx={{ flexGrow: 0.1 }}
-          primary={formatCoins(props.service.price)}
-          secondary={`${props.service.timeExecution} min`}
-        />
-        <Stack justifyContent='flex-end'>
-          <IconButton
-            size="small"
-            sx={{ backgroundColor: '#42424240' }}
-            edge="end"
-            aria-label="delete"
-            onClick={handleEdit}
-          >
-            <Icon sx={{ color: 'grey.600' }}>edit</Icon>
-          </IconButton>
+        <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+          <StatusUser status={props.service.status as any} />
         </Stack>
       </Stack>
 
-      <Stack direction="row" sx={{ width: '100%', justifyContent: 'space-between' }}>
-        <StatusUser status={props.service.status as any}/>
-      </Stack>
+      <ListItemText
+        sx={{ flexGrow: 0, pr: 2 }}
+        primary={formatCoins(props.service.price)}
+        secondary={`${props.service.timeExecution} min`}
+        slotProps={{
+          primary: { sx: { lineHeight: 1} },
+        }}
+      />
+
+      <IconButton
+        size="small"
+        sx={{ backgroundColor: 'background.default' }}
+        edge="end"
+        aria-label="delete"
+        onClick={handleEdit}
+      >
+        <Icon sx={{ color: 'grey.600' }}>edit</Icon>
+      </IconButton>
     </ListItem>
   )
 }

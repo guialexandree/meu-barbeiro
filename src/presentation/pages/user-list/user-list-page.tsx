@@ -46,7 +46,7 @@ const UsersListPage: React.FC = () => {
     [],
   )
 
-  React.useEffect(() => { onInit()}, [])
+  React.useEffect(() => { onInit() }, [onInit])
 
   return (
     <PageContainer

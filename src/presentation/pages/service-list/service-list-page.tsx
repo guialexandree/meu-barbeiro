@@ -12,12 +12,14 @@ const ServicesListPage: React.FC = () => {
   const setLoading = useSetRecoilState(State.loadingServicesState)
   const setServices = useSetRecoilState(State.List.servicesState)
   const setError = useSetRecoilState(State.errorServicesState)
-  const setSearch = useSetRecoilState(State.List.servicesSearchState)
+  const setSearch = useSetRecoilState(State.List.textSearchState)
+  const setTextInputSearch = useSetRecoilState(State.List.textInputSearchState)
 
   const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
 
   const onInit = React.useCallback(async () => {
     setSearch('')
+    setTextInputSearch('')
     const serviceResult = (await onLoadServices())!
     if (serviceResult?.success) {
       if (serviceResult.data) {
@@ -46,23 +48,23 @@ const ServicesListPage: React.FC = () => {
     [],
   )
 
-  React.useEffect(() => { onInit()}, [])
+  React.useEffect(() => { onInit() }, [onInit])
 
   return (
     <PageContainer title="Serviços" subtitle="Cadastro de serviços e tabela de preços">
       <Alert
         severity="info"
         variant="outlined"
-        sx={{ lineHeight: 1, mb: 2, mx: 2, px: { xs: 1, sm: 3 }, py: 0, alignItems: 'center' }}
+        sx={{ lineHeight: 1, mb: 1, mx: 2, px: { xs: 1, sm: 3 }, py: 0, alignItems: 'center' }}
       >
         somente serviços ativos serão exibidos no app do cliente
       </Alert>
 
-      <ServiceFormAction />
-
       <ServiceFilters loadServices={onLoadServices} />
 
       <ServiceList onReload={onInit} />
+
+      <ServiceFormAction />
     </PageContainer>
   )
 }
