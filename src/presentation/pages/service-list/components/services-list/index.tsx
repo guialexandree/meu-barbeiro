@@ -19,7 +19,7 @@ export const ServiceList: React.FC<ServiceListProps> = (props) => {
   const search = useRecoilValue(State.List.textSearchState)
 
   if (loading) {
-    return <PageLoader />
+    return <PageLoader loading />
   }
 
   if (error) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { Chip, Icon, Stack, Typography } from '@mui/material'
+import { Chip, Fade, Icon, Stack, Typography } from '@mui/material'
 import { LoadServicesResult } from '@/domain/usecases'
 import { ServiceStatus } from '@/domain/models'
 import { State } from '@/presentation/pages/service-list/components/atoms'
@@ -38,25 +38,27 @@ export const ServiceActivedFilters: React.FC<ServiceActivedFiltersProps> = (prop
   }
 
   return (
-    <Stack direction="row" alignItems="center" px={2} mt={1}>
-      <Chip
-        color={'secondary'}
-        variant="outlined"
-        label={
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography variant="caption" fontWeight={600}>
-              FILTRO:
-            </Typography>
-            <Typography variant="body2" fontWeight={300}>
-              {textInput}
-            </Typography>
-          </Stack>
-        }
-        size="small"
-        deleteIcon={<Icon color="secondary">close</Icon>}
-        onDelete={resetSearch}
-        sx={{ cursor: 'pointer' }}
-      />
-    </Stack>
+    <Fade in>
+      <Stack direction="row" alignItems="center" px={2} mt={1}>
+        <Chip
+          color={'secondary'}
+          variant="outlined"
+          label={
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Typography variant="caption" fontWeight={600}>
+                FILTRO:
+              </Typography>
+              <Typography variant="body2" fontWeight={300}>
+                {textInput}
+              </Typography>
+            </Stack>
+          }
+          size="small"
+          deleteIcon={<Icon color="secondary">close</Icon>}
+          onDelete={resetSearch}
+          sx={{ cursor: 'pointer' }}
+        />
+      </Stack>
+    </Fade>
   )
 }

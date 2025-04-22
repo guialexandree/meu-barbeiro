@@ -18,7 +18,6 @@ export const PageContainer: React.FC<PageContainerProps> = (props) => {
       sx={{
         pt: 4,
         pb: 6,
-        minHeight: '100%',
         color: 'white',
         flexDirection: 'column',
         position: 'relative',

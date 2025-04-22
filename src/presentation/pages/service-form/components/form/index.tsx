@@ -50,11 +50,6 @@ export const Form: React.FC = () => {
             <InputPrice
               state={State.priceState}
               inputProps={{
-                slotProps: {
-                  input: {
-                    startAdornment: <Icon sx={{ mr: 1, color: 'grey.500' }}>price_change</Icon>,
-                  },
-                },
                 inputMode: 'decimal',
                 disabled: loading,
                 label: 'Preço',

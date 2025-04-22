@@ -72,7 +72,7 @@ const ServiceFormPage: React.FC = () => {
     >
       <Grid2 container>
         <Grid2 size={{ xs: 12, sm: 6 }} sx={{ mx: { xs: 2, sm: 4 } }}>
-          <Stack spacing={2} component='form' onSubmit={(event) => event.preventDefault()}>
+          <Stack spacing={1} component='form' onSubmit={(event) => event.preventDefault()}>
             <StatusSwitch />
             <Form />
             <TimeExecution />

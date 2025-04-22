@@ -60,11 +60,11 @@ export const StatusFilter: React.FC<StatusFilterProps> = (props) => {
           labelId="service-filter-status-autowidth-label"
           id="service-filter-status-autowidth"
           value={status}
+          fullWidth
           size="small"
           onChange={(event) => {
             handleChangeStatusFilter(event.target.value as ServiceStatus)
           }}
-          autoWidth
           slotProps={{
             input: { sx: { color: 'grey.400' } },
           }}
