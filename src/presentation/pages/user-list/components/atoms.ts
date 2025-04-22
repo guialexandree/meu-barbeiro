@@ -1,24 +1,16 @@
 import { atom } from 'recoil'
 import * as List from './user-list/atoms'
 
-const loadingUsersState = atom({
-  key: 'loadingClientsState',
-  default: true,
-})
-
-const noResultsClientsState = atom({
-  key: 'noResultsClientsState',
-  default: false,
-})
-
-const errorClientsState = atom({
-  key: 'errorClientsState',
-  default: '',
+const listState = atom({
+  key: 'listUsersState',
+  default: {
+    loading: true,
+    noResults: false,
+    error: ''
+  },
 })
 
 export const State = {
-  loadingUsersState,
-  noResultsClientsState,
-  errorClientsState,
+  listState,
   List,
 }

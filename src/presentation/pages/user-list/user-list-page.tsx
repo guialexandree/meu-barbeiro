@@ -7,8 +7,7 @@ import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/pages/user-list/components/atoms'
 
 const UsersListPage: React.FC = () => {
-  const setLoading = useSetRecoilState(State.loadingUsersState)
-  const setError = useSetRecoilState(State.errorClientsState)
+  const setListState = useSetRecoilState(State.listState)
   const setUsers = useSetRecoilState(State.List.usersResultState)
   const setSearch = useSetRecoilState(State.List.textSearchState)
   const [page] = React.useState(1)
@@ -26,20 +25,19 @@ const UsersListPage: React.FC = () => {
       return
     }
 
-    setError(usersResult?.error || 'Erro ao carregar clientes')
+    setListState( currentState => ({ ...currentState, error: usersResult?.error || 'Erro ao carregar clientes' }))
   }, [])
 
   const onLoadUsers = React.useCallback(
     async (search?: string): Promise<LoadUsersResult> => {
       try {
-        setLoading(true)
-        setError('')
+        setListState({ loading: true, error: '', noResults: false })
         const usersResult = await loadUsers.load({ page, limit, search })
         return usersResult
       } catch (error) {
-        setError((error as Error).message)
+        setListState({ loading: true, error: (error as Error).message, noResults: false })
       } finally {
-        setLoading(false)
+        setListState( currentState => ({ ...currentState, loading: false }))
       }
       return { success: false } as LoadUsersResult
     },

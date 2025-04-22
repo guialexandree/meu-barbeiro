@@ -10,8 +10,8 @@ type UsersFiltersProps = {
 }
 
 export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
+  const setListState = useSetRecoilState(State.listState)
   const setUsers = useSetRecoilState(State.List.usersResultState)
-  const setError = useSetRecoilState(State.errorClientsState)
   const setTextSearch = useSetRecoilState(State.List.textSearchState)
   const [search, setSearch] = React.useState('')
 
@@ -26,7 +26,7 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
       return
     }
 
-    setError(usersResult?.error || 'Erro ao carregar clientes')
+    setListState(currentState => ({ ...currentState, error: usersResult?.error || 'Erro ao carregar clientes' }))
   }, [])
 
   const resetSearch = React.useCallback(() => {

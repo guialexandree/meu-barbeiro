@@ -44,6 +44,12 @@ export const Form: React.FC = () => {
                 disabled: loading,
                 id: 'service-description',
                 name: 'description',
+                slotProps: {
+                  input: {
+                    style: { textTransform: 'uppercase' },
+                    sx: { textTransform: 'uppercase' },
+                  }
+                }
               }}
             />
 

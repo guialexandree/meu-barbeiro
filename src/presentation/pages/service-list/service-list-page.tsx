@@ -9,9 +9,8 @@ import { ServiceList, ServiceFilters, ServiceFormAction } from '@/presentation/p
 import { State } from '@/presentation/pages/service-list/components/atoms'
 
 const ServicesListPage: React.FC = () => {
-  const setLoading = useSetRecoilState(State.loadingServicesState)
+  const setListState = useSetRecoilState(State.listState)
   const setServices = useSetRecoilState(State.List.servicesState)
-  const setError = useSetRecoilState(State.errorServicesState)
   const setSearch = useSetRecoilState(State.List.textSearchState)
   const setTextInputSearch = useSetRecoilState(State.List.textInputSearchState)
 
@@ -28,20 +27,19 @@ const ServicesListPage: React.FC = () => {
       return
     }
 
-    setError(serviceResult?.error || 'Erro ao carregar serviços')
+    setListState(currentState => ({ ...currentState, error: serviceResult?.error || 'Erro ao carregar serviços' }))
   }, [])
 
   const onLoadServices = React.useCallback(
     async (search?: string, status?: ServiceStatus): Promise<LoadServicesResult> => {
       try {
-        setLoading(true)
-        setError('')
+        setListState({ loading: true, error: '', noResults: false })
         const servicesResult = await loadServices.load({ search: search?.toLowerCase(), status })
         return servicesResult
       } catch (error) {
-        setError((error as Error).message)
+        setListState({ error: (error as Error).message, loading: false, noResults: false }) 
       } finally {
-        setLoading(false)
+        setListState(currentState => ({ ...currentState, loading: false }))
       }
       return { success: false } as LoadServicesResult
     },

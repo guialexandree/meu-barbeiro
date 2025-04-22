@@ -17,7 +17,7 @@ const InputText: React.FC<InputTextProps> = (props) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault()
-    setInput({ error: '', text: event.target.value })
+    setInput({ error: '', text: event.target.value?.toUpperCase() })
     props.onClearError?.()
   }
 

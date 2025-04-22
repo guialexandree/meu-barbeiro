@@ -83,7 +83,7 @@ export const SaveFormAction: React.FC = () => {
         onClick={handleSubmit}
         type="submit"
         fullWidth
-        endIcon={<Icon>check</Icon>}
+        endIcon={<Icon  fontSize='small'>check</Icon>}
         id="save-service-button"
         href="#"
       >

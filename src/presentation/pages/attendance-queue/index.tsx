@@ -1,23 +1,11 @@
 import { PageContainer } from '@/presentation/components'
 import React from 'react'
-import { Icon, List, SpeedDial, SpeedDialAction, SpeedDialIcon, useTheme, Zoom } from '@mui/material'
-
-const actions = [
-  { icon: <Icon>file_copy</Icon>, name: 'Copy' },
-  { icon: <Icon>save</Icon>, name: 'Save' },
-  { icon: <Icon>print</Icon>, name: 'Print' },
-  { icon: <Icon>share</Icon>, name: 'Share' },
-]
+import { List } from '@mui/material'
 
 const AttendanceQueuePage: React.FC = () => {
-  const theme = useTheme()
-  const transitionDuration = {
-    enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen,
-  }
 
   return (
-    <PageContainer title='Fila de Atedimento' subtitle='Acompanhe a fila de atendimento'>
+    <PageContainer>
       <List disablePadding>
         {/* {_mockAttendances.map(attendance => (
           <ListItem key={attendance.id} sx={{ gap: 2 }}>
@@ -46,18 +34,6 @@ const AttendanceQueuePage: React.FC = () => {
         ))} */}
       </List>
 
-      <Zoom in timeout={transitionDuration} unmountOnExit>
-        <SpeedDial
-          ariaLabel="SpeedDial basic example"
-          sx={{ position: 'fixed', bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon />}
-          color={theme.palette.secondary.main}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} />
-          ))}
-        </SpeedDial>
-      </Zoom>
     </PageContainer>
   )
 }
