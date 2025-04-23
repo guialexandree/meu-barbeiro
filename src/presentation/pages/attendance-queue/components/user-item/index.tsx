@@ -8,7 +8,6 @@ type UserItemProps = {
 }
 
 export const UserItem: React.FC<UserItemProps> = (props) => {
-
   return (
     <ListItem
       key={`user-item-${props.user.id}`}
@@ -25,8 +24,8 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
           14:50
         </Typography>
         <Typography variant="caption" color="text.secondary" fontSize={11} fontFamily="Inter" textAlign="center">
-              R$ 50
-            </Typography>
+          R$ 50
+        </Typography>
       </Stack>
 
       <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
@@ -56,7 +55,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
             edge="end"
             aria-label="adicioanr na fila"
           >
-            <Icon fontSize='small'>notifications_active</Icon>
+            <Icon fontSize="small">notifications_active</Icon>
           </IconButton>
         </Tooltip>
         <Tooltip title="Chamar o WhatsApp" placement="left" arrow>
@@ -66,7 +65,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
             edge="end"
             aria-label="whastapp"
           >
-            <WhatsAppIcon fontSize='small' />
+            <WhatsAppIcon fontSize="small" />
           </IconButton>
         </Tooltip>
 
@@ -77,7 +76,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
             edge="end"
             aria-label="adicioanr na fila"
           >
-            <Icon fontSize='small'>more_vert</Icon>
+            <Icon fontSize="small">more_vert</Icon>
           </IconButton>
         </Tooltip>
       </Stack>

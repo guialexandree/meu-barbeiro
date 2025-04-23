@@ -36,13 +36,13 @@ export const CurrentAttendance: React.FC = () => {
           color={statusColor}
           label={statusLabel}
           size="small"
-          sx={{ fontSize: 14, fontWeight: 900, color: '#fff', letterSpacing: 1 }}
+          sx={{ fontSize: 14, fontWeight: 800, letterSpacing: 1 }}
         />
         <Stack direction="row" alignItems="center" spacing={1}>
           <Chip
             label="22:06"
             size="small"
-            sx={{ minWidth: 74 }}
+            sx={{ minWidth: 70, color: 'text.secondary', fontSize: 11 }}
             onDelete={() => {}}
             deleteIcon={<Icon fontSize="small">alarm</Icon>}
           />
@@ -63,7 +63,7 @@ export const CurrentAttendance: React.FC = () => {
             mt: 1,
             width: 60,
             height: 60,
-            backgroundColor: 'grey.900',
+            backgroundColor: 'background.default',
             border: '3px solid',
             borderColor: `${statusColor}.light`,
           }}
@@ -80,7 +80,7 @@ export const CurrentAttendance: React.FC = () => {
         </Stack>
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} mt={1}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} mt={1} spacing={0.5}>
         <IconButton>
           <Icon>close</Icon>
         </IconButton>
