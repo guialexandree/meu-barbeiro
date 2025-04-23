@@ -20,24 +20,15 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
         '& .MuiListItemText-root': { mb: 0 },
       }}
     >
-      <ListItemText
-        sx={{ mt: 0.5 }}
-        primary={'14:50'}
-        slotProps={{
-          primary: {
-            textTransform: 'uppercase',
-            id: 'user-name',
-            sx: { lineHeight: 1, fontSize: 16, fontWeight: 900, fontFamily: 'Inter' },
-          },
-        }}
-        secondary={
-          <Stack alignItems="center">
-            <Typography variant="caption" color="text.secondary" fontSize={11} fontFamily="Inter" textAlign="center">
+      <Stack mt={0.5} alignItems="center">
+        <Typography variant="body2" color="text.primary" fontSize={14} fontWeight={900} fontFamily="Inter">
+          14:50
+        </Typography>
+        <Typography variant="caption" color="text.secondary" fontSize={11} fontFamily="Inter" textAlign="center">
               R$ 50
             </Typography>
-          </Stack>
-        }
-      />
+      </Stack>
+
       <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
       <ListItemText
         sx={{ flex: 1, mt: 0.5 }}
