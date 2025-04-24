@@ -35,7 +35,7 @@ export const UserFormAction: React.FC = () => {
             ':active': { opacity: 1 },
           }}
         >
-          <Icon sx={{ fontSize: 36, color: 'primary.dark' }}>add</Icon>
+          <Icon sx={{ mr: 1, fontSize: 24, color: 'primary.dark' }}>control_point</Icon>
           criar novo
         </Fab>
       </Zoom>

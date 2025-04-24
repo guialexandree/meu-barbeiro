@@ -19,7 +19,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
       }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Zoom timeout={400} in mountOnEnter unmountOnExit>
+        <Zoom timeout={400} in>
           <Box
             src={logoImg}
             component={'img'}

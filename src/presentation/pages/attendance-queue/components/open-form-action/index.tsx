@@ -31,7 +31,7 @@ export const OpenFormAction: React.FC = () => {
             ':active': { opacity: 1 },
           }}
         >
-          <Icon sx={{ mr: 1, fontSize: 24, color: 'primary.dark' }}>sort</Icon>
+          <Icon sx={{ mr: 1, fontSize: 24, color: 'primary.dark' }}>data_saver_on</Icon>
           adicionar na fila
         </Fab>
       </Zoom>

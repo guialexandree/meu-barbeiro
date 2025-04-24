@@ -18,7 +18,7 @@ const UserFormPage: React.FC = () => {
           {formSuccess ? (
             <SuccessPanel />
           ) : (
-            <Stack spacing={2} component='form' onSubmit={(event) => event.preventDefault()}>
+            <Stack spacing={1} component='form' onSubmit={(event) => event.preventDefault()}>
 
               <TypeSwitch />
               <Form />

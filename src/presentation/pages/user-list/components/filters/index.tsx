@@ -1,6 +1,6 @@
 import React from 'react'
-import { useSetRecoilState } from 'recoil'
-import { Chip, Icon, Stack, Typography } from '@mui/material'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { Chip, Icon, Slide, Stack, Typography } from '@mui/material'
 import { LoadUsersResult } from '@/domain/usecases'
 import { InputSearch } from '@/presentation/components'
 import { State } from '@/presentation/pages/user-list/components/atoms'
@@ -11,8 +11,8 @@ type UsersFiltersProps = {
 
 export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
   const setListState = useSetRecoilState(State.listState)
-  const setUsers = useSetRecoilState(State.List.usersResultState)
   const setTextSearch = useSetRecoilState(State.List.textSearchState)
+  const [usersResult, setUsersResult] = useRecoilState(State.List.usersResultState)
   const [search, setSearch] = React.useState('')
 
   const handleLoadUsers = React.useCallback(async (textSearch: string): Promise<void> => {
@@ -20,13 +20,13 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
     const usersResult = await props.loadUsers(textSearch)!
     if (usersResult?.success) {
       if (usersResult.data) {
-        setUsers(usersResult)
+        setUsersResult(usersResult)
       }
 
       return
     }
 
-    setListState(currentState => ({ ...currentState, error: usersResult?.error || 'Erro ao carregar clientes' }))
+    setListState((currentState) => ({ ...currentState, error: usersResult?.error || 'Erro ao carregar clientes' }))
   }, [])
 
   const resetSearch = React.useCallback(() => {
@@ -43,29 +43,44 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
         loadData={handleLoadUsers}
         inputSearchState={State.List.textSearchState}
         showFiltersState={State.List.showFilterState}
+        showFilters={false}
         onReset={resetSearch}
       />
 
       {!!search && (
-        <Stack direction="row" alignItems="center">
-          <Chip
-            color={'secondary'}
-            variant="outlined"
-            label={
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Slide direction="right" in mountOnEnter unmountOnExit>
+            <Chip
+              color={'secondary'}
+              variant="outlined"
+              label={
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Typography variant="caption" fontWeight={600}>
+                    FILTRO:
+                  </Typography>
+                  <Typography variant="body2" fontWeight={300}>
+                    {search}
+                  </Typography>
+                </Stack>
+              }
+              size="small"
+              deleteIcon={<Icon color="secondary">close</Icon>}
+              onDelete={resetSearch}
+              sx={{ cursor: 'pointer' }}
+            />
+          </Slide>
+
+          {!!usersResult?.data?.length && (
+            <Slide direction="left" in mountOnEnter unmountOnExit>
               <Stack direction="row" alignItems="center" spacing={1}>
-                <Typography variant="caption" fontWeight={600}>
-                  FILTRO:
+                <Typography variant="caption" fontWeight={600} color='textSecondary'>
+                  {usersResult.data.length} resultado{usersResult?.data?.length > 1 ? 's' : ''} encontrado
+                  {usersResult?.data?.length > 1 ? 's' : ''}
                 </Typography>
-                <Typography variant="body2" fontWeight={300}>
-                  {search}
-                </Typography>
+                <Icon color="secondary">search</Icon>
               </Stack>
-            }
-            size="small"
-            deleteIcon={<Icon color="secondary">close</Icon>}
-            onDelete={resetSearch}
-            sx={{ cursor: 'pointer' }}
-          />
+            </Slide>
+          )}
         </Stack>
       )}
     </Stack>

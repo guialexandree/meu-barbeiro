@@ -40,6 +40,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
     <Stack sx={{ transition: 'height 0.3s ease' }}>
       <Stack>
         <InputSearch
+          showFilters
           id="services-input-search"
           placeholder="Buscar"
           loadData={handleLoadServices}

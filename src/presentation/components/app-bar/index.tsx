@@ -22,24 +22,29 @@ export const AppBar: React.FC = () => {
         <Toolbar sx={{ width: '100%', mt: 1 }}>
           <Slide direction="right" in={true} mountOnEnter unmountOnExit>
             <Typography variant="h6" sx={{ flex: 1, textTransform: 'uppercase' }}>
-              Susu Barbearia
+              SUSUZEIRA
             </Typography>
           </Slide>
 
           <Stack direction="row" alignItems="center" spacing={0.7}>
-            <Zoom in timeout={500} style={{ transitionDelay: '200ms' }} unmountOnExit>
+            <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
               <IconButton edge="start" aria-label="menu">
                 <Icon>tune</Icon>
               </IconButton>
             </Zoom>
-            <Zoom in timeout={500} style={{ transitionDelay: '200ms' }} unmountOnExit>
+            <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
+              <IconButton edge="start" aria-label="menu">
+                <Icon>visibility</Icon>
+              </IconButton>
+            </Zoom>
+            <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
               <IconButton edge="start" aria-label="menu">
                 <Badge color="secondary" badgeContent={4} invisible={false}>
                   <Icon>notifications</Icon>
                 </Badge>
               </IconButton>
             </Zoom>
-            <Zoom in timeout={500} style={{ transitionDelay: '200ms' }} unmountOnExit>
+            <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
               <IconButton
                 edge="start"
                 size="large"

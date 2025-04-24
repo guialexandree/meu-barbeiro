@@ -45,9 +45,11 @@ export const QueueInfo: React.FC = () => {
             <IconButton size="small" sx={{ p: 0 }}>
               <Icon sx={{ fontSize: 14 }}>content_cut</Icon>
             </IconButton>
-            <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-              5
-            </Typography>
+            <Stack direction='row' alignItems="center" spacing={0.5}>
+              <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                5 realizados
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
 
@@ -59,13 +61,8 @@ export const QueueInfo: React.FC = () => {
           </Typography>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
-              R$ ***
+              R$ ****
             </Typography>
-            <IconButton size="small" sx={{ p: 0 }}>
-              <Icon fontSize="small" sx={{ fontSize: 14 }}>
-                visibility
-              </Icon>
-            </IconButton>
           </Stack>
         </Stack>
       </Paper>

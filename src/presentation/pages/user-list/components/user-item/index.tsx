@@ -46,7 +46,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
           <IconButton size={'small'}
             sx={{ backgroundColor: theme => `${theme.palette.primary.light}10` }}
             edge="end"
-            aria-label="adicioanr na fila"
+            aria-label="adicionar na fila"
           >
             <Icon>data_saver_on</Icon>
           </IconButton>
