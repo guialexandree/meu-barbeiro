@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@mui/material/Button'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon } from '@mui/material/'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { useNotify } from '@/presentation/hooks'
 import { GenericState } from '@/presentation/components/atoms'
@@ -11,11 +11,13 @@ export const ChangeStatusDialog = () => {
   const { notify } = useNotify()
   const [open, setOpen] = useRecoilState(State.openChangeStatusDialogState)
   const [company, setCompany] = useRecoilState(GenericState.companyState)
+  const setLoading = useSetRecoilState(State.loadingChangeStatusState)
 
   const startAttendanceCompany = React.useMemo(() => Factories.makeRemoteStartAttendanceCompany(), [])
   const closedAttendanceCompany = React.useMemo(() => Factories.makeRemoteClosedAttendanceCompany(), [])
 
   const handleStartAttendance = () => {
+    setLoading(true)
     startAttendanceCompany
       .start()
       .then((result) => {
@@ -28,9 +30,11 @@ export const ChangeStatusDialog = () => {
         notify(result.error, { type: 'error' })
       })
       .catch(console.error)
+      .finally(() => { setLoading(false) })
   }
 
   const handleEndAttendance = () => {
+    setLoading(true)
     closedAttendanceCompany
       .closed()
       .then((result) => {
@@ -43,6 +47,7 @@ export const ChangeStatusDialog = () => {
         notify(result.error, { type: 'error' })
       })
       .catch(console.error)
+      .finally(() => { setLoading(false) })
   }
 
   const handleConfirm = () => {

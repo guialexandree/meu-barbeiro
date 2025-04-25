@@ -5,6 +5,11 @@ const openChangeStatusDialogState = atom({
   default: false,
 })
 
+const loadingChangeStatusState = atom({
+  key: 'loadingChangeStatusState',
+  default: false,
+})
+
 const listState = atom({
   key: 'listUsersState',
   default: {
@@ -16,5 +21,6 @@ const listState = atom({
 
 export const State = {
   listState,
+  loadingChangeStatusState,
   openChangeStatusDialogState
 }
