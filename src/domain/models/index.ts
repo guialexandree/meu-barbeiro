@@ -1,5 +1,6 @@
 export * from './authentication-model'
 export * from './alert-model'
 export * from './attendance-model'
+export * from './company-model'
 export * from './users'
 export * from './service-model'

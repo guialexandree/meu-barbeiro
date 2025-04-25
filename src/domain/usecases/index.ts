@@ -1,5 +1,6 @@
 export * from './authentication'
 export * from './attendances'
 export * from './alerts'
+export * from './companies'
 export * from './services'
 export * from './users'
