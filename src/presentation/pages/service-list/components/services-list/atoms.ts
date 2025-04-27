@@ -13,7 +13,7 @@ export const textSearchState = atom({
 
 export const showFilterState = atom({
   key: 'showFilterServicesState',
-  default: true
+  default: false
 })
 
 export const statusFilterState = atom({

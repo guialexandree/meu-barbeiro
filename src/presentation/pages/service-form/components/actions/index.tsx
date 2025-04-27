@@ -1,29 +1,34 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Slide, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import { SaveFormAction, UpdateFormAction } from '@/presentation/pages/service-form/components'
+import { CancelAction } from '@/presentation/components'
 
 export const Actions: React.FC = () => {
   const navigate = useNavigate()
 
-  const handleGoBackToList = () => {
+  const handleGoBackToList = React.useCallback(() => {
     navigate('/servicos')
-  }
+  }, [])
 
   return (
-    <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={2} spacing={2}>
-      <Slide in direction="right" unmountOnExit mountOnEnter>
-        <Button
-          fullWidth
-          id="close-service-form-action"
-          color="inherit"
-          variant="outlined"
-          sx={{ borderColor: 'grey.700' }}
-          onClick={handleGoBackToList}
-        >
-          Cancelar
-        </Button>
-      </Slide>
+    <Stack
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+        left: 0,
+        zIndex: 1,
+        mx: { xs: 2, sm: 4 },
+        px: { xs: 2, sm: 4 },
+        py: { xs: 1, sm: 2 },
+      }}
+      direction="row"
+      alignItems="center"
+      justifyContent="flex-end"
+      spacing={2}
+    >
+      <CancelAction fullWidth onCancel={handleGoBackToList} enterDelay={250} />
       <UpdateFormAction />
       <SaveFormAction />
     </Stack>

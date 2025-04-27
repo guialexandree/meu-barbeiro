@@ -77,13 +77,13 @@ export const SaveFormAction: React.FC = () => {
   }
 
   return (
-    <Slide in direction="left" unmountOnExit mountOnEnter>
+    <Slide in direction="left" unmountOnExit mountOnEnter style={{ transitionDelay: '250ms' }}>
       <Button
         variant="contained"
         onClick={handleSubmit}
         type="submit"
         fullWidth
-        endIcon={<Icon  fontSize='small'>check</Icon>}
+        endIcon={<Icon  fontSize='small'>done_outline</Icon>}
         id="save-service-button"
         href="#"
       >

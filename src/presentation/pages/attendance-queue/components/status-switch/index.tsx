@@ -9,7 +9,7 @@ export const StatusSwitch: React.FC = () => {
   const setOpen = useSetRecoilState(State.openChangeStatusDialogState)
   const companyState = useRecoilValue(GenericState.companyState)
   const loadingCompany = useRecoilValue(GenericState.loadingCompanyState)
-  const loading= useRecoilValue(State.loadingChangeStatusState)
+  const loading = useRecoilValue(State.loadingChangeStatusState)
 
   const handleChangeStatus = (_: React.MouseEvent<HTMLElement>, value: string) => {
     if (value) {
@@ -20,38 +20,10 @@ export const StatusSwitch: React.FC = () => {
   const colorStatus = {
     serving: 'success',
     closed: 'warning',
-  }[companyState.statusAttendance]
+  }[companyState?.statusAttendance || 'closed']
 
   if (loading) {
     return (
-      <Paper
-        id="status-queue-form"
-        component="form"
-        variant="elevation"
-        elevation={0}
-        onSubmit={(event) => {
-          event.preventDefault()
-        }}
-        sx={{
-          py: 1.2,
-          pr: 1.2,
-          mx: 2,
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 2
-        }}
-      >
-        <Typography variant="body2" fontWeight={500} sx={{ ml: 3, fontFamily: 'Inter' }}>
-          Gravando novo status da fila
-        </Typography>
-        <CircularProgress size={30} />
-      </Paper>
-    )
-  }
-
-  return (
-    <>
       <Fade in timeout={500} style={{ transitionDelay: '100ms' }} unmountOnExit>
         <Paper
           id="status-queue-form"
@@ -65,17 +37,54 @@ export const StatusSwitch: React.FC = () => {
             py: 1.2,
             pr: 1.2,
             mx: 2,
+            mb: 1,
+            height: 56,
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
             alignItems: 'center',
+            gap: 2,
           }}
         >
+          <Fade in unmountOnExit>
+            <Typography variant="body2" fontWeight={500} sx={{ ml: 3, fontFamily: 'Inter' }}>
+              Gravando novo status da fila
+            </Typography>
+          </Fade>
+          <CircularProgress size={24} />
+        </Paper>
+      </Fade>
+    )
+  }
+
+  return (
+    <>
+      <Paper
+        id="status-queue-form"
+        component="form"
+        variant="elevation"
+        elevation={0}
+        onSubmit={(event) => {
+          event.preventDefault()
+        }}
+        sx={{
+          py: 1.2,
+          pr: 1.2,
+          mx: 2,
+          mb: 1,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Fade in unmountOnExit>
           <Typography variant="body2" fontWeight={500} sx={{ ml: 3, fontFamily: 'Inter' }}>
             Fila de atendimento
           </Typography>
+        </Fade>
 
-          {companyState ? (
+        {companyState ? (
+          <Fade in unmountOnExit>
             <ToggleButtonGroup
               size="small"
               color={colorStatus as any}
@@ -94,11 +103,11 @@ export const StatusSwitch: React.FC = () => {
                 Encerrada
               </ToggleButton>
             </ToggleButtonGroup>
-          ) : (
-            <Skeleton variant="text" width={175} height={37} />
-          )}
-        </Paper>
-      </Fade>
+          </Fade>
+        ) : (
+          <Skeleton variant="text" width={175} height={37} />
+        )}
+      </Paper>
 
       <ChangeStatusDialog />
     </>

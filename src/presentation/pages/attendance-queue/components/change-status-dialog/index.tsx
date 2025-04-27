@@ -1,14 +1,16 @@
 import React from 'react'
-import Button from '@mui/material/Button'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon } from '@mui/material/'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { State } from '@/presentation/pages/attendance-queue/components/atoms'
-import { useNotify } from '@/presentation/hooks'
-import { GenericState } from '@/presentation/components/atoms'
+import Button from '@mui/material/Button'
 import { Factories } from '@/main/factories/usecases'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon } from '@mui/material/'
+import { State } from '@/presentation/pages/attendance-queue/components/atoms'
+import { useNotify, useWithMinimunDelay } from '@/presentation/hooks'
+import { GenericState } from '@/presentation/components/atoms'
+import { CancelAction } from '@/presentation/components'
 
 export const ChangeStatusDialog = () => {
   const { notify } = useNotify()
+  const { withMinimumDelay } = useWithMinimunDelay()
   const [open, setOpen] = useRecoilState(State.openChangeStatusDialogState)
   const [company, setCompany] = useRecoilState(GenericState.companyState)
   const setLoading = useSetRecoilState(State.loadingChangeStatusState)
@@ -16,48 +18,45 @@ export const ChangeStatusDialog = () => {
   const startAttendanceCompany = React.useMemo(() => Factories.makeRemoteStartAttendanceCompany(), [])
   const closedAttendanceCompany = React.useMemo(() => Factories.makeRemoteClosedAttendanceCompany(), [])
 
-  const handleStartAttendance = () => {
+  const handleStartAttendance = async () => {
     setLoading(true)
     startAttendanceCompany
       .start()
       .then((result) => {
         if (result.success) {
-          setCompany((currentState) => ({ ...currentState, statusAttendance: 'serving' }))
-          notify('Fila de atendimento aberta com sucesso!')
+          setCompany(result.data)
           return
         }
 
         notify(result.error, { type: 'error' })
       })
       .catch(console.error)
-      .finally(() => { setLoading(false) })
   }
 
-  const handleEndAttendance = () => {
+  const handleEndAttendance = async () => {
     setLoading(true)
-    closedAttendanceCompany
+    return closedAttendanceCompany
       .closed()
       .then((result) => {
         if (result.success) {
-          setCompany((currentState) => ({ ...currentState, statusAttendance: 'closed' }))
-          notify('Fila de atendimento encerrada com sucesso!')
+          setCompany(result.data)
           return
         }
 
         notify(result.error, { type: 'error' })
       })
       .catch(console.error)
-      .finally(() => { setLoading(false) })
   }
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const action = {
       serving: handleEndAttendance,
       closed: handleStartAttendance,
     }[company.statusAttendance]
 
-    action()
     handleClose()
+    await withMinimumDelay(action, 1200)
+    setLoading(false)
   }
 
   const handleClose = () => {
@@ -77,6 +76,13 @@ export const ChangeStatusDialog = () => {
   return (
     <Dialog
       open={open}
+      slotProps={{
+        paper: {
+          sx: {
+            backgroundColor: 'background.default',
+          }
+        }
+      }}
       onClose={handleClose}
       aria-labelledby="change-status-dialog-title"
       aria-describedby="change-status-dialog-description"
@@ -86,7 +92,7 @@ export const ChangeStatusDialog = () => {
         <DialogContentText id="change-status-dialog-description">{messageStatus}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>cancelar</Button>
+        <CancelAction onCancel={handleClose} />
         <Button variant="contained" onClick={handleConfirm} autoFocus endIcon={<Icon>done_outline</Icon>}>
           {labelActionStatus}
         </Button>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Fade, Icon, Paper, Stack } from '@mui/material'
+import { Fade, Paper, Stack } from '@mui/material'
 import { InputPrice, InputText } from '@/presentation/components'
 import { State } from '@/presentation/pages/service-form/components/atoms'
 import { useMobile } from '@/presentation/hooks'
@@ -22,11 +22,6 @@ export const Form: React.FC = () => {
             <InputText
               state={State.nameState}
               inputProps={{
-                slotProps: {
-                  input: {
-                    startAdornment: <Icon sx={{ mr: 1, color: 'grey.500' }}>group</Icon>,
-                  },
-                },
                 autoFocus: !isMobile,
                 disabled: loading,
                 inputMode: 'text',

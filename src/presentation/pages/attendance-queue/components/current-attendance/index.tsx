@@ -2,12 +2,19 @@ import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { Avatar, Button, Chip, Icon, IconButton, Paper, Stack, Typography } from '@mui/material'
 import { State } from '@/presentation/pages/user-list/components/atoms'
+import { GenericState } from '@/presentation/components/atoms'
 
 type AttendaceStatus = 'current' | 'attending' | 'finished' | 'canceled'
 
 export const CurrentAttendance: React.FC = () => {
   const clientsResult = useRecoilValue(State.List.usersResultState)
+  const company = useRecoilValue(GenericState.companyState)
   const [status] = React.useState<AttendaceStatus>('attending')
+
+  if (company.statusAttendance !== 'serving') {
+    return null
+  }
+
   const currentClient = clientsResult?.data?.at(0)
 
   const statusLabel = {

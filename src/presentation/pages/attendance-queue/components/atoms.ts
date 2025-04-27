@@ -11,7 +11,7 @@ const loadingChangeStatusState = atom({
 })
 
 const listState = atom({
-  key: 'listUsersState',
+  key: 'listAttendanceState',
   default: {
     loading: true,
     noResults: false,

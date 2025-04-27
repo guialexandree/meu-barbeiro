@@ -1,6 +1,8 @@
 import React from 'react'
+import { useRecoilValue } from 'recoil'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts'
 import { Chip, Paper, Stack, ToggleButton, ToggleButtonGroup, useTheme } from '@mui/material'
+import { GenericState } from '@/presentation/components/atoms'
 
 const data = [
   { name: 'Dia 1', atendimentos: 12 },
@@ -23,6 +25,11 @@ const renderCustomizedLabel = (props: any) => {
 
 export const AttendancesGraphPanel: React.FC = () => {
   const theme = useTheme()
+  const companyState = useRecoilValue(GenericState.companyState)
+
+  if (companyState?.statusAttendance !== 'closed') {
+    return null
+  }
 
   return (
     <Paper

@@ -81,13 +81,13 @@ export const UpdateFormAction: React.FC = () => {
 
   return (
     <>
-      <Slide in direction="left" unmountOnExit mountOnEnter>
+      <Slide in direction="left" unmountOnExit mountOnEnter style={{ transitionDelay: '250ms' }}>
         <Button
           variant="contained"
           onClick={handleSubmit}
           type="submit"
           fullWidth
-          endIcon={<Icon>check</Icon>}
+          endIcon={<Icon>done_outline</Icon>}
           id="update-service-button"
           href="#"
         >
