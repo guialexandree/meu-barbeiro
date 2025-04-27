@@ -14,7 +14,7 @@ export const AttendanceQueueList: React.FC<AttendanceQueueListProps> = (props) =
   const clientsResult = useRecoilValue(State.List.usersResultState)
   const company = useRecoilValue(GenericState.companyState)
 
-  if (company.statusAttendance !== 'serving') {
+  if (company?.statusAttendance !== 'serving') {
     return null
   }
 
