@@ -43,6 +43,15 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
       onClose={() => {
         setOpen(false)
       }}
+      slotProps={{
+        paper: {
+          sx: {
+            backgroundColor: 'background.default',
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+          },
+        },
+      }}
     >
       <Box
         sx={{ width: { xs: 'auto', sm: 380 } }}
@@ -51,18 +60,19 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
           setOpen(false)
         }}
       >
-        <List disablePadding sx={{ flexDirection: 'column', py: 4 }}>
+        <List disablePadding sx={{ flexDirection: 'column', pt: 4, pb: 2 }}>
           {props.items.map((appNavigate) => (
             <ListItem key={`item-drawer-${appNavigate.icon}`}>
               <ListItemButton
+                sx={{ borderRadius: 2 }}
                 onClick={() => {
                   navigate(appNavigate.pathTo)
                 }}
               >
                 <ListItemIcon>
-                  <IconButton sx={{ backgroundColor: 'grey.800' }}>
+                  <IconButton sx={{ backgroundColor: theme => `${theme.palette.primary.light}20`,  border: 'solid 1px', borderColor: location.endsWith(appNavigate.pathTo) ? 'primary.light' : 'transparent'  }}>
                     <Icon color={location.endsWith(appNavigate.pathTo) ? 'primary' : 'inherit'}>
-                    {appNavigate.icon}
+                      {appNavigate.icon}
                     </Icon>
                   </IconButton>
                 </ListItemIcon>
@@ -77,12 +87,14 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
             </ListItem>
           ))}
 
-          <Divider sx={{ borderColor: 'grey.800' }} />
+          <Divider sx={{ borderColor: 'grey.700' }} />
 
           <ListItem key={`item-drawer-logout`}>
-            <ListItemButton onClick={handleLogout}>
+            <ListItemButton onClick={handleLogout} sx={{ borderRadius: 2 }}>
               <ListItemIcon>
-                <Icon>logout</Icon>
+                <IconButton sx={{ backgroundColor: theme => `${theme.palette.primary.light}20` }}>
+                  <Icon>logout</Icon>
+                </IconButton>
               </ListItemIcon>
               <ListItemText
                 primary="sair"

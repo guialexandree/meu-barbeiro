@@ -33,10 +33,10 @@ export const appNavigation: AppNavigation[] = [
     subtitle: 'cadastro de serviços e tabela de preços',
     pathTo: 'servicos',
   },
-  {
-    icon: 'notification_add',
-    title: 'avisos',
-    subtitle: 'cadastro de avisos para clientes',
-    pathTo: 'avisos',
-  },
+  // {
+  //   icon: 'notification_add',
+  //   title: 'avisos',
+  //   subtitle: 'cadastro de avisos para clientes',
+  //   pathTo: 'avisos',
+  // },
 ]
