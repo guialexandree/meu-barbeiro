@@ -27,7 +27,7 @@ const ServicesListPage: React.FC = () => {
       return
     }
 
-    setListState(currentState => ({ ...currentState, error: serviceResult?.error || 'Erro ao carregar serviços' }))
+    setListState((currentState) => ({ ...currentState, error: serviceResult?.error || 'Erro ao carregar serviços' }))
   }, [])
 
   const onLoadServices = React.useCallback(
@@ -37,23 +37,34 @@ const ServicesListPage: React.FC = () => {
         const servicesResult = await loadServices.load({ search: search?.toLowerCase(), status })
         return servicesResult
       } catch (error) {
-        setListState({ error: (error as Error).message, loading: false, noResults: false }) 
+        setListState({ error: (error as Error).message, loading: false, noResults: false })
       } finally {
-        setListState(currentState => ({ ...currentState, loading: false }))
+        setListState((currentState) => ({ ...currentState, loading: false }))
       }
       return { success: false } as LoadServicesResult
     },
     [],
   )
 
-  React.useEffect(() => { onInit() }, [onInit])
+  React.useEffect(() => {
+    onInit()
+  }, [onInit])
 
   return (
     <PageContainer title="Serviços" subtitle="Cadastro de serviços e tabela de preços">
       <Alert
         severity="info"
         variant="outlined"
-        sx={{ lineHeight: 1, mb: 1, mx: 2, px: { xs: 1, sm: 3 }, py: 0, alignItems: 'center' }}
+        sx={{
+          lineHeight: 1,
+          mb: 1,
+          mx: 2,
+          px: { xs: 1, sm: 3 },
+          py: 0,
+          alignItems: 'center',
+          color: 'grey.600',
+          borderColor: 'grey.800',
+        }}
       >
         somente serviços ativos serão exibidos no app do cliente
       </Alert>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { Factories } from '@/main/factories/usecases'
@@ -19,7 +19,7 @@ export const AdminTemplate: React.FC = () => {
   React.useEffect(() => {
     loadCompany
       .load()
-      .then(companyResult => {
+      .then((companyResult) => {
         if (companyResult.success) {
           setCompany(companyResult.data)
           return
@@ -27,7 +27,7 @@ export const AdminTemplate: React.FC = () => {
 
         notify(companyResult.error, { type: 'error' })
       })
-    .catch(console.error)
+      .catch(console.error)
   }, [])
 
   React.useLayoutEffect(() => {
@@ -39,17 +39,17 @@ export const AdminTemplate: React.FC = () => {
 
   return (
     // <PrivateRoute>
-      <Box
-        sx={{
-          backgroundColor: 'background.default',
-          height: '100vh',
-        }}
-      >
-        <AppBar />
-        <Drawer items={appNavigation} />
-        <Outlet />
-        <ToastContainer autoClose={7000} theme="light" position="bottom-right" />
-      </Box>
+    <Box
+      sx={{
+        backgroundColor: 'background.default',
+        height: '100vh',
+      }}
+    >
+      <AppBar />
+      <Drawer items={appNavigation} />
+      <Outlet />
+      <ToastContainer autoClose={7000} theme="light" position="bottom-right" />
+    </Box>
     // </PrivateRoute>
   )
 }

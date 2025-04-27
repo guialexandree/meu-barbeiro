@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { ServiceModel } from '@/domain/models'
-import { Button, Icon } from '@mui/material'
+import { Button, Icon, Slide } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/service-form/components/atoms'
 import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
@@ -57,7 +57,7 @@ export const UpdateFormAction: React.FC = () => {
   }
 
   const handleServiceUpdate = (): void => {
-    if(!id) return
+    if (!id) return
 
     setLoading(true)
     updateService
@@ -81,23 +81,25 @@ export const UpdateFormAction: React.FC = () => {
 
   return (
     <>
-      <Button
-        variant="contained"
-        onClick={handleSubmit}
-        type="submit"
-        sx={{ borderRadius: 0, py: 1.5 }}
-        fullWidth
-        endIcon={<Icon>check</Icon>}
-        id="update-service-button"
-        href="#"
-      >
-        Editar
-      </Button>
+      <Slide in direction="left" unmountOnExit mountOnEnter style={{ transitionDelay: '250ms' }}>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          type="submit"
+          sx={{ borderRadius: 0, py: 1.5 }}
+          fullWidth
+          endIcon={<Icon>done_outline</Icon>}
+          id="update-service-button"
+          href="#"
+        >
+          Editar
+        </Button>
+      </Slide>
 
       <DialogConfirm
-        icon='info'
+        icon="info"
         title="Atualização de serviço"
-        answer={`O serviço ${serviceCreate.name.toUpperCase()} será atualizado, deseja continuar com a eliminação?`}
+        answer={`O serviço ${serviceCreate.name.toUpperCase()} será atualizado, deseja continuar com a atualização?`}
         onConfirm={handleServiceUpdate}
         openState={State.openUpdateConfirmState}
       />

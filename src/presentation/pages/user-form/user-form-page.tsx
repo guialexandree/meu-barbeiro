@@ -2,7 +2,7 @@ import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { Grid2, Stack } from '@mui/material'
 import { PageContainer } from '@/presentation/components'
-import { Actions, TypeSwitch, SuccessPanel, ErrorPanel, Form } from './components'
+import { Actions, TypeSwitch, SuccessPanel, ErrorPanel, Form, PermissionsPanel } from './components'
 import { State } from '@/presentation/pages/user-form/components/atoms'
 
 const UserFormPage: React.FC = () => {
@@ -22,8 +22,9 @@ const UserFormPage: React.FC = () => {
 
               <TypeSwitch />
               <Form />
-              <Actions />
+              <PermissionsPanel />
 
+              <Actions />
               <ErrorPanel />
             </Stack>
           )}

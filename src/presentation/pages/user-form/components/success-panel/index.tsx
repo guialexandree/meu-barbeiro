@@ -37,8 +37,8 @@ export const SuccessPanel: React.FC = () => {
       </Slide>
 
       <Slide direction='right' in timeout={400}>
-        <ButtonGroup color="success" size="large" fullWidth orientation="vertical" aria-label="Vertical button group">
-          <Button onClick={handleSendAppLink} endIcon={<WhatsAppIcon />} startIcon={<Icon>share</Icon>}>
+        <ButtonGroup color="inherit" size="large" fullWidth orientation="vertical" aria-label="Vertical button group">
+          <Button onClick={handleSendAppLink} endIcon={<WhatsAppIcon />} >
             Enviar link do app
           </Button>
 
@@ -57,7 +57,7 @@ export const SuccessPanel: React.FC = () => {
           component="img"
           src={successImg}
           height={300}
-          sx={{ position: 'absolute', bottom: -0, left: '20%', maxHeight: '30vh', zInde: 1 }}
+          sx={{ position: 'fixed', bottom: -0, left: '20%', maxHeight: '30vh', zInde: 1 }}
         />
       </Slide>
     </Stack>

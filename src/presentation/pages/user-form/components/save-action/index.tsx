@@ -25,9 +25,8 @@ export const SaveAction: React.FC = () => {
   const createClient = React.useMemo(() => Factories.makeRemoteCreateUser(), [])
 
   const onSuccess = (client: UserModel): void => {
-    setClientsResult((currentState) => ({ ...currentState, data: [...currentState.data, client] }))
+    setClientsResult((currentState) => ({ ...currentState, data: [client, ...currentState?.data || []] }))
     setFormSuccess(true)
-    notify('Cadastro criado com sucesso', { type: 'success' })
   }
 
   const onError = (error: string, inputName: string): void => {
@@ -42,7 +41,7 @@ export const SaveAction: React.FC = () => {
 
   const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
     event.preventDefault()
-    handleServiceCreate()
+    handleUserCreate()
   }
 
   const validateForm = (): boolean => {
@@ -57,7 +56,7 @@ export const SaveAction: React.FC = () => {
     return result.success
   }
 
-  const handleServiceCreate = (): void => {
+  const handleUserCreate = (): void => {
     if (!validateForm()) return
 
     setLoading(true)
@@ -65,14 +64,14 @@ export const SaveAction: React.FC = () => {
       .create(newUser)
       .then((result) => {
         if (result.success) {
-          onSuccess({ ...newUser, id: result.data.id } as any)
+          onSuccess(result.data)
           return
         }
 
         setError(result.error)
       })
       .catch(() => {
-        notify('Erro ao criar serviço', { type: 'error' })
+        notify('Erro ao tentar criar cliente', { type: 'error' })
       })
       .finally(() => setLoading(false))
   }
@@ -82,14 +81,14 @@ export const SaveAction: React.FC = () => {
   }
 
   return (
-    <Slide in direction="left" unmountOnExit mountOnEnter>
+    <Slide in direction="left" unmountOnExit mountOnEnter style={{ transitionDelay: '250ms' }}>
       <Button
         variant="contained"
         onClick={handleSubmit}
         loading={loading}
         type="submit"
         fullWidth
-        endIcon={<Icon fontSize='small'>check</Icon>}
+        endIcon={<Icon fontSize='small'>done_outline</Icon>}
         id="save-user-button"
         href="#"
       >
