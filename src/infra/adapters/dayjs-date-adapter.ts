@@ -10,7 +10,7 @@ export class DayJsDateAdapter implements DateAdapter {
     return dayjs().format(format || 'DD-MM-yyyy HH:mm:ss')
   }
   
-  format(date?: string, format?: string) {
+  format(date?: string, format: string = 'DD/MM/YYYY') {
     return dayjs(date).format(format)
   }
 

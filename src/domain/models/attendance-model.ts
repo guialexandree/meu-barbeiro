@@ -1,22 +1,27 @@
-import { ServiceModel } from '@/domain/models'
+import { ServiceModel, UserModel } from '@/domain/models'
 
 export enum AttendanceStatus {
-  NaFila = 'nafila',
-  EmAtendimento = 'ematendimento',
-  Cancelado = 'cancelado',
+  EmAtendimento = 'attending',
+  NaVez = 'current',
+  NaFila = 'in_queue',
+  Cancelado = 'canceled',
+  Atendido = 'finished',
 }
 
 export type AttendanceModel = {
   id: string
   createdAt: string
-  services: ServiceModel[]
-  client: {
-    id: string
-    name: string
-    contactNumber: string
-  }
-  startDate: string | null
+  startedAt: Date | null
+  finishedAt: Date | null
+  services: AttendanceServiceModel[]
+  user: UserModel
   cancellationDate: string | null
   cancellationReason: string
   status: AttendanceStatus
+}
+
+type AttendanceServiceModel = {
+  id: string
+  service: ServiceModel
+  price: number
 }

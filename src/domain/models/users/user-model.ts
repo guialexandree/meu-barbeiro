@@ -7,9 +7,7 @@ export type UserModel = {
   createdAt: Date
 }
 
-export type UserResult = Omit<UserModel, 'id'> & {
-  id: string
-}
+export type UserResult = UserModel
 
 export type UserRole = 'admin' | 'barber' | 'client'
 
