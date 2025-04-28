@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import * as List from './list/atoms'
 
 const openChangeStatusDialogState = atom({
   key: 'openChangeStatusDialogState',
@@ -20,6 +21,7 @@ const listState = atom({
 })
 
 export const State = {
+  List,
   listState,
   loadingChangeStatusState,
   openChangeStatusDialogState

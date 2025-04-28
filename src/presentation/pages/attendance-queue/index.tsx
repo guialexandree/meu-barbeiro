@@ -11,7 +11,7 @@ const AttendanceQueuePage: React.FC = () => {
       <AttendancesGraphPanel />
       <CurrentAttendance />
 
-      <AttendanceQueueList onReload={() => {}} />
+      <AttendanceQueueList />
 
       <OpenFormAction />
     </PageContainer>

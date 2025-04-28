@@ -2,10 +2,10 @@ import React from 'react'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import { Icon, IconButton, Stack, Tooltip } from '@mui/material'
 
-export const UserActions: React.FC = () => {
+export const AttendanceActions: React.FC = () => {
   return (
     <Stack direction="row" spacing={1} alignItems="flex-end">
-      <Tooltip title="Adicionar na fila" placement="left" arrow>
+      {/* <Tooltip title="Adicionar na fila" placement="left" arrow>
         <IconButton
           size={'small'}
           sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}10` }}
@@ -14,7 +14,7 @@ export const UserActions: React.FC = () => {
         >
           <Icon fontSize="small">notifications_active</Icon>
         </IconButton>
-      </Tooltip>
+      </Tooltip> */}
       <Tooltip title="Chamar o WhatsApp" placement="left" arrow>
         <IconButton
           size={'small'}

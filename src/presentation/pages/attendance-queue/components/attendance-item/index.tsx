@@ -1,17 +1,17 @@
 import React from 'react'
 import { Divider, ListItem, ListItemText, Stack, Typography } from '@mui/material'
-import { UserModel } from '@/domain/models'
-import { UserActions } from '../user-actions'
+import { AttendanceModel } from '@/domain/models'
+import { AttendanceActions } from '../attendance-actions'
 
-type UserItemProps = {
-  user: UserModel
+type AttendanceItemProps = {
+  attendance: AttendanceModel
 }
 
-export const UserItem: React.FC<UserItemProps> = (props) => {
+export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
   return (
     <ListItem
-      key={`user-item-${props.user.id}`}
-      id={`user-item-${props.user.id}`}
+      key={`attendance-item-${props.attendance.id}`}
+      id={`attendance-item-${props.attendance.id}`}
       sx={{
         mt: 1,
         borderRadius: 2,
@@ -31,7 +31,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
       <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
       <ListItemText
         sx={{ flex: 1, mt: 0.5 }}
-        primary={props.user.name}
+        primary={props.attendance.user.name}
         slotProps={{
           primary: {
             textTransform: 'uppercase',
@@ -42,13 +42,13 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
         secondary={
           <Stack alignItems="flex-start">
             <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
-              CORTE + HIDRATAÇÃO
+              {props.attendance.services.map((attendanceService) => attendanceService.service.description.toUpperCase()).join(' + ')}
             </Typography>
           </Stack>
         }
       />
 
-      <UserActions />
+      <AttendanceActions />
     </ListItem>
   )
 }

@@ -6,7 +6,7 @@ import { GenericState } from '@/presentation/components/atoms'
 export const OpenFormAction: React.FC = () => {
   const company = useRecoilValue(GenericState.companyState)
 
-  if (company.statusAttendance !== 'serving') {
+  if (company?.statusAttendance !== 'serving') {
     return null
   }
 

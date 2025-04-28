@@ -52,7 +52,7 @@ export const ChangeStatusDialog = () => {
     const action = {
       serving: handleEndAttendance,
       closed: handleStartAttendance,
-    }[company.statusAttendance]
+    }[company?.statusAttendance || 'closed']
 
     handleClose()
     await withMinimumDelay(action, 1200)
@@ -66,12 +66,12 @@ export const ChangeStatusDialog = () => {
   const messageStatus = {
     serving: 'Confirma encerramento da fila de atendimento?',
     closed: 'Confirma abertura da fila de atendimento?',
-  }[company.statusAttendance]
+  }[company?.statusAttendance || 'closed']
 
   const labelActionStatus = {
     serving: 'encerrar',
     closed: 'confirmar',
-  }[company.statusAttendance]
+  }[company?.statusAttendance || 'closed']
 
   return (
     <Dialog
