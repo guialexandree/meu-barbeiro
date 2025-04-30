@@ -2,7 +2,7 @@ import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import Button from '@mui/material/Button'
 import { Factories } from '@/main/factories/usecases'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fade, FormControlLabel, Icon, Slide, Stack } from '@mui/material/'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fade, FormControlLabel, Icon, Stack } from '@mui/material/'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { useNotify, useWithMinimunDelay } from '@/presentation/hooks'
 import { GenericState } from '@/presentation/components/atoms'
@@ -105,11 +105,11 @@ export const ChangeStatusDialog = () => {
       <DialogActions>
         <CancelAction onCancel={handleClose} />
 
-        <Slide in direction="left" unmountOnExit mountOnEnter>
+        <Fade in unmountOnExit mountOnEnter>
           <Button variant="contained" onClick={handleConfirm} autoFocus endIcon={<Icon>done_outline</Icon>}>
             {labelActionStatus}
           </Button>
-        </Slide>
+        </Fade>
       </DialogActions>
     </Dialog>
   )
