@@ -27,7 +27,7 @@ export const PageTitle: React.FC<PageTitleProps> = (props) => {
           />
         </Zoom>
 
-        <Slide direction="down" in mountOnEnter unmountOnExit>
+        <Slide direction="left" in mountOnEnter unmountOnExit>
           <Stack>
             <Typography
               variant="h6"

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Divider, Fade, Icon, IconButton, Paper, Stack, Typography } from '@mui/material'
+import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography } from '@mui/material'
 
 export const QueueInfo: React.FC = () => {
   return (
-    <Fade in timeout={500} style={{ transitionDelay: '400ms' }} unmountOnExit>
+    <Zoom in timeout={500} style={{ transitionDelay: '400ms' }} unmountOnExit>
       <Paper
         component="header"
         elevation={0}
@@ -66,6 +66,6 @@ export const QueueInfo: React.FC = () => {
           </Stack>
         </Stack>
       </Paper>
-    </Fade>
+    </Zoom>
   )
 }
