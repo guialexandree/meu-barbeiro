@@ -49,6 +49,8 @@ export const AttendanceQueueList: React.FC = () => {
             backgroundColor: (theme) => `${theme.palette.primary.dark}20`,
             borderBottomLeftRadius: 30,
             borderBottomRightRadius: 30,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
           }}
           elevation={0}
         >

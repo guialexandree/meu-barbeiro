@@ -2,6 +2,7 @@ import React from 'react'
 import {
   AppBar as AppBarMUI,
   Badge,
+  Box,
   Icon,
   IconButton,
   Skeleton,
@@ -39,7 +40,9 @@ export const AppBar: React.FC = () => {
                 {company.name}
               </Typography>
             ) : (
-              <Skeleton variant="text" width={100} height={30} />
+              <Box sx={{ flex: 1}}>
+                <Skeleton variant="text" width={100} height={30} />
+              </Box>
             )}
           </Slide>
 

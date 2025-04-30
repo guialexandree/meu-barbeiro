@@ -112,7 +112,7 @@ export const StatusSwitch: React.FC = () => {
               </ToggleButtonGroup>
             </Fade>
           ) : (
-            <Skeleton variant="text" width={175} height={37} />
+            <Skeleton variant="rounded" width={175} height={37} />
           )}
         </Paper>
       </Fade>

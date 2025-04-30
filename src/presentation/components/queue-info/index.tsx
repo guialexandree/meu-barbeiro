@@ -3,7 +3,7 @@ import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography } from '@mui/
 
 export const QueueInfo: React.FC = () => {
   return (
-    <Zoom in timeout={500} style={{ transitionDelay: '400ms' }} unmountOnExit>
+    <Zoom in timeout={300} style={{ transitionDelay: '300ms' }} unmountOnExit>
       <Paper
         component="header"
         elevation={0}

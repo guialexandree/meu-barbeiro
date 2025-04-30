@@ -11,9 +11,6 @@ export const HistoryToday: React.FC = () => {
             expandIcon={<GridExpandMoreIcon />}
             aria-controls="panel2-content"
             id="panel2-header"
-            sx={{
-              borderRadius: 30,
-            }}
           >
             <Icon color="action" sx={{ mr: 1, color: 'grey.300' }}>
               history
