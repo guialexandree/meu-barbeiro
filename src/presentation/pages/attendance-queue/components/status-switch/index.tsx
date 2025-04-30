@@ -5,7 +5,6 @@ import {
   Fade,
   Paper,
   Skeleton,
-  Slide,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
@@ -33,7 +32,7 @@ export const StatusSwitch: React.FC = () => {
 
   if (loading) {
     return (
-      <Slide in direction="right" timeout={500} style={{ transitionDelay: '100ms' }} mountOnEnter unmountOnExit>
+      <Fade in timeout={500} style={{ transitionDelay: '100ms' }} mountOnEnter unmountOnExit>
         <Paper
           id="status-queue-form"
           component="form"
@@ -60,13 +59,13 @@ export const StatusSwitch: React.FC = () => {
           </Fade>
           <CircularProgress size={24} />
         </Paper>
-      </Slide>
+      </Fade>
     )
   }
 
   return (
     <>
-      <Fade in unmountOnExit>
+      <Fade in unmountOnExit style={{ transitionDelay: '100ms' }}>
         <Paper
           id="status-queue-form"
           component="form"

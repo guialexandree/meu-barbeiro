@@ -1,10 +1,10 @@
 import React from 'react'
-import { Accordion, AccordionDetails, AccordionSummary, Icon, Slide, Stack, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Icon, Fade, Stack, Typography } from '@mui/material'
 import { GridExpandMoreIcon } from '@mui/x-data-grid'
 
 export const HistoryToday: React.FC = () => {
   return (
-    <Slide in direction="left" timeout={500} mountOnEnter unmountOnExit>
+    <Fade in timeout={500} mountOnEnter unmountOnExit style={{ transitionDelay: '250ms' }}>
       <Stack justifyContent="center">
         <Accordion variant="outlined" elevation={0}>
           <AccordionSummary
@@ -30,6 +30,6 @@ export const HistoryToday: React.FC = () => {
           </AccordionDetails>
         </Accordion>
       </Stack>
-    </Slide>
+    </Fade>
   )
 }
