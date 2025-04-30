@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Slide } from '@mui/material'
+import { Button, Fade } from '@mui/material'
 
 type CancelActionProps = {
   onCancel: VoidFunction
@@ -9,7 +9,7 @@ type CancelActionProps = {
 
 export const CancelAction: React.FC<CancelActionProps> = (props) => {
   return (
-    <Slide in direction="right" unmountOnExit mountOnEnter style={{ transitionDelay: `${props.enterDelay || 0}ms` }}>
+    <Fade in unmountOnExit mountOnEnter style={{ transitionDelay: `${props.enterDelay || 0}ms` }}>
       <Button
         fullWidth={props.fullWidth}
         id="close-clients-form-action"
@@ -20,6 +20,6 @@ export const CancelAction: React.FC<CancelActionProps> = (props) => {
       >
         Cancelar
       </Button>
-    </Slide>
+    </Fade>
   )
 }

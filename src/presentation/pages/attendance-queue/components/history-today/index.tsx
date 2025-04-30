@@ -15,7 +15,7 @@ export const HistoryToday: React.FC = () => {
             borderRadius: 30
           }}
         >
-          <Icon color='action' sx={{ mr: 2, color: 'grey.300' }}>history</Icon>
+          <Icon color='action' sx={{ mr: 1, color: 'grey.300' }}>history</Icon>
           <Typography color='grey.200' variant="body2" fontWeight={500} fontFamily="Inter" >Histórico do dia</Typography>
         </AccordionSummary>
         <AccordionDetails>

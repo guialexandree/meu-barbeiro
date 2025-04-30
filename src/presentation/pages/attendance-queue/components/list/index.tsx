@@ -53,7 +53,7 @@ export const AttendanceQueueList: React.FC = () => {
           elevation={0}
         >
           <Stack spacing={2}>
-            <Stack spacing={2} direction="row" alignItems="center" justifyContent="center">
+            <Stack spacing={1} direction="row" alignItems="center" justifyContent="center">
               <Icon color="info" sx={{ color: 'info.light' }}>
                 info_outline
               </Icon>
