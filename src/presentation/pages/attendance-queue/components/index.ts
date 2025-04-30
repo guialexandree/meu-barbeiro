@@ -1,6 +1,7 @@
 export * from './current-attendance'
 export * from './change-status-dialog'
 export * from './list'
+export * from './history-today'
 export * from './status-switch'
 export * from './open-form-action'
 export * from './attendance-actions'

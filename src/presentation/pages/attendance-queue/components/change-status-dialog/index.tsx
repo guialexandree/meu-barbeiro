@@ -2,11 +2,11 @@ import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import Button from '@mui/material/Button'
 import { Factories } from '@/main/factories/usecases'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon } from '@mui/material/'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fade, FormControlLabel, Icon, Slide, Stack } from '@mui/material/'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { useNotify, useWithMinimunDelay } from '@/presentation/hooks'
 import { GenericState } from '@/presentation/components/atoms'
-import { CancelAction } from '@/presentation/components'
+import { Android12Switch, CancelAction } from '@/presentation/components'
 
 export const ChangeStatusDialog = () => {
   const { notify } = useNotify()
@@ -64,7 +64,7 @@ export const ChangeStatusDialog = () => {
   }
 
   const messageStatus = {
-    serving: 'Confirma encerramento da fila de atendimento?',
+    serving: 'Confirma encerramento da fila de atendimento? Ao encerrar o atendimento, nenhum cliente poderá entrar na fila.',
     closed: 'Confirma abertura da fila de atendimento?',
   }[company?.statusAttendance || 'closed']
 
@@ -80,22 +80,36 @@ export const ChangeStatusDialog = () => {
         paper: {
           sx: {
             backgroundColor: 'background.default',
-          }
-        }
+          },
+        },
       }}
       onClose={handleClose}
       aria-labelledby="change-status-dialog-title"
       aria-describedby="change-status-dialog-description"
     >
-      <DialogTitle id="change-status-dialog-title">{'Fila de atendimento'}</DialogTitle>
+      <DialogTitle id="change-status-dialog-title">{company?.statusAttendance === 'closed' ? 'Iniciar atendimentos' : 'Encerrar atendimentos'}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="change-status-dialog-description">{messageStatus}</DialogContentText>
+        <Fade in timeout={500} style={{ transitionDelay: '100ms' }} unmountOnExit>
+          <Stack spacing={2}>
+            <DialogContentText id="change-status-dialog-description">{messageStatus}</DialogContentText>
+            {company?.statusAttendance === 'closed' && <FormControlLabel
+              slotProps={{
+                typography: { fontSize: 14, fontFamily: 'Inter' },
+              }}
+              control={<Android12Switch />}
+              label="Enviar notificação para os clientes"
+            />}
+          </Stack>
+        </Fade>
       </DialogContent>
       <DialogActions>
         <CancelAction onCancel={handleClose} />
-        <Button variant="contained" onClick={handleConfirm} autoFocus endIcon={<Icon>done_outline</Icon>}>
-          {labelActionStatus}
-        </Button>
+
+        <Slide in direction="left" unmountOnExit mountOnEnter>
+          <Button variant="contained" onClick={handleConfirm} autoFocus endIcon={<Icon>done_outline</Icon>}>
+            {labelActionStatus}
+          </Button>
+        </Slide>
       </DialogActions>
     </Dialog>
   )

@@ -1,19 +1,23 @@
 import React from 'react'
 import { PageContainer } from '@/presentation/components'
-import { AttendanceQueueList, CurrentAttendance, OpenFormAction, StatusSwitch } from './components'
+import { AttendanceQueueList, CurrentAttendance, HistoryToday, OpenFormAction, StatusSwitch } from './components'
 import { AttendancesGraphPanel } from '../financial/components'
+import { Stack } from '@mui/material'
 
 const AttendanceQueuePage: React.FC = () => {
   return (
     <PageContainer>
-      <StatusSwitch />
+      <Stack mx={2}>
+        <StatusSwitch />
 
-      <AttendancesGraphPanel />
-      <CurrentAttendance />
+        <HistoryToday />
+        <CurrentAttendance />
+        <AttendanceQueueList />
 
-      <AttendanceQueueList />
+        <AttendancesGraphPanel />
 
-      <OpenFormAction />
+        <OpenFormAction />
+      </Stack>
     </PageContainer>
   )
 }

@@ -2,11 +2,13 @@ import React from 'react'
 import { Fab, Icon, Stack, Zoom } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { GenericState } from '@/presentation/components/atoms'
+import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 
 export const OpenFormAction: React.FC = () => {
   const company = useRecoilValue(GenericState.companyState)
+  const attendancesResult = useRecoilValue(State.List.attendancesResultState)
 
-  if (company?.statusAttendance !== 'serving') {
+  if (company?.statusAttendance !== 'serving' || !attendancesResult?.data?.length) {
     return null
   }
 

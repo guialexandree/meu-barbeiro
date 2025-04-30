@@ -24,7 +24,7 @@ export const StatusSwitch: React.FC = () => {
 
   if (loading) {
     return (
-      <Fade in timeout={500} style={{ transitionDelay: '100ms' }} unmountOnExit>
+      <Fade in timeout={1000} style={{ transitionDelay: '100ms' }} unmountOnExit>
         <Paper
           id="status-queue-form"
           component="form"
@@ -36,7 +36,6 @@ export const StatusSwitch: React.FC = () => {
           sx={{
             py: 1.2,
             pr: 1.2,
-            mx: 2,
             mb: 1,
             height: 56,
             display: 'flex',
@@ -69,7 +68,6 @@ export const StatusSwitch: React.FC = () => {
         sx={{
           py: 1.2,
           pr: 1.2,
-          mx: 2,
           mb: 1,
           display: 'flex',
           flexDirection: 'row',
