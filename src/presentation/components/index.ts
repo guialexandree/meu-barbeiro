@@ -1,5 +1,6 @@
 export { default as AvatarRandom } from './avatar-random'
 export * from './app-bar'
+export * from './android-checkbox'
 export * from './cancel-action'
 export * from './dialog-confirm'
 export * from './drawer'

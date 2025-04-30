@@ -1,10 +1,23 @@
 import React from 'react'
-import { AppBar as AppBarMUI, Badge, Icon, IconButton, Slide, Stack, Toolbar, Typography, Zoom } from '@mui/material'
-import { useSetRecoilState } from 'recoil'
+import {
+  AppBar as AppBarMUI,
+  Badge,
+  Icon,
+  IconButton,
+  Skeleton,
+  Slide,
+  Stack,
+  Toolbar,
+  Typography,
+  Zoom,
+} from '@mui/material'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { isOpenDrawer, QueueInfo } from '@/presentation/components'
+import { GenericState } from '../atoms'
 
 export const AppBar: React.FC = () => {
   const setOpenDrawer = useSetRecoilState(isOpenDrawer)
+  const company = useRecoilValue(GenericState.companyState)
 
   return (
     <Slide direction="down" in={true} mountOnEnter unmountOnExit>
@@ -21,9 +34,13 @@ export const AppBar: React.FC = () => {
       >
         <Toolbar sx={{ width: '100%', mt: 1 }}>
           <Slide direction="right" in={true} mountOnEnter unmountOnExit>
-            <Typography variant="h6" sx={{ flex: 1, textTransform: 'uppercase' }}>
-              SUSUZEIRA
-            </Typography>
+            {company ? (
+              <Typography variant="h6" sx={{ flex: 1, textTransform: 'uppercase' }}>
+                {company.name}
+              </Typography>
+            ) : (
+              <Skeleton variant="text" width={100} height={30} />
+            )}
           </Slide>
 
           <Stack direction="row" alignItems="center" spacing={0.7}>

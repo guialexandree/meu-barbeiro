@@ -7,6 +7,7 @@ import { Loadable, ThemeProvider } from '@/presentation/components'
 import LoginPage from '@/presentation/pages/login/login-page'
 import RecoveryPasswordPage from '@/presentation/pages/recovery-password'
 const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-queue'))
+const AttendanceFormPage = lazy(() => import('@/presentation/pages/attendance-form/attedance-form-page'))
 const ServiceListPage = lazy(() => import('@/presentation/pages/service-list/service-list-page'))
 const ServiceFormPage = lazy(() => import('@/presentation/pages/service-form/service-form-page'))
 const UserFormPage = lazy(() => import('@/presentation/pages/user-form/user-form-page'))
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Loadable children={<AttendanceQueuePage />} />,
+      },
+      {
+        path: '/fila/entrar',
+        element: <Loadable children={<AttendanceFormPage />} />,
       },
       {
         path: '/clientes',

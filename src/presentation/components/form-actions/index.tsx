@@ -10,7 +10,7 @@ export const FormActions: React.FC<FormActionsProps> = (props) => {
     <Stack
       sx={{
         position: 'fixed',
-        bottom: 0,
+        bottom: 12,
         right: 0,
         left: 0,
         zIndex: 1,
