@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import {Fade, Paper, Typography } from '@mui/material'
-import { ChangeStatusDialog } from '@/presentation/pages/attendance-queue/components'
 import { GenericState } from '@/presentation/components/atoms'
 
 export const SummaryToday: React.FC = () => {
@@ -42,7 +41,6 @@ export const SummaryToday: React.FC = () => {
           </Fade>
         </Paper>
       </Fade>
-      <ChangeStatusDialog />
     </>
   )
 }

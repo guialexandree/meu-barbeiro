@@ -11,8 +11,8 @@ import {
   Divider,
   Fade,
   Icon,
-  Slide,
   Stack,
+  Zoom,
 } from '@mui/material'
 import { CancelAction } from '../cancel-action'
 
@@ -20,9 +20,12 @@ type DialogConfirmProps = {
   openState: RecoilState<boolean>
   title: string
   answer: string
-  onConfirm: VoidFunction
+  onConfirm: () => Promise<void>
   icon?: string
+  loading?: boolean
+  labelConfirm?: string
   onClose?: VoidFunction
+  children?: React.ReactNode
 }
 
 export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
@@ -33,8 +36,8 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
     setOpen(false)
   }
 
-  const onConfirm = (): void => {
-    props.onConfirm()
+  const onConfirm = async (): Promise<void> => {
+    await props.onConfirm()
     setOpen(false)
   }
 
@@ -63,17 +66,27 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
         <Divider />
         <Fade in unmountOnExit mountOnEnter style={{ transitionDelay: `250ms` }}>
           <DialogContent>
-            <DialogContentText id="service-dialog-description">{props.answer}</DialogContentText>
+            <Stack spacing={2}>
+              <DialogContentText id="service-dialog-description">{props.answer}</DialogContentText>
+              {props.children}
+            </Stack>
           </DialogContent>
         </Fade>
         <DialogActions>
           <CancelAction onCancel={onClose} enterDelay={250} />
 
-          <Slide in direction="left" unmountOnExit mountOnEnter style={{ transitionDelay: `250ms` }}>
-            <Button variant="contained" onClick={onConfirm} autoFocus color="success">
-              Confirmar
+          <Zoom in unmountOnExit mountOnEnter style={{ transitionDelay: `250ms` }}>
+            <Button
+              variant="contained"
+              loading={props.loading}
+              onClick={onConfirm}
+              autoFocus
+              color="success"
+              endIcon={<Icon>done_outline</Icon>}
+            >
+              {props.labelConfirm || 'Confirmar'}
             </Button>
-          </Slide>
+          </Zoom>
         </DialogActions>
       </Box>
     </Dialog>

@@ -1,14 +1,79 @@
 import React from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { Button, Fade, Paper, Skeleton, Typography } from '@mui/material'
-import { ChangeStatusDialog } from '@/presentation/pages/attendance-queue/components'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { Button, Fade, FormControlLabel, Paper, Skeleton, Typography } from '@mui/material'
+import { Factories } from '@/main/factories/usecases'
+import { CompanyModel } from '@/domain/models'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
+import { Android12Switch, DialogConfirm } from '@/presentation/components'
+import { useNotify } from '@/presentation/hooks'
 
 export const StatusSwitch: React.FC = () => {
+  const { notify } = useNotify()
   const setOpen = useSetRecoilState(State.openDialog)
-  const companyState = useRecoilValue(GenericState.companyState)
-  const loading = useRecoilValue(State.loadingChangeStatusState)
+  const setExpandHistory = useSetRecoilState(State.expandHistoryState)
+  const [loading, setLoading] = useRecoilState(State.loadingChangeStatusState)
+  const [company, setCompany] = useRecoilState(GenericState.companyState)
+
+  const startAttendanceCompany = React.useMemo(() => Factories.makeRemoteStartAttendanceCompany(), [])
+  const closedAttendanceCompany = React.useMemo(() => Factories.makeRemoteClosedAttendanceCompany(), [])
+
+  const onSuccess = (company: CompanyModel) => {
+    setCompany(company)
+    setOpen(false)
+    setLoading(false)
+  }
+
+  const handleStartAttendance = async () => {
+    setLoading(true)
+    startAttendanceCompany
+      .start()
+      .then((result) => {
+        if (result.success) {
+          onSuccess(result.data)
+          setExpandHistory(false)
+          return
+        }
+
+        notify(result.error, { type: 'error' })
+      })
+      .catch(console.error)
+  }
+
+  const handleEndAttendance = async () => {
+    setLoading(true)
+    return closedAttendanceCompany
+      .closed()
+      .then((result) => {
+        if (result.success) {
+          onSuccess(result.data)
+          setExpandHistory(true)
+          return
+        }
+
+        notify(result.error, { type: 'error' })
+      })
+      .catch(console.error)
+  }
+
+  const handleChangeStatus = async () => {
+    const action = {
+      serving: handleEndAttendance,
+      closed: handleStartAttendance,
+    }[company?.statusAttendance || 'closed']
+
+    await action()
+  }
+
+  const messageStatus = {
+    serving: 'Confirma encerramento da fila de atendimento? Ao encerrar o atendimento, nenhum cliente poderá entrar na fila.',
+    closed: 'Confirma abertura da fila de atendimento?',
+  }[company?.statusAttendance || 'closed']
+
+  const labelActionStatus = {
+    serving: 'encerrar',
+    closed: 'confirmar',
+  }[company?.statusAttendance || 'closed']
 
   return (
     <>
@@ -38,9 +103,9 @@ export const StatusSwitch: React.FC = () => {
             </Typography>
           </Fade>
 
-          {!companyState && <Skeleton variant="rounded" width={175} height={37} />}
+          {!company && <Skeleton variant="rounded" width={175} height={37} />}
 
-          {companyState.statusAttendance === 'closed' && (
+          {company.statusAttendance === 'closed' && (
             <Button
               variant="contained"
               color="success"
@@ -60,7 +125,7 @@ export const StatusSwitch: React.FC = () => {
               Abrir Fila
             </Button>
           )}
-          {companyState.statusAttendance === 'serving' && (
+          {company.statusAttendance === 'serving' && (
             <Button
               variant="contained"
               loading={loading}
@@ -82,7 +147,24 @@ export const StatusSwitch: React.FC = () => {
           )}
         </Paper>
       </Fade>
-      <ChangeStatusDialog />
+
+      <DialogConfirm
+        icon="info"
+        title={company?.statusAttendance === 'closed' ? 'Iniciar atendimentos' : 'Encerrar atendimentos'}
+        answer={messageStatus}
+        loading={loading}
+        onConfirm={handleChangeStatus}
+        openState={State.openDialog}
+        labelConfirm={labelActionStatus}
+      >
+        {company?.statusAttendance === 'closed' && <FormControlLabel
+          slotProps={{
+            typography: { fontSize: 14, fontFamily: 'Inter' },
+          }}
+          control={<Android12Switch />}
+          label="Enviar notificação para os clientes"
+        />}
+      </DialogConfirm>
     </>
   )
 }
