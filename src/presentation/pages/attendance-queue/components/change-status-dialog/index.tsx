@@ -11,8 +11,9 @@ import { Android12Switch, CancelAction } from '@/presentation/components'
 export const ChangeStatusDialog = () => {
   const { notify } = useNotify()
   const { withMinimumDelay } = useWithMinimunDelay()
-  const [open, setOpen] = useRecoilState(State.openChangeStatusDialogState)
+  const [open, setOpen] = useRecoilState(State.openDialog)
   const [company, setCompany] = useRecoilState(GenericState.companyState)
+  const setExpandHistory = useSetRecoilState(State.expandHistoryState)
   const setLoading = useSetRecoilState(State.loadingChangeStatusState)
 
   const startAttendanceCompany = React.useMemo(() => Factories.makeRemoteStartAttendanceCompany(), [])
@@ -25,6 +26,7 @@ export const ChangeStatusDialog = () => {
       .then((result) => {
         if (result.success) {
           setCompany(result.data)
+          setExpandHistory(false)
           return
         }
 
@@ -40,6 +42,7 @@ export const ChangeStatusDialog = () => {
       .then((result) => {
         if (result.success) {
           setCompany(result.data)
+          setExpandHistory(true)
           return
         }
 

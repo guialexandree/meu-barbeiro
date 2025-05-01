@@ -1,7 +1,6 @@
 import React from 'react'
 import { PageContainer } from '@/presentation/components'
-import { AttendanceQueueList, CurrentAttendance, HistoryToday, OpenFormAction, StatusSwitch } from './components'
-import { AttendancesGraphPanel } from '../financial/components'
+import { AttendanceQueueList, CurrentAttendance, HistoryToday, OpenFormAction, StatusSwitch, SummaryToday } from './components'
 import { Stack } from '@mui/material'
 
 const AttendanceQueuePage: React.FC = () => {
@@ -13,8 +12,7 @@ const AttendanceQueuePage: React.FC = () => {
         <HistoryToday />
         <CurrentAttendance />
         <AttendanceQueueList />
-
-        <AttendancesGraphPanel />
+        <SummaryToday />
 
         <OpenFormAction />
       </Stack>

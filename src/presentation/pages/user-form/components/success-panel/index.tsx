@@ -38,16 +38,16 @@ export const SuccessPanel: React.FC = () => {
 
       <Slide direction='right' in timeout={400}>
         <ButtonGroup color="inherit" size="large" fullWidth orientation="vertical" aria-label="Vertical button group">
-          <Button onClick={handleSendAppLink} endIcon={<WhatsAppIcon />} >
+          <Button sx={{ color: 'grey.300' }} onClick={handleSendAppLink} endIcon={<WhatsAppIcon />} >
             Enviar link do app
           </Button>
 
-          <Button onClick={handleGoBackToForm} endIcon={<Icon>add</Icon>}>Cadastrar Novo Cliente</Button>
+          <Button sx={{ color: 'grey.300' }} onClick={handleGoBackToForm} endIcon={<Icon>add</Icon>}>Cadastrar Novo Cliente</Button>
         </ButtonGroup>
       </Slide>
 
       <Slide direction="left" in mountOnEnter unmountOnExit timeout={300}>
-        <Button sx={{ mt: 2 }} variant="text" color="inherit" size="small" onClick={handleGoBackToList} startIcon={<Icon>arrow_back</Icon>}>
+        <Button sx={{ mt: 2, color: 'grey.300' }} variant="text" color="inherit" size="small" onClick={handleGoBackToList} startIcon={<Icon>arrow_back</Icon>}>
           Voltar para lista
         </Button>
       </Slide>

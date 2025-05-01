@@ -11,6 +11,11 @@ export const loadingUsersTotalizerResultState = atom({
   default: true,
 })
 
+export const limitState = atom({
+  key: 'listUserslimitState',
+  default: 20,
+})
+
 export const usersTotalizerResultState = atom<LoadUsersTotalizerResult>({
   key: 'usersTotalizerState',
   default: null as unknown as LoadUsersTotalizerResult,

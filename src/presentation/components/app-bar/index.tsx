@@ -23,6 +23,8 @@ export const AppBar: React.FC = () => {
   return (
     <Slide direction="down" in={true} mountOnEnter unmountOnExit>
       <AppBarMUI
+        position="sticky"
+        variant="outlined"
         elevation={1}
         sx={{
           maxWidth: '100vw',
@@ -40,18 +42,13 @@ export const AppBar: React.FC = () => {
                 {company.name}
               </Typography>
             ) : (
-              <Box sx={{ flex: 1}}>
+              <Box sx={{ flex: 1 }}>
                 <Skeleton variant="text" width={100} height={30} />
               </Box>
             )}
           </Slide>
 
           <Stack direction="row" alignItems="center" spacing={0.7}>
-            <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              <IconButton edge="start" aria-label="menu">
-                <Icon>tune</Icon>
-              </IconButton>
-            </Zoom>
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
               <IconButton edge="start" aria-label="menu">
                 <Icon>visibility</Icon>

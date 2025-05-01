@@ -1,5 +1,5 @@
 import { UserRole } from '@/domain/models'
-import { atom, selector } from 'recoil'
+import { atom } from 'recoil'
 
 const loadingFormState = atom({
   key: 'isLoadingFormClientCreateState',
@@ -45,18 +45,6 @@ const userTypeState = atom<UserRole>({
   default: 'client'
 })
 
-const newUserFormState = selector({
-  key: 'newUserFormState',
-  get: ({ get }) => {
-    return {
-      name: get(nameState).text,
-      contactNumber: get(contactNumberState).text,
-      password: get(passwordState).text,
-      role: get(userTypeState)
-    }
-  }
-})
-
 export const State = {
   loadingFormState,
   errorFormState,
@@ -65,5 +53,4 @@ export const State = {
   contactNumberState,
   passwordState,
   userTypeState,
-  newUserFormState
 }

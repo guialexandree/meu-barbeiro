@@ -1,12 +1,12 @@
 import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Chip, Icon, Slide, Stack, Typography } from '@mui/material'
-import { LoadUsersResult } from '@/domain/usecases'
+import { LoadUsersParams, LoadUsersResult } from '@/domain/usecases'
 import { InputSearch } from '@/presentation/components'
 import { State } from '@/presentation/pages/user-list/components/atoms'
 
 type UsersFiltersProps = {
-  loadUsers: (search?: string) => Promise<LoadUsersResult>
+  loadUsers: (params: LoadUsersParams) => Promise<LoadUsersResult>
 }
 
 export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
@@ -15,9 +15,9 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
   const [usersResult, setUsersResult] = useRecoilState(State.List.usersResultState)
   const [search, setSearch] = React.useState('')
 
-  const handleLoadUsers = React.useCallback(async (textSearch: string): Promise<void> => {
-    setSearch(textSearch)
-    const usersResult = await props.loadUsers(textSearch)!
+  const handleLoadUsers = React.useCallback(async (params: LoadUsersParams): Promise<void> => {
+    setSearch(search)
+    const usersResult = await props.loadUsers(params)!
     if (usersResult?.success) {
       if (usersResult.data) {
         setUsersResult(usersResult)
@@ -32,7 +32,7 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
   const resetSearch = React.useCallback(() => {
     setTextSearch('')
     setSearch('')
-    handleLoadUsers('')
+    handleLoadUsers({ search: '', limit: 10 })
   }, [])
 
   return (
@@ -40,7 +40,7 @@ export const UsersFilters: React.FC<UsersFiltersProps> = (props) => {
       <InputSearch
         id="clients-input-search"
         placeholder="Buscar"
-        loadData={handleLoadUsers}
+        loadData={search => { handleLoadUsers({ search, limit: 20 }) }}
         inputSearchState={State.List.textSearchState}
         showFiltersState={State.List.showFilterState}
         showFilters={false}

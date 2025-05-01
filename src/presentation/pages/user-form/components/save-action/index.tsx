@@ -1,9 +1,10 @@
 import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
+import { Button, Icon, Slide } from '@mui/material'
 import { Factories } from '@/main/factories/usecases'
 import { UserModel } from '@/domain/models'
-import { Button, Icon, Slide } from '@mui/material'
+import { CreateUserParams } from '@/domain/usecases'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/user-form/components/atoms'
 import { State as ClientsState } from '@/presentation/pages/user-list/components/atoms'
@@ -11,7 +12,6 @@ import { clientCreateValidation } from './validations'
 
 export const SaveAction: React.FC = () => {
   const { notify } = useNotify()
-  const newUser = useRecoilValue(State.newUserFormState)
   const loading = useRecoilValue(State.loadingFormState)
   const setClientsResult = useSetRecoilState(ClientsState.List.usersResultState)
   const setLoading = useSetRecoilState(State.loadingFormState)
@@ -25,7 +25,7 @@ export const SaveAction: React.FC = () => {
   const createClient = React.useMemo(() => Factories.makeRemoteCreateUser(), [])
 
   const onSuccess = (client: UserModel): void => {
-    setClientsResult((currentState) => ({ ...currentState, data: [client, ...currentState?.data || []] }))
+    setClientsResult((currentState) => ({ ...currentState, data: [client, ...(currentState?.data || [])] }))
     setFormSuccess(true)
   }
 
@@ -41,11 +41,18 @@ export const SaveAction: React.FC = () => {
 
   const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
     event.preventDefault()
-    handleUserCreate()
+    const formData = new FormData((event.target as HTMLFormElement).closest('form') as HTMLFormElement)
+    const params: CreateUserParams = Object.fromEntries(formData.entries()) as CreateUserParams
+
+    if (!validateForm(params)) {
+      return
+    }
+
+    handleUserCreate(params)
   }
 
-  const validateForm = (): boolean => {
-    const result = clientCreateValidation.safeParse(newUser)
+  const validateForm = (params: CreateUserParams): boolean => {
+    const result = clientCreateValidation.safeParse(params)
 
     if (!result.success) {
       const error = result.error.errors.at(0)!
@@ -56,12 +63,10 @@ export const SaveAction: React.FC = () => {
     return result.success
   }
 
-  const handleUserCreate = (): void => {
-    if (!validateForm()) return
-
+  const handleUserCreate = (params: CreateUserParams): void => {
     setLoading(true)
     createClient
-      .create(newUser)
+      .create(params)
       .then((result) => {
         if (result.success) {
           onSuccess(result.data)
@@ -88,7 +93,7 @@ export const SaveAction: React.FC = () => {
         loading={loading}
         type="submit"
         fullWidth
-        endIcon={<Icon fontSize='small'>done_outline</Icon>}
+        endIcon={<Icon fontSize="small">done_outline</Icon>}
         id="save-user-button"
         href="#"
       >

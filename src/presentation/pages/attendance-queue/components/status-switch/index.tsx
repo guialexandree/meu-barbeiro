@@ -1,67 +1,14 @@
 import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import {
-  CircularProgress,
-  Fade,
-  Paper,
-  Skeleton,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material'
+import { Button, Fade, Paper, Skeleton, Typography } from '@mui/material'
 import { ChangeStatusDialog } from '@/presentation/pages/attendance-queue/components'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
 
 export const StatusSwitch: React.FC = () => {
-  const setOpen = useSetRecoilState(State.openChangeStatusDialogState)
+  const setOpen = useSetRecoilState(State.openDialog)
   const companyState = useRecoilValue(GenericState.companyState)
-  const loadingCompany = useRecoilValue(GenericState.loadingCompanyState)
   const loading = useRecoilValue(State.loadingChangeStatusState)
-
-  const handleChangeStatus = (_: React.MouseEvent<HTMLElement>, value: string) => {
-    if (value) {
-      setOpen(true)
-    }
-  }
-
-  const colorStatus = {
-    serving: 'success',
-    closed: 'warning',
-  }[companyState?.statusAttendance || 'closed']
-
-  if (loading) {
-    return (
-      <Fade in timeout={500} style={{ transitionDelay: '100ms' }} mountOnEnter unmountOnExit>
-        <Paper
-          id="status-queue-form"
-          component="form"
-          variant="elevation"
-          elevation={0}
-          onSubmit={(event) => {
-            event.preventDefault()
-          }}
-          sx={{
-            py: 1.2,
-            pr: 1.2,
-            mb: 1,
-            height: 56,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <Fade in unmountOnExit>
-            <Typography variant="body2" fontWeight={500} sx={{ ml: 3, fontFamily: 'Inter' }}>
-              Gravando novo status da fila
-            </Typography>
-          </Fade>
-          <CircularProgress size={24} />
-        </Paper>
-      </Fade>
-    )
-  }
 
   return (
     <>
@@ -76,7 +23,8 @@ export const StatusSwitch: React.FC = () => {
           }}
           sx={{
             py: 1.2,
-            pr: 1.2,
+            pr: 2,
+            pl: 3,
             mb: 1,
             display: 'flex',
             flexDirection: 'row',
@@ -85,34 +33,52 @@ export const StatusSwitch: React.FC = () => {
           }}
         >
           <Fade in unmountOnExit>
-            <Typography variant="body2" fontWeight={500} sx={{ ml: 3, fontFamily: 'Inter' }}>
+            <Typography variant="body2" fontWeight={500} sx={{ fontFamily: 'Inter' }}>
               Fila de atendimento
             </Typography>
           </Fade>
 
-          {companyState ? (
-            <Fade in unmountOnExit>
-              <ToggleButtonGroup
-                size="small"
-                color={colorStatus as any}
-                value={companyState.statusAttendance}
-                id="status-queue"
-                exclusive
-                disabled={loadingCompany}
-                sx={{ backgroundColor: 'grey.900' }}
-                onChange={handleChangeStatus}
-                aria-label="status do serviço"
-              >
-                <ToggleButton value="serving" id="service-status-actived" sx={{ fontSize: 12 }}>
-                  Atendendo
-                </ToggleButton>
-                <ToggleButton value="closed" id="service-status-inactived" defaultChecked sx={{ fontSize: 12 }}>
-                  Encerrada
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </Fade>
-          ) : (
-            <Skeleton variant="rounded" width={175} height={37} />
+          {!companyState && <Skeleton variant="rounded" width={175} height={37} />}
+
+          {companyState.statusAttendance === 'closed' && (
+            <Button
+              variant="contained"
+              color="success"
+              loading={loading}
+              size="small"
+              sx={{
+                boxShadow: 0,
+                backgroundColor: 'success.light',
+                minWidth: 128,
+                fontWeight: '700',
+                fontFamily: 'Inter',
+              }}
+              onClick={() => {
+                setOpen(true)
+              }}
+            >
+              Abrir Fila
+            </Button>
+          )}
+          {companyState.statusAttendance === 'serving' && (
+            <Button
+              variant="contained"
+              loading={loading}
+              color="secondary"
+              size="small"
+              sx={{
+                boxShadow: 0,
+                backgroundColor: 'secondary.light',
+                minWidth: 128,
+                fontWeight: '700',
+                fontFamily: 'Inter',
+              }}
+              onClick={() => {
+                setOpen(true)
+              }}
+            >
+              Encerrar Fila
+            </Button>
           )}
         </Paper>
       </Fade>

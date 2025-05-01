@@ -1,12 +1,16 @@
 import React from 'react'
-import { Accordion, AccordionDetails, AccordionSummary, Icon, Fade, Stack, Typography } from '@mui/material'
+import { useRecoilState } from 'recoil'
 import { GridExpandMoreIcon } from '@mui/x-data-grid'
+import { Accordion, AccordionDetails, AccordionSummary, Icon, Fade, Stack, Typography } from '@mui/material'
+import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 
 export const HistoryToday: React.FC = () => {
+  const [expanded, setExpanded] = useRecoilState(State.expandHistoryState)
+
   return (
     <Fade in timeout={500} mountOnEnter unmountOnExit style={{ transitionDelay: '250ms' }}>
       <Stack justifyContent="center">
-        <Accordion variant="outlined" elevation={0}>
+        <Accordion expanded={expanded} variant="outlined" onChange={() => { setExpanded(currentState => !currentState) }} elevation={0}>
           <AccordionSummary
             expandIcon={<GridExpandMoreIcon />}
             aria-controls="panel2-content"
