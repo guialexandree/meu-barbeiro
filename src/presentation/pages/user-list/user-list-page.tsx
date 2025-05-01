@@ -34,6 +34,8 @@ const UsersListPage: React.FC = () => {
         return usersResult
       } catch (error) {
         setListState({ loading: true, error: (error as Error).message, noResults: false })
+      } finally {
+        setListState({ loading: false, noResults: false, error: '' })
       }
       return { success: false } as LoadUsersResult
     },
