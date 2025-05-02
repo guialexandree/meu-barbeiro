@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Chip, Fade, Stack } from '@mui/material'
+import { Chip, Fade, Icon, Stack } from '@mui/material'
 import { LoadUsersParams, LoadUsersResult } from '@/domain/usecases'
 import { List } from '@/presentation/components'
 import { State } from '@/presentation/pages/user-list/components/atoms'
@@ -75,7 +75,9 @@ export const UserList: React.FC<UserListProps> = (props) => {
         refreshFunction={refreshList}
         pullDownToRefresh
         pullDownToRefreshThreshold={50}
-        pullDownToRefreshContent={<h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>}
+        pullDownToRefreshContent={<Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
+        <Chip color='default' icon={<Icon sx={{ mr: 1 }}>south</Icon>} sx={{ backgroundColor: 'background.paper'}} variant="filled" label="Arraste para baixo para atualizar" size="small" />
+      </Stack>}
         releaseToRefreshContent={
           <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
             <Chip sx={{ backgroundColor: 'background.paper'}} variant="filled" label="Atualizando clientes..." size="small" />

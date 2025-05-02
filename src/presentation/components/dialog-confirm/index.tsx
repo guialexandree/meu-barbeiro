@@ -7,11 +7,11 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
   Divider,
   Fade,
   Icon,
   Stack,
+  Typography,
   Zoom,
 } from '@mui/material'
 import { CancelAction } from '../cancel-action'
@@ -57,11 +57,13 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
       aria-describedby="service-dialog-description"
     >
       <Box sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}20` }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mr={2}>
-          <DialogTitle id="service-dialog-title" sx={{ textTransform: 'uppercase' }}>
+        <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
+          <Icon color="info" sx={{ color: 'info.light' }}>
+            {props.icon || 'info_outline'}
+          </Icon>
+          <Typography id="service-dialog-title" variant="h6" fontWeight={800} fontFamily="Inter" sx={{ py: 1 }}>
             {props.title}
-          </DialogTitle>
-          <Icon>{props.icon || 'delete'}</Icon>
+          </Typography>
         </Stack>
         <Divider />
         <Fade in unmountOnExit mountOnEnter style={{ transitionDelay: `250ms` }}>

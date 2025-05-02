@@ -1,11 +1,17 @@
 import React from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { GridExpandMoreIcon } from '@mui/x-data-grid'
 import { Accordion, AccordionDetails, AccordionSummary, Icon, Fade, Stack, Typography, Chip } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
+import { GenericState } from '@/presentation/components/atoms'
 
 export const HistoryToday: React.FC = () => {
   const [expanded, setExpanded] = useRecoilState(State.expandHistoryState)
+  const company = useRecoilValue(GenericState.companyState)
+
+  if (company?.statusAttendance !== 'serving') {
+    return null
+  }
 
   return (
     <Fade in timeout={500} mountOnEnter unmountOnExit style={{ transitionDelay: '250ms' }}>

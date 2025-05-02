@@ -26,7 +26,7 @@ export const StatusSwitch: React.FC = () => {
 
   const handleStartAttendance = async () => {
     setLoading(true)
-    startAttendanceCompany
+    return startAttendanceCompany
       .start()
       .then((result) => {
         if (result.success) {
@@ -105,7 +105,7 @@ export const StatusSwitch: React.FC = () => {
 
           {!company && <Skeleton variant="rounded" width={175} height={37} />}
 
-          {company.statusAttendance === 'closed' && (
+          {company?.statusAttendance === 'closed' && (
             <Button
               variant="contained"
               color="success"
@@ -125,7 +125,7 @@ export const StatusSwitch: React.FC = () => {
               Abrir Fila
             </Button>
           )}
-          {company.statusAttendance === 'serving' && (
+          {company?.statusAttendance === 'serving' && (
             <Button
               variant="contained"
               loading={loading}

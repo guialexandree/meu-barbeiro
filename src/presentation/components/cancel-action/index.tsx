@@ -15,8 +15,9 @@ export const CancelAction: React.FC<CancelActionProps> = (props) => {
         id="close-clients-form-action"
         color="inherit"
         variant="outlined"
-        sx={{ borderColor: 'grey.700' }}
+        sx={{ borderColor: 'grey.700', backgroundColor: 'background.default' }}
         onClick={props.onCancel}
+
       >
         Cancelar
       </Button>

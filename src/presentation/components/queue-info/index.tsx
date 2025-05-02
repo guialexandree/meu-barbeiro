@@ -1,7 +1,10 @@
 import React from 'react'
 import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 export const QueueInfo: React.FC = () => {
+  const navigate = useNavigate()
+
   return (
     <Zoom in timeout={300} style={{ transitionDelay: '300ms' }} unmountOnExit>
       <Paper
@@ -21,7 +24,7 @@ export const QueueInfo: React.FC = () => {
         }}
       >
         <Stack spacing={1} direction="row" alignItems="center">
-          <IconButton size="large" sx={{ p: 0 }}>
+          <IconButton size="large" sx={{ p: 0 }} onClick={() => { navigate('/')}}>
             <Icon>sort</Icon>
           </IconButton>
 
