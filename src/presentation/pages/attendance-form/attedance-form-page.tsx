@@ -85,13 +85,14 @@ const UserFormPage: React.FC = () => {
           </Typography>
           <Paper
             variant="outlined"
-            sx={{ display: 'flex', flexDirection: 'column', p: 2, backgroundColor: 'background.paper' }}
+            sx={{ display: 'flex', flexDirection: 'column', p: 2, backgroundColor: 'background.paper', borderColor: selectedValue === 'a' ? 'grey.300' : 'grey.800' }}
             elevation={0}
+            onClick={() => setSelectedValue('a')}
           >
             <FormControlLabel
               label="ADICIONAR NO FINAL"
               value="Adicionar no final"
-              slotProps={{ typography: { fontWeight: '600', color: 'text.primary' } }}
+              slotProps={{ typography: { fontWeight: '600', color: selectedValue === 'a' ? 'text.primary' : 'text.secondary' } }}
               control={
                 <Radio
                   checked={selectedValue === 'a'}
@@ -103,19 +104,20 @@ const UserFormPage: React.FC = () => {
                 />
               }
             />
-            <Typography variant="caption" fontWeight={500} color="text.secondary" letterSpacing={1}>
+            <Typography variant="caption" color="text.disabled" letterSpacing={1}>
               Adicionar no final da fila de atendimento
             </Typography>
           </Paper>
           <Paper
             variant="outlined"
-            sx={{ display: 'flex', flexDirection: 'column', p: 2, backgroundColor: 'background.paper' }}
+            sx={{ display: 'flex', flexDirection: 'column', p: 2, backgroundColor: 'background.paper', borderColor: selectedValue === 'b' ? 'grey.300' : 'grey.800' }}
             elevation={0}
+            onClick={() => setSelectedValue('b')}
           >
             <FormControlLabel
               label="ADICIONAR NO INÍCIO"
               value="Adicionar no final"
-              slotProps={{ typography: { fontWeight: '600', color: 'text.primary' } }}
+              slotProps={{ typography: { fontWeight: '600', color: selectedValue === 'b' ? 'text.primary' : 'text.secondary' } }}
               control={
                 <Radio
                   checked={selectedValue === 'b'}
@@ -127,7 +129,7 @@ const UserFormPage: React.FC = () => {
                 />
               }
             />
-            <Typography variant="caption" fontWeight={500} color="text.secondary" letterSpacing={1}>
+            <Typography variant="caption" color="text.disabled" letterSpacing={1}>
               Adicionar no início da fila de atendimento, será o próximo a ser atendido
             </Typography>
           </Paper>
