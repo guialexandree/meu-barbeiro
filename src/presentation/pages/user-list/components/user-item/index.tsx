@@ -5,6 +5,8 @@ import { UserModel } from '@/domain/models'
 import { StatusUser } from '@/presentation/components'
 import { useFormat } from '@/presentation/hooks'
 import { useNavigate } from 'react-router-dom'
+import { State } from '@/presentation/pages/attendance-form/components/atoms'
+import { useSetRecoilState } from 'recoil'
 
 type UserItemProps = {
   user: UserModel
@@ -13,6 +15,7 @@ type UserItemProps = {
 export const UserItem: React.FC<UserItemProps> = (props) => {
   const { formatPhoneNumber } = useFormat()
   const navigate = useNavigate()
+  const setSelectedUser = useSetRecoilState(State.selectedUserState)
 
   return (
     <ListItem
@@ -54,6 +57,10 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
             sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}10` }}
             edge="end"
             aria-label="adicionar na fila"
+            onClick={() => {
+              setSelectedUser({ label: props.user.name.toUpperCase(), id: props.user.id })
+              navigate('/fila/entrar')
+            }}
           >
             <Icon>data_saver_on</Icon>
           </IconButton>

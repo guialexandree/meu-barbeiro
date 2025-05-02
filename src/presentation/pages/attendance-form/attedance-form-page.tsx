@@ -8,11 +8,12 @@ import { State as ServiceState } from '@/presentation/pages/service-list/compone
 import { Actions, Services } from './components'
 
 const UserFormPage: React.FC = () => {
-  const [users, setUsers] = useRecoilState(State.usersState)
-  const [services, setServices] = useRecoilState(ServiceState.List.servicesState)
   const setSelectedServices = useSetRecoilState(State.selectedServicesState)
   const setLoading = useSetRecoilState(State.loadingUsersState)
+  const [users, setUsers] = useRecoilState(State.usersState)
+  const [services, setServices] = useRecoilState(ServiceState.List.servicesState)
   const [selectedValue, setSelectedValue] = React.useState('a')
+  const [selectedUser, setSelectedUser] = useRecoilState(State.selectedUserState)
 
   const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
   const loadSimpleUsers = React.useMemo(() => Factories.makeRemoteLoadSimpleUsers(), [])
@@ -57,8 +58,11 @@ const UserFormPage: React.FC = () => {
         <Autocomplete
           disablePortal
           fullWidth
+          value={selectedUser}
           options={options}
-          sx={{ maxWdth: 600 }}
+          onChange={(_, newValue) => {
+            setSelectedUser(newValue!)
+          }}
           renderInput={(params) => <TextField {...params} label="Cliente" placeholder="Informe o cliente" />}
         />
         <Services />

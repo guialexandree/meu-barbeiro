@@ -17,6 +17,11 @@ const usersState = atom<SimpleUser[]>({
   default: []
 })
 
+const selectedUserState = atom<{ id: string, label: string }>({
+  key: 'selectedUserQueueState',
+  default: null as unknown as { id: string, label: string },
+})
+
 const selectedServicesState = atom<ServiceModel[]>({
   key: 'selectedServicesQueueState',
   default: []
@@ -26,5 +31,6 @@ export const State = {
   loadingUsersState,
   loadingServicesState,
   selectedServicesState,
+  selectedUserState,
   usersState
 }
