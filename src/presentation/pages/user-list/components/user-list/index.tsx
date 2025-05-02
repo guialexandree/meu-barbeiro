@@ -68,7 +68,7 @@ export const UserList: React.FC<UserListProps> = (props) => {
         }
         endMessage={
           <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
-          <Chip sx={{ backgroundColor: 'background.paper'}} variant="filled" label="Não existem mais registros para carregar" size="small" />
+          <Chip sx={{ backgroundColor: 'background.paper'}} variant="filled" label={`Retornados ${usersResult?.data?.length} clientes`} size="small" />
         </Stack>
         }
 

@@ -14,7 +14,7 @@ const UserFormPage: React.FC = () => {
 
   const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
   const loadSimpleUsers = React.useMemo(() => Factories.makeRemoteLoadSimpleUsers(), [])
-  const options = React.useMemo(() => users.map((user) => ({ label: user.name, id: user.id })), [users])
+  const options = React.useMemo(() => users.map((user) => ({ label: user.name.toUpperCase(), id: user.id })), [users])
 
   const onLoad = React.useCallback(async () => {
     try {

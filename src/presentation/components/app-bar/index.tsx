@@ -28,6 +28,7 @@ export const AppBar: React.FC = () => {
         elevation={1}
         sx={{
           maxWidth: '100vw',
+          border: 'none',
           backgroundColor: 'primary.main',
           minHeight: 90,
           borderRadius: 0,
