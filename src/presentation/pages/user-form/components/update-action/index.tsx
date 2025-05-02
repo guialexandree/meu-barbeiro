@@ -56,11 +56,11 @@ export const UpdateFormAction: React.FC = () => {
     setOpenUpdateConfirm(true)
   }
 
-  const handleServiceUpdate = (): void => {
+  const handleServiceUpdate = async () => {
     if (!id) return
 
     setLoading(true)
-    updateService
+    return updateService
       .update({ ...serviceCreate, id })
       .then((result) => {
         if (result.success) {
@@ -86,6 +86,7 @@ export const UpdateFormAction: React.FC = () => {
           variant="contained"
           onClick={handleSubmit}
           type="submit"
+          size='large'
           sx={{ borderRadius: 0, py: 1.5 }}
           fullWidth
           endIcon={<Icon>done_outline</Icon>}

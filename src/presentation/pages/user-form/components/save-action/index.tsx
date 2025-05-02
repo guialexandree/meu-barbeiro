@@ -94,6 +94,7 @@ export const SaveAction: React.FC = () => {
         onClick={handleSubmit}
         loading={loading}
         type="submit"
+        size='large'
         fullWidth
         endIcon={<Icon fontSize="small">done_outline</Icon>}
         id="save-user-button"

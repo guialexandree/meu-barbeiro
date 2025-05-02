@@ -14,6 +14,7 @@ export const CancelAction: React.FC<CancelActionProps> = (props) => {
         fullWidth={props.fullWidth}
         id="close-clients-form-action"
         color="inherit"
+        size='large'
         variant="outlined"
         sx={{ borderColor: 'grey.700', backgroundColor: 'background.default' }}
         onClick={props.onCancel}

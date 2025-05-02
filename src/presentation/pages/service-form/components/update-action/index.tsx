@@ -86,6 +86,7 @@ export const UpdateFormAction: React.FC = () => {
           variant="contained"
           onClick={handleSubmit}
           type="submit"
+          size='large'
           fullWidth
           endIcon={<Icon>done_outline</Icon>}
           id="update-service-button"

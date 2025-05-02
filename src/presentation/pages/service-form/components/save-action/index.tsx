@@ -82,6 +82,7 @@ export const SaveFormAction: React.FC = () => {
         variant="contained"
         onClick={handleSubmit}
         type="submit"
+        size='large'
         fullWidth
         endIcon={<Icon  fontSize='small'>done_outline</Icon>}
         id="save-service-button"
