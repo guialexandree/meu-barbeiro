@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SaveAction, UpdateFormAction } from '@/presentation/pages/user-form/components'
+import { SaveFormAction } from '@/presentation/pages/attendance-form/components'
 import { CancelAction, FormActions } from '@/presentation/components'
 
 export const Actions: React.FC = () => {
@@ -13,8 +13,7 @@ export const Actions: React.FC = () => {
   return (
     <FormActions>
       <CancelAction fullWidth onCancel={handleGoBackToList} enterDelay={250} />
-      <UpdateFormAction />
-      <SaveAction />
+      <SaveFormAction />
     </FormActions>
   )
 }

@@ -41,7 +41,7 @@ export const CurrentAttendance: React.FC = () => {
   }[currentAttendance.status]
 
   return (
-    <Paper variant="outlined" sx={{ px: 1, py: 1, mx: 2, mt: 1, backgroundColor: bgStatusColor }} elevation={0}>
+    <Paper variant="outlined" sx={{ px: 1, py: 1, mt: 1, backgroundColor: bgStatusColor }}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} spacing={1}>
         <Chip
           variant="filled"

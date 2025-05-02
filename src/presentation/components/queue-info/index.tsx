@@ -1,9 +1,12 @@
 import React from 'react'
-import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography } from '@mui/material'
+import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography, Badge } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { GenericState } from '../atoms'
 
 export const QueueInfo: React.FC = () => {
   const navigate = useNavigate()
+  const company = useRecoilValue(GenericState.companyState)
 
   return (
     <Zoom in timeout={300} style={{ transitionDelay: '300ms' }} unmountOnExit>
@@ -24,23 +27,42 @@ export const QueueInfo: React.FC = () => {
         }}
       >
         <Stack spacing={1} direction="row" alignItems="center">
-          <IconButton size="large" sx={{ p: 0 }} onClick={() => { navigate('/')}}>
-            <Icon>sort</Icon>
+          <IconButton
+            size="large"
+            sx={{ p: 0 }}
+            onClick={() => {
+              navigate('/')
+            }}
+          >
+            <Badge
+              variant="dot"
+              color={company?.statusAttendance === 'serving' ? "success" : 'error'}
+              overlap="circular"
+              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+            >
+              <Icon>sort</Icon>
+            </Badge>
           </IconButton>
 
-          <Stack spacing={0.5}>
+          <Stack spacing={0.3}>
             <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
               Status
             </Typography>
-            <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-              12 na fila
-            </Typography>
+            {company?.statusAttendance === 'serving' ? (
+              <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                12 na fila
+              </Typography>
+            ) : (
+              <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14}}>
+                encerrada
+              </Typography>
+            )}
           </Stack>
         </Stack>
 
         <Divider orientation="vertical" flexItem />
 
-        <Stack sx={{ pr: 2 }} spacing={0.5}>
+        <Stack sx={{ pr: 2 }} spacing={0.3}>
           <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
             Atendimentos
           </Typography>
@@ -48,7 +70,7 @@ export const QueueInfo: React.FC = () => {
             <IconButton size="small" sx={{ p: 0 }}>
               <Icon sx={{ fontSize: 14 }}>content_cut</Icon>
             </IconButton>
-            <Stack direction='row' alignItems="center" spacing={0.5}>
+            <Stack direction="row" alignItems="center" spacing={0.5}>
               <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
                 5 realizados
               </Typography>
@@ -58,7 +80,7 @@ export const QueueInfo: React.FC = () => {
 
         <Divider orientation="vertical" flexItem />
 
-        <Stack spacing={0.5}>
+        <Stack spacing={0.3}>
           <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
             Saldo do dia
           </Typography>

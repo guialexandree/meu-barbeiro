@@ -2,33 +2,29 @@ import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Factories } from '@/main/factories/usecases'
-import { ServiceModel } from '@/domain/models'
+import { AttendanceModel } from '@/domain/models'
 import { Button, Icon, Slide } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
-import { State } from '@/presentation/pages/service-form/components/atoms'
-import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
+import { State } from '@/presentation/pages/attendance-form/components/atoms'
 import { serviceCreateValidation } from './validations'
 
 export const SaveFormAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
-  const newService = useRecoilValue(State.serviceCreateState)
-  const setServices = useSetRecoilState(ServiceState.List.servicesState)
-  const setLoading = useSetRecoilState(State.loadingFormState)
-  const setName = useSetRecoilState(State.nameState)
+  const newAttendance = useRecoilValue(State.newAttendandeState)
+  const setLoading = useSetRecoilState(State.loadingState)
   const { id } = useParams<{ id: string }>()
 
-  const createService = React.useMemo(() => Factories.makeRemoteCreateService(), [])
+  const addAttendanceInQueue = React.useMemo(() => Factories.makeRemoteAddAttendanceInQueue(), [])
 
-  const onSuccess = (service: ServiceModel): void => {
-    setServices((services) => [service, ...services])
-    navigate('/servicos')
-    notify('Serviço criado com sucesso', { type: 'success' })
+  const onSuccess = (attendance: AttendanceModel): void => {
+    navigate('/')
+    notify(`${attendance.user.name.toUpperCase()} foi adicionado na fila`)
   }
 
   const onError = (error: string, inputName: string): void => {
     if (inputName === 'name') {
-      setName((currentState) => ({ ...currentState, error }))
+      // setName((currentState) => ({ ...currentState, error }))
       return
     }
 
@@ -37,11 +33,11 @@ export const SaveFormAction: React.FC = () => {
 
   const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement>): void => {
     event.preventDefault()
-    handleServiceCreate()
+    handleAddAttendanceInQueue()
   }
 
   const validateForm = (): boolean => {
-    const result = serviceCreateValidation.safeParse(newService)
+    const result = serviceCreateValidation.safeParse(newAttendance)
 
     if (!result.success) {
       const error = result.error.errors.at(0)!
@@ -52,19 +48,19 @@ export const SaveFormAction: React.FC = () => {
     return result.success
   }
 
-  const handleServiceCreate = (): void => {
+  const handleAddAttendanceInQueue = (): void => {
     if (!validateForm()) return
 
     setLoading(true)
-    createService
-      .create(newService)
+    addAttendanceInQueue
+      .add(newAttendance)
       .then((result) => {
         if (result.success) {
           onSuccess(result.data)
           return
         }
 
-        onError(result.error, 'name')
+        onError(result.error, 'client')
       })
       .catch(() => {
         notify('Erro ao criar serviço', { type: 'error' })
@@ -88,7 +84,7 @@ export const SaveFormAction: React.FC = () => {
         id="save-service-button"
         href="#"
       >
-        Gravar
+        Adicionar
       </Button>
     </Slide>
   )
