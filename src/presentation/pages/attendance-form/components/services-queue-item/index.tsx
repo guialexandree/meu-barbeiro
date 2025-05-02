@@ -61,7 +61,7 @@ export const ServiceQueueItem: React.FC<ServiceQueueItemProps> = (props) => {
         aria-label="delete"
         onClick={handleEdit}
       >
-        <Icon fontSize='small' sx={{ color: 'grey.600' }}>close</Icon>
+        <Icon fontSize='small' sx={{ color: 'grey.600' }}>delete_outlined</Icon>
       </IconButton>
     </ListItem>
   )

@@ -18,7 +18,6 @@ export const HistoryToday: React.FC = () => {
       <Stack justifyContent="center">
         <Accordion
           expanded={expanded}
-          variant="outlined"
           onChange={() => {
             setExpanded((currentState) => !currentState)
           }}

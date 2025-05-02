@@ -18,6 +18,7 @@ export const SaveAction: React.FC = () => {
   const setError = useSetRecoilState(State.errorFormState)
   const setFormSuccess = useSetRecoilState(State.successFormState)
   const setName = useSetRecoilState(State.nameState)
+  const setNickname = useSetRecoilState(State.nicknameState)
   const setPassword = useSetRecoilState(State.passwordState)
   const setContactNumber = useSetRecoilState(State.contactNumberState)
   const { id } = useParams<{ id: string }>()
@@ -32,6 +33,7 @@ export const SaveAction: React.FC = () => {
   const onError = (error: string, inputName: string): void => {
     const setter = {
       name: setName,
+      nickname: setNickname,
       contactNumber: setContactNumber,
       password: setPassword,
     }[inputName]
@@ -97,7 +99,7 @@ export const SaveAction: React.FC = () => {
         id="save-user-button"
         href="#"
       >
-        Gravar
+        Adicionar
       </Button>
     </Slide>
   )

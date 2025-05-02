@@ -24,6 +24,14 @@ const nameState = atom({
   }
 })
 
+const nicknameState = atom({
+  key: 'nicknameClientFormState',
+  default: {
+    text: '',
+    error: ''
+  }
+})
+
 const contactNumberState = atom({
   key: 'contactNumberStateClientForm',
   default: {
@@ -50,6 +58,7 @@ export const State = {
   errorFormState,
   successFormState,
   nameState,
+  nicknameState,
   contactNumberState,
   passwordState,
   userTypeState,

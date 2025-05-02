@@ -61,7 +61,7 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
           <Icon color="info" sx={{ color: 'info.light' }}>
             {props.icon || 'info_outline'}
           </Icon>
-          <Typography id="service-dialog-title" variant="h6" fontWeight={800} fontFamily="Inter" sx={{ py: 1 }}>
+          <Typography id="service-dialog-title" variant="h6" fontWeight={800} fontFamily="Inter" sx={{ py: 1.5, fontSize: 16 }}>
             {props.title}
           </Typography>
         </Stack>

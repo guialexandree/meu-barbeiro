@@ -8,6 +8,7 @@ export interface CreateUser {
 export type CreateUserParams = {
   password: string
   name: string
+  nickname: string
   contactNumber: string
   role: UserRole
 }

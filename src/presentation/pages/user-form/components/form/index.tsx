@@ -53,6 +53,17 @@ export const Form: React.FC = () => {
           />
 
           <InputText
+            state={State.nicknameState}
+            inputProps={{
+              inputMode: 'text',
+              disabled: loading,
+              placeholder: 'Apelido',
+              id: 'client-nickname-input',
+              name: 'nickname',
+            }}
+          />
+
+          <InputText
             state={State.passwordState}
             toogleVisibility
             inputProps={{
