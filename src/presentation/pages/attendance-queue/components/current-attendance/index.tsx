@@ -4,6 +4,7 @@ import { Avatar, Chip, Icon, IconButton, Paper, Stack, Typography, useTheme } fr
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
 import { CurrentActions } from '../current-actions'
+import { getRandomAvatar } from '@/presentation/components/avatar-random'
 
 export const CurrentAttendance: React.FC = () => {
   const theme = useTheme()
@@ -73,7 +74,7 @@ export const CurrentAttendance: React.FC = () => {
             border: '3px solid',
             borderColor: `${bgStatusColor}.light`,
           }}
-          src={`/public/img/avataaars${Math.floor(Math.random() * 8) + 1}.svg`}
+          src={getRandomAvatar()}
         />
 
         <Stack sx={{ flex: 1 }}>
