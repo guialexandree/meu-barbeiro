@@ -56,7 +56,7 @@ export const UpdateFormAction: React.FC = () => {
     setOpenUpdateConfirm(true)
   }
 
-  const handleServiceUpdate = (): void => {
+  const handleServiceUpdate = async () => {
     if (!id) return
 
     setLoading(true)

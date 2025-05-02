@@ -1,10 +1,10 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Fade, Paper, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
-import { State } from '@/presentation/pages/user-form/components/atoms'
+import { State } from '@/presentation/pages/service-form/components/atoms'
 
 export const StatusSwitch: React.FC = () => {
-  const [userType, setUserType] = useRecoilState(State.userTypeState)
+  const [userType, setUserType] = useRecoilState(State.statusState)
   const loading = useRecoilValue(State.loadingFormState)
 
   return (
@@ -45,10 +45,10 @@ export const StatusSwitch: React.FC = () => {
           }}
           aria-label="status do serviço"
         >
-          <ToggleButton value="client" id="service-status-actived" defaultChecked sx={{ fontSize: 12 }}>
+          <ToggleButton value="actived" id="service-status-actived" defaultChecked sx={{ fontSize: 12 }}>
             Ativo
           </ToggleButton>
-          <ToggleButton value="barber" id="service-status-inactived" sx={{ fontSize: 12 }}>
+          <ToggleButton value="deactivated" id="service-status-inactived" sx={{ fontSize: 12 }}>
             Inativo
           </ToggleButton>
         </ToggleButtonGroup>
