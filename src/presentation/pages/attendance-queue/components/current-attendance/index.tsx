@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Avatar, Chip, Icon, IconButton, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { Avatar, Chip, Icon, IconButton, Paper, Stack, Typography, useTheme, Zoom } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
 import { CurrentActions } from '../current-actions'
@@ -54,13 +54,15 @@ export const CurrentAttendance: React.FC = () => {
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} spacing={1}>
-        <Chip
-          variant="filled"
-          color={statusColor}
-          label={statusLabel}
-          size="small"
-          sx={{ fontSize: 14, fontWeight: 800, letterSpacing: 1 }}
-        />
+        <Zoom in unmountOnExit>
+          <Chip
+            variant="filled"
+            color={statusColor}
+            label={statusLabel}
+            size="small"
+            sx={{ fontSize: 14, fontWeight: 800, letterSpacing: 1 }}
+          />
+        </Zoom>
         <IconButton size="small">
           <Icon fontSize="small">more_vert</Icon>
         </IconButton>

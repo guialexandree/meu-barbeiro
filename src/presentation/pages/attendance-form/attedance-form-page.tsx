@@ -10,8 +10,8 @@ import { Actions, Position, Services } from './components'
 const UserFormPage: React.FC = () => {
   const setSelectedServices = useSetRecoilState(State.selectedServicesState)
   const setLoading = useSetRecoilState(State.loadingUsersState)
+  const setServices = useSetRecoilState(ServiceState.List.servicesState)
   const [users, setUsers] = useRecoilState(State.usersState)
-  const [services, setServices] = useRecoilState(ServiceState.List.servicesState)
   const [selectedUser, setSelectedUser] = useRecoilState(State.selectedUserState)
 
   const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
@@ -33,18 +33,16 @@ const UserFormPage: React.FC = () => {
   React.useEffect(() => {
     onLoad()
 
-    if (!services?.length) {
-      loadServices
-        .load({ search: '' })
-        .then((result) => {
-          if (result.data.length) {
-            setServices(result.data)
-            const defaultService = result.data.find((service) => service.name.toUpperCase().includes('CORTE'))!
-            setSelectedServices([defaultService])
-          }
-        })
-        .catch(console.error)
-    }
+    loadServices
+      .load({ search: '' })
+      .then((result) => {
+        if (result.data.length) {
+          setServices(result.data)
+          const defaultService = result.data.find((service) => service.name.toUpperCase().includes('CORTE'))!
+          setSelectedServices([defaultService])
+        }
+      })
+      .catch(console.error)
   }, [])
 
   return (
