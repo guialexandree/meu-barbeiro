@@ -1,10 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Fab, Icon, Stack, Zoom } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { GenericState } from '@/presentation/components/atoms'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 
 export const OpenFormAction: React.FC = () => {
+  const navigate = useNavigate()
   const company = useRecoilValue(GenericState.companyState)
   const attendancesResult = useRecoilValue(State.List.attendancesResultState)
 
@@ -32,7 +34,7 @@ export const OpenFormAction: React.FC = () => {
           variant="extended"
           title="Criar novo cadastro de cliente"
           id="user-create-action"
-          onClick={() => {}}
+          onClick={() => { navigate('/fila/entrar')}}
           sx={{
             bottom: 30,
             transition: 'opacity 0.3s',

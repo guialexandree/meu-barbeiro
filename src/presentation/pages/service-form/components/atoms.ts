@@ -58,7 +58,7 @@ const timeExecutionState = atom({
   default: 20
 })
 
-const serviceCreateState = selector({
+const serviceFormState = selector({
   key: 'serviceCreateState',
   get: ({ get }) => {
     return {
@@ -82,5 +82,5 @@ export const State = {
   statusState,
   priceState,
   timeExecutionState,
-  serviceCreateState
+  serviceFormState,
 }

@@ -9,11 +9,16 @@ import { State } from '@/presentation/pages/attendance-form/components/atoms'
 import { serviceCreateValidation } from './validations'
 import { PageLoader } from '@/presentation/components'
 
-export const SaveFormAction: React.FC = () => {
+type SaveFormActionProps = {
+  onReset: VoidFunction
+}
+
+export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
   const { notify } = useNotify()
   const navigate = useNavigate()
   const newAttendance = useRecoilValue(State.newAttendandeState)
   const [loading, setLoading] = useRecoilState(State.loadingState)
+
   const { id } = useParams<{ id: string }>()
 
   const addAttendanceInQueue = React.useMemo(() => Factories.makeRemoteAddAttendanceInQueue(), [])
@@ -21,6 +26,7 @@ export const SaveFormAction: React.FC = () => {
   const onSuccess = (attendance: AttendanceModel): void => {
     navigate('/')
     notify(`${attendance.user.name.toUpperCase()} foi adicionado na fila`)
+    props.onReset()
   }
 
   const onError = (error: string, inputName: string): void => {

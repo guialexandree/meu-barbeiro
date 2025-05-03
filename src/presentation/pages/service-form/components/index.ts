@@ -1,4 +1,5 @@
 export * from './actions'
+export * from './delete-action'
 export * from './form'
 export * from './remove-action'
 export * from './save-action'

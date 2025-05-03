@@ -13,7 +13,7 @@ import { DialogConfirm } from '@/presentation/components'
 export const UpdateFormAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
-  const serviceCreate = useRecoilValue(State.serviceCreateState)
+  const serviceCreate = useRecoilValue(State.serviceFormState)
   const setServices = useSetRecoilState(ServiceState.List.servicesState)
   const setLoading = useSetRecoilState(State.loadingFormState)
   const setName = useSetRecoilState(State.nameState)
