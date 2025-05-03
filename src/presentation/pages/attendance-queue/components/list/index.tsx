@@ -46,6 +46,7 @@ export const AttendanceQueueList: React.FC = () => {
             p: 3,
             my: 3,
             mt: 1,
+            mx: 2,
             backgroundColor: (theme) => `${theme.palette.primary.dark}20`,
             borderBottomLeftRadius: 30,
             borderBottomRightRadius: 30,
@@ -93,7 +94,7 @@ export const AttendanceQueueList: React.FC = () => {
 
   return (
     <Stack justifyContent="center">
-      <Typography mt={2} variant="h6" fontWeight={900} fontFamily="Inter" letterSpacing={1}>
+      <Typography mx={2} mt={2} variant="h6" fontWeight={900} fontFamily="Inter" letterSpacing={1}>
         PRÓXIMOS NA FILA
       </Typography>
 

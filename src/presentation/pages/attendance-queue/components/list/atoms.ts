@@ -1,5 +1,5 @@
 import { LoadAttendancesResult } from '@/domain/usecases'
-import { atom } from 'recoil'
+import { atom, selector } from 'recoil'
 
 export const loadingState = atom({
   key: 'loadingAttendancesState',
@@ -9,4 +9,12 @@ export const loadingState = atom({
 export const attendancesResultState = atom<LoadAttendancesResult>({
   key: 'attendancesState',
   default: null as unknown as LoadAttendancesResult,
+})
+
+export const currentAttendanceState = selector({
+  key: 'currentAttendanceState',
+  get: ({ get }) => {
+    const attendances = get(attendancesResultState)
+    return attendances?.data?.[0] ?? null
+  },
 })

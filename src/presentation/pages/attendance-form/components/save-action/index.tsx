@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Factories } from '@/main/factories/usecases'
 import { AttendanceModel } from '@/domain/models'
@@ -7,12 +7,13 @@ import { Button, Icon, Slide } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
 import { serviceCreateValidation } from './validations'
+import { PageLoader } from '@/presentation/components'
 
 export const SaveFormAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
   const newAttendance = useRecoilValue(State.newAttendandeState)
-  const setLoading = useSetRecoilState(State.loadingState)
+  const [loading, setLoading] = useRecoilState(State.loadingState)
   const { id } = useParams<{ id: string }>()
 
   const addAttendanceInQueue = React.useMemo(() => Factories.makeRemoteAddAttendanceInQueue(), [])
@@ -70,6 +71,10 @@ export const SaveFormAction: React.FC = () => {
 
   if (id) {
     return undefined
+  }
+
+  if (loading) {
+    return <PageLoader loading title='Adicionando na fila' />
   }
 
   return (

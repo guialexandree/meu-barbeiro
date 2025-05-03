@@ -1,14 +1,20 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Button, Chip, Icon, Stack, Typography } from '@mui/material'
+import { Chip, Icon, Stack } from '@mui/material'
+import { AttendanceStatus } from '@/domain/models'
 import { GenericState } from '@/presentation/components/atoms'
+import { StartAttendanceAction } from '../start-attendance-action'
+import { EndAttendanceAction } from '../end-attendance-action'
 
-type AttendaceStatus = 'current' | 'attending' | 'finished' | 'canceled'
+type CurrentActions = {
+  status: AttendanceStatus
+  attendanceId: string
+}
 
-export const CurrentActions: React.FC = () => {
+export const CurrentActions: React.FC<CurrentActions> = (props) => {
   const dateAdapter = useRecoilValue(GenericState.dateAdapterState)
   const company = useRecoilValue(GenericState.companyState)
-  const [status] = React.useState<AttendaceStatus>('current')
+  const [status] = React.useState<AttendanceStatus>('current')
 
   if (company?.statusAttendance !== 'serving') {
     return null
@@ -25,8 +31,8 @@ export const CurrentActions: React.FC = () => {
     >
       {status === 'current' && (
         <Chip
-          sx={{ borderRadius: 8 }}
-          icon={<Icon>alarm_on</Icon>}
+          sx={{ borderRadius: 8, fontSize: 12 }}
+          icon={<Icon fontSize='small'>alarm_on</Icon>}
           label={`tempo previsto ${dateAdapter.format('2025-05-20 09:23:222', 'HH:MM')}`}
         />
       )}
@@ -38,33 +44,9 @@ export const CurrentActions: React.FC = () => {
         />
       )}
 
-      {status === 'current' && (
-        <Button
-          variant="contained"
-          disableElevation
-          color="success"
-          size="small"
-          sx={{ fontSize: 14, boxShadow: 0 }}
-          endIcon={<Icon>content_cut</Icon>}
-        >
-          INICIAR
-        </Button>
-      )}
-      {status === 'attending' && (
-        <Button
-          variant="contained"
-          disableElevation
-          color="success"
-          size="small"
-          sx={{ fontSize: 14, boxShadow: 0 }}
-          endIcon={<Icon>done_outlined</Icon>}
-        >
-          FINALIZAR
-          <Typography variant="caption" fontSize={12} fontFamily="Inter" ml={0.5}>
-            (14:50)
-          </Typography>
-        </Button>
-      )}
+      <StartAttendanceAction status={props.status} attendanceId={props.attendanceId} />
+
+      <EndAttendanceAction status={props.status} attendanceId={props.attendanceId} />
     </Stack>
   )
 }

@@ -14,7 +14,7 @@ export const ServiceFormRemoveAction: React.FC = () => {
   const { notify } = useNotify()
   const setServices = useSetRecoilState(ServicesState.List.servicesState)
   const setDialogConfirm = useSetRecoilState(State.openRemoveConfirmState)
-  const serviceCreate = useRecoilValue(State.serviceCreateState)
+  const serviceCreate = useRecoilValue(State.serviceFormState)
   const setLoading = useSetRecoilState(State.loadingFormState)
   const { id } = useParams<{ id: string }>()
 

@@ -42,7 +42,17 @@ export const CurrentAttendance: React.FC = () => {
   }[currentAttendance.status]
 
   return (
-    <Paper variant="outlined" sx={{ px: 1, py: 1, mt: 1, backgroundColor: bgStatusColor }}>
+    <Paper
+      variant="outlined"
+      sx={{
+        px: 1,
+        py: 1,
+        mt: 1,
+        transition: 'all ease 0.3s',
+        backgroundColor: bgStatusColor,
+        borderColor: `${statusColor}.light`,
+      }}
+    >
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} spacing={1}>
         <Chip
           variant="filled"
@@ -82,12 +92,14 @@ export const CurrentAttendance: React.FC = () => {
             {currentAttendance.user.name}
           </Typography>
           <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
-            {currentAttendance.services.map((attendanceService) => attendanceService.service.description.toUpperCase()).join(' + ')}
+            {currentAttendance.services
+              .map((attendanceService) => attendanceService.service.description.toUpperCase())
+              .join(' + ')}
           </Typography>
         </Stack>
       </Stack>
 
-      <CurrentActions />
+      <CurrentActions attendanceId={currentAttendance.id} status={currentAttendance.status} />
     </Paper>
   )
 }

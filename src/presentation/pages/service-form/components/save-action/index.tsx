@@ -12,7 +12,7 @@ import { serviceCreateValidation } from './validations'
 export const SaveFormAction: React.FC = () => {
   const { notify } = useNotify()
   const navigate = useNavigate()
-  const newService = useRecoilValue(State.serviceCreateState)
+  const newService = useRecoilValue(State.serviceFormState)
   const setServices = useSetRecoilState(ServiceState.List.servicesState)
   const setLoading = useSetRecoilState(State.loadingFormState)
   const setName = useSetRecoilState(State.nameState)
