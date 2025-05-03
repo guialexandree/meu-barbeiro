@@ -43,7 +43,7 @@ export default defineConfig({
         theme_color: '#2c82d8',
         icons: [
           {
-            src: 'img/favicon.png',
+            src: 'favicon.png',
             sizes: '64x64',
             type: 'image/png',
           },
