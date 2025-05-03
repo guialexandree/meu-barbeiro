@@ -11,6 +11,7 @@ export const HistoryToday: React.FC = () => {
     <Fade in timeout={500} mountOnEnter unmountOnExit style={{ transitionDelay: '250ms' }}>
       <Stack justifyContent="center" mt={1}>
         <Accordion
+          variant='outlined'
           expanded={expanded}
           onChange={() => {
             setExpanded((currentState) => !currentState)
