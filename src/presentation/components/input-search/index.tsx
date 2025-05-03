@@ -26,6 +26,9 @@ export const InputSearch: React.FC<InputSearchProps> = (props) => {
         component="form"
         onSubmit={(event) => {
           event.preventDefault()
+          // Close the keyboard after selecting an item
+          const input = document.activeElement as HTMLElement
+          input?.blur()
         }}
         sx={{
           boxShadow: 0,
