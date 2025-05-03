@@ -57,7 +57,7 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
       aria-describedby="service-dialog-description"
     >
       <Box sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}20` }}>
-        <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
+        <Stack direction="row" alignItems="center" spacing={1} pl={2}>
           <Icon color="info" sx={{ color: 'info.light' }}>
             {props.icon || 'info_outline'}
           </Icon>

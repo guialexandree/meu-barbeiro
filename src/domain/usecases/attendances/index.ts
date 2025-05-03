@@ -1,3 +1,5 @@
 export * from './add-attendance-in-queue'
+export * from './start-attendance'
+export * from './end-attendance'
 export * from './load-attendances'
 export * from './load-attendances-by-user'

@@ -1,12 +1,6 @@
 import { ServiceModel, UserModel } from '@/domain/models'
 
-export enum AttendanceStatus {
-  EmAtendimento = 'attending',
-  NaVez = 'current',
-  NaFila = 'in_queue',
-  Cancelado = 'canceled',
-  Atendido = 'finished',
-}
+export type AttendanceStatus = 'attending' | 'current' | 'in_queue' | 'canceled' | 'finished'
 
 export type AttendanceModel = {
   id: string

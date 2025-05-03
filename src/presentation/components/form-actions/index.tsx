@@ -15,13 +15,13 @@ export const FormActions: React.FC<FormActionsProps> = (props) => {
         left: 0,
         zIndex: 1,
         Width: '100%',
-        mx: { xs: 2, sm: 4 },
+        px: { xs: 2, sm: 4 },
         py: { xs: 1, sm: 2 },
       }}
       direction="row"
       alignItems="center"
       justifyContent="flex-end"
-      spacing={2}
+      spacing={1}
     >
       {props.children}
     </Stack>
