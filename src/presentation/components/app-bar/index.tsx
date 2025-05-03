@@ -44,7 +44,7 @@ export const AppBar: React.FC = () => {
               </Typography>
             ) : (
               <Box sx={{ flex: 1 }}>
-                <Skeleton variant="text" width={100} height={30} />
+                <Skeleton variant="rounded" width={140} height={30} />
               </Box>
             )}
           </Slide>

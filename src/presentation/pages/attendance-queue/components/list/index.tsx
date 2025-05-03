@@ -94,7 +94,7 @@ export const AttendanceQueueList: React.FC = () => {
 
   return (
     <Stack justifyContent="center">
-      <Typography mx={2} mt={2} variant="h6" fontWeight={900} fontFamily="Inter" letterSpacing={1}>
+      <Typography mx={2} mt={2} variant="h1">
         PRÓXIMOS NA FILA
       </Typography>
 

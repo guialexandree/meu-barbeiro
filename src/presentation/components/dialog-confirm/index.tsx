@@ -37,7 +37,7 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
   }
 
   const onConfirm = async (): Promise<void> => {
-    await props.onConfirm()
+    props.onConfirm()
     setOpen(false)
   }
 
@@ -57,11 +57,23 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
       aria-describedby="service-dialog-description"
     >
       <Box sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}20` }}>
-        <Stack direction="row" alignItems="center" spacing={1} pl={2}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={1}
+          pl={2}
+          sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}20` }}
+        >
           <Icon color="info" sx={{ color: 'info.light' }}>
             {props.icon || 'info_outline'}
           </Icon>
-          <Typography id="service-dialog-title" variant="h6" fontWeight={800} fontFamily="Inter" sx={{ py: 1.5, fontSize: 16 }}>
+          <Typography
+            id="service-dialog-title"
+            variant="h6"
+            fontWeight={800}
+            fontFamily="Inter"
+            sx={{ py: 1.5, fontSize: 14, letterSpacing: 0.5, textTransform: 'uppercase' }}
+          >
             {props.title}
           </Typography>
         </Stack>

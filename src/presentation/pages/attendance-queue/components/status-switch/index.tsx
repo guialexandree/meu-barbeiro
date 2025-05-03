@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { Button, Fade, FormControlLabel, Paper, Skeleton, Typography } from '@mui/material'
+import { Button, Fade, FormControlLabel, Icon, Skeleton, Stack, Typography } from '@mui/material'
 import { Factories } from '@/main/factories/usecases'
 import { CompanyModel } from '@/domain/models'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
@@ -66,42 +66,23 @@ export const StatusSwitch: React.FC = () => {
   }
 
   const messageStatus = {
-    serving: 'Confirma encerramento da fila de atendimento? Ao encerrar o atendimento, nenhum cliente poderá entrar na fila.',
+    serving:
+      'Confirma encerramento da fila de atendimento? Ao encerrar o atendimento, nenhum cliente poderá entrar na fila.',
     closed: 'Confirma abertura da fila de atendimento?',
   }[company?.statusAttendance || 'closed']
 
   const labelActionStatus = {
     serving: 'encerrar',
-    closed: 'confirmar',
+    closed: 'iniciar',
   }[company?.statusAttendance || 'closed']
 
   return (
     <>
       <Fade in unmountOnExit style={{ transitionDelay: '100ms' }}>
-        <Paper
-          id="status-queue-form"
-          component="form"
-          variant="elevation"
-          elevation={0}
-          onSubmit={(event) => {
-            event.preventDefault()
-          }}
-          sx={{
-            py: 1.2,
-            pr: 2,
-            pl: 3,
-            mb: 1,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Fade in unmountOnExit>
-            <Typography variant="body2" fontWeight={500} sx={{ fontFamily: 'Inter' }}>
-              Fila de atendimento
-            </Typography>
-          </Fade>
+        <Stack direction="row" alignItems="center" justifyContent="space-between"mb={1}>
+          <Typography variant="h1">
+            FILA
+          </Typography>
 
           {!company && <Skeleton variant="rounded" width={175} height={37} />}
 
@@ -112,7 +93,6 @@ export const StatusSwitch: React.FC = () => {
               loading={loading}
               size="small"
               sx={{
-                boxShadow: 0,
                 backgroundColor: 'success.light',
                 minWidth: 128,
                 fontWeight: '700',
@@ -121,8 +101,9 @@ export const StatusSwitch: React.FC = () => {
               onClick={() => {
                 setOpen(true)
               }}
+              endIcon={<Icon>settings_power</Icon>}
             >
-              Abrir Fila
+              iniciar atendimentos
             </Button>
           )}
           {company?.statusAttendance === 'serving' && (
@@ -132,7 +113,7 @@ export const StatusSwitch: React.FC = () => {
               color="secondary"
               size="small"
               sx={{
-                boxShadow: 0,
+                fontSize: 12,
                 backgroundColor: 'secondary.light',
                 minWidth: 128,
                 fontWeight: '700',
@@ -141,11 +122,12 @@ export const StatusSwitch: React.FC = () => {
               onClick={() => {
                 setOpen(true)
               }}
+              endIcon={<Icon>power_settings_new</Icon>}
             >
-              Encerrar Fila
+              Encerrar atendimentos
             </Button>
           )}
-        </Paper>
+        </Stack>
       </Fade>
 
       <DialogConfirm
@@ -157,13 +139,15 @@ export const StatusSwitch: React.FC = () => {
         openState={State.openDialog}
         labelConfirm={labelActionStatus}
       >
-        {company?.statusAttendance === 'closed' && <FormControlLabel
-          slotProps={{
-            typography: { fontSize: 14, fontFamily: 'Inter' },
-          }}
-          control={<Android12Switch />}
-          label="Enviar notificação para os clientes"
-        />}
+        {company?.statusAttendance === 'closed' && (
+          <FormControlLabel
+            slotProps={{
+              typography: { fontSize: 14, fontFamily: 'Inter' },
+            }}
+            control={<Android12Switch />}
+            label="Enviar notificação para os clientes"
+          />
+        )}
       </DialogConfirm>
     </>
   )

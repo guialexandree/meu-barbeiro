@@ -19,6 +19,20 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'Inter',
+          fontWeight: 400,
+        },
+        h1: {
+          fontWeight: 900,
+          fontSize: 20,
+          lineHeight: 1,
+          letterSpacing: 0.5,
+        },
+      },
+    },
     MuiChip: {
       styleOverrides: {
         root: {

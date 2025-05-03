@@ -21,6 +21,7 @@ export const Logo: React.FC<LogoProps> = (props) => {
         alt='Logo da barbearia'
         id='logo'
         height={props.size || 220}
+        width={props.size || 220}
         sx={{
           ...props.sx,
           objectFit: 'contain',
