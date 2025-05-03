@@ -7,7 +7,7 @@ export const Actions: React.FC = () => {
   const navigate = useNavigate()
 
   const handleGoBackToList = React.useCallback(() => {
-    navigate('/clientes')
+    navigate('/')
   }, [])
 
   return (
