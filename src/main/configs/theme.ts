@@ -22,10 +22,10 @@ export const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          fontFamily: 'Inter',
           fontWeight: 400,
         },
         h1: {
+          fontFamily: 'Inter',
           fontWeight: 900,
           fontSize: 20,
           lineHeight: 1,
