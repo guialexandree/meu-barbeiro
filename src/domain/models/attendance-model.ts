@@ -19,3 +19,9 @@ type AttendanceServiceModel = {
   service: ServiceModel
   price: number
 }
+
+export type AttendanceTotal = {
+  finished: number
+  inQueue: number
+  amount: number
+}

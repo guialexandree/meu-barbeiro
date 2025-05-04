@@ -1,4 +1,5 @@
 export * from './remote-add-attendance-in-queue-factory'
+export * from './remote-load-attendances-info-today-factory'
 export * from './remote-load-attendances-factory'
 export * from './remote-load-attendances-by-user-factory'
 export * from './remote-start-attendance-factory'
