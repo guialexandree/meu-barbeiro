@@ -1,4 +1,5 @@
 export * from './actions'
+export * from './client'
 export * from './position'
 export * from './services-queue-item'
 export * from './services'

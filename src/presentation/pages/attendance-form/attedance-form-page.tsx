@@ -1,22 +1,20 @@
 import React from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { Autocomplete, Stack, TextField } from '@mui/material'
+import { useSetRecoilState } from 'recoil'
+import { Stack } from '@mui/material'
 import { PageContainer } from '@/presentation/components'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
 import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
-import { Actions, Position, Services } from './components'
+import { Actions, Client, Position, Services } from './components'
 
 const UserFormPage: React.FC = () => {
   const setSelectedServices = useSetRecoilState(State.selectedServicesState)
   const setLoading = useSetRecoilState(State.loadingUsersState)
   const setServices = useSetRecoilState(ServiceState.List.servicesState)
-  const [users, setUsers] = useRecoilState(State.usersState)
-  const [selectedUser, setSelectedUser] = useRecoilState(State.selectedUserState)
+  const setUsers = useSetRecoilState(State.usersState)
 
   const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
   const loadSimpleUsers = React.useMemo(() => Factories.makeRemoteLoadSimpleUsers(), [])
-  const options = React.useMemo(() => users.map((user) => ({ label: user.name.toUpperCase(), id: user.id })), [users])
 
   const onLoad = React.useCallback(async () => {
     try {
@@ -46,7 +44,7 @@ const UserFormPage: React.FC = () => {
   }, [])
 
   return (
-    <PageContainer title="Adicionar na fila">
+    <PageContainer >
       <Stack
         component="form"
         onSubmit={(event) => {
@@ -54,22 +52,8 @@ const UserFormPage: React.FC = () => {
         }}
       >
         <Stack spacing={2} mx={2} height={'100%'}>
-          <Autocomplete
-            disablePortal
-            fullWidth
-            value={selectedUser}
-            options={options}
-            onChange={(_, newValue) => {
-              setSelectedUser(newValue!)
-              // Close the keyboard after selecting an item
-              const input = document.activeElement as HTMLElement
-              input?.blur()
-            }}
-            renderInput={(params) => <TextField {...params} label="Cliente" placeholder="Informe o cliente" name='client' />}
-          />
-
+          <Client />
           <Services />
-
           <Position />
         </Stack>
 

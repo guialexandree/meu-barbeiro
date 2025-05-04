@@ -21,9 +21,6 @@ export const theme = createTheme({
   components: {
     MuiTypography: {
       styleOverrides: {
-        root: {
-          fontWeight: 400,
-        },
         h1: {
           fontFamily: 'Inter',
           fontWeight: 900,

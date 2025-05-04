@@ -12,7 +12,7 @@ export const Services: React.FC = () => {
     <Fade in mountOnEnter unmountOnExit>
       <Stack spacing={1}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Typography variant="h6" fontWeight={900} fontFamily="Inter" letterSpacing={1}>
+          <Typography variant="h1">
             SERVIÇOS A REALIZAR
           </Typography>
           <IconButton size="small" color="info" sx={{ backgroundColor: (theme) => `${theme.palette.info.light}20` }}>

@@ -11,7 +11,7 @@ export type AppNavigation = {
 export const appNavigation: AppNavigation[] = [
   {
     icon: 'sort',
-    title: 'atendimento',
+    title: 'fila',
     subtitle: 'fila de atendimento',
     pathTo: '/',
   },
