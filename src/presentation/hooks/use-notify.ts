@@ -3,7 +3,8 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const useNotify = () => {
   const notify = (message: string, options?: ToastOptions) => {
-    toast(message, options)
+    const id = message.split(' ').join('-').toLowerCase()
+    toast(message, { ...options, toastId: id })
   }
 
   return { notify }
