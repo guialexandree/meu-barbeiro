@@ -54,7 +54,7 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
       }}
     >
       <Box
-        sx={{ width: { xs: 'auto', sm: 380 } }}
+        sx={{ width: { xs: 'auto', sm: 380 },backgroundColor: (theme) => `${theme.palette.primary.light}20` }}
         role="presentation"
         onClick={() => {
           setOpen(false)
@@ -80,7 +80,8 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
                   primary={appNavigate.title}
                   secondary={appNavigate.subtitle}
                   slotProps={{
-                    secondary: { sx: { color: 'grey.600', lineHeight: 1 } },
+                    primary: { sx: { fontWeight: 600, textTransform: 'uppercase' } },
+                    secondary: { sx: { color: 'grey.500', lineHeight: 1 } },
                   }}
                 />
               </ListItemButton>
@@ -100,7 +101,8 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
                 primary="sair"
                 secondary="realizar logout do app"
                 slotProps={{
-                  secondary: { sx: { color: 'grey.600', lineHeight: 1 } },
+                  primary: { sx: { fontWeight: 600, textTransform: 'uppercase' } },
+                  secondary: { sx: { color: 'grey.500', lineHeight: 1 } },
                 }}
               />
             </ListItemButton>
