@@ -51,7 +51,7 @@ const UserFormPage: React.FC = () => {
           event.preventDefault()
         }}
       >
-        <Stack spacing={2} mx={2} height={'100%'}>
+        <Stack spacing={3} mx={2} height={'100%'}>
           <Client />
           <Services />
           <Position />

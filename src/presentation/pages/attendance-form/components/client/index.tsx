@@ -10,7 +10,7 @@ export const Client: React.FC = () => {
   const options = React.useMemo(() => users.map((user) => ({ label: user.name.toUpperCase(), id: user.id })), [users])
 
   return (
-    <Stack spacing={1}>
+    <Stack spacing={1.5}>
       <Typography variant="h1">ADICIONAR NA FILA</Typography>
 
       <Autocomplete
@@ -20,18 +20,14 @@ export const Client: React.FC = () => {
         options={options}
         sx={{
           backgroundColor: (theme) => `${theme.palette.primary.light}20`,
-          '& input': {
-            borderRadius: 20,
-          },
         }}
         popupIcon={<Icon>keyboard_arrow_down</Icon>}
         slotProps={{
           popupIndicator: {
             sx: {
-              backgroundColor: 'background.paper',
+              backgroundColor: (theme) => `${theme.palette.primary.light}40`,
             },
           },
-
           paper: {
             sx: {
               mt: -0.5,
