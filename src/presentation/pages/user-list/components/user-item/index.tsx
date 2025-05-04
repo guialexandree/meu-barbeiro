@@ -25,13 +25,14 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
       sx={{
         mt: 1,
         borderRadius: 2,
-        pl: 2,
+        pl: 3,
+        alignItems: 'stretch',
         backgroundColor: (theme) => `${theme.palette.primary.light}10`,
         '& .MuiListItemText-root': { mb: 0 },
       }}
     >
       <ListItemText
-        sx={{ flex: 1, mt: 0.5 }}
+        sx={{ flex: 1, mt: 1 }}
         primary={props.user.name}
         slotProps={{
           primary: {
@@ -50,7 +51,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
           </Stack>
         }
       />
-      <Stack direction="row" spacing={1} alignItems="flex-end" mr={1}>
+      <Stack direction="row" spacing={1} alignItems="center" mr={1}>
         <Tooltip title="Adicionar na fila" placement="left" arrow>
           <IconButton
             size={'small'}
