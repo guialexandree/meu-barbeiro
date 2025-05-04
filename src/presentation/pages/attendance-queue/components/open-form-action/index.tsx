@@ -10,7 +10,7 @@ export const OpenFormAction: React.FC = () => {
   const company = useRecoilValue(GenericState.companyState)
   const attendancesResult = useRecoilValue(State.List.attendancesResultState)
 
-  if (company?.statusAttendance !== 'serving' || !attendancesResult?.data?.length) {
+  if (company?.statusAttendance !== 'serving' || !attendancesResult?.data?.length || attendancesResult?.data?.length === 1) {
     return null
   }
 

@@ -37,7 +37,7 @@ export const AttendanceQueueList: React.FC = () => {
     return null
   }
 
-  if (!attendancesResult?.data?.length) {
+  if (!attendancesResult?.data?.length || attendancesResult?.data?.length === 1) {
     return (
       <Fade in timeout={1000} style={{ transitionDelay: '100ms' }} unmountOnExit>
         <Paper
@@ -60,8 +60,8 @@ export const AttendanceQueueList: React.FC = () => {
               <Icon color="info" sx={{ color: 'info.light' }}>
                 info_outline
               </Icon>
-              <Typography mt={2} sx={{ color: 'info.light', fontSize: 16 }} variant="h6" fontWeight={800} fontFamily="Inter">
-                Nenhum cliente na fila
+              <Typography mt={2} sx={{ color: 'info.light', fontSize: 14 }} variant="h6" fontWeight={600} fontFamily="Inter">
+                NENHUM CLIENTE NA FILA
               </Typography>
             </Stack>
 

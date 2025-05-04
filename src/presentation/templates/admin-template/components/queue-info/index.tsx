@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography, Badge } from '@mui/material'
+import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography, Badge, Skeleton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { GenericState } from '@/presentation/components/atoms'
@@ -73,36 +73,56 @@ export const QueueInfo: React.FC = () => {
             <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
               Status
             </Typography>
-            {(company?.statusAttendance === 'serving') ? (
+            {!attendancesInfo && <Skeleton variant="rounded" width={54} height={14} />}
+            {company?.statusAttendance === 'serving' &&
               <Zoom in unmountOnExit>
                 <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                  {attendancesInfo?.inQueue || 0} na fila
+                  {attendancesInfo?.inQueue ? `${attendancesInfo?.inQueue} na fila` : 'Aberto'} 
                 </Typography>
-              </Zoom>
-            ) : (
-              <Zoom in unmountOnExit>
-                <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                  encerrada
-                </Typography>
-              </Zoom>
-            )}
+              </Zoom>}
+              {company?.statusAttendance === 'closed' && (
+                 <Zoom in unmountOnExit>
+                 <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                   encerrada
+                 </Typography>
+               </Zoom>
+              )}
           </Stack>
         </Stack>
 
         <Divider orientation="vertical" flexItem />
+        <Stack spacing={1} direction="row" alignItems="center">
+          <IconButton
+            size="large"
+            sx={{ p: 0 }}
+            onClick={() => {
+              navigate('/')
+            }}
+          >
+            <Icon>content_cut</Icon>
+          </IconButton>
 
-        <Stack sx={{ pr: 2 }} spacing={0.5}>
-          <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
-            Atendimentos
-          </Typography>
-          <Stack direction="row" alignItems="center" spacing={0.5}>
-            <IconButton size="small" sx={{ p: 0 }}>
-              <Icon sx={{ fontSize: 14 }}>content_cut</Icon>
-            </IconButton>
+          <Stack spacing={0.5}>
+            <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
+              Atendimentos
+            </Typography>
+
+            {!attendancesInfo && <Skeleton variant="rounded" width={78} height={14} />}
+
             <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                {attendancesInfo?.finished || 0} realizados
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+              <Zoom in unmountOnExit>
+                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                  {attendancesInfo?.finished || 0}
+                </Typography>
+              </Zoom>
+
+              <Zoom in unmountOnExit>
+                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                  realizados
+                </Typography>
+                </Zoom>
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
@@ -117,6 +137,7 @@ export const QueueInfo: React.FC = () => {
             <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
               R$
             </Typography>
+            {!attendancesInfo && <Skeleton variant="rounded" width={30} height={14} />}
             {showAmount && (
               <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
                 <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
