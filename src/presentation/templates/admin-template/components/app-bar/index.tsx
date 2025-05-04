@@ -12,12 +12,14 @@ import {
   Typography,
   Zoom,
 } from '@mui/material'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { isOpenDrawer, QueueInfo } from '@/presentation/components'
-import { GenericState } from '../atoms'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { GenericState } from '@/presentation/components/atoms'
+import { isOpenDrawer } from '../drawer/atoms'
+import { QueueInfo } from '../queue-info'
 
 export const AppBar: React.FC = () => {
   const setOpenDrawer = useSetRecoilState(isOpenDrawer)
+  const [showAmount, setShowAmount] = useRecoilState(GenericState.showAmountState)
   const company = useRecoilValue(GenericState.companyState)
 
   return (
@@ -51,8 +53,8 @@ export const AppBar: React.FC = () => {
 
           <Stack direction="row" alignItems="center" spacing={0.7}>
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              <IconButton edge="start" aria-label="menu">
-                <Icon>visibility</Icon>
+              <IconButton edge="start" aria-label="menu" onClick={() => setShowAmount(currentState => !currentState)}>
+                <Icon>{showAmount ? 'visibility' : 'visibility_off'}</Icon>
               </IconButton>
             </Zoom>
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>

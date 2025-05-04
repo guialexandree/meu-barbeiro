@@ -1,12 +1,37 @@
 import React from 'react'
 import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography, Badge } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
-import { GenericState } from '../atoms'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { GenericState } from '@/presentation/components/atoms'
+import { Factories } from '@/main/factories/usecases'
+import { State } from '@/presentation/templates/admin-template/components/atoms'
+import { useNotify } from '@/presentation/hooks'
 
 export const QueueInfo: React.FC = () => {
+  const { notify } = useNotify()
   const navigate = useNavigate()
   const company = useRecoilValue(GenericState.companyState)
+  const showAmount = useRecoilValue(GenericState.showAmountState)
+  const [attendancesInfo, setAttendancesInfo] = useRecoilState(State.attendancesInfoResultState)
+
+  const loadAttendancesInfoToday = React.useMemo(() => Factories.makeRemoteLoadAttendancesInfoToday(), [])
+
+  const onLoadAttendancesInfoToday = async () => {
+    try {
+      const result = await loadAttendancesInfoToday.load()
+      if (!result.success) {
+        notify('Error loading attendance info:', { type: 'error' })
+        return
+      }
+      setAttendancesInfo(result.data)
+    } catch (error) {
+      console.error('Error loading attendance info:', error)
+    }
+  }
+
+  React.useEffect(() => {
+    onLoadAttendancesInfoToday()
+  }, [])
 
   return (
     <Zoom in timeout={300} style={{ transitionDelay: '300ms' }} unmountOnExit>
@@ -36,7 +61,7 @@ export const QueueInfo: React.FC = () => {
           >
             <Badge
               variant="dot"
-              color={company?.statusAttendance === 'serving' ? "success" : 'error'}
+              color={company?.statusAttendance === 'serving' ? 'success' : 'error'}
               overlap="circular"
               anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
             >
@@ -44,25 +69,29 @@ export const QueueInfo: React.FC = () => {
             </Badge>
           </IconButton>
 
-          <Stack spacing={0.3}>
+          <Stack spacing={0.5}>
             <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
               Status
             </Typography>
-            {company?.statusAttendance === 'serving' ? (
-              <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                12 na fila
-              </Typography>
+            {(company?.statusAttendance === 'serving') ? (
+              <Zoom in unmountOnExit>
+                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                  {attendancesInfo?.inQueue || 0} na fila
+                </Typography>
+              </Zoom>
             ) : (
-              <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14}}>
-                encerrada
-              </Typography>
+              <Zoom in unmountOnExit>
+                <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                  encerrada
+                </Typography>
+              </Zoom>
             )}
           </Stack>
         </Stack>
 
         <Divider orientation="vertical" flexItem />
 
-        <Stack sx={{ pr: 2 }} spacing={0.3}>
+        <Stack sx={{ pr: 2 }} spacing={0.5}>
           <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
             Atendimentos
           </Typography>
@@ -72,7 +101,7 @@ export const QueueInfo: React.FC = () => {
             </IconButton>
             <Stack direction="row" alignItems="center" spacing={0.5}>
               <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                5 realizados
+                {attendancesInfo?.finished || 0} realizados
               </Typography>
             </Stack>
           </Stack>
@@ -80,14 +109,28 @@ export const QueueInfo: React.FC = () => {
 
         <Divider orientation="vertical" flexItem />
 
-        <Stack spacing={0.3}>
+        <Stack spacing={0.5}>
           <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
             Saldo do dia
           </Typography>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
-              R$ ****
+              R$
             </Typography>
+            {showAmount && (
+              <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
+                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
+                  {(+attendancesInfo?.amount)?.toFixed(0) || 0}
+                </Typography>
+              </Zoom>
+            )}
+            {!showAmount && (
+              <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
+                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
+                  ****
+                </Typography>
+              </Zoom>
+            )}
           </Stack>
         </Stack>
       </Paper>

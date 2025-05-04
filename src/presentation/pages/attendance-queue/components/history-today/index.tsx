@@ -23,11 +23,11 @@ export const HistoryToday: React.FC = () => {
               content_cut
             </Icon>
             <Typography color="grey.200" variant="body2" fontWeight={500} fontFamily="Inter">
-              Atendidos
+              Atendimentos
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-              <Chip icon={<Icon color='disabled'>playlist_remove</Icon>} variant='outlined' color='default' sx={{ color: 'text.secondary'}} label="Nenhum atendimento hoje" />
+            <Chip icon={<Icon color='disabled'>playlist_remove</Icon>} variant='outlined' color='default' sx={{ color: 'text.secondary'}} label="Nenhum atendimento hoje" />
           </AccordionDetails>
         </Accordion>
       </Stack>

@@ -5,9 +5,9 @@ import { ToastContainer } from 'react-toastify'
 import { Factories } from '@/main/factories/usecases'
 import { Box, useTheme } from '@mui/material'
 import { appNavigation } from '@/main/configs'
-import { AppBar, Drawer } from '@/presentation/components'
-import { GenericState } from '@/presentation/components/atoms'
 import { useNotify } from '@/presentation/hooks'
+import { AppBar, Drawer } from './components'
+import { GenericState } from '@/presentation/components/atoms'
 
 export const AdminTemplate: React.FC = () => {
   const theme = useTheme()
