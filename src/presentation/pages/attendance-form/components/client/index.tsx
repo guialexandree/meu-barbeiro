@@ -16,6 +16,7 @@ export const Client: React.FC = () => {
       <Autocomplete
         disablePortal
         fullWidth
+        blurOnSelect
         value={selectedUser}
         options={options}
         sx={{
@@ -64,11 +65,10 @@ export const Client: React.FC = () => {
         }
         nonce=""
         onChange={(_, newValue) => {
-          console.log('newValue', newValue)
           setSelectedUser(newValue!)
-          // Close the keyboard after selecting an item
-          const input = document.activeElement as HTMLElement
-          input?.blur()
+          // // Close the keyboard after selecting an item
+          // const input = document.activeElement as HTMLElement
+          // input?.blur()
         }}
         renderInput={(params) => (
           <TextField {...params} label="Cliente" value={12} placeholder="Informe o cliente" name="client" />
