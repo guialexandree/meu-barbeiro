@@ -13,3 +13,8 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+:root {
+  --toastify-color-info: #2c82d8;
+  --toastify-color-success: #66bb6a;
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { Button, Icon } from '@mui/material'
-import { AttendanceStatus } from '@/domain/models'
+import { AttendanceModel, AttendanceStatus } from '@/domain/models'
 import { Factories } from '@/main/factories/usecases'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '../atoms'
@@ -22,12 +22,12 @@ export const StartAttendanceAction: React.FC<StartAttendanceActionProps> = (prop
     return null
   }
 
-  const onSuccess = () => {
+  const onSuccess = (attendanceResult: AttendanceModel) => {
     setAttendancesResult((currentState) => ({
       ...currentState,
       data: currentState.data.map((attendance) => {
-        if (attendance.id === props.attendanceId) {
-          return { ...attendance, status: 'attending' }
+        if (attendance.id === attendanceResult.id) {
+          return { ...attendance, status: 'attending', startedAt: attendanceResult.startedAt }
         }
         return attendance
       }),
@@ -40,7 +40,7 @@ export const StartAttendanceAction: React.FC<StartAttendanceActionProps> = (prop
       .start({ attendanceId: props.attendanceId })
       .then((result) => {
         if (result.success) {
-          onSuccess()
+          onSuccess(result.data)
           return
         }
       })

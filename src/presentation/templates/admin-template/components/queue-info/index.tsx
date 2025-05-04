@@ -34,7 +34,7 @@ export const QueueInfo: React.FC = () => {
   }, [])
 
   return (
-    <Zoom in timeout={300} style={{ transitionDelay: '300ms' }} unmountOnExit>
+    <Zoom in timeout={300} style={{ transitionDelay: '250ms' }} unmountOnExit>
       <Paper
         component="header"
         elevation={0}

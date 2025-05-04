@@ -11,6 +11,11 @@ export const attendancesResultState = atom<LoadAttendancesResult>({
   default: null as unknown as LoadAttendancesResult,
 })
 
+export const successState = atom({
+  key: 'successAttendanceQueueState',
+  default: false
+})
+
 export const currentAttendanceState = selector({
   key: 'currentAttendanceState',
   get: ({ get }) => {

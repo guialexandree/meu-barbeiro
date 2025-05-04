@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { Outlet } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { Bounce, ToastContainer } from 'react-toastify'
 import { Factories } from '@/main/factories/usecases'
 import { Box, useTheme } from '@mui/material'
 import { appNavigation } from '@/main/configs'
@@ -48,7 +48,7 @@ export const AdminTemplate: React.FC = () => {
       <AppBar />
       <Drawer items={appNavigation} />
       <Outlet />
-      <ToastContainer autoClose={7000} theme="light" position="bottom-right" />
+      <ToastContainer autoClose={5000} theme="colored" position="top-right" draggable transition={Bounce} limit={2} />
     </Box>
     // </PrivateRoute>
   )

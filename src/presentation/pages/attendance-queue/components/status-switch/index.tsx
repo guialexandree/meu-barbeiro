@@ -32,6 +32,7 @@ export const StatusSwitch: React.FC = () => {
         if (result.success) {
           onSuccess(result.data)
           setExpandHistory(false)
+          notify('Fila de atendimento iniciada', { type: 'success' })
           return
         }
 
@@ -48,6 +49,7 @@ export const StatusSwitch: React.FC = () => {
         if (result.success) {
           onSuccess(result.data)
           setExpandHistory(true)
+          notify('Fila de atendimento encerrada', { type: 'success' })
           return
         }
 
@@ -79,10 +81,8 @@ export const StatusSwitch: React.FC = () => {
   return (
     <>
       <Fade in unmountOnExit style={{ transitionDelay: '100ms' }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between"mb={1}>
-          <Typography variant="h1">
-            FILA
-          </Typography>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1}>
+          <Typography variant="h1">FILA</Typography>
 
           {!company && <Skeleton variant="rounded" width={175} height={37} />}
 
@@ -110,11 +110,11 @@ export const StatusSwitch: React.FC = () => {
             <Button
               variant="contained"
               loading={loading}
-              color="secondary"
               size="small"
               sx={{
                 fontSize: 12,
-                backgroundColor: 'secondary.light',
+                backgroundColor: 'grey.400',
+                color: 'grey.900',
                 minWidth: 128,
                 fontWeight: '700',
                 fontFamily: 'Inter',
