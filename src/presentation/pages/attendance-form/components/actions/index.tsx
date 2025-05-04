@@ -18,7 +18,7 @@ export const Actions: React.FC = () => {
   }, [])
 
   const handleGoBackToList = React.useCallback(() => {
-    navigate('/clientes')
+    navigate('/')
     onReset()
   }, [])
 
