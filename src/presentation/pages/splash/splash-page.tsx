@@ -38,8 +38,8 @@ const SplashPage: React.FC<SplashPageProps> = (props) => {
             <Box
               component="img"
               src={bgImg}
-              alt="Logo da barbearia"
-              id="logo"
+              alt="imagem e fundo da splash"
+              id="bg-splash"
               sx={{
                 objectFit: 'contain',
                 position: 'absolute',

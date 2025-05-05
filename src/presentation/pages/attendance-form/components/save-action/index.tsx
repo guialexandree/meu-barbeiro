@@ -25,7 +25,7 @@ export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
 
   const onSuccess = (attendance: AttendanceModel): void => {
     navigate('/')
-    notify(`${attendance.user.name.toUpperCase()} foi adicionado na fila`)
+    notify(`${attendance.user.name.toUpperCase()} foi adicionado na fila`, { type: 'info' })
     props.onReset()
   }
 

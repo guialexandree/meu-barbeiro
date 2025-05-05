@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { Button, Icon, Typography } from '@mui/material'
 import { AttendanceStatus } from '@/domain/models'
 import { Factories } from '@/main/factories/usecases'
@@ -11,12 +11,12 @@ type EndAttendanceActionProps = {
   status: AttendanceStatus
   attendanceId: string
   startDate: Date
+  onSuccess: (attendanceId: string) => void
 }
 
 export const EndAttendanceAction: React.FC<EndAttendanceActionProps> = (props) => {
   const { notify } = useNotify()
-  const setAttendancesResult = useSetRecoilState(State.List.attendancesResultState)
-  const [success, setSuccess] = useRecoilState(State.List.successState)
+  const success = useRecoilValue(State.List.successState)
   const [loading, setLoading] = React.useState(false)
 
   const endAttendance = React.useMemo(() => Factories.makeRemoteEndAttendance(), [])
@@ -25,24 +25,13 @@ export const EndAttendanceAction: React.FC<EndAttendanceActionProps> = (props) =
     return null
   }
 
-  const onSuccess = () => {
-    setSuccess(true)
-    setTimeout(() => {
-      setAttendancesResult((currentState) => ({
-        ...currentState,
-        data: currentState.data.filter((attendance) => attendance.id !== props.attendanceId),
-      }))
-      setSuccess(false)
-    }, 1200)
-  }
-
   const handleEndAttendance = () => {
     setLoading(true)
     endAttendance
       .end({ attendanceId: props.attendanceId })
       .then((result) => {
         if (result.success) {
-          onSuccess()
+          props.onSuccess(props.attendanceId)
           return
         }
       })

@@ -10,6 +10,7 @@ type CurrentActions = {
   status: AttendanceStatus
   attendanceId: string
   startDate: Date
+  endSuccess: (attendanceId: string) => void
 }
 
 export const CurrentActions: React.FC<CurrentActions> = (props) => {
@@ -20,17 +21,15 @@ export const CurrentActions: React.FC<CurrentActions> = (props) => {
   }
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="flex-end"
-      sx={{ width: '100%' }}
-      mt={1}
-      spacing={0.5}
-    >
+    <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ width: '100%' }} mt={1} spacing={0.5}>
       <StartAttendanceAction status={props.status} attendanceId={props.attendanceId} />
 
-      <EndAttendanceAction startDate={props.startDate} status={props.status} attendanceId={props.attendanceId} />
+      <EndAttendanceAction
+        onSuccess={props.endSuccess}
+        startDate={props.startDate}
+        status={props.status}
+        attendanceId={props.attendanceId}
+      />
     </Stack>
   )
 }

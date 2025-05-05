@@ -54,7 +54,7 @@ export const AppBar: React.FC = () => {
           <Stack direction="row" alignItems="center" spacing={0.7}>
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
               <IconButton edge="start" aria-label="menu" onClick={() => setShowAmount(currentState => !currentState)}>
-                <Icon>{showAmount ? 'visibility' : 'visibility_off'}</Icon>
+                <Icon>{showAmount ? 'visibility_off' : 'visibility'}</Icon>
               </IconButton>
             </Zoom>
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
