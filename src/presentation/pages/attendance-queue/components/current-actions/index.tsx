@@ -10,7 +10,6 @@ type CurrentActions = {
   status: AttendanceStatus
   attendanceId: string
   startDate: Date
-  success?: boolean
 }
 
 export const CurrentActions: React.FC<CurrentActions> = (props) => {

@@ -44,7 +44,10 @@ export const CurrentAttendance: React.FC = () => {
   }[currentAttendance.status]
 
   return (
-    <Zoom in unmountOnExit>
+    <Zoom in unmountOnExit timeout={{
+      enter: 300,
+      exit: 300,
+    }}>
       <Paper
         variant="outlined"
         sx={{
@@ -142,7 +145,6 @@ export const CurrentAttendance: React.FC = () => {
           startDate={currentAttendance.startedAt!}
           attendanceId={currentAttendance.id}
           status={currentAttendance.status}
-          success={success}
         />
       </Paper>
     </Zoom>
