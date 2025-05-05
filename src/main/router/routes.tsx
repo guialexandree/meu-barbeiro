@@ -1,9 +1,10 @@
-import { lazy } from 'react'
+import React, { lazy } from 'react'
 import { RecoilRoot } from 'recoil'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AdminTemplate, LoginTemplate } from '@/presentation/templates'
 import { Loadable, ThemeProvider } from '@/presentation/components'
 
+import SplashPage from '@/presentation/pages/splash/splash-page'
 import LoginPage from '@/presentation/pages/login/login-page'
 import RecoveryPasswordPage from '@/presentation/pages/recovery-password'
 const AttendanceQueuePage = lazy(() => import('@/presentation/pages/attendance-queue'))
@@ -80,10 +81,16 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  const [showSplash, setShowSplash] = React.useState(true)
+
+  const onFinish = React.useCallback(() => {
+    setShowSplash(false)
+  }, [])
+
   return (
     <ThemeProvider>
       <RecoilRoot>
-        <RouterProvider router={router} />
+        {showSplash ? <SplashPage onFinish={onFinish} /> : <RouterProvider router={router} />}
       </RecoilRoot>
     </ThemeProvider>
   )

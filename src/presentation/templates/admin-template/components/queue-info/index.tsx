@@ -6,6 +6,7 @@ import { GenericState } from '@/presentation/components/atoms'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/templates/admin-template/components/atoms'
 import { useNotify } from '@/presentation/hooks'
+import { io, Socket } from 'socket.io-client'
 
 export const QueueInfo: React.FC = () => {
   const { notify } = useNotify()
@@ -31,6 +32,32 @@ export const QueueInfo: React.FC = () => {
 
   React.useEffect(() => {
     onLoadAttendancesInfoToday()
+
+    const socket: Socket = io('http://localhost:3000/attendances', {
+      transports: ['websocket'],
+    })
+
+    // Escutar mensagens do servidor
+    socket.on('connect', () => {
+      onLoadAttendancesInfoToday()
+      console.log('Conectado ao WebSocket')
+    })
+
+    socket.on('attendance-update', (data) => {
+      console.log('Atualização recebida:', data)
+      setAttendancesInfo(data)
+    })
+
+    // Lidar com desconexão
+    socket.on('disconnect', () => {
+      console.warn('Socket desconectado')
+      onLoadAttendancesInfoToday()
+    })
+
+    // Limpar conexão ao desmontar o componente
+    return () => {
+      socket.disconnect()
+    }
   }, [])
 
   return (
@@ -74,19 +101,20 @@ export const QueueInfo: React.FC = () => {
               Status
             </Typography>
             {!attendancesInfo && <Skeleton variant="rounded" width={54} height={14} />}
-            {company?.statusAttendance === 'serving' &&
+            {attendancesInfo && company?.statusAttendance === 'serving' && (
               <Zoom in unmountOnExit>
                 <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                  {attendancesInfo?.inQueue ? `${attendancesInfo?.inQueue} na fila` : 'Aberto'} 
+                  {attendancesInfo?.inQueue ? `${attendancesInfo?.inQueue} na fila` : 'Aberto'}
                 </Typography>
-              </Zoom>}
-              {company?.statusAttendance === 'closed' && (
-                 <Zoom in unmountOnExit>
-                 <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                   encerrada
-                 </Typography>
-               </Zoom>
-              )}
+              </Zoom>
+            )}
+            {attendancesInfo && company?.statusAttendance === 'closed' && (
+              <Zoom in unmountOnExit>
+                <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                  encerrada
+                </Typography>
+              </Zoom>
+            )}
           </Stack>
         </Stack>
 
@@ -111,17 +139,21 @@ export const QueueInfo: React.FC = () => {
 
             <Stack direction="row" alignItems="center" spacing={0.5}>
               <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Zoom in unmountOnExit>
-                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                  {attendancesInfo?.finished || 0}
-                </Typography>
-              </Zoom>
+                {!!attendancesInfo && (
+                  <Zoom in unmountOnExit>
+                    <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                      {attendancesInfo?.finished || 0}
+                    </Typography>
+                  </Zoom>
+                )}
 
-              <Zoom in unmountOnExit>
-                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                  realizados
-                </Typography>
-                </Zoom>
+                {!!attendancesInfo && (
+                  <Zoom in unmountOnExit>
+                    <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                      realizados
+                    </Typography>
+                  </Zoom>
+                )}
               </Stack>
             </Stack>
           </Stack>
@@ -138,14 +170,14 @@ export const QueueInfo: React.FC = () => {
               R$
             </Typography>
             {!attendancesInfo && <Skeleton variant="rounded" width={30} height={14} />}
-            {showAmount && (
+            {!!attendancesInfo && showAmount && (
               <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
                 <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
                   {(+attendancesInfo?.amount)?.toFixed(0) || 0}
                 </Typography>
               </Zoom>
             )}
-            {!showAmount && (
+            {!!attendancesInfo && !showAmount && (
               <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
                 <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
                   ****

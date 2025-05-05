@@ -6,8 +6,9 @@ import { Factories } from '@/main/factories/usecases'
 import { Box, useTheme } from '@mui/material'
 import { appNavigation } from '@/main/configs'
 import { useNotify } from '@/presentation/hooks'
-import { AppBar, Drawer } from './components'
 import { GenericState } from '@/presentation/components/atoms'
+import { PrivateRoute } from '@/presentation/components'
+import { AppBar, Drawer } from './components'
 
 export const AdminTemplate: React.FC = () => {
   const theme = useTheme()
@@ -38,18 +39,18 @@ export const AdminTemplate: React.FC = () => {
   }, [])
 
   return (
-    // <PrivateRoute>
-    <Box
-      sx={{
-        backgroundColor: 'background.default',
-        height: '100vh',
-      }}
-    >
-      <AppBar />
-      <Drawer items={appNavigation} />
-      <Outlet />
-      <ToastContainer autoClose={5000} theme="colored" position="top-right" draggable transition={Bounce} limit={2} />
-    </Box>
-    // </PrivateRoute>
+    <PrivateRoute>
+      <Box
+        sx={{
+          backgroundColor: 'background.default',
+          height: '100vh',
+        }}
+      >
+        <AppBar />
+        <Drawer items={appNavigation} />
+        <Outlet />
+        <ToastContainer autoClose={5000} theme="colored" position="top-right" draggable transition={Bounce} limit={2} />
+      </Box>
+    </PrivateRoute>
   )
 }
