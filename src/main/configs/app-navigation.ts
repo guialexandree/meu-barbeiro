@@ -18,7 +18,7 @@ export const appNavigation: AppNavigation[] = [
   {
     icon: 'group',
     title: 'clientes',
-    subtitle: 'gerenciamento de clientes',
+    subtitle: 'gerenciamento de clientes e barbeiros',
     pathTo: 'clientes',
   },
   // {
