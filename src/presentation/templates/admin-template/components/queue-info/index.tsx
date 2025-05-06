@@ -8,6 +8,7 @@ import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/templates/admin-template/components/atoms'
 import { useNotify } from '@/presentation/hooks'
 import { io, Socket } from 'socket.io-client'
+import { TextZoom } from '@/presentation/components'
 
 export const QueueInfo: React.FC = () => {
   const { notify } = useNotify()
@@ -34,7 +35,7 @@ export const QueueInfo: React.FC = () => {
   React.useEffect(() => {
     onLoadAttendancesInfoToday()
 
-    const socket: Socket = io('http://212.85.11.80:3000/attendances', {
+    const socket: Socket = io('http://meubarbeiro.site:3000/attendances', {
       transports: ['websocket'],
     })
 
@@ -57,7 +58,7 @@ export const QueueInfo: React.FC = () => {
       setAttendancesInfo(currentState => ({
         ...currentState,
         inQueue: currentState.inQueue - 1,
-        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + service.price, 0),
+        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + (+service.price), 0),
         finished: currentState.finished + 1,
       }))
     })
@@ -185,20 +186,21 @@ export const QueueInfo: React.FC = () => {
               R$
             </Typography>
             {!attendancesInfo && <Skeleton variant="rounded" width={30} height={14} />}
-            {!!attendancesInfo && showAmount && (
-              <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
-                  {(+attendancesInfo?.amount)?.toFixed(0) || 0}
-                </Typography>
-              </Zoom>
+            {!!attendancesInfo && (
+              <TextZoom text={showAmount ? (attendancesInfo?.amount.toFixed(0) || 0) : '****'} />
+              // <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
+              //   <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
+              //     {(+attendancesInfo?.amount)?.toFixed(0) || 0}
+              //   </Typography>
+              // </Zoom>
             )}
-            {!!attendancesInfo && !showAmount && (
-              <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
+            {/* {!!attendancesInfo && !showAmount && (
+              <Zoom in style={{ transitionDelay: '200ms', }} unmountOnExit>
                 <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
                   ****
                 </Typography>
               </Zoom>
-            )}
+            )} */}
           </Stack>
         </Stack>
       </Paper>
