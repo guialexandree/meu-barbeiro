@@ -1,13 +1,13 @@
-import { HttpClient, HttpStatusCode } from '@/data/protocols'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
-import { LoadAttendances, LoadAttendancesResult } from '@/domain/usecases'
+import { LoadAvailablesUsers, LoadAvailablesUsersResult } from '@/domain/usecases'
+import { HttpClient, HttpStatusCode } from '@/data/protocols'
 
-export class RemoteLoadAttendances implements LoadAttendances {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadAttendancesResult>) {}
+export class RemoteLoadAvailablesUsers implements LoadAvailablesUsers {
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadAvailablesUsersResult>) {}
 
-  async load (): Promise<LoadAttendancesResult> {
+  async load (): Promise<LoadAvailablesUsersResult> {
     const { statusCode, body } = await this.httpClient.request({
-      url: `${this.url}/api/attendances`,
+      url: `${this.url}/api/attendances/availables-users`,
       method: 'get',
     })
 
@@ -21,7 +21,7 @@ export class RemoteLoadAttendances implements LoadAttendances {
       throw new AccessDeniedError()
     }
 
-    if (!body?.data || !Array.isArray(body.data)) {
+    if (!body?.data) {
       throw new UnexpectedError()
     }
 

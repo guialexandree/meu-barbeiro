@@ -1,13 +1,13 @@
 import { HttpClient, HttpStatusCode } from '@/data/protocols'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
-import { LoadAttendances, LoadAttendancesResult } from '@/domain/usecases'
+import { LoadDoneAttendances, LoadDoneAttendancesResult } from '@/domain/usecases'
 
-export class RemoteLoadAttendances implements LoadAttendances {
-  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadAttendancesResult>) {}
+export class RemoteLoadDoneAttendances implements LoadDoneAttendances {
+  constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadDoneAttendancesResult>) {}
 
-  async load (): Promise<LoadAttendancesResult> {
+  async load (): Promise<LoadDoneAttendancesResult> {
     const { statusCode, body } = await this.httpClient.request({
-      url: `${this.url}/api/attendances`,
+      url: `${this.url}/api/attendances/done-today`,
       method: 'get',
     })
 

@@ -25,3 +25,18 @@ export type AttendanceTotal = {
   inQueue: number
   amount: number
 }
+
+export type AttendanceDone = {
+  id: string
+  status: AttendanceStatus
+  timeService: number
+  amount: number
+  startedAt: Date | null
+  finishedAt: Date | null
+  canceledAt: null
+  user: {
+    id: string
+    name: string
+    contactNumber: string
+  }
+}

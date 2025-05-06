@@ -14,3 +14,9 @@ export type UserRole = 'admin' | 'barber' | 'client'
 export type UserOrigin = 'sms' | 'facebook' | 'instagram' | 'barber'
 
 export type UserStatus = 'actived' | 'bloqued' | 'canceled'
+
+export type SimpleUser = {
+  id: string
+  name: string
+  nickname: string
+}
