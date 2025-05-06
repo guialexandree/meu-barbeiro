@@ -25,9 +25,11 @@ const Timer: React.FC<TimerProps> = (props) => {
     return () => clearInterval(interval.current as NodeJS.Timeout)
   }, [props.play])
 
-  return timer >= 3600
+  const result = timer >= 3600
     ? `${Math.floor(timer / 3600).toString().padStart(2, '0')}:${Math.floor((timer % 3600) / 60).toString().padStart(2, '0')}:${(timer % 60).toString().padStart(2, '0')}`
     : `${Math.floor((timer % 3600) / 60).toString().padStart(2, '0')}:${(timer % 60).toString().padStart(2, '0')}`
+
+  return result.startsWith('-1') ? '00:00' : result
 }
 
 export default Timer

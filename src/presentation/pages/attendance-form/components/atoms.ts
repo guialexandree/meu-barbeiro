@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil'
-import { AddAttendanceInQueueParams, SimpleUser } from '@/domain/usecases'
-import { ServiceModel } from '@/domain/models'
+import { AddAttendanceInQueueParams } from '@/domain/usecases'
+import { ServiceModel, SimpleUser } from '@/domain/models'
 
 const loadingState = atom({
   key: 'loadingAddAttendanceInQueueState',

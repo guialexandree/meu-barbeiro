@@ -14,12 +14,12 @@ const UserFormPage: React.FC = () => {
   const setUsers = useSetRecoilState(State.usersState)
 
   const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
-  const loadSimpleUsers = React.useMemo(() => Factories.makeRemoteLoadSimpleUsers(), [])
+  const loadAvailablesUsers = React.useMemo(() => Factories.makeRemoteLoadAvailablesUsers(), [])
 
   const onLoad = React.useCallback(async () => {
     try {
       setLoading(true)
-      const result = await loadSimpleUsers.load()
+      const result = await loadAvailablesUsers.load()
       setUsers(result.data)
       setLoading(false)
     } catch (error: any) {

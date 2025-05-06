@@ -11,6 +11,11 @@ export const attendancesResultState = atom<LoadAttendancesResult>({
   default: null as unknown as LoadAttendancesResult,
 })
 
+export const openDialogWhatsAppState = atom({
+  key: 'openDialogWhatsAppState',
+  default: false,
+})
+
 export const successState = atom({
   key: 'successAttendanceQueueState',
   default: false

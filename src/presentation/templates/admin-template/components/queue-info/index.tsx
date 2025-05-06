@@ -2,6 +2,7 @@ import React from 'react'
 import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography, Badge, Skeleton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { AttendanceModel } from '@/domain/models'
 import { GenericState } from '@/presentation/components/atoms'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/templates/admin-template/components/atoms'
@@ -43,9 +44,22 @@ export const QueueInfo: React.FC = () => {
       console.log('Conectado ao WebSocket')
     })
 
-    socket.on('attendance-update', (data) => {
-      console.log('Atualização recebida:', data)
-      setAttendancesInfo(data)
+    socket.on('add', (attendance: AttendanceModel) => {
+      console.log('Adicionado na fila recebida:', attendance)
+      setAttendancesInfo(currentState => ({
+        ...currentState,
+        inQueue: currentState.inQueue + 1,
+      }))
+    })
+
+    socket.on('finish', (attendance: AttendanceModel) => {
+      console.log('Encerrado na fila recebida:', attendance)
+      setAttendancesInfo(currentState => ({
+        ...currentState,
+        inQueue: currentState.inQueue - 1,
+        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + +service.price, 0),
+        finished: currentState.finished + 1,
+      }))
     })
 
     // Lidar com desconexão
@@ -91,6 +105,7 @@ export const QueueInfo: React.FC = () => {
               color={company?.statusAttendance === 'serving' ? 'success' : 'error'}
               overlap="circular"
               anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+              badgeContent={company ? 1 : 0}
             >
               <Icon>sort</Icon>
             </Badge>
@@ -104,7 +119,7 @@ export const QueueInfo: React.FC = () => {
             {attendancesInfo && company?.statusAttendance === 'serving' && (
               <Zoom in unmountOnExit>
                 <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                  {attendancesInfo?.inQueue ? `${attendancesInfo?.inQueue} na fila` : 'Aberto'}
+                  {attendancesInfo?.inQueue ? `${attendancesInfo?.inQueue} na fila` : 'Aberta'}
                 </Typography>
               </Zoom>
             )}

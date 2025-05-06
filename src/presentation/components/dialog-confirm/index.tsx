@@ -78,7 +78,7 @@ export const DialogConfirm: React.FC<DialogConfirmProps> = (props) => {
           </Typography>
         </Stack>
         <Divider />
-        <Fade in unmountOnExit mountOnEnter style={{ transitionDelay: `250ms` }}>
+        <Fade in unmountOnExit mountOnEnter style={{ transitionDelay: `150ms` }}>
           <DialogContent>
             <Stack spacing={2}>
               <DialogContentText id="service-dialog-description">{props.answer}</DialogContentText>

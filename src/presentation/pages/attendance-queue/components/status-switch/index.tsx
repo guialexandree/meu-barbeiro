@@ -10,7 +10,7 @@ import { useNotify } from '@/presentation/hooks'
 
 export const StatusSwitch: React.FC = () => {
   const { notify } = useNotify()
-  const setOpen = useSetRecoilState(State.openDialog)
+  const setOpen = useSetRecoilState(State.openDialogState)
   const setExpandHistory = useSetRecoilState(State.expandHistoryState)
   const [loading, setLoading] = useRecoilState(State.loadingChangeStatusState)
   const [company, setCompany] = useRecoilState(GenericState.companyState)
@@ -81,10 +81,10 @@ export const StatusSwitch: React.FC = () => {
   return (
     <>
       <Fade in unmountOnExit style={{ transitionDelay: '100ms' }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" >
           <Typography variant="h1">FILA</Typography>
 
-          {!company && <Skeleton variant="rounded" width={175} height={37} />}
+          {!company && <Skeleton variant="rounded" width={175} height={37}  sx={{ borderRadius: 2 }} />}
 
           {company?.statusAttendance === 'closed' && (
             <Button
@@ -136,7 +136,7 @@ export const StatusSwitch: React.FC = () => {
         answer={messageStatus}
         loading={loading}
         onConfirm={handleChangeStatus}
-        openState={State.openDialog}
+        openState={State.openDialogState}
         labelConfirm={labelActionStatus}
       >
         {company?.statusAttendance === 'closed' && (

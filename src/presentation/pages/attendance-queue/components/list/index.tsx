@@ -13,6 +13,7 @@ export const AttendanceQueueList: React.FC = () => {
   const navigate = useNavigate()
   const [attendancesResult, setAttendanceResult] = useRecoilState(State.List.attendancesResultState)
   const setPageState = useSetRecoilState(State.listState)
+  const setOpenWhatsAppDialog = useSetRecoilState(State.List.openDialogWhatsAppState)
   const company = useRecoilValue(GenericState.companyState)
 
   const loadAttendances = React.useMemo(() => Factories.makeRemoteLoadAttendances(), [])
@@ -60,7 +61,13 @@ export const AttendanceQueueList: React.FC = () => {
               <Icon color="info" sx={{ color: 'info.light' }}>
                 info_outline
               </Icon>
-              <Typography mt={2} sx={{ color: 'info.light', fontSize: 14 }} variant="h6" fontWeight={600} fontFamily="Inter">
+              <Typography
+                mt={2}
+                sx={{ color: 'info.light', fontSize: 14 }}
+                variant="h6"
+                fontWeight={600}
+                fontFamily="Inter"
+              >
                 NENHUM CLIENTE NA FILA
               </Typography>
             </Stack>
@@ -73,7 +80,9 @@ export const AttendanceQueueList: React.FC = () => {
               color="primary"
               id="user-create-action"
               variant="contained"
-              onClick={() => { navigate('/fila/entrar') }}
+              onClick={() => {
+                navigate('/fila/entrar')
+              }}
               sx={{
                 boxShadow: 0,
                 borderRadius: 8,
@@ -109,9 +118,36 @@ export const AttendanceQueueList: React.FC = () => {
       >
         {attendancesResult?.data?.slice(1, 4)?.map((attendance, index) => (
           <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={attendance.id}>
-            <span>
-              <AttendanceItem attendance={attendance} />
-            </span>
+            <Box sx={{ width: '100%', position: 'relative' }}>
+              <Box
+                component="span"
+                sx={{
+                  position: 'absolute',
+                  width: 18,
+                  height: 18,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  borderRadius: 10,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  top: 4,
+                  left: 0,
+                  transform: 'translateY(+50%) translateX(-50%)',
+                  backgroundColor: 'grey.200',
+                  color: 'grey.700',
+                }}
+              >
+                {index + 1}
+              </Box>
+
+              <AttendanceItem
+                openDialogWhatsapp={() => {
+                  setOpenWhatsAppDialog(true)
+                }}
+                attendance={attendance}
+              />
+            </Box>
           </Fade>
         ))}
       </List>

@@ -1,13 +1,18 @@
 import React from 'react'
 import { Divider, ListItem, ListItemText, Stack, Typography } from '@mui/material'
-import { AttendanceModel } from '@/domain/models'
+import { AttendanceModel, UserModel } from '@/domain/models'
 import { AttendanceActions } from '../attendance-actions'
 
 type AttendanceItemProps = {
   attendance: AttendanceModel
+  openDialogWhatsapp: (user: UserModel) => void
 }
 
 export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
+  const onOpenDialogWhatsapp = React.useCallback(() => {
+    window.open(`https://api.whatsapp.com/send?phone=55${props.attendance.user.contactNumber.replace(/\D/g, '')}`, '_blank')
+  }, [])
+
   return (
     <ListItem
       key={`attendance-item-${props.attendance.id}`}
@@ -19,7 +24,7 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
         '& .MuiListItemText-root': { mb: 0 },
       }}
     >
-      <Stack mt={0.5} alignItems="center">
+      <Stack mt={0.5} alignItems="center" pl={1}>
         <Typography variant="body2" color="text.primary" fontSize={14} fontWeight={900} fontFamily="Inter">
           14:50
         </Typography>
@@ -42,13 +47,15 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
         secondary={
           <Stack alignItems="flex-start">
             <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
-              {props.attendance.services.map((attendanceService) => attendanceService.service.description.toUpperCase()).join(' + ')}
+              {props.attendance.services
+                .map((attendanceService) => attendanceService.service.description.toUpperCase())
+                .join(' + ')}
             </Typography>
           </Stack>
         }
       />
 
-      <AttendanceActions />
+      <AttendanceActions openDialogWhatsapp={onOpenDialogWhatsapp} />
     </ListItem>
   )
 }

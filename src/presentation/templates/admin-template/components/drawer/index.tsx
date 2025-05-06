@@ -49,12 +49,13 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
             backgroundColor: 'background.default',
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0,
+            backgroundImage: 'none',
           },
         },
       }}
     >
       <Box
-        sx={{ width: { xs: 'auto', sm: 380 },backgroundColor: (theme) => `${theme.palette.primary.light}20` }}
+        sx={{ width: { xs: 'auto', sm: 380 }, backgroundColor: (theme) => `${theme.palette.primary.light}20` }}
         role="presentation"
         onClick={() => {
           setOpen(false)
@@ -88,7 +89,7 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
             </ListItem>
           ))}
 
-          <Divider sx={{ borderColor: 'grey.700' }} />
+          <Divider sx={{ borderColor: theme => `${theme.palette.primary.light}60` }} />
 
           <ListItem key={`item-drawer-logout`}>
             <ListItemButton onClick={handleLogout} sx={{ borderRadius: 2 }}>
