@@ -35,26 +35,16 @@ export const QueueInfo: React.FC = () => {
   React.useEffect(() => {
     onLoadAttendancesInfoToday()
 
-    const socket: Socket = io('http://meubarbeiro.site:3000/attendances', {
+    const socket: Socket = io('https://meubarbeiro.site/attendances', {
       transports: ['websocket'],
     })
 
     // Escutar mensagens do servidor
     socket.on('connect', () => {
-      onLoadAttendancesInfoToday()
       console.log('Conectado ao WebSocket')
     })
 
-    socket.on('add', (attendance: AttendanceModel) => {
-      console.log('Adicionado na fila recebida:', attendance)
-      setAttendancesInfo(currentState => ({
-        ...currentState,
-        inQueue: currentState.inQueue + 1,
-      }))
-    })
-
     socket.on('finish', (attendance: AttendanceModel) => {
-      console.log('Encerrado na fila recebida:', attendance)
       setAttendancesInfo(currentState => ({
         ...currentState,
         inQueue: currentState.inQueue - 1,
@@ -63,13 +53,10 @@ export const QueueInfo: React.FC = () => {
       }))
     })
 
-    // Lidar com desconexão
     socket.on('disconnect', () => {
-      console.warn('Socket desconectado')
       onLoadAttendancesInfoToday()
     })
 
-    // Limpar conexão ao desmontar o componente
     return () => {
       socket.disconnect()
     }
@@ -82,7 +69,7 @@ export const QueueInfo: React.FC = () => {
         elevation={0}
         sx={{
           backgroundColor: 'primary.light',
-          backgroundImage: 'linear-gradient(0deg,rgba(44, 130, 216, 1) 0%, #569bdf 60%)',
+          backgroundImage: 'linear-gradient(0deg,rgba(44, 130, 216, 1) 0%, #4b91d8 60%)',
           borderRadius: 1,
           flexGrow: 1,
           alignItems: 'flex-start',

@@ -10,7 +10,7 @@ import { State } from '../atoms'
 type EndAttendanceActionProps = {
   status: AttendanceStatus
   attendanceId: string
-  startDate: Date
+  startDate: string
   onSuccess: (attendanceId: string) => void
 }
 

@@ -113,7 +113,7 @@ export const StatusSwitch: React.FC = () => {
               size="small"
               sx={{
                 fontSize: 12,
-                backgroundColor: 'grey.400',
+                backgroundColor: 'grey.300',
                 color: 'grey.900',
                 minWidth: 128,
                 fontWeight: '700',
