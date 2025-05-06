@@ -7,7 +7,7 @@ import { GenericState } from '@/presentation/components/atoms'
 import { Box, Button, Fade, Icon, Paper, Stack, Typography, Zoom } from '@mui/material'
 import { AttendanceItem } from '../attendance-item'
 import { Factories } from '@/main/factories/usecases'
-import barberImg from '@/presentation/assets/barber.svg'
+import barberImg from '@/presentation/assets/logo.png'
 
 export const AttendanceQueueList: React.FC = () => {
   const navigate = useNavigate()
@@ -56,7 +56,7 @@ export const AttendanceQueueList: React.FC = () => {
           }}
           elevation={0}
         >
-          <Stack spacing={2}>
+          <Stack spacing={2} alignItems='center'>
             <Stack spacing={1} direction="row" alignItems="center" justifyContent="center">
               <Icon color="info" sx={{ color: 'info.light' }}>
                 info_outline
@@ -73,12 +73,13 @@ export const AttendanceQueueList: React.FC = () => {
             </Stack>
 
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              <Box component="img" height={150} src={barberImg} />
+              <Box component="img" height={150} width={150} src={barberImg}  sx={{ opacity: 0.3}} />
             </Zoom>
 
             <Button
               color="primary"
               id="user-create-action"
+              fullWidth
               variant="contained"
               onClick={() => {
                 navigate('/fila/entrar')
