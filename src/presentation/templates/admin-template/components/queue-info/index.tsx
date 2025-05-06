@@ -34,7 +34,7 @@ export const QueueInfo: React.FC = () => {
   React.useEffect(() => {
     onLoadAttendancesInfoToday()
 
-    const socket: Socket = io('http://localhost:3000/attendances', {
+    const socket: Socket = io('http://212.85.11.80:3000/attendances', {
       transports: ['websocket'],
     })
 
@@ -57,7 +57,7 @@ export const QueueInfo: React.FC = () => {
       setAttendancesInfo(currentState => ({
         ...currentState,
         inQueue: currentState.inQueue - 1,
-        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + +service.price, 0),
+        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + service.price, 0),
         finished: currentState.finished + 1,
       }))
     })
