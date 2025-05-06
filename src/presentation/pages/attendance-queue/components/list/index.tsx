@@ -73,7 +73,7 @@ export const AttendanceQueueList: React.FC = () => {
             </Stack>
 
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              <Box component="img" height={150} width={150} src={barberImg}  sx={{ opacity: 0.3}} />
+              <Box component="img" height={110} width={110} src={barberImg}  sx={{ opacity: 0.3}} />
             </Zoom>
 
             <Button
