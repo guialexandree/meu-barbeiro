@@ -1,10 +1,13 @@
 import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { io, Socket } from 'socket.io-client'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { Grow, Paper, Skeleton, Slide, Stack, useTheme } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
+import { State as TemplateState } from '@/presentation/templates/admin-template/components/atoms'
 import { CurrentActions } from '../current-actions'
 import { Attendance, Header, SuccessPanel } from './components'
+import { AttendanceModel } from '@/domain/models'
 
 export const CurrentAttendance: React.FC = () => {
   const theme = useTheme()
@@ -12,6 +15,7 @@ export const CurrentAttendance: React.FC = () => {
   const company = useRecoilValue(GenericState.companyState)
   const [success, setSuccess] = useRecoilState(State.List.successState)
   const [closeAttendance, setCloseAttendance] = React.useState(false)
+  const setAttendancesInfo = useSetRecoilState(TemplateState.attendancesInfoResultState)
 
   const endSuccess = React.useCallback((attendanceId: string) => {
     setSuccess(true)
@@ -41,6 +45,50 @@ export const CurrentAttendance: React.FC = () => {
       }, 700)
     }, 1200)
   }, [])
+
+  React.useEffect(() => {
+    const socket: Socket = io('https://meubarbeiro.site/attendances', {
+      transports: ['websocket'],
+    })
+
+    socket.on('add', (attendance: AttendanceModel) => {
+      console.log('add', attendance)
+      setAttendancesInfo((currentState) => ({
+        ...currentState,
+        inQueue: currentState.inQueue + 1,
+      }))
+      setAttendancesResult((currentState) => ({
+        ...currentState,
+        data: currentState.data.length ? [...currentState.data, attendance] : [{ ...attendance, status: 'current' }],
+      }))
+    })
+
+    socket.on('finish', (attendance: AttendanceModel) => {
+      setAttendancesInfo(currentState => ({
+        ...currentState,
+        inQueue: currentState.inQueue - 1,
+        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + (+service.price), 0),
+        finished: currentState.finished + 1,
+      }))
+      endSuccess(attendance.id)
+    })
+
+    socket.on('start', (attendance: AttendanceModel) => {
+      setAttendancesResult(currentState => ({
+        ...currentState,
+        data: currentState.data.map(item => item.id === attendance.id ? attendance : item),
+      }))
+    })
+
+    socket.on('disconnect', () => {
+      // onLoadAttendancesInfoToday()
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
+
 
   if (!company) {
     return <Skeleton variant="rounded" width="100%" height={157} sx={{ borderRadius: 2, mt: 1 }} />
