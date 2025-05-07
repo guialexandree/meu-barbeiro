@@ -28,6 +28,13 @@ export const theme = createTheme({
           lineHeight: 1,
           letterSpacing: 0.5,
         },
+        h2: {
+          fontFamily: 'Inter',
+          fontWeight: 900,
+          fontSize: 18,
+          lineHeight: 1,
+          letterSpacing: 0.5,
+        },
       },
     },
     MuiChip: {

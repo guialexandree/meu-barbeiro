@@ -50,15 +50,18 @@ export const Position: React.FC = () => {
   }, [])
 
   return (
-    <Slide in direction="up" style={{ transitionDelay: '250ms' }}  unmountOnExit mountOnEnter>
-      <Stack spacing={1}>
-        <Typography variant="h6" fontWeight={900} fontFamily="Inter" letterSpacing={1}>
+    <Stack spacing={1}justifyContent="space-between">
+      <Slide direction="right" in mountOnEnter unmountOnExit style={{ transitionDelay: '50ms' }}>
+        <Typography variant="h2" mb={4}>
           POSIÇÃO NA FILA
         </Typography>
-
+      </Slide>
+      <>
         <InputRadio<'first' | 'last'>
           label="ADICIONAR NO FINAL"
+          icon='south'
           value="last"
+          key={`position-last`}
           checked={position === 'last'}
           onChange={handleChange}
           description="Padrão, adiciona no final da fila de atendimento"
@@ -76,15 +79,16 @@ export const Position: React.FC = () => {
             label="Previsão de atendimento às 19:40"
           />
         </InputRadio>
-
         <InputRadio<'first' | 'last'>
           label="ADICIONAR NO INÍCIO"
           value="first"
+          icon='north'
+          key={`position-first`}
           checked={position === 'first'}
           onChange={handleChange}
           description="Adiciona no início da fila de atendimento, será o próximo a ser atendido"
         />
-      </Stack>
-    </Slide>
+      </>
+    </Stack>
   )
 }

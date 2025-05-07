@@ -16,7 +16,7 @@ export const TextZoom: React.FC<TextZoomProps> = (props) => {
 
   const zoomStyle = {
     transition: 'transform 0.3s ease-in-out',
-    transform: visible ? 'scale(1.2)' : 'scale(1)',
+    transform: visible ? 'scale(1.4)' : 'scale(1)',
   }
   return (
     <Typography variant="subtitle1" sx={{ ...zoomStyle, lineHeight: 1, fontWeight: '600', fontSize: 14, display: 'inline-block' }}>

@@ -1,4 +1,4 @@
-import { Fade, FormControlLabel, Paper, Radio, Typography } from '@mui/material'
+import { FormControlLabel, Icon, Paper, Radio, Slide, Stack, Typography } from '@mui/material'
 
 type InputRadioProps<T> = {
   onChange: (newValue: T) => void
@@ -7,27 +7,33 @@ type InputRadioProps<T> = {
   description: string
   checked: boolean
   children?: React.ReactNode
+  icon?: 'north' | 'south'
 }
 
 export const InputRadio = <T,>(props: InputRadioProps<T>) => {
   return (
-    <Fade in timeout={300}>
+    <Slide direction='up' in timeout={350}>
       <Paper
         variant="outlined"
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          p: 2,
+          px: 2,
+          py: 1.5,
           transition: 'all 0.3s ease',
           backgroundColor: props.checked ? 'background.paper' : 'background.default',
-          borderColor: props.checked ? 'grey.300' : 'grey.800',
+          borderColor: props.checked ? 'grey.500' : 'grey.800',
         }}
-        elevation={0}
         onClick={() => props.onChange(props.value)}
       >
         <FormControlLabel
-          label={props.label}
+          label={
+            <Stack direction="row" alignItems="center" width={'100%'} gap={0.5}>
+              {props.label}
+              {props.icon && <Icon sx={{ fontSize: 16 }} >{props.icon}</Icon>}
+            </Stack>
+          }
           value={props.label}
           slotProps={{
             typography: { fontWeight: '600', color: props.checked ? 'text.primary' : 'text.secondary' },
@@ -35,6 +41,7 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
           control={
             <Radio
               checked={props.checked}
+              color='success'
               onChange={() => {
                 props.onChange(props.value)
               }}
@@ -49,6 +56,6 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
         </Typography>
         {props.children}
       </Paper>
-    </Fade>
+    </Slide>
   )
 }

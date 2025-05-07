@@ -47,10 +47,10 @@ export const QueueInfo: React.FC = () => {
     })
 
     socket.on('finish', (attendance: AttendanceModel) => {
-      setAttendancesInfo(currentState => ({
+      setAttendancesInfo((currentState) => ({
         ...currentState,
         inQueue: currentState.inQueue - 1,
-        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + (+service.price), 0),
+        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + +service.price, 0),
         finished: currentState.finished + 1,
       }))
     })
@@ -104,9 +104,12 @@ export const QueueInfo: React.FC = () => {
             {!attendancesInfo && <Skeleton variant="rounded" width={54} height={14} />}
             {attendancesInfo && company?.statusAttendance === 'serving' && (
               <Zoom in unmountOnExit>
-                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                  {attendancesInfo?.inQueue ? `${attendancesInfo?.inQueue} na fila` : 'Aberta'}
-                </Typography>
+                <Stack direction="row" alignItems="center" spacing={0.5}>
+                  {!!attendancesInfo?.inQueue && <TextZoom text={attendancesInfo.inQueue} />}
+                  <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                    {attendancesInfo?.inQueue ? 'na fila' : 'Aberta'}
+                  </Typography>
+                </Stack>
               </Zoom>
             )}
             {attendancesInfo && company?.statusAttendance === 'closed' && (
@@ -138,25 +141,17 @@ export const QueueInfo: React.FC = () => {
 
             {!attendancesInfo && <Skeleton variant="rounded" width={78} height={14} />}
 
-            <Stack direction="row" alignItems="center" spacing={0.5}>
+            <Zoom in unmountOnExit>
               <Stack direction="row" alignItems="center" spacing={0.5}>
-                {!!attendancesInfo && (
-                  <Zoom in unmountOnExit>
-                    <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                      {attendancesInfo?.finished || 0}
-                    </Typography>
-                  </Zoom>
-                )}
+                {!!attendancesInfo?.finished && <TextZoom text={attendancesInfo.finished} />}
 
                 {!!attendancesInfo && (
-                  <Zoom in unmountOnExit>
-                    <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                      realizados
-                    </Typography>
-                  </Zoom>
+                  <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
+                    realizados
+                  </Typography>
                 )}
               </Stack>
-            </Stack>
+            </Zoom>
           </Stack>
         </Stack>
 
@@ -171,21 +166,7 @@ export const QueueInfo: React.FC = () => {
               R$
             </Typography>
             {!attendancesInfo && <Skeleton variant="rounded" width={30} height={14} />}
-            {!!attendancesInfo && (
-              <TextZoom text={showAmount ? (attendancesInfo?.amount.toFixed(0) || 0) : '****'} />
-              // <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              //   <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
-              //     {(+attendancesInfo?.amount)?.toFixed(0) || 0}
-              //   </Typography>
-              // </Zoom>
-            )}
-            {/* {!!attendancesInfo && !showAmount && (
-              <Zoom in style={{ transitionDelay: '200ms', }} unmountOnExit>
-                <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
-                  ****
-                </Typography>
-              </Zoom>
-            )} */}
+            {!!attendancesInfo && <TextZoom text={showAmount ? attendancesInfo?.amount.toFixed(0) || 0 : '****'} />}
           </Stack>
         </Stack>
       </Paper>
