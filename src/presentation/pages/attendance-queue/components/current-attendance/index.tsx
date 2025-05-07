@@ -1,10 +1,9 @@
 import React from 'react'
 import { io, Socket } from 'socket.io-client'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { Grow, Paper, Skeleton, Slide, Stack, useTheme } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
-import { State as TemplateState } from '@/presentation/templates/admin-template/components/atoms'
 import { CurrentActions } from '../current-actions'
 import { Attendance, Header, SuccessPanel } from './components'
 import { AttendanceModel } from '@/domain/models'
@@ -15,7 +14,6 @@ export const CurrentAttendance: React.FC = () => {
   const company = useRecoilValue(GenericState.companyState)
   const [success, setSuccess] = useRecoilState(State.List.successState)
   const [closeAttendance, setCloseAttendance] = React.useState(false)
-  const setAttendancesInfo = useSetRecoilState(TemplateState.attendancesInfoResultState)
 
   const endSuccess = React.useCallback((attendanceId: string) => {
     setSuccess(true)
@@ -52,11 +50,6 @@ export const CurrentAttendance: React.FC = () => {
     })
 
     socket.on('add', (attendance: AttendanceModel) => {
-      console.log('add', attendance)
-      setAttendancesInfo((currentState) => ({
-        ...currentState,
-        inQueue: currentState.inQueue + 1,
-      }))
       setAttendancesResult((currentState) => ({
         ...currentState,
         data: currentState.data.length ? [...currentState.data, attendance] : [{ ...attendance, status: 'current' }],
@@ -64,12 +57,6 @@ export const CurrentAttendance: React.FC = () => {
     })
 
     socket.on('finish', (attendance: AttendanceModel) => {
-      setAttendancesInfo(currentState => ({
-        ...currentState,
-        inQueue: currentState.inQueue - 1,
-        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + (+service.price), 0),
-        finished: currentState.finished + 1,
-      }))
       endSuccess(attendance.id)
     })
 

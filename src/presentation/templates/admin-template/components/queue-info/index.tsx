@@ -2,10 +2,12 @@ import React from 'react'
 import { Divider, Zoom, Icon, IconButton, Paper, Stack, Typography, Badge, Skeleton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { AttendanceModel } from '@/domain/models'
 import { GenericState } from '@/presentation/components/atoms'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/templates/admin-template/components/atoms'
 import { useNotify } from '@/presentation/hooks'
+import { io, Socket } from 'socket.io-client'
 import { TextZoom } from '@/presentation/components'
 
 export const QueueInfo: React.FC = () => {
@@ -33,6 +35,29 @@ export const QueueInfo: React.FC = () => {
   React.useEffect(() => {
     onLoadAttendancesInfoToday()
 
+    const socket: Socket = io('https://meubarbeiro.site/attendances', {
+      transports: ['websocket'],
+    })
+
+    socket.on('add', () => {
+      setAttendancesInfo((currentState) => ({
+        ...currentState,
+        inQueue: currentState.inQueue + 1,
+      }))
+    })
+
+    socket.on('finish', (attendance: AttendanceModel) => {
+      setAttendancesInfo(currentState => ({
+        ...currentState,
+        inQueue: currentState.inQueue - 1,
+        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + (+service.price), 0),
+        finished: currentState.finished + 1,
+      }))
+    })
+
+    return () => {
+      socket.disconnect()
+    }
   }, [])
 
   return (
