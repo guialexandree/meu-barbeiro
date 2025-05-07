@@ -15,7 +15,7 @@ export const SuccessPanel: React.FC = () => {
   const handleSendAppLink = () => {
     const linkApp = 'https://www.google.com'
     const message = `Salvee ${name.text?.toUpperCase()}, seu cadastro foi criado, esse é o link pra entrar na fila pela APP ${linkApp}`
-    window.open(`https://api.whatsapp.com/send?phone=${contactNumber}&text=${message}`, '_blank')
+    window.open(`https://api.whatsapp.com/send?phone=${contactNumber}&text=${message}`)
   }
 
   const handleGoBackToList = () => {

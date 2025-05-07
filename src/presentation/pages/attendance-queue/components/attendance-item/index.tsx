@@ -13,7 +13,6 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
   const onOpenDialogWhatsapp = React.useCallback(() => {
     window.open(
       `https://api.whatsapp.com/send?phone=55${props.attendance.user.contactNumber.replace(/\D/g, '')}`,
-      '_blank',
     )
   }, [])
 
