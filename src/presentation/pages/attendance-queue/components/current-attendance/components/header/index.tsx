@@ -58,8 +58,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
           <Icon fontSize="small" sx={{ color: 'grey.500' }}>
             access_time
           </Icon>
-          <Typography variant="caption" fontSize={12} fontFamily="Inter" sx={{ color: 'grey.500' }}>
-            iniciou {dateAdapter.format(props.startDate!, 'HH:mm')}
+          <Typography variant="caption" fontSize={12} fontFamily="Inter" sx={{ color: 'grey.500', fontWeight: 500 }}>
+            INICIOU {dateAdapter.format(props.startDate!, 'HH:mm')}
           </Typography>
         </Stack>
       )}

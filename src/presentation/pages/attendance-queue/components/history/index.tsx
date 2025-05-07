@@ -53,7 +53,6 @@ export const HistoryToday: React.FC = () => {
           onChange={() => {
             setExpanded((currentState) => !currentState)
           }}
-          elevation={0}
         >
           <AccordionSummary
             sx={{ fontSize: 12 }}

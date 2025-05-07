@@ -6,11 +6,11 @@ import { AttendanceModel } from '@/domain/models'
 import { GenericState } from '@/presentation/components/atoms'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/templates/admin-template/components/atoms'
-import { useNotify } from '@/presentation/hooks'
-import { io, Socket } from 'socket.io-client'
+import { useNotify, useSocket } from '@/presentation/hooks'
 import { TextZoom } from '@/presentation/components'
 
 export const QueueInfo: React.FC = () => {
+  const { getSocket } = useSocket()
   const { notify } = useNotify()
   const navigate = useNavigate()
   const company = useRecoilValue(GenericState.companyState)
@@ -35,18 +35,16 @@ export const QueueInfo: React.FC = () => {
   React.useEffect(() => {
     onLoadAttendancesInfoToday()
 
-    const socket: Socket = io('https://meubarbeiro.site/attendances', {
-      transports: ['websocket'],
-    })
+    const socket = getSocket()
 
-    socket.on('add', () => {
+    socket.on('entry_in_queue', () => {
       setAttendancesInfo((currentState) => ({
         ...currentState,
         inQueue: currentState.inQueue + 1,
       }))
     })
 
-    socket.on('finish', (attendance: AttendanceModel) => {
+    socket.on('finish_attendance', (attendance: AttendanceModel) => {
       setAttendancesInfo((currentState) => ({
         ...currentState,
         inQueue: currentState.inQueue - 1,
@@ -54,10 +52,6 @@ export const QueueInfo: React.FC = () => {
         finished: currentState.finished + 1,
       }))
     })
-
-    return () => {
-      socket.disconnect()
-    }
   }, [])
 
   return (

@@ -1,17 +1,17 @@
 import React from 'react'
-import { io, Socket } from 'socket.io-client'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Grow, Paper, Skeleton, Slide, Stack, useTheme } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
-import { CurrentActions } from '../current-actions'
-import { Attendance, Header, SuccessPanel } from './components'
+import { Actions, Attendance, Header, SuccessPanel } from './components'
 import { AttendanceModel } from '@/domain/models'
+import { useSocket } from '@/presentation/hooks'
 
 export const CurrentAttendance: React.FC = () => {
   const theme = useTheme()
-  const [attendanceResult, setAttendancesResult] = useRecoilState(State.List.attendancesResultState)
+  const { getSocket } = useSocket()
   const company = useRecoilValue(GenericState.companyState)
+  const [attendanceResult, setAttendancesResult] = useRecoilState(State.List.attendancesResultState)
   const [success, setSuccess] = useRecoilState(State.List.successState)
   const [closeAttendance, setCloseAttendance] = React.useState(false)
 
@@ -45,22 +45,20 @@ export const CurrentAttendance: React.FC = () => {
   }, [])
 
   React.useEffect(() => {
-    const socket: Socket = io('https://meubarbeiro.site/attendances', {
-      transports: ['websocket'],
-    })
+    const socket = getSocket()
 
-    socket.on('add', (attendance: AttendanceModel) => {
+    socket.on('entry_in_queue', (attendance: AttendanceModel) => {
       setAttendancesResult((currentState) => ({
         ...currentState,
         data: currentState.data.length ? [...currentState.data, attendance] : [{ ...attendance, status: 'current' }],
       }))
     })
 
-    socket.on('finish', (attendance: AttendanceModel) => {
+    socket.on('finish_attendance', (attendance: AttendanceModel) => {
       endSuccess(attendance.id)
     })
 
-    socket.on('start', (attendance: AttendanceModel) => {
+    socket.on('start_attendance', (attendance: AttendanceModel) => {
       setAttendancesResult(currentState => ({
         ...currentState,
         data: currentState.data.map(item => item.id === attendance.id ? attendance : item),
@@ -71,9 +69,9 @@ export const CurrentAttendance: React.FC = () => {
       // onLoadAttendancesInfoToday()
     })
 
-    return () => {
-      socket.disconnect()
-    }
+    // return () => {
+    //   socket.disconnect()
+    // }
   }, [])
 
 
@@ -129,7 +127,7 @@ export const CurrentAttendance: React.FC = () => {
 
             <Attendance attendance={currentAttendance} />
 
-            <CurrentActions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={endSuccess} />
+            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={endSuccess} />
           </Stack>
         </Slide>
       </Paper>

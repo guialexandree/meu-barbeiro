@@ -48,7 +48,6 @@ export const PermissionsPanel: React.FC = () => {
     <Fade in timeout={500} style={{ transitionDelay: '100ms' }} unmountOnExit>
       <Paper
         id="user-permissions-form"
-        variant="elevation"
         elevation={0}
         sx={{
           py: 2,

@@ -54,7 +54,6 @@ export const AttendanceQueueList: React.FC = () => {
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
           }}
-          elevation={0}
         >
           <Stack spacing={2} alignItems='center'>
             <Stack spacing={1} direction="row" alignItems="center" justifyContent="center">
@@ -104,7 +103,7 @@ export const AttendanceQueueList: React.FC = () => {
 
   return (
     <Stack justifyContent="center">
-      <Typography mx={2} mt={2} variant="h1">
+      <Typography mx={2} mt={2} mb={2} variant="h1">
         PRÓXIMOS NA FILA
       </Typography>
 
@@ -119,30 +118,9 @@ export const AttendanceQueueList: React.FC = () => {
       >
         {attendancesResult?.data?.slice(1, 4)?.map((attendance, index) => (
           <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={attendance.id}>
-            <Box sx={{ width: '100%', position: 'relative' }}>
-              <Box
-                component="span"
-                sx={{
-                  position: 'absolute',
-                  width: 18,
-                  height: 18,
-                  fontSize: 12,
-                  fontWeight: 700,
-                  borderRadius: 10,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  top: 4,
-                  left: 0,
-                  transform: 'translateY(+50%) translateX(-50%)',
-                  backgroundColor: 'grey.200',
-                  color: 'grey.700',
-                }}
-              >
-                {index + 1}
-              </Box>
-
+            <Box sx={{ width: '100%'}}>
               <AttendanceItem
+                position={index + 1}
                 openDialogWhatsapp={() => {
                   setOpenWhatsAppDialog(true)
                 }}

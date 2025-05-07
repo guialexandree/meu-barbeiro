@@ -1,22 +1,16 @@
 import React from 'react'
-import { useRecoilValue } from 'recoil'
 import { Stack } from '@mui/material'
 import { AttendanceModel } from '@/domain/models'
-import { GenericState } from '@/presentation/components/atoms'
-import { StartAttendanceAction } from '../start-attendance-action'
-import { EndAttendanceAction } from '../end-attendance-action'
-import { CancelAttendanceAction } from '../cancel-attendance-action'
+import { StartAttendanceAction, EndAttendanceAction, CancelAttendanceAction } from '@/presentation/pages/attendance-queue/components'
 
-type CurrentActions = {
+type Actions = {
   attendance: AttendanceModel | undefined
   endSuccess: (attendanceId: string) => void
   cancelSuccess: (attendanceId: string) => void
 }
 
-export const CurrentActions: React.FC<CurrentActions> = (props) => {
-  const company = useRecoilValue(GenericState.companyState)
-
-  if (company?.statusAttendance !== 'serving' || !props.attendance) {
+export const Actions: React.FC<Actions> = (props) => {
+  if (!props.attendance) {
     return null
   }
 

@@ -6,31 +6,49 @@ import { AttendanceActions } from '../attendance-actions'
 type AttendanceItemProps = {
   attendance: AttendanceModel
   openDialogWhatsapp: (user: UserModel) => void
+  position: number
 }
 
 export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
   const onOpenDialogWhatsapp = React.useCallback(() => {
-    window.open(`https://api.whatsapp.com/send?phone=55${props.attendance.user.contactNumber.replace(/\D/g, '')}`, '_blank')
+    window.open(
+      `https://api.whatsapp.com/send?phone=55${props.attendance.user.contactNumber.replace(/\D/g, '')}`,
+      '_blank',
+    )
   }, [])
 
   return (
     <ListItem
       key={`attendance-item-${props.attendance.id}`}
       id={`attendance-item-${props.attendance.id}`}
+      disablePadding
       sx={{
         mt: 1,
+        minHeight: 40,
+        pr: 1,
+        gap: 1,
         borderRadius: 2,
+        overflow: 'hidden',
         backgroundColor: (theme) => `${theme.palette.primary.light}10`,
         '& .MuiListItemText-root': { mb: 0 },
       }}
     >
-      <Stack mt={0.5} alignItems="center" pl={1}>
-        <Typography variant="body2" color="text.primary" fontSize={14} fontWeight={900} fontFamily="Inter">
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}20`, height: 40, width: 36 }}
+      >
+        <Typography variant="h1" color='primary.light'>{props.position}</Typography>
+      </Stack>
+
+      <Stack>
+        <Typography variant='caption' color="text.secondary" fontSize={8} lineHeight={1} fontFamily="Inter">
+          PREVISÃO
+        </Typography>
+        <Typography variant="body2" letterSpacing={0.8}  fontSize={14} fontWeight={900} fontFamily="Inter">
           14:50
         </Typography>
-        <Typography variant="caption" color="text.secondary" fontSize={11} fontFamily="Inter" textAlign="center">
-          R$ 50
-        </Typography>
+
       </Stack>
 
       <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />

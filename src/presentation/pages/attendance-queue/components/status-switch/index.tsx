@@ -145,7 +145,15 @@ export const StatusSwitch: React.FC = () => {
               typography: { fontSize: 14, fontFamily: 'Inter' },
             }}
             control={<Android12Switch />}
-            label="Enviar notificação para os clientes"
+            label={
+              <Stack direction="row" alignItems="center" gap={1} width={'100%'}>
+                Notificar clientes
+                <Icon fontSize="small" color="info" sx={{ color: 'info.light' }}>
+                  notifications_active
+                </Icon>
+
+              </Stack>
+            }
           />
         )}
       </DialogConfirm>

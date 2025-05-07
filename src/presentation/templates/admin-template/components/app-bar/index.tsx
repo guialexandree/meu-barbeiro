@@ -27,7 +27,6 @@ export const AppBar: React.FC = () => {
       <AppBarMUI
         position="sticky"
         variant="outlined"
-        elevation={1}
         sx={{
           maxWidth: '100vw',
           border: 'none',

@@ -12,7 +12,6 @@ export const StatusSwitch: React.FC = () => {
       <Paper
         id="client-create-form"
         component="form"
-        variant="elevation"
         elevation={0}
         onSubmit={(event) => {
           event.preventDefault()
