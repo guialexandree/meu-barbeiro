@@ -27,7 +27,6 @@ export const ServiceQueueItem: React.FC<ServiceQueueItemProps> = (props) => {
           borderRadius: 2,
           backgroundColor: (theme) => `${theme.palette.primary.light}10`,
           '& .MuiListItemText-root': { mb: 0 },
-          zIndex: 2,
         }}
       >
         <ListItemIcon sx={{ minWidth: 0, mr: 1 }}>
