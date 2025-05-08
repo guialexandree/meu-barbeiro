@@ -12,15 +12,43 @@ import {
   Typography,
   Zoom,
 } from '@mui/material'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { GenericState } from '@/presentation/components/atoms'
 import { isOpenDrawer } from '../drawer/atoms'
 import { QueueInfo } from '../queue-info'
+import { useNotify } from '@/presentation/hooks'
+import { Factories } from '@/main/factories/usecases'
 
 export const AppBar: React.FC = () => {
+  const { notify } = useNotify()
   const setOpenDrawer = useSetRecoilState(isOpenDrawer)
+  const [company, setCompany] = useRecoilState(GenericState.companyState)
+  const [loading, setLoading] = useRecoilState(GenericState.loadingCompanyState)
   const [showAmount, setShowAmount] = useRecoilState(GenericState.showAmountState)
-  const company = useRecoilValue(GenericState.companyState)
+
+  const loadCompany = React.useMemo(() => Factories.makeRemoteLoadCompany(), [])
+
+  const onLoadCompany = () => {
+    if (loading) return
+
+    setLoading(true)
+    loadCompany
+    .load()
+    .then((companyResult) => {
+      if (companyResult.success) {
+        setCompany(companyResult.data)
+        return
+      }
+
+      notify(companyResult.error, { type: 'error' })
+    })
+    .catch(console.error)
+    .finally(() => { setLoading(false) })
+  }
+
+  React.useEffect(() => {
+    onLoadCompany()
+  }, [])
 
   return (
     <Slide direction="down" in={true} mountOnEnter unmountOnExit>
@@ -52,7 +80,7 @@ export const AppBar: React.FC = () => {
 
           <Stack direction="row" alignItems="center" spacing={0.7}>
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              <IconButton edge="start" aria-label="menu" onClick={() => setShowAmount(currentState => !currentState)}>
+              <IconButton edge="start" aria-label="menu" onClick={() => setShowAmount((currentState) => !currentState)}>
                 <Icon>{showAmount ? 'visibility_off' : 'visibility'}</Icon>
               </IconButton>
             </Zoom>

@@ -16,11 +16,15 @@ export const QueueInfo: React.FC = () => {
   const company = useRecoilValue(GenericState.companyState)
   const showAmount = useRecoilValue(GenericState.showAmountState)
   const [attendancesInfo, setAttendancesInfo] = useRecoilState(State.attendancesInfoResultState)
+  const [loading, setLoading] = useRecoilState(State.loadingState)
 
   const loadAttendancesInfoToday = React.useMemo(() => Factories.makeRemoteLoadAttendancesInfoToday(), [])
 
-  const onLoadAttendancesInfoToday = async () => {
+  const onLoadAttendancesInfoToday = React.useCallback(async () => {
     try {
+      if (loading) return
+
+      setLoading(true)
       const result = await loadAttendancesInfoToday.load()
       if (!result.success) {
         notify('Error loading attendance info:', { type: 'error' })
@@ -29,8 +33,10 @@ export const QueueInfo: React.FC = () => {
       setAttendancesInfo(result.data)
     } catch (error) {
       console.error('Error loading attendance info:', error)
+    } finally {
+      setLoading(false)
     }
-  }
+  }, [loading])
 
   React.useEffect(() => {
     onLoadAttendancesInfoToday()

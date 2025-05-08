@@ -9,7 +9,7 @@ export type AttendanceModel = {
   finishedAt: string
   services: AttendanceServiceModel[]
   user: UserModel
-  cancellationDate: string | null
+  canceledAt: string | null
   cancellationReason: string
   status: AttendanceStatus
 }
@@ -33,7 +33,7 @@ export type AttendanceDone = {
   amount: number
   startedAt: string
   finishedAt: string
-  canceledAt: null
+  canceledAt: string | null
   user: {
     id: string
     name: string
