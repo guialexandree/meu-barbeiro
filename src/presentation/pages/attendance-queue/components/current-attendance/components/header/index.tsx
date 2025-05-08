@@ -1,7 +1,8 @@
 import React from 'react'
-import { Chip, Grow, Icon, IconButton, ListItemIcon, Menu, MenuItem, Stack, Typography } from '@mui/material'
+import { Chip, Grow, Icon, IconButton, ListItemIcon, MenuItem, Stack, Typography } from '@mui/material'
 import { AttendanceStatus } from '@/domain/models'
 import { useRecoilValue } from 'recoil'
+import { Menu } from '@/presentation/components'
 import { GenericState } from '@/presentation/components/atoms'
 
 type HeaderProps = {
@@ -54,7 +55,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
       </Grow>
 
       {props.startDate && (
-        <Stack direction='row' alignItems='center' justifyContent='flex-end' spacing={0.5} sx={{ flex: 1 }}>
+        <Stack direction="row" alignItems="center" justifyContent="flex-end" spacing={0.5} sx={{ flex: 1 }}>
           <Icon fontSize="small" sx={{ color: 'grey.500' }}>
             access_time
           </Icon>
@@ -75,30 +76,13 @@ export const Header: React.FC<HeaderProps> = (props) => {
       </IconButton>
 
       <Menu
+        anchorOrigin={{
+          horizontal: 'left',
+          vertical: 30,
+        }}
         id="basic-menu"
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={open}
         onClose={handleClose}
-        slotProps={{
-          root: {
-            sx: {},
-          },
-          list: {
-            dense: true,
-            sx: {
-              color: 'grey.900',
-            },
-          },
-          paper: {
-            sx: {
-              backgroundColor: (theme) => `${theme.palette.grey[200]}`,
-            },
-          },
-        }}
       >
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
