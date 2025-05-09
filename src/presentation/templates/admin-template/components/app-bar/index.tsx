@@ -28,23 +28,23 @@ export const AppBar: React.FC = () => {
 
   const loadCompany = React.useMemo(() => Factories.makeRemoteLoadCompany(), [])
 
-  const onLoadCompany = () => {
-    if (loading) return
-
-    setLoading(true)
-    loadCompany
-    .load()
-    .then((companyResult) => {
-      if (companyResult.success) {
-        setCompany(companyResult.data)
+  const onLoadCompany = React.useCallback(async () => {
+    try {
+      if (loading) return
+      setLoading(true)
+      const companyResult = await loadCompany.load()
+      if (!companyResult.success) {
+        notify(companyResult.error, { type: 'error' })
         return
       }
 
-      notify(companyResult.error, { type: 'error' })
-    })
-    .catch(console.error)
-    .finally(() => { setLoading(false) })
-  }
+      setCompany(companyResult.data)
+    } catch (error: any) {
+      notify(error.message, { type: 'error' })
+    } finally {
+      setLoading(false)
+    }
+  }, [])
 
   React.useEffect(() => {
     onLoadCompany()
