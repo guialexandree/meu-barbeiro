@@ -120,28 +120,58 @@ export const HistoryToday: React.FC = () => {
               {doneAttendances?.map((attendance) => (
                 <TimelineItem key={`history-item-${attendance.id}`} sx={{ minHeight: 40 }}>
                   <TimelineOppositeContent color="textSecondary" sx={{ fontSize: 14 }}>
-                    {dateAdapter.format(attendance.finishedAt, 'HH:mm')}
+                    {dateAdapter.format((attendance.finishedAt || attendance.canceledAt)!, 'HH:mm')}
                   </TimelineOppositeContent>
                   <TimelineSeparator>
-                    <TimelineDot sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}40`, m: 0 }}>
-                      <Icon color="success" sx={{ fontSize: 12 }}>
-                        check
+                    <TimelineDot
+                      sx={{
+                        boxShadow: 'none',
+                        backgroundColor: (theme) =>
+                          attendance.status === 'canceled'
+                            ? `${theme.palette.error.light}20`
+                            : `${theme.palette.success.light}20`,
+                        m: 0,
+                        p: 0
+                      }}
+                    >
+                      <Icon
+                        fontSize="small"
+                        sx={{
+                          color: attendance.status === 'canceled' ? 'error.main' : 'success.main',
+                          fontSize: 16,
+                        }}
+                      >
+                        {attendance.status === 'canceled' ? 'close' : 'check'}
                       </Icon>
                     </TimelineDot>
                     <TimelineConnector sx={{ width: '1px', backgroundColor: 'grey.600' }} />
                   </TimelineSeparator>
                   <TimelineContent sx={{ textTransform: 'uppercase', pt: 0 }}>
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" flex={1}>
+                    <Stack direction="row" alignItems="center" justifyContent="space-between" flex={1} sx={{ color: attendance.status === 'canceled' ? 'text.secondary' : 'text.primary' }}>
                       {attendance.user.name}
-                      <Chip
-                        label={`${dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt)} min`}
-                        icon={
-                          <Icon sx={{ fontSize: 14, color: 'grey.500' }}>
-                            access_time
-                          </Icon>
-                        }
-                        sx={{ fontSize: 10, py: 0.4, textTransform: 'lowercase', height: 'auto', minWidth: 68 }}
-                      />
+                      {attendance.status === 'canceled' && (
+                        <Chip
+                          label="PERDEU A VEZ"
+                          variant="outlined"
+                          color="error"
+                          size="small"
+                          sx={{
+                            fontSize: 10,
+                            py: 0.4,
+                            height: 'auto',
+                            minWidth: 68,
+                            backgroundColor: (theme) => `${theme.palette.error.light}20`,
+                          }}
+                        />
+                      )}
+
+                      {attendance.status === 'finished' && (
+                        <Chip
+                          label={`${dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt)} min`}
+                          icon={<Icon sx={{ fontSize: 14, color: 'grey.500' }}>access_time</Icon>}
+                          sx={{ fontSize: 10, py: 0.4, textTransform: 'lowercase', height: 'auto', minWidth: 68 }}
+                        />
+                      )}
                     </Stack>
                   </TimelineContent>
                 </TimelineItem>

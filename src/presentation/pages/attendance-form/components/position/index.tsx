@@ -50,13 +50,13 @@ export const Position: React.FC = () => {
   }, [])
 
   return (
-    <Stack spacing={1}justifyContent="space-between">
+    <Stack spacing={2} justifyContent="space-between">
       <Slide direction="right" in mountOnEnter unmountOnExit style={{ transitionDelay: '50ms' }}>
-        <Typography variant="h2" mb={4}>
+        <Typography variant="h2">
           POSIÇÃO NA FILA
         </Typography>
       </Slide>
-      <>
+      <Stack spacing={1}>
         <InputRadio<'first' | 'last'>
           label="ADICIONAR NO FINAL"
           icon='south'
@@ -88,7 +88,7 @@ export const Position: React.FC = () => {
           onChange={handleChange}
           description="Adiciona no início da fila de atendimento, será o próximo a ser atendido"
         />
-      </>
+      </Stack>
     </Stack>
   )
 }
