@@ -7,6 +7,7 @@ export type AttendanceModel = {
   createdAt: string
   startedAt: string
   finishedAt: string
+  startPrevision: string
   services: AttendanceServiceModel[]
   user: UserModel
   canceledAt: string | null

@@ -74,7 +74,6 @@ export const Client: React.FC = () => {
           }}
           renderInput={(params) => (
             <TextField
-              label="Cliente"
               slotProps={{
                 input: {
                   ...params.InputProps,

@@ -1,6 +1,8 @@
 import React from 'react'
+import { useRecoilValue } from 'recoil'
 import { Divider, ListItem, ListItemText, Stack, Typography } from '@mui/material'
 import { AttendanceModel, UserModel } from '@/domain/models'
+import { GenericState } from '@/presentation/components/atoms'
 import { AttendanceActions } from '../attendance-actions'
 
 type AttendanceItemProps = {
@@ -10,6 +12,7 @@ type AttendanceItemProps = {
 }
 
 export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
+  const dateAdapter = useRecoilValue(GenericState.dateAdapterState)
   const onOpenDialogWhatsapp = React.useCallback(() => {
     window.open(
       `https://api.whatsapp.com/send?phone=55${props.attendance.user.contactNumber.replace(/\D/g, '')}`,
@@ -45,7 +48,7 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
           PREVISÃO
         </Typography>
         <Typography variant="body2" letterSpacing={0.8}  fontSize={14} fontWeight={900} fontFamily="Inter">
-          14:50
+          {dateAdapter.format(props.attendance.startPrevision, 'HH:mm')}
         </Typography>
 
       </Stack>

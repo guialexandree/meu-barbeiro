@@ -21,6 +21,7 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
           alignItems: 'flex-start',
           px: 3,
           py: 1.5,
+          pr: 4,
           transition: 'all 0.3s ease',
           backgroundColor: props.checked ? 'background.paper' : 'background.default',
           borderColor: props.checked ? 'grey.500' : 'grey.800',
@@ -31,7 +32,11 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
         <Stack direction="row" alignItems="center" justifyContent="space-between" width={'100%'}>
           <Stack direction="row" alignItems="center" spacing={1}>
             {props.icon && <Icon sx={{ fontSize: 16 }}>{props.icon}</Icon>}
-            <Typography variant="body2" fontWeight={500} color={props.checked ? 'text.primary' : 'text.secondary'}>
+            <Typography
+              variant="body2"
+              fontWeight={props.checked ? 600 : 400}
+              color={props.checked ? 'text.primary' : 'text.secondary'}
+            >
               {props.label}
             </Typography>
           </Stack>
@@ -46,7 +51,7 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
             sx={{}}
             slotProps={{
               input: { 'aria-label': 'A', sx: { p: 0 } },
-              root: { sx: { py: 0, position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' } },
+              root: { sx: { py: 0, position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)' } },
             }}
           />
         </Stack>
