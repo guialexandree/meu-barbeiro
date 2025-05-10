@@ -87,6 +87,9 @@ export const CurrentAttendance: React.FC = () => {
     socket.on('finish_attendance', (attendance: AttendanceModel) => {
       endSuccess(attendance.id)
     })
+    socket.on('cancel_attendance', (attendance: AttendanceModel) => {
+      cancelSuccess(attendance.id)
+    })
 
     socket.on('start_attendance', (attendance: AttendanceModel) => {
       setAttendancesResult(currentState => ({
@@ -115,6 +118,14 @@ export const CurrentAttendance: React.FC = () => {
 
     return 'default'
   }, [success, passTheTurn]) as 'cancel' | 'success' | 'default'
+
+  const colorStatus = React.useMemo(() => {
+    if (success) {
+      return 'success'
+    }
+
+    return 'primary'
+  }, [success, passTheTurn]) as 'primary' | 'success'
 
 
   if (!company) {
@@ -155,7 +166,7 @@ export const CurrentAttendance: React.FC = () => {
           py: 1,
           mt: 1,
           height: 157,
-          backgroundColor: (theme) => (success ? `${theme.palette.success.main}90` : bgStatusColor),
+          backgroundColor: (theme) => ((success || passTheTurn) ? `${theme.palette[colorStatus].main}90` : bgStatusColor),
           transition: 'all 0.5s ease',
           borderColor: `${statusColor}.light`,
           position: 'relative',
@@ -169,7 +180,7 @@ export const CurrentAttendance: React.FC = () => {
 
             <Attendance attendance={currentAttendance} />
 
-            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={cancelSuccess} />
+            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={() => {}} />
           </Stack>
         </Slide>
       </Paper>

@@ -6,7 +6,6 @@ import { AttendanceModel } from '@/domain/models'
 import { Button, Icon, Slide } from '@mui/material'
 import { useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
-import { serviceCreateValidation } from './validations'
 import { PageLoader } from '@/presentation/components'
 
 type SaveFormActionProps = {
@@ -43,21 +42,7 @@ export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
     handleAddAttendanceInQueue()
   }
 
-  const validateForm = (): boolean => {
-    const result = serviceCreateValidation.safeParse(newAttendance)
-
-    if (!result.success) {
-      const error = result.error.errors.at(0)!
-      const inputName = error.path.at(0) as string
-      onError(error.message, inputName)
-    }
-
-    return result.success
-  }
-
   const handleAddAttendanceInQueue = (): void => {
-    if (!validateForm()) return
-
     setLoading(true)
     addAttendanceInQueue
       .add(newAttendance)

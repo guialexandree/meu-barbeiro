@@ -68,9 +68,6 @@ export const Client: React.FC = () => {
           }
           onChange={(_, newValue) => {
             setSelectedUser(newValue!)
-            // // Close the keyboard after selecting an item
-            // const input = document.activeElement as HTMLElement
-            // input?.blur()
           }}
           renderInput={(params) => (
             <TextField
