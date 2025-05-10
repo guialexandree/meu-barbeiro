@@ -70,12 +70,12 @@ export const HistoryToday: React.FC = () => {
 
     socket.on('cancel_attendance', (attendance: AttendanceModel) => {
       setDoneAttendances((currentState) => [
-        ...currentState,
         {
           ...attendance,
           amount: 0,
           timeService: dateAdapter.diffInMinutes(attendance.startedAt, attendance.canceledAt!),
         },
+        ...currentState,
       ])
     })
   }, [])

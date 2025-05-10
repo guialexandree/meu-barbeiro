@@ -3,22 +3,52 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { Grow, Paper, Skeleton, Slide, Stack, useTheme } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
-import { Actions, Attendance, Header, SuccessPanel } from './components'
+import { Actions, Attendance, Header, StatePanel } from './components'
 import { AttendanceModel } from '@/domain/models'
 import { useSocket } from '@/presentation/hooks'
 
 export const CurrentAttendance: React.FC = () => {
   const theme = useTheme()
-  const { getSocket } = useSocket()
   const company = useRecoilValue(GenericState.companyState)
+  const { getSocket } = useSocket()
   const [attendanceResult, setAttendancesResult] = useRecoilState(State.List.attendancesResultState)
   const [success, setSuccess] = useRecoilState(State.List.successState)
   const [closeAttendance, setCloseAttendance] = React.useState(false)
+  const [passTheTurn, setPassTheTurn] = React.useState(false)
 
   const endSuccess = React.useCallback((attendanceId: string) => {
     setSuccess(true)
     setTimeout(() => {
       setSuccess(false)
+      setCloseAttendance(true)
+      setTimeout(() => {
+        setAttendancesResult((currentState) => {
+          let pendingsAttendances = currentState.data.filter((attendance) => attendance.id !== attendanceId)
+          pendingsAttendances = pendingsAttendances.map((attendance, index) => {
+            if (index === 0) {
+              return {
+                ...attendance,
+                status: 'current',
+                startedAt: new Date().toISOString(),
+              }
+            }
+            return attendance
+          })
+
+          return {
+            ...currentState,
+            data: pendingsAttendances,
+          }
+        })
+        setCloseAttendance(false)
+      }, 700)
+    }, 1200)
+  }, [])
+
+  const cancelSuccess = React.useCallback((attendanceId: string) => {
+    setPassTheTurn(true)
+    setTimeout(() => {
+      setPassTheTurn(false)
       setCloseAttendance(true)
       setTimeout(() => {
         setAttendancesResult((currentState) => {
@@ -74,6 +104,19 @@ export const CurrentAttendance: React.FC = () => {
     // }
   }, [])
 
+  const statusPanel = React.useMemo(() => {
+    if (success) {
+      return 'success'
+    }
+
+    if (passTheTurn) {
+      return 'success'
+    }
+
+    return 'default'
+  }, [success, passTheTurn]) as 'cancel' | 'success' | 'default'
+
+
   if (!company) {
     return <Skeleton variant="rounded" width="100%" height={157} sx={{ borderRadius: 2, mt: 1 }} />
   }
@@ -118,7 +161,7 @@ export const CurrentAttendance: React.FC = () => {
           position: 'relative',
         }}
       >
-        <SuccessPanel success={success} />
+        <StatePanel variant={statusPanel} />
 
         <Slide direction={closeAttendance ? 'left' : 'up'} in={!closeAttendance} timeout={100}>
           <Stack>
@@ -126,7 +169,7 @@ export const CurrentAttendance: React.FC = () => {
 
             <Attendance attendance={currentAttendance} />
 
-            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={endSuccess} />
+            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={cancelSuccess} />
           </Stack>
         </Slide>
       </Paper>

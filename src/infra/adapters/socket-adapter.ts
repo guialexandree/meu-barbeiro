@@ -10,6 +10,13 @@ export class SocketAdapter {
       SocketAdapter.instance = io(process.env.API_URL, {
         transports: ['websocket']
       })
+
+      SocketAdapter.instance.on('connect', () => {
+        console.log('Socket connected')
+      })
+      SocketAdapter.instance.on('disconnect', () => {
+        console.log('Socket disconnected')
+      })
     }
     return SocketAdapter.instance
   }

@@ -143,7 +143,7 @@ export const QueueInfo: React.FC = () => {
 
             <Zoom in unmountOnExit>
               <Stack direction="row" alignItems="center" spacing={0.5}>
-                {!!attendancesInfo?.finished && <TextZoom text={attendancesInfo.finished} />}
+                <TextZoom text={attendancesInfo?.finished || 0} />
 
                 {!!attendancesInfo && (
                   <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
