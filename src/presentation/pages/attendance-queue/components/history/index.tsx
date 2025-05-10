@@ -59,12 +59,12 @@ export const HistoryToday: React.FC = () => {
     const socket = getSocket()
     socket.on('finish_attendance', (attendance: AttendanceModel) => {
       setDoneAttendances((currentState) => [
-        ...currentState,
         {
           ...attendance,
           amount: attendance.services.reduce((acc, service) => acc + +service.price, 0),
           timeService: dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt!),
         },
+        ...currentState.filter((item) => item.id !== attendance.id),
       ])
     })
 
@@ -119,7 +119,7 @@ export const HistoryToday: React.FC = () => {
             >
               {doneAttendances?.map((attendance) => (
                 <TimelineItem key={`history-item-${attendance.id}`} sx={{ minHeight: 40 }}>
-                  <TimelineOppositeContent color="textSecondary" sx={{ fontSize: 14 }}>
+                  <TimelineOppositeContent color="textSecondary" sx={{ fontSize: 14, pt: 0 }}>
                     {dateAdapter.format((attendance.finishedAt || attendance.canceledAt)!, 'HH:mm')}
                   </TimelineOppositeContent>
                   <TimelineSeparator>
@@ -159,7 +159,7 @@ export const HistoryToday: React.FC = () => {
                             fontSize: 10,
                             py: 0.4,
                             height: 'auto',
-                            minWidth: 68,
+                            minWidth: 84,
                             backgroundColor: (theme) => `${theme.palette.error.light}20`,
                           }}
                         />
@@ -168,9 +168,18 @@ export const HistoryToday: React.FC = () => {
                       {attendance.status === 'finished' && (
                         <Chip
                           label={`${dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt)} min`}
-                          icon={<Icon sx={{ fontSize: 14, color: 'grey.500' }}>access_time</Icon>}
-                          sx={{ fontSize: 10, py: 0.4, textTransform: 'lowercase', height: 'auto', minWidth: 68 }}
+                          variant="outlined"
+                          color='success'
+                          size="small"
+                          sx={{
+                            fontSize: 10,
+                            py: 0.4,
+                            height: 'auto',
+                            minWidth: 84,
+                            backgroundColor: (theme) => `${theme.palette.success.light}20`,
+                          }}
                         />
+                       
                       )}
                     </Stack>
                   </TimelineContent>

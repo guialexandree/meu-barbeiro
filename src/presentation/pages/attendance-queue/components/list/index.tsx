@@ -116,7 +116,7 @@ export const AttendanceQueueList: React.FC = () => {
           error: 'Erro ao carregar fila de atendimento',
         }}
       >
-        {attendancesResult?.data?.map((attendance, index) => (
+        {attendancesResult?.data?.slice(1)?.map((attendance, index) => (
           <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={attendance.id}>
             <Box sx={{ width: '100%'}}>
               <AttendanceItem
