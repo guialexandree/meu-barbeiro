@@ -58,6 +58,11 @@ export const QueueInfo: React.FC = () => {
         finished: currentState.finished + 1,
       }))
     })
+
+    return () => {
+      socket.off('entry_in_queue')
+      socket.off('finish_attendance')
+    }
   }, [])
 
   return (
@@ -143,7 +148,7 @@ export const QueueInfo: React.FC = () => {
 
             <Zoom in unmountOnExit>
               <Stack direction="row" alignItems="center" spacing={0.5}>
-                <TextZoom text={attendancesInfo?.finished || 0} />
+                {attendancesInfo && <TextZoom text={attendancesInfo?.finished || 0} />}
 
                 {!!attendancesInfo && (
                   <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>

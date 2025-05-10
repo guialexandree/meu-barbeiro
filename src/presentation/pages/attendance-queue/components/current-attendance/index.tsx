@@ -1,11 +1,11 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Grow, Paper, Skeleton, Slide, Stack, useTheme } from '@mui/material'
+import { AttendanceModel } from '@/domain/models'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
-import { Actions, Attendance, Header, StatePanel } from './components'
-import { AttendanceModel } from '@/domain/models'
 import { useSocket } from '@/presentation/hooks'
+import { Actions, Attendance, Header, StatePanel } from './components'
 
 export const CurrentAttendance: React.FC = () => {
   const theme = useTheme()
@@ -102,9 +102,12 @@ export const CurrentAttendance: React.FC = () => {
       // onLoadAttendancesInfoToday()
     })
 
-    // return () => {
-    //   socket.disconnect()
-    // }
+    return () => {
+      socket.off('entry_in_queue')
+      socket.off('finish_attendance')
+      socket.off('cancel_attendance')
+      socket.off('start_attendance')
+    }
   }, [])
 
   const statusPanel = React.useMemo(() => {

@@ -11,6 +11,7 @@ import {
   Typography,
   Chip,
   CircularProgress,
+  Grow,
 } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { Factories } from '@/main/factories/usecases'
@@ -64,7 +65,7 @@ export const HistoryToday: React.FC = () => {
           amount: attendance.services.reduce((acc, service) => acc + +service.price, 0),
           timeService: dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt!),
         },
-        ...currentState.filter((item) => item.id !== attendance.id),
+        ...currentState,
       ])
     })
 
@@ -78,6 +79,11 @@ export const HistoryToday: React.FC = () => {
         ...currentState,
       ])
     })
+
+    return () => {
+      socket.off('finish_attendance')
+      socket.off('cancel_attendance')
+    }
   }, [])
 
   if (!doneAttendances.length) {
@@ -117,73 +123,74 @@ export const HistoryToday: React.FC = () => {
                 py: 0,
               }}
             >
-              {doneAttendances?.map((attendance) => (
-                <TimelineItem key={`history-item-${attendance.id}`} sx={{ minHeight: 40 }}>
-                  <TimelineOppositeContent color="textSecondary" sx={{ fontSize: 14, pt: 0 }}>
-                    {dateAdapter.format((attendance.finishedAt || attendance.canceledAt)!, 'HH:mm')}
-                  </TimelineOppositeContent>
-                  <TimelineSeparator>
-                    <TimelineDot
-                      sx={{
-                        boxShadow: 'none',
-                        backgroundColor: (theme) =>
-                          attendance.status === 'canceled'
-                            ? `${theme.palette.error.light}20`
-                            : `${theme.palette.success.light}20`,
-                        m: 0,
-                        p: 0
-                      }}
-                    >
-                      <Icon
-                        fontSize="small"
+              {doneAttendances?.map((attendance, index) => (
+                <Grow key={`history-item-${attendance.id}`} in style={{ transitionDelay: `${index * 50}ms` }} unmountOnExit>
+                  <TimelineItem key={`history-item-${attendance.id}`} sx={{ minHeight: 40 }}>
+                    <TimelineOppositeContent color="textSecondary" sx={{ fontSize: 14, pt: 0 }}>
+                      {dateAdapter.format((attendance.finishedAt || attendance.canceledAt)!, 'HH:mm')}
+                    </TimelineOppositeContent>
+                    <TimelineSeparator>
+                      <TimelineDot
                         sx={{
-                          color: attendance.status === 'canceled' ? 'error.main' : 'success.main',
-                          fontSize: 16,
+                          boxShadow: 'none',
+                          backgroundColor: (theme) =>
+                            attendance.status === 'canceled'
+                              ? `${theme.palette.error.light}20`
+                              : `${theme.palette.success.light}20`,
+                          m: 0,
+                          p: 0
                         }}
                       >
-                        {attendance.status === 'canceled' ? 'close' : 'check'}
-                      </Icon>
-                    </TimelineDot>
-                    <TimelineConnector sx={{ width: '1px', backgroundColor: 'grey.600' }} />
-                  </TimelineSeparator>
-                  <TimelineContent sx={{ textTransform: 'uppercase', pt: 0 }}>
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" flex={1} sx={{ color: attendance.status === 'canceled' ? 'text.secondary' : 'text.primary' }}>
-                      {attendance.user.name}
-                      {attendance.status === 'canceled' && (
-                        <Chip
-                          label="PERDEU A VEZ"
-                          variant="outlined"
-                          color="error"
-                          size="small"
+                        <Icon
+                          fontSize="small"
                           sx={{
-                            fontSize: 10,
-                            py: 0.4,
-                            height: 'auto',
-                            minWidth: 84,
-                            backgroundColor: (theme) => `${theme.palette.error.light}20`,
+                            color: attendance.status === 'canceled' ? 'error.main' : 'success.main',
+                            fontSize: 16,
                           }}
-                        />
-                      )}
+                        >
+                          {attendance.status === 'canceled' ? 'close' : 'check'}
+                        </Icon>
+                      </TimelineDot>
+                      <TimelineConnector sx={{ width: '1px', backgroundColor: 'grey.600' }} />
+                    </TimelineSeparator>
+                    <TimelineContent sx={{ textTransform: 'uppercase', pt: 0 }}>
+                      <Stack direction="row" alignItems="center" justifyContent="space-between" flex={1} sx={{ color: attendance.status === 'canceled' ? 'text.secondary' : 'text.primary' }}>
+                        {attendance.user.name}
+                        {attendance.status === 'canceled' && (
+                          <Chip
+                            label="PERDEU A VEZ"
+                            variant="outlined"
+                            color="error"
+                            size="small"
+                            sx={{
+                              fontSize: 10,
+                              py: 0.4,
+                              height: 'auto',
+                              minWidth: 84,
+                              backgroundColor: (theme) => `${theme.palette.error.light}20`,
+                            }}
+                          />
+                        )}
 
-                      {attendance.status === 'finished' && (
-                        <Chip
-                          label={`${dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt)} min`}
-                          variant="outlined"
-                          color='success'
-                          size="small"
-                          sx={{
-                            fontSize: 10,
-                            py: 0.4,
-                            height: 'auto',
-                            minWidth: 84,
-                            backgroundColor: (theme) => `${theme.palette.success.light}20`,
-                          }}
-                        />
-                       
-                      )}
-                    </Stack>
-                  </TimelineContent>
-                </TimelineItem>
+                        {attendance.status === 'finished' && (
+                          <Chip
+                            label={`${dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt)} min`}
+                            variant="outlined"
+                            color='success'
+                            size="small"
+                            sx={{
+                              fontSize: 10,
+                              py: 0.4,
+                              height: 'auto',
+                              minWidth: 84,
+                              backgroundColor: (theme) => `${theme.palette.success.light}20`,
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    </TimelineContent>
+                  </TimelineItem>
+                </Grow>
               ))}
             </Timeline>
 
