@@ -19,11 +19,23 @@ export const QueueInfo: React.FC = () => {
   const [loading, setLoading] = useRecoilState(State.loadingState)
 
   const loadAttendancesInfoToday = React.useMemo(() => Factories.makeRemoteLoadAttendancesInfoToday(), [])
+  const pollingInterval = React.useRef<NodeJS.Timeout>()
 
   const onLoadAttendancesInfoToday = React.useCallback(async () => {
     try {
-      if (loading) return
+      const result = await loadAttendancesInfoToday.load()
+      if (!result.success) {
+        notify('Error loading attendance info:', { type: 'error' })
+        return
+      }
+      setAttendancesInfo(result.data)
+    } catch (error) {
+      console.error('Error loading attendance info:', error)
+    }
+  }, [loading])
 
+  const onLoad = React.useCallback(async () => {
+    try {
       setLoading(true)
       const result = await loadAttendancesInfoToday.load()
       if (!result.success) {
@@ -39,9 +51,21 @@ export const QueueInfo: React.FC = () => {
   }, [loading])
 
   React.useEffect(() => {
-    onLoadAttendancesInfoToday()
+    onLoad()
 
     const socket = getSocket()
+
+    socket.on('connect', () => {
+      if (pollingInterval.current) {
+        clearInterval(pollingInterval.current)
+      }
+    })
+
+    socket.on('disconnect', () => {
+      pollingInterval.current = setInterval(() => {
+        onLoadAttendancesInfoToday()
+      }, 30000)
+    })
 
     socket.on('entry_in_queue', () => {
       setAttendancesInfo((currentState) => ({
@@ -62,6 +86,9 @@ export const QueueInfo: React.FC = () => {
     return () => {
       socket.off('entry_in_queue')
       socket.off('finish_attendance')
+      if (pollingInterval.current) {
+        clearInterval(pollingInterval.current)
+      }
     }
   }, [])
 

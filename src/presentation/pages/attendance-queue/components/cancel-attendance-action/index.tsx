@@ -1,14 +1,15 @@
 import React from 'react'
 import { Button, Grow, Icon, ListItemIcon, MenuItem } from '@mui/material'
-import { AttendanceStatus } from '@/domain/models'
+import { AttendanceModel, AttendanceStatus } from '@/domain/models'
 import { Factories } from '@/main/factories/usecases'
 import { useNotify } from '@/presentation/hooks'
 import { Menu } from '@/presentation/components'
 
 type CancelAttendanceActionProps = {
   status: AttendanceStatus
-  attendanceId: string
+  attendance: AttendanceModel
   onSuccess: (attendanceId: string) => void
+  sendTo: (attendance: AttendanceModel) => void
 }
 
 export const CancelAttendanceAction: React.FC<CancelAttendanceActionProps> = (props) => {
@@ -17,6 +18,7 @@ export const CancelAttendanceAction: React.FC<CancelAttendanceActionProps> = (pr
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const cancelAttendance = React.useMemo(() => Factories.makeRemoteCancelAttendance(), [])
+  const addAttendanceInQueue = React.useMemo(() => Factories.makeRemoteAddAttendanceInQueue(), [])
 
   if (props.status !== 'current') {
     return null
@@ -30,13 +32,38 @@ export const CancelAttendanceAction: React.FC<CancelAttendanceActionProps> = (pr
     setAnchorEl(null)
   }
 
-  const handleCancelAttendance = () => {
+  const handleAddAttendanceInQueue = () => {
     setLoading(true)
-    cancelAttendance
-      .cancel({ attendanceId: props.attendanceId, reason: 'PERDEU A VEZ' })
+    handleClose()
+    addAttendanceInQueue
+      .add({
+        position: 'last',
+        services: props.attendance.services.map((service) => service.id),
+        userId: props.attendance.user.id,
+       })
       .then((result) => {
         if (result.success) {
-          props.onSuccess(props.attendanceId)
+          props.sendTo(result.data)
+          return
+        }
+      })
+      .catch((error) => {
+        notify(error, { type: 'error' })
+      })
+      .finally(() => {
+        setLoading(false)
+        handleClose()
+      })
+  }
+
+  const handleCancelAttendance = () => {
+    setLoading(true)
+    handleClose()
+    cancelAttendance
+      .cancel({ attendanceId: props.attendance.id, reason: 'PERDEU A VEZ' })
+      .then((result) => {
+        if (result.success) {
+          props.onSuccess(props.attendance.id)
           return
         }
       })
@@ -68,21 +95,21 @@ export const CancelAttendanceAction: React.FC<CancelAttendanceActionProps> = (pr
       </Grow>
 
       <Menu anchorOrigin={{ horizontal: -40, vertical: 36 }} id="basic-menu" anchorEl={anchorEl} onClose={handleClose}>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon onClick={handleAddAttendanceInQueue}>
+            <Icon sx={{ color: 'grey.900' }} fontSize="small">
+              south
+            </Icon>
+          </ListItemIcon>
+          Enviar para o final da fila
+        </MenuItem>
         <MenuItem onClick={handleCancelAttendance}>
           <ListItemIcon sx={{ boxShadow: 'none' }}>
             <Icon sx={{ color: 'grey.900' }} fontSize="small">
               close
             </Icon>
           </ListItemIcon>
-          Cancelar atendimento
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Icon sx={{ color: 'grey.900' }} fontSize="small">
-              south
-            </Icon>
-          </ListItemIcon>
-          Enviar para o final da fila
+          Remover da fila
         </MenuItem>
       </Menu>
     </>

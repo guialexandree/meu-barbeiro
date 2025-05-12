@@ -7,16 +7,50 @@ import { GenericState } from '@/presentation/components/atoms'
 import { Box, Button, Fade, Icon, Paper, Stack, Typography, Zoom } from '@mui/material'
 import { AttendanceItem } from '../attendance-item'
 import { Factories } from '@/main/factories/usecases'
+import { useSocket } from '@/presentation/hooks'
 import barberImg from '@/presentation/assets/logo.png'
 
 export const AttendanceQueueList: React.FC = () => {
   const navigate = useNavigate()
+  const { getSocket } = useSocket()
   const [attendancesResult, setAttendanceResult] = useRecoilState(State.List.attendancesResultState)
   const setPageState = useSetRecoilState(State.listState)
   const setOpenWhatsAppDialog = useSetRecoilState(State.List.openDialogWhatsAppState)
   const company = useRecoilValue(GenericState.companyState)
 
   const loadAttendances = React.useMemo(() => Factories.makeRemoteLoadAttendances(), [])
+  const pollingInterval = React.useRef<NodeJS.Timeout>()
+
+  const onLoadAttendances = React.useCallback(async () => {
+    try {
+      const result = await loadAttendances.load()
+      setAttendanceResult(result)
+    } catch (error: any) {
+      console.error(error)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const socket = getSocket()
+
+    socket.on('connect', () => {
+      if (pollingInterval.current) {
+        clearInterval(pollingInterval.current)
+      }
+    })
+
+    socket.on('disconnect', () => {
+      pollingInterval.current = setInterval(() => {
+        onLoadAttendances()
+      }, 30000)
+    })
+
+    return () => {
+      if (pollingInterval.current) {
+        clearInterval(pollingInterval.current)
+      }
+    }
+  }, [])
 
   const onLoad = React.useCallback(async () => {
     try {

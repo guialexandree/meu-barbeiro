@@ -7,6 +7,7 @@ type Actions = {
   attendance: AttendanceModel | undefined
   endSuccess: (attendanceId: string) => void
   cancelSuccess: (attendanceId: string) => void
+  sendTo: (attendance: AttendanceModel) => void
 }
 
 export const Actions: React.FC<Actions> = (props) => {
@@ -17,7 +18,8 @@ export const Actions: React.FC<Actions> = (props) => {
   return (
     <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ width: '100%' }} mt={1} spacing={2}>
       <CancelAttendanceAction
-        attendanceId={props.attendance.id}
+        attendance={props.attendance}
+        sendTo={props.sendTo}
         onSuccess={props.cancelSuccess}
         status={props.attendance.status}
       />

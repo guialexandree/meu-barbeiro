@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar, Stack, Typography, useTheme, Zoom } from '@mui/material'
-import { getRandomAvatar } from '@/presentation/components/avatar-random'
+import { imgRandom } from '@/presentation/components/avatar-random'
 import { AttendanceModel } from '@/domain/models'
 
 type AttendanceProps = {
@@ -9,6 +9,7 @@ type AttendanceProps = {
 
 export const Attendance: React.FC<AttendanceProps> = (props) => {
   const theme = useTheme()
+  const avatar = React.useMemo(() => imgRandom[Math.floor(Math.random() * imgRandom.length)], [])
 
   if (!props.attendance) {
     return null
@@ -42,7 +43,7 @@ export const Attendance: React.FC<AttendanceProps> = (props) => {
             border: '3px solid',
             borderColor: `${bgStatusColor}.light`,
           }}
-          src={getRandomAvatar()}
+          src={avatar}
         />
       </Zoom>
 

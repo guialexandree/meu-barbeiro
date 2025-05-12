@@ -92,14 +92,10 @@ export const CurrentAttendance: React.FC = () => {
     })
 
     socket.on('start_attendance', (attendance: AttendanceModel) => {
-      setAttendancesResult(currentState => ({
+      setAttendancesResult((currentState) => ({
         ...currentState,
-        data: currentState.data.map(item => item.id === attendance.id ? attendance : item),
+        data: currentState.data.map((item) => (item.id === attendance.id ? attendance : item)),
       }))
-    })
-
-    socket.on('disconnect', () => {
-      // onLoadAttendancesInfoToday()
     })
 
     return () => {
@@ -123,13 +119,12 @@ export const CurrentAttendance: React.FC = () => {
   }, [success, passTheTurn]) as 'cancel' | 'success' | 'default'
 
   const colorStatus = React.useMemo(() => {
-    if (success) {
+    if (success || attendanceResult?.data?.at(0)?.status === 'attending') {
       return 'success'
     }
 
     return 'primary'
-  }, [success, passTheTurn]) as 'primary' | 'success'
-
+  }, [attendanceResult, success, passTheTurn]) as 'primary' | 'success'
 
   if (!company) {
     return <Skeleton variant="rounded" width="100%" height={157} sx={{ borderRadius: 2, mt: 1 }} />
@@ -143,14 +138,6 @@ export const CurrentAttendance: React.FC = () => {
     attending: `${theme.palette.success.light}30`,
     finished: `${theme.palette.success.light}20`,
     canceled: `${theme.palette.error.light}20`,
-  }[currentAttendance?.status || 'in_queue']
-
-  const statusColor: any = {
-    in_queue: 'info',
-    current: 'info',
-    attending: 'success',
-    finished: 'success',
-    canceled: 'error',
   }[currentAttendance?.status || 'in_queue']
 
   return (
@@ -169,9 +156,9 @@ export const CurrentAttendance: React.FC = () => {
           py: 1,
           mt: 1,
           height: 157,
-          backgroundColor: (theme) => ((success || passTheTurn) ? `${theme.palette[colorStatus].main}90` : bgStatusColor),
+          backgroundColor: (theme) => (success || passTheTurn ? `${theme.palette[colorStatus].main}90` : bgStatusColor),
           transition: 'all 0.5s ease',
-          borderColor: `${statusColor}.light`,
+          borderColor: `${colorStatus}.light`,
           position: 'relative',
         }}
       >
@@ -183,7 +170,7 @@ export const CurrentAttendance: React.FC = () => {
 
             <Attendance attendance={currentAttendance} />
 
-            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={() => {}} />
+            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={() => {}} sendTo={() => {}} />
           </Stack>
         </Slide>
       </Paper>

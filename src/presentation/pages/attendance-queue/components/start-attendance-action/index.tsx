@@ -64,7 +64,7 @@ export const StartAttendanceAction: React.FC<StartAttendanceActionProps> = (prop
       sx={{ fontSize: 14, boxShadow: 0 }}
       endIcon={<Icon>content_cut</Icon>}
     >
-      {loading ? 'INICIANDO...' : 'INICIAR'}
+      INICIAR
     </Button>
   )
 }

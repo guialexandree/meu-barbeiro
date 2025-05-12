@@ -95,18 +95,18 @@ export const Header: React.FC<HeaderProps> = (props) => {
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Icon sx={{ color: 'grey.900' }} fontSize="small">
-              close
-            </Icon>
-          </ListItemIcon>
-          Cancelar atendimento
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Icon sx={{ color: 'grey.900' }} fontSize="small">
               south
             </Icon>
           </ListItemIcon>
           Enviar para o final da fila
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Icon sx={{ color: 'grey.900' }} fontSize="small">
+              close
+            </Icon>
+          </ListItemIcon>
+          Remover da fila
         </MenuItem>
       </Menu>
     </Stack>
