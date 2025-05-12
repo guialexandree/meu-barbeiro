@@ -17,7 +17,7 @@ export const ServiceActivedFilters: React.FC<ServiceActivedFiltersProps> = (prop
 
   const handleLoadServices = React.useCallback(
     async (textSearch: string): Promise<void> => {
-      const services = await props.loadServices(textSearch, status !== 'todos' ? status : undefined)!
+      const services = await props.loadServices(textSearch, status !== 'all' ? status : undefined)!
       if (services?.success) {
         setServices(services.data)
         return
@@ -29,7 +29,7 @@ export const ServiceActivedFilters: React.FC<ServiceActivedFiltersProps> = (prop
   const resetSearch = React.useCallback(() => {
     setTextSearch('')
     setTextInput('')
-    setStatus('todos')
+    setStatus('all')
     handleLoadServices('')
   }, [])
 

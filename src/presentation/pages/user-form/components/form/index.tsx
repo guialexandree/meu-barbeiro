@@ -1,8 +1,7 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { Fade, Icon, Paper, Stack } from '@mui/material'
-import WhatsAppIcon from '@mui/icons-material/WhatsApp'
-import { InputText } from '@/presentation/components'
+import { InputPhoneNumber, InputText } from '@/presentation/components'
 import { State } from '@/presentation/pages/user-form/components/atoms'
 import { useMobile } from '@/presentation/hooks'
 
@@ -20,14 +19,9 @@ export const Form: React.FC = () => {
         }}
       >
         <Stack spacing={1.5} sx={{ mx: { xs: 2, sm: 5 }, transition: 'all 0.3s' }}>
-          <InputText
+          <InputPhoneNumber
             state={State.contactNumberState}
             inputProps={{
-              slotProps: {
-                input: {
-                  startAdornment: <WhatsAppIcon sx={{ mr: 1, color: 'grey.500' }} />,
-                },
-              },
               placeholder: '(11) 99999-9999',
               type: 'tel',
               disabled: loading,
@@ -40,7 +34,7 @@ export const Form: React.FC = () => {
             inputProps={{
               slotProps: {
                 input: {
-                  startAdornment: <Icon sx={{ mr: 1, color: 'grey.500' }}>group</Icon>,
+                  startAdornment: <Icon sx={{ mr: 1, color: 'grey.500' }}>person_outlined</Icon>,
                 },
               },
               autoFocus: !isMobile,
@@ -52,7 +46,7 @@ export const Form: React.FC = () => {
             }}
           />
 
-          <InputText
+          {/* <InputText
             state={State.nicknameState}
             inputProps={{
               inputMode: 'text',
@@ -61,9 +55,9 @@ export const Form: React.FC = () => {
               id: 'client-nickname-input',
               name: 'nickname',
             }}
-          />
+          /> */}
 
-          <InputText
+          {/* <InputText
             state={State.passwordState}
             toogleVisibility
             inputProps={{
@@ -85,7 +79,7 @@ export const Form: React.FC = () => {
               id: 'client-password',
               name: 'password',
             }}
-          />
+          /> */}
         </Stack>
       </Paper>
     </Fade>

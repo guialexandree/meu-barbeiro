@@ -22,7 +22,7 @@ export const StatusFilter: React.FC<StatusFilterProps> = (props) => {
       if (!status) return
       setStatus(status)
       setTextSearch(textSearch)
-      const services = await props.loadServices(textSearch, status !== 'todos' ? status : undefined)!
+      const services = await props.loadServices(textSearch, status !== 'all' ? status : undefined)!
       if (services?.success) {
         setServices(services.data)
         return
@@ -71,7 +71,7 @@ export const StatusFilter: React.FC<StatusFilterProps> = (props) => {
           label="Status"
           sx={{ minWidth: 240 }}
         >
-          <MenuItem value={'todos'}>exibir todos</MenuItem>
+          <MenuItem value={'all'}>exibir todos</MenuItem>
           <MenuItem value={'actived'}>somente ativos</MenuItem>
           <MenuItem value={'deactivated'}>somentos inativo</MenuItem>
         </Select>

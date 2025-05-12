@@ -5,6 +5,7 @@ export type ServiceModel = {
   status: ServiceStatus
   price: number
   timeExecution: number
+  default?: boolean
 }
 
-export type ServiceStatus = 'deactivated' | 'actived' | 'todos'
+export type ServiceStatus = 'deactivated' | 'actived' | 'all'

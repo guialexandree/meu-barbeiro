@@ -28,6 +28,11 @@ export const SaveAction: React.FC = () => {
   const onSuccess = (client: UserModel): void => {
     setClientsResult((currentState) => ({ ...currentState, data: [client, ...(currentState?.data || [])] }))
     setFormSuccess(true)
+    setName({ error: '', text: '' })
+    setNickname({ error: '', text: '' })
+    setContactNumber({ error: '', text: '' })
+    setPassword({ error: '', text: '' })
+    setError('')
   }
 
   const onError = (error: string, inputName: string): void => {

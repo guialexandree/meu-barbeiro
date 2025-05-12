@@ -1,4 +1,4 @@
-import { ServiceStatus } from '@/domain/models'
+import { ServiceModel, ServiceStatus } from '@/domain/models'
 import { atom, selector } from 'recoil'
 
 const loadingServiceState = atom({
@@ -71,6 +71,12 @@ const serviceFormState = selector({
   }
 })
 
+const serviceResultState = atom<ServiceModel | null>({
+  key: 'serviceResultState',
+  default: null
+})
+
+
 export const State = {
   loadingFormState,
   loadingServiceState,
@@ -82,5 +88,6 @@ export const State = {
   statusState,
   priceState,
   timeExecutionState,
+  serviceResultState,
   serviceFormState,
 }

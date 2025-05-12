@@ -20,7 +20,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
   const handleLoadServices = React.useCallback(
     async (textSearch: string): Promise<void> => {
       setTextInputSearch(textSearch)
-      const services = await props.loadServices(textSearch, status !== 'todos' ? status : undefined)!
+      const services = await props.loadServices(textSearch, status !== 'all' ? status : undefined)!
       if (services?.success) {
         setServices(services.data)
         return
@@ -32,7 +32,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
   const resetSearch = React.useCallback(() => {
     setTextSearch('')
     setTextInputSearch('')
-    setStatus('todos')
+    setStatus('all')
     handleLoadServices('')
   }, [])
 

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Icon, Stack, Typography, useTheme } from '@mui/material'
+import { ServiceStatus } from '@/domain/models'
 
 type StatusUserProps = {
-  status: 'actived' | 'deactivated'
+  status: ServiceStatus
 }
 
 export const StatusUser: React.FC<StatusUserProps> = (props) => {
@@ -11,11 +12,13 @@ export const StatusUser: React.FC<StatusUserProps> = (props) => {
   const labelStatus = {
     actived: 'ativo',
     deactivated: 'inativo',
+    all: 'cancelado',
   }[props.status]
 
   const colorStatus = {
     actived: `${theme.palette.success.light}99`,
     deactivated: `${theme.palette.error.light}99`,
+    all: `${theme.palette.error.light}99`,
   }[props.status]
 
   return (

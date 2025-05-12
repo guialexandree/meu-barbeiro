@@ -18,7 +18,7 @@ export const showFilterState = atom({
 
 export const statusFilterState = atom({
   key: 'statusServiceFilterState',
-  default: 'todos' as ServiceStatus,
+  default: 'all' as ServiceStatus,
 })
 
 export const servicesState = atom<ServiceModel[]>({

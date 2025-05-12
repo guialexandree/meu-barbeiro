@@ -14,6 +14,7 @@ const ServiceFormPage: React.FC = () => {
   const { notify } = useNotify()
   const setLoading = useSetRecoilState(State.loadingServiceState)
   const setName = useSetRecoilState(State.nameState)
+  const setServiceResult = useSetRecoilState(State.serviceResultState)
   const setDescription = useSetRecoilState(State.descriptionState)
   const setPrice = useSetRecoilState(State.priceState)
   const setTimeExecution = useSetRecoilState(State.timeExecutionState)
@@ -37,6 +38,7 @@ const ServiceFormPage: React.FC = () => {
   }, [])
 
   const onSucess = (service: ServiceModel) => {
+    setServiceResult(service)
     setName({ error: '', text: service.name })
     setDescription({ error: '', text: service.description })
     setPrice(service.price)

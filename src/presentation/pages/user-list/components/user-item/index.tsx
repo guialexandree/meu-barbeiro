@@ -2,7 +2,6 @@ import React from 'react'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import { Box, Icon, IconButton, ListItem, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
 import { UserModel } from '@/domain/models'
-import { StatusUser } from '@/presentation/components'
 import { useFormat } from '@/presentation/hooks'
 import { useNavigate } from 'react-router-dom'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
@@ -32,7 +31,7 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
       }}
     >
       <ListItemText
-        sx={{ flex: 1, mt: 1 }}
+        sx={{ flex: 1, mt: 1, justifyContent: 'space-evenly', display: 'flex', flexDirection: 'column' }}
         primary={props.user.name}
         slotProps={{
           primary: {
@@ -42,13 +41,9 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
           },
         }}
         secondary={
-          <Stack alignItems="flex-start">
-            <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
-              {formatPhoneNumber(props.user.contactNumber.slice(-11))}
-            </Typography>
-
-            <StatusUser status={props.user.status as any} />
-          </Stack>
+          <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
+            {formatPhoneNumber(props.user.contactNumber.slice(-11))}
+          </Typography>
         }
       />
       <Stack direction="row" spacing={1} alignItems="center" mr={1}>

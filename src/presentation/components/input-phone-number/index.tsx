@@ -1,23 +1,30 @@
 import React from 'react'
 import { RecoilState, useRecoilState } from 'recoil'
-import { Fade, Icon, IconButton, InputAdornment, TextField, TextFieldProps, useMediaQuery, useTheme } from '@mui/material'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
+import { Fade, TextField, TextFieldProps, useMediaQuery, useTheme } from '@mui/material'
 
-type InputTextProps = {
+type InputPhoneNumberProps = {
   state: RecoilState<{ text: string; error: string }>
   inputProps: TextFieldProps
   toogleVisibility?: boolean
   onClearError?: () => void
 }
 
-const InputText: React.FC<InputTextProps> = (props) => {
-  const [visible, setVisible] = React.useState(false)
+const InputPhoneNumber: React.FC<InputPhoneNumberProps> = (props) => {
   const [input, setInput] = useRecoilState(props.state)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault()
-    setInput({ error: '', text: event.target.value })
+
+    if (event.target.value.length > 15) {
+      return
+    }
+
+    const value = event.target.value.replace(/\D/g, '')
+    const formattedValue = value.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d)(\d{4})$/, '$1-$2')
+    setInput({ error: '', text: formattedValue })
     props.onClearError?.()
   }
 
@@ -39,25 +46,13 @@ const InputText: React.FC<InputTextProps> = (props) => {
               autoFocus: props.inputProps.autoFocus,
               id: props.inputProps.id,
             },
-            endAdornment: props.toogleVisibility && (
-              <InputAdornment position="end">
-                <IconButton
-                  id="toggle-password-visibility"
-                  aria-label="toggle password visibility"
-                  onClick={() => setVisible((currentValue) => !currentValue)}
-                  edge="end"
-                >
-                  <Icon sx={{ color: 'grey.600', fontSize: 22 }}>{visible ? 'visibility_off' : 'visibility'}</Icon>
-                </IconButton>
-              </InputAdornment>
-            ),
+            startAdornment: <WhatsAppIcon sx={{ mr: 1, color: 'grey.500' }} />
           },
         }}
         {...props.inputProps}
-        type={visible ? 'text' : props.inputProps.type}
       />
     </Fade>
   )
 }
 
-export default InputText
+export default InputPhoneNumber

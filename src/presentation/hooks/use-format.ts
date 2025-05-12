@@ -14,7 +14,7 @@ const useFormat = () => {
       if (match) {
         return `(${match[1]}) ${match[2]}-${match[3]}`
       }
-      return value
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`
     }
 
   return { formatCoins, formatPhoneNumber }

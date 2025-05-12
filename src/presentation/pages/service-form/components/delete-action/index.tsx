@@ -9,7 +9,11 @@ import { State as ServiceState } from '@/presentation/pages/service-list/compone
 import { Factories } from '@/main/factories/usecases'
 import { DialogConfirm } from '@/presentation/components'
 
-export const DeleteFormAction: React.FC = () => {
+type DeleteFormActionProps = {
+  service: ServiceModel | null
+}
+
+export const DeleteFormAction: React.FC<DeleteFormActionProps> = (props) => {
   const { notify } = useNotify()
   const navigate = useNavigate()
   const serviceForm = useRecoilValue(State.serviceFormState)
@@ -45,7 +49,7 @@ export const DeleteFormAction: React.FC = () => {
       .finally(() => setLoading(false))
   }
 
-  if (!id) {
+  if (!id || props.service?.default) {
     return undefined
   }
 

@@ -8,7 +8,7 @@ import avataaars5 from '@/presentation/assets/avatars/avataaars5.svg'
 import avataaars6 from '@/presentation/assets/avatars/avataaars6.svg'
 import avataaars7 from '@/presentation/assets/avatars/avataaars7.svg'
 
-const imgRandom = [
+export const imgRandom = [
   avataaars1,
   avataaars2,
   avataaars3,
