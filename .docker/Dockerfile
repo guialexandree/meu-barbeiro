@@ -9,6 +9,8 @@ COPY package*.json ./
 COPY *.json ./
 COPY . .
 
+RUN ls -l /app
+
 # Instalar as dependências
 RUN npm install
 
