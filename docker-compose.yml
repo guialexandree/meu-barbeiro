@@ -8,6 +8,6 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/appweb
+      - .:/app
     environment:
       - NODE_ENV=development

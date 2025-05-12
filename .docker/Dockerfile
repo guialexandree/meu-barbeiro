@@ -1,10 +1,10 @@
 FROM node:22.15-alpine AS builder
 
 # Definir o diretório de trabalho
-WORKDIR /appweb
+WORKDIR /app
 
 # Copiar os arquivos necessários para o build
-COPY package.json package-lock.json ./
+COPY package.json ./
 COPY vite.config.ts ./
 COPY tsconfig.json ./
 COPY ./src ./src
@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:stable-alpine
 
 # Copiar os arquivos do build para o Nginx
-COPY --from=builder /appweb/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Configurar o Nginx
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
