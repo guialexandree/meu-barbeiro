@@ -8,6 +8,7 @@ COPY .env ./
 COPY package.json ./
 COPY vite.config.ts ./
 COPY tsconfig*.json ./
+COPY index.html ./
 COPY ./src ./src
 COPY ./public ./public
 
