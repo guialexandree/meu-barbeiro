@@ -4,6 +4,7 @@ FROM node:22.15-alpine AS builder
 WORKDIR /app
 
 # Copiar os arquivos necessários para o build
+COPY .env ./
 COPY package.json ./
 COPY vite.config.ts ./
 COPY tsconfig.json ./
