@@ -9,5 +9,4 @@ services:
       - "8080:8080"
     env_file:
       - /home/meu-barbeiro/.env
-    environment:
-      - NODE_ENV=development
+    restart: always
