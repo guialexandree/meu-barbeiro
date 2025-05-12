@@ -7,7 +7,7 @@ WORKDIR /app
 COPY .env ./
 COPY package.json ./
 COPY vite.config.ts ./
-COPY tsconfig.json ./
+COPY tsconfig*.json ./
 COPY ./src ./src
 COPY ./public ./public
 
