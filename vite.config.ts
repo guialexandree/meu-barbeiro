@@ -35,7 +35,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       manifest: {
         name: 'Gestão Barbearia',
-        short_name: 'SUSUZEIRA',
+        short_name: 'SUSUZEIRA Barbearia',
         description: 'Aplicativo de gestão para barbearias',
         start_url: '/',
         display: 'standalone',

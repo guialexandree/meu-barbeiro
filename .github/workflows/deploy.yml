@@ -1,0 +1,36 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Execute remote SSH commands using SSH key
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: "root"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "."
+          target: "/home/meu-barbeiro"
+
+      # Conectar à VPS e atualizar o serviço
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: 'root'
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/meu-barbeiro
+            docker-compose down
+            docker-compose up --build -d
