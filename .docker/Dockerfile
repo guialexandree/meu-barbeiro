@@ -17,14 +17,14 @@ RUN npm install
 RUN npm run build
 
 # Etapa 2: Servir os arquivos estáticos
-FROM nginx:stable-alpine
+FROM nginx:alpine
 
 # Copiar os arquivos do build para o Nginx
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 RUN rm /etc/nginx/conf.d/default.conf
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expor a porta 80
 EXPOSE 8080
