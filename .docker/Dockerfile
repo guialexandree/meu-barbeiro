@@ -6,7 +6,7 @@ WORKDIR /app
 # Copiar os arquivos necessários para o build
 COPY vite.config.ts ./
 COPY package*.json ./
-COPY *.conf ./
+COPY .docker/nginx.conf ./
 COPY *.json ./
 COPY . .
 
