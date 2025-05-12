@@ -4,13 +4,10 @@ FROM node:22.15-alpine AS builder
 WORKDIR /app
 
 # Copiar os arquivos necessários para o build
-COPY .env ./
-COPY package.json ./
 COPY vite.config.ts ./
-COPY tsconfig*.json ./
-COPY index.html ./
-COPY ./src ./src
-COPY ./public ./public
+COPY package*.json ./
+COPY *.json ./
+COPY . .
 
 # Instalar as dependências
 RUN npm install
