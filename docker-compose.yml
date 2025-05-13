@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile
-    container_name: meubarbeiro-front
+    container_name: meu-barbeiro
     ports:
       - "8080:80"
     env_file:
