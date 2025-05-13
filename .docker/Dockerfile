@@ -1,19 +1,29 @@
-FROM node:22.15-alpine AS builder
+FROM node:18-alpine AS build
 
-# Definir o diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos necessários para o build
-COPY vite.config.ts ./
+# Copia os arquivos do projeto
 COPY package*.json ./
-COPY *.json ./
+COPY vite.config.* ./
 COPY . .
 
-# Instalar as dependências
+# Instala as dependências e faz o build
 RUN npm install
+RUN npm run build
 
-# Expor a porta 80
-EXPOSE 5173
+# Etapa 2: Servir com nginx
+FROM nginx:alpine
 
-# Comando para iniciar o Nginx
-CMD ["npm", "start"]
+# Remove configuração default do nginx
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copia o build para o nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copia configuração customizada do nginx (opcional)
+COPY .docker/nginx.conf /etc/nginx/nginx.conf
+
+# Expõe a porta
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
