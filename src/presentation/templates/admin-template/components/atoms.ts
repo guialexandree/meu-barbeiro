@@ -8,7 +8,11 @@ const loadingState = atom({
 
 const attendancesInfoResultState = atom<AttendanceTotal>({
   key: 'attendancesInfoResultState',
-  default: null as unknown as AttendanceTotal,
+  default: {
+    amount: 0,
+    finished: 0,
+    inQueue: 0,
+  },
 })
 
 export const State = {

@@ -7,7 +7,7 @@ export class SocketAdapter {
 
   public static getInstance(): Socket {
     if (!SocketAdapter.instance) {
-      SocketAdapter.instance = io(`${process.env.API_URL}/api`, {
+      SocketAdapter.instance = io(process.env.API_URL, {
         transports: ['websocket']
       })
 

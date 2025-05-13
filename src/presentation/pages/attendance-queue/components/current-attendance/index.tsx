@@ -7,7 +7,11 @@ import { GenericState } from '@/presentation/components/atoms'
 import { useSocket } from '@/presentation/hooks'
 import { Actions, Attendance, Header, StatePanel } from './components'
 
-export const CurrentAttendance: React.FC = () => {
+type CurrentAttendanceProps = {
+  onCloseAttendace: (attendanceId: string) => void
+}
+
+export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
   const theme = useTheme()
   const company = useRecoilValue(GenericState.companyState)
   const { getSocket } = useSocket()
@@ -22,24 +26,7 @@ export const CurrentAttendance: React.FC = () => {
       setSuccess(false)
       setCloseAttendance(true)
       setTimeout(() => {
-        setAttendancesResult((currentState) => {
-          let pendingsAttendances = currentState.data.filter((attendance) => attendance.id !== attendanceId)
-          pendingsAttendances = pendingsAttendances.map((attendance, index) => {
-            if (index === 0) {
-              return {
-                ...attendance,
-                status: 'current',
-                startedAt: new Date().toISOString(),
-              }
-            }
-            return attendance
-          })
-
-          return {
-            ...currentState,
-            data: pendingsAttendances,
-          }
-        })
+        props.onCloseAttendace(attendanceId)
         setCloseAttendance(false)
       }, 700)
     }, 1200)
@@ -51,24 +38,7 @@ export const CurrentAttendance: React.FC = () => {
       setPassTheTurn(false)
       setCloseAttendance(true)
       setTimeout(() => {
-        setAttendancesResult((currentState) => {
-          let pendingsAttendances = currentState.data.filter((attendance) => attendance.id !== attendanceId)
-          pendingsAttendances = pendingsAttendances.map((attendance, index) => {
-            if (index === 0) {
-              return {
-                ...attendance,
-                status: 'current',
-                startedAt: new Date().toISOString(),
-              }
-            }
-            return attendance
-          })
-
-          return {
-            ...currentState,
-            data: pendingsAttendances,
-          }
-        })
+        props.onCloseAttendace(attendanceId)
         setCloseAttendance(false)
       }, 700)
     }, 1200)
@@ -77,21 +47,21 @@ export const CurrentAttendance: React.FC = () => {
   React.useEffect(() => {
     const socket = getSocket()
 
-    socket.on('entry_in_queue', (attendance: AttendanceModel) => {
+    socket.on('queue/entry_in_queue', (attendance: AttendanceModel) => {
       setAttendancesResult((currentState) => ({
         ...currentState,
         data: currentState.data.length ? [...currentState.data, attendance] : [{ ...attendance, status: 'current' }],
       }))
     })
 
-    socket.on('finish_attendance', (attendance: AttendanceModel) => {
+    socket.on('queue/finish_attendance', (attendance: AttendanceModel) => {
       endSuccess(attendance.id)
     })
-    socket.on('cancel_attendance', (attendance: AttendanceModel) => {
+    socket.on('queue/cancel_attendance', (attendance: AttendanceModel) => {
       cancelSuccess(attendance.id)
     })
 
-    socket.on('start_attendance', (attendance: AttendanceModel) => {
+    socket.on('queue/start_attendance', (attendance: AttendanceModel) => {
       setAttendancesResult((currentState) => ({
         ...currentState,
         data: currentState.data.map((item) => (item.id === attendance.id ? attendance : item)),
@@ -99,10 +69,10 @@ export const CurrentAttendance: React.FC = () => {
     })
 
     return () => {
-      socket.off('entry_in_queue')
-      socket.off('finish_attendance')
-      socket.off('cancel_attendance')
-      socket.off('start_attendance')
+      socket.off('queue/entry_in_queue')
+      socket.off('queue/finish_attendance')
+      socket.off('queue/cancel_attendance')
+      socket.off('queue/start_attendance')
     }
   }, [])
 

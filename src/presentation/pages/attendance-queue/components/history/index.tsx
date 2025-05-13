@@ -58,7 +58,7 @@ export const HistoryToday: React.FC = () => {
     onLoadDoneAttendances()
 
     const socket = getSocket()
-    socket.on('finish_attendance', (attendance: AttendanceModel) => {
+    socket.on('queue/finish_attendance', (attendance: AttendanceModel) => {
       setDoneAttendances((currentState) => [
         {
           ...attendance,
@@ -69,7 +69,7 @@ export const HistoryToday: React.FC = () => {
       ])
     })
 
-    socket.on('cancel_attendance', (attendance: AttendanceModel) => {
+    socket.on('queue/cancel_attendance', (attendance: AttendanceModel) => {
       setDoneAttendances((currentState) => [
         {
           ...attendance,
@@ -81,8 +81,8 @@ export const HistoryToday: React.FC = () => {
     })
 
     return () => {
-      socket.off('finish_attendance')
-      socket.off('cancel_attendance')
+      socket.off('queue/finish_attendance')
+      socket.off('queue/cancel_attendance')
     }
   }, [])
 

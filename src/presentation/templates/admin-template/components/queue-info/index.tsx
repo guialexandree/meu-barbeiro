@@ -67,25 +67,31 @@ export const QueueInfo: React.FC = () => {
       }, 30000)
     })
 
-    socket.on('entry_in_queue', () => {
+    socket.on('queue_info/entry_in_queue', () => {
       setAttendancesInfo((currentState) => ({
         ...currentState,
-        inQueue: currentState.inQueue + 1,
+        inQueue: currentState.inQueue  + 1,
+      }))
+    })
+    socket.on('queue_info/cancel_attendance', () => {
+      setAttendancesInfo((currentState) => ({
+        ...currentState,
+        inQueue: currentState.inQueue  - 1,
       }))
     })
 
-    socket.on('finish_attendance', (attendance: AttendanceModel) => {
+    socket.on('queue_info/finish_attendance', (attendance: AttendanceModel) => {
       setAttendancesInfo((currentState) => ({
-        ...currentState,
         inQueue: currentState.inQueue - 1,
-        amount: currentState.amount + attendance.services.reduce((acc, service) => acc + +service.price, 0),
+        amount: currentState.amount + attendance?.services?.reduce((acc, service) => acc + +service.price, 0),
         finished: currentState.finished + 1,
       }))
     })
 
     return () => {
-      socket.off('entry_in_queue')
-      socket.off('finish_attendance')
+      socket.off('queue_info/entry_in_queue')
+      socket.off('queue_info/cancel_attendance')
+      socket.off('queue_info/finish_attendance')
       if (pollingInterval.current) {
         clearInterval(pollingInterval.current)
       }
@@ -133,18 +139,18 @@ export const QueueInfo: React.FC = () => {
             <Typography variant="subtitle2" sx={{ lineHeight: 1, fontWeight: '300', fontSize: 12 }}>
               Status
             </Typography>
-            {!attendancesInfo && <Skeleton variant="rounded" width={54} height={14} />}
-            {attendancesInfo && company?.statusAttendance === 'serving' && (
+            {loading && !attendancesInfo.amount && <Skeleton variant="rounded" width={54} height={14} />}
+            {!loading && company?.statusAttendance === 'serving' && (
               <Zoom in unmountOnExit>
                 <Stack direction="row" alignItems="center" spacing={0.5}>
-                  {!!attendancesInfo?.inQueue && <TextZoom text={attendancesInfo.inQueue} />}
+                  {!!attendancesInfo.inQueue && <TextZoom text={attendancesInfo.inQueue} />}
                   <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
-                    {attendancesInfo?.inQueue ? 'na fila' : 'Aberta'}
+                    {attendancesInfo.inQueue ? 'na fila' : 'Aberta'}
                   </Typography>
                 </Stack>
               </Zoom>
             )}
-            {attendancesInfo && company?.statusAttendance === 'closed' && (
+            {!loading && company?.statusAttendance === 'closed' && (
               <Zoom in unmountOnExit>
                 <Typography variant="subtitle1" sx={{ mt: 0, lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
                   encerrada
@@ -171,13 +177,13 @@ export const QueueInfo: React.FC = () => {
               Atendimentos
             </Typography>
 
-            {!attendancesInfo && <Skeleton variant="rounded" width={78} height={14} />}
+            {loading && !attendancesInfo.amount && <Skeleton variant="rounded" width={78} height={14} />}
 
             <Zoom in unmountOnExit>
               <Stack direction="row" alignItems="center" spacing={0.5}>
-                {attendancesInfo && <TextZoom text={attendancesInfo?.finished || 0} />}
+                {!!attendancesInfo.amount && !loading && <TextZoom text={attendancesInfo.finished} />}
 
-                {!!attendancesInfo && (
+                {!!attendancesInfo.amount && !loading && (
                   <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
                     realizados
                   </Typography>
@@ -197,8 +203,8 @@ export const QueueInfo: React.FC = () => {
             <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '600', fontSize: 14 }}>
               R$
             </Typography>
-            {!attendancesInfo && <Skeleton variant="rounded" width={30} height={14} />}
-            {!!attendancesInfo && <TextZoom text={showAmount ? attendancesInfo?.amount.toFixed(0) || 0 : '****'} />}
+            {!attendancesInfo.amount && loading && <Skeleton variant="rounded" width={30} height={14} />}
+            {!!attendancesInfo.amount && !loading && <TextZoom text={showAmount ? attendancesInfo.amount?.toFixed(0) || 0 : '****'} />}
           </Stack>
         </Stack>
       </Paper>
