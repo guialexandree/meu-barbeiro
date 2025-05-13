@@ -13,7 +13,7 @@ COPY . .
 RUN npm install
 
 # Expor a porta 80
-EXPOSE 8080
+EXPOSE 5173
 
 # Comando para iniciar o Nginx
 CMD ["npm", "start"]
