@@ -40,6 +40,7 @@ export const AttendanceQueueList: React.FC = () => {
     })
 
     socket.on('disconnect', () => {
+      onLoadAttendances()
       pollingInterval.current = setInterval(() => {
         onLoadAttendances()
       }, 30000)

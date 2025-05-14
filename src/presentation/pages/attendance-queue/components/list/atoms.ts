@@ -16,11 +16,6 @@ export const openDialogWhatsAppState = atom({
   default: false,
 })
 
-export const successState = atom({
-  key: 'successAttendanceQueueState',
-  default: false
-})
-
 export const currentAttendanceState = selector({
   key: 'currentAttendanceState',
   get: ({ get }) => {

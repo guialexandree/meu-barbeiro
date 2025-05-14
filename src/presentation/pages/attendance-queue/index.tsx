@@ -20,7 +20,7 @@ const AttendanceQueuePage: React.FC = () => {
       }
       return attendance
     })
-  })
+  }, [])
 
   const onCloseAttendance = React.useCallback((attendanceId: string) => {
     setAttendancesResult((currentState) => {
@@ -39,7 +39,7 @@ const AttendanceQueuePage: React.FC = () => {
       <Stack sx={{ px: 2 }} spacing={2}>
         <StatusSwitch />
 
-        <CurrentAttendance onCloseAttendace={onCloseAttendance}/>
+        <CurrentAttendance onCloseAttendace={onCloseAttendance} />
         {/* <SummaryToday /> */}
         <HistoryToday />
 

@@ -17,6 +17,11 @@ const loadingChangeStatusState = atom({
   default: false,
 })
 
+const loadingActionState = atom({
+  key: 'loadingActionState',
+  default: false,
+})
+
 const listState = atom({
   key: 'listAttendanceState',
   default: {
@@ -31,6 +36,7 @@ export const State = {
   History,
   listState,
   loadingChangeStatusState,
+  loadingActionState,
   openDialogState,
   expandHistoryState
 }

@@ -4,7 +4,7 @@ import { Button, Icon } from '@mui/material'
 import { AttendanceModel, AttendanceStatus } from '@/domain/models'
 import { Factories } from '@/main/factories/usecases'
 import { useNotify } from '@/presentation/hooks'
-import { State } from '../atoms'
+import { State } from '../../../atoms'
 
 type StartAttendanceActionProps = {
   status: AttendanceStatus

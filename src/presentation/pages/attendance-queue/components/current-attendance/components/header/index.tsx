@@ -1,17 +1,22 @@
 import React from 'react'
-import { Chip, Grow, Icon, IconButton, ListItemIcon, MenuItem, Stack, Typography } from '@mui/material'
+import { Chip, Grow, Icon, IconButton, Stack, Typography } from '@mui/material'
 import { AttendanceStatus } from '@/domain/models'
-import { useRecoilValue } from 'recoil'
-import { Menu } from '@/presentation/components'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { GenericState } from '@/presentation/components/atoms'
+import { MenuActions } from '../menu-actions'
+import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 
 type HeaderProps = {
+  attendanceId: string
   status: AttendanceStatus | undefined
   startDate?: string | undefined
+  endSuccess: (attendanceId: string) => void
+  cancelSuccess: (attendanceId: string) => void
 }
 
 export const Header: React.FC<HeaderProps> = (props) => {
   const dateAdapter = useRecoilValue(GenericState.dateAdapterState)
+  const setLoading = useSetRecoilState(State.loadingActionState)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -67,7 +72,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
       <IconButton
         size="small"
-        aria-controls={open ? 'basic-menu' : undefined}
+        aria-controls={open ? 'menu-actions-header' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
@@ -75,40 +80,19 @@ export const Header: React.FC<HeaderProps> = (props) => {
         <Icon fontSize="small">more_vert</Icon>
       </IconButton>
 
-      <Menu
+      <MenuActions
         anchorOrigin={{
           horizontal: 'left',
           vertical: 30,
         }}
-        id="basic-menu"
+        id="menu-actions-header"
         anchorEl={anchorEl}
         onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Icon sx={{ color: 'grey.900' }} fontSize="small">
-              edit
-            </Icon>
-          </ListItemIcon>
-          Editar serviços
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Icon sx={{ color: 'grey.900' }} fontSize="small">
-              south
-            </Icon>
-          </ListItemIcon>
-          Enviar para o final da fila
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Icon sx={{ color: 'grey.900' }} fontSize="small">
-              close
-            </Icon>
-          </ListItemIcon>
-          Remover da fila
-        </MenuItem>
-      </Menu>
+        attendanceId={props.attendanceId}
+        endSuccess={props.endSuccess}
+        cancelSuccess={props.cancelSuccess}
+        setLoading={(loading) => { setLoading(loading) }}
+      />
     </Stack>
   )
 }

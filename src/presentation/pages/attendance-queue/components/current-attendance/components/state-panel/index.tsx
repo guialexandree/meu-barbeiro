@@ -21,21 +21,22 @@ export const StatePanel: React.FC<StatePanelProps> = (props) => {
       />
     ),
     cancel: (
-      <Icon
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 60,
-          width: 60,
-          fontSize: 50,
-          backgroundColor: 'primary.light',
-          borderRadius: 8,
-          boxShadow: 2,
-        }}
-      >
-        redo
-      </Icon>
+      <Zoom in>
+        <Icon
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 60,
+            width: 60,
+            fontSize: 50,
+            backgroundColor: 'primary.light',
+            borderRadius: 8,
+          }}
+        >
+          redo
+        </Icon>
+      </Zoom>
     ),
     default: null,
   }[props.variant]

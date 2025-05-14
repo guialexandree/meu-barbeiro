@@ -17,7 +17,7 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
     window.open(
       `https://api.whatsapp.com/send?phone=55${props.attendance.user.contactNumber.replace(/\D/g, '')}`,
     )
-  }, [])
+  }, [props.attendance])
 
   return (
     <ListItem
@@ -43,7 +43,7 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
         <Typography variant="h1" color='primary.light'>{props.position}</Typography>
       </Stack>
 
-      <Stack>
+      <Stack sx={{ minWidth: 50 }} alignItems="center" justifyContent="center">
         <Typography variant='caption' color="text.secondary" fontSize={8} lineHeight={1} fontFamily="Inter">
           PREVISÃO
         </Typography>
@@ -64,15 +64,6 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
             sx: { lineHeight: 1, fontWeight: 500, fontFamily: 'Inter' },
           },
         }}
-        secondary={
-          <Stack alignItems="flex-start">
-            <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
-              {props.attendance.services
-                .map((attendanceService) => attendanceService.service.description.toUpperCase())
-                .join(' + ')}
-            </Typography>
-          </Stack>
-        }
       />
 
       <AttendanceActions openDialogWhatsapp={onOpenDialogWhatsapp} />

@@ -4,7 +4,7 @@ import { Grow, Paper, Skeleton, Slide, Stack, useTheme } from '@mui/material'
 import { AttendanceModel } from '@/domain/models'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
-import { useSocket } from '@/presentation/hooks'
+import { useActions, useSocket } from '@/presentation/hooks'
 import { Actions, Attendance, Header, StatePanel } from './components'
 
 type CurrentAttendanceProps = {
@@ -13,10 +13,12 @@ type CurrentAttendanceProps = {
 
 export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
   const theme = useTheme()
+  const { removeAction, getAction } = useActions()
   const company = useRecoilValue(GenericState.companyState)
+  const currentAttendance = useRecoilValue(State.List.currentAttendanceState)
   const { getSocket } = useSocket()
   const [attendanceResult, setAttendancesResult] = useRecoilState(State.List.attendancesResultState)
-  const [success, setSuccess] = useRecoilState(State.List.successState)
+  const [success, setSuccess] = React.useState(false)
   const [closeAttendance, setCloseAttendance] = React.useState(false)
   const [passTheTurn, setPassTheTurn] = React.useState(false)
 
@@ -28,7 +30,7 @@ export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
       setTimeout(() => {
         props.onCloseAttendace(attendanceId)
         setCloseAttendance(false)
-      }, 700)
+      }, 500)
     }, 1200)
   }, [])
 
@@ -40,7 +42,7 @@ export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
       setTimeout(() => {
         props.onCloseAttendace(attendanceId)
         setCloseAttendance(false)
-      }, 700)
+      }, 500)
     }, 1200)
   }, [])
 
@@ -48,6 +50,12 @@ export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
     const socket = getSocket()
 
     socket.on('queue/entry_in_queue', (attendance: AttendanceModel) => {
+      const action = getAction(attendance.id, 'inQueue')
+      if (action) {
+        removeAction(action)
+        return
+      }
+
       setAttendancesResult((currentState) => ({
         ...currentState,
         data: currentState.data.length ? [...currentState.data, attendance] : [{ ...attendance, status: 'current' }],
@@ -55,9 +63,21 @@ export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
     })
 
     socket.on('queue/finish_attendance', (attendance: AttendanceModel) => {
+      const action = getAction(attendance.id, 'finished')
+      if (action) {
+        removeAction(action)
+        return
+      }
+
       endSuccess(attendance.id)
     })
     socket.on('queue/cancel_attendance', (attendance: AttendanceModel) => {
+      const action = getAction(attendance.id, 'cancel')
+      if (action) {
+        removeAction(action)
+        return
+      }
+
       cancelSuccess(attendance.id)
     })
 
@@ -76,31 +96,17 @@ export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
     }
   }, [])
 
-  const statusPanel = React.useMemo(() => {
-    if (success) {
-      return 'success'
-    }
-
-    if (passTheTurn) {
-      return 'success'
-    }
-
-    return 'default'
-  }, [success, passTheTurn]) as 'cancel' | 'success' | 'default'
-
   const colorStatus = React.useMemo(() => {
     if (success || attendanceResult?.data?.at(0)?.status === 'attending') {
       return 'success'
     }
 
     return 'primary'
-  }, [attendanceResult, success, passTheTurn]) as 'primary' | 'success'
+  }, [attendanceResult, success]) as 'primary' | 'success'
 
   if (!company) {
     return <Skeleton variant="rounded" width="100%" height={157} sx={{ borderRadius: 2, mt: 1 }} />
   }
-
-  const currentAttendance = attendanceResult?.data?.at(0)
 
   const bgStatusColor: string = {
     in_queue: `${theme.palette.grey[400]}20`,
@@ -132,15 +138,16 @@ export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
           position: 'relative',
         }}
       >
-        <StatePanel variant={statusPanel} />
+        {passTheTurn && <StatePanel variant={'cancel'} />}
+        {success && <StatePanel variant={'success'} />}
 
         <Slide direction={closeAttendance ? 'left' : 'up'} in={!closeAttendance} timeout={100}>
           <Stack>
-            <Header startDate={currentAttendance?.startedAt} status={currentAttendance?.status} />
+            <Header attendanceId={currentAttendance?.id} startDate={currentAttendance?.startedAt} status={currentAttendance?.status} endSuccess={endSuccess} cancelSuccess={cancelSuccess} />
 
             <Attendance attendance={currentAttendance} />
 
-            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={() => {}} sendTo={() => {}} />
+            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={cancelSuccess} sendTo={cancelSuccess} />
           </Stack>
         </Slide>
       </Paper>

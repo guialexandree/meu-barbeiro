@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Factories } from '@/main/factories/usecases'
 import { AttendanceModel } from '@/domain/models'
 import { Button, Icon, Slide } from '@mui/material'
-import { useNotify } from '@/presentation/hooks'
+import { useActions, useNotify } from '@/presentation/hooks'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
 import { PageLoader } from '@/presentation/components'
 
@@ -15,6 +15,7 @@ type SaveFormActionProps = {
 export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
   const { notify } = useNotify()
   const navigate = useNavigate()
+  const actions = useActions()
   const newAttendance = useRecoilValue(State.newAttendandeState)
   const [loading, setLoading] = useRecoilState(State.loadingState)
 
@@ -25,6 +26,11 @@ export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
   const onSuccess = (attendance: AttendanceModel): void => {
     navigate('/')
     notify(`${attendance.user.name.toUpperCase()} foi adicionado na fila`, { type: 'info' })
+    actions.addAction({
+      attendanceId: attendance.id,
+      type: 'inQueue',
+    })
+
     props.onReset()
   }
 
@@ -55,7 +61,7 @@ export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
         onError(result.error, 'client')
       })
       .catch(() => {
-        notify('Erro ao criar serviço', { type: 'error' })
+        notify('Não foi possível adicionar o cliente na fila', { type: 'error' })
       })
       .finally(() => setLoading(false))
   }
