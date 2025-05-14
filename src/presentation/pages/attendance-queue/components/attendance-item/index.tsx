@@ -1,9 +1,8 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Divider, ListItem, ListItemText, Stack, Typography } from '@mui/material'
+import { Divider, Icon, IconButton, ListItem, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
 import { AttendanceModel, UserModel } from '@/domain/models'
 import { GenericState } from '@/presentation/components/atoms'
-import { AttendanceActions } from '../attendance-actions'
 
 type AttendanceItemProps = {
   attendance: AttendanceModel
@@ -13,11 +12,6 @@ type AttendanceItemProps = {
 
 export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
   const dateAdapter = useRecoilValue(GenericState.dateAdapterState)
-  const onOpenDialogWhatsapp = React.useCallback(() => {
-    window.open(
-      `https://api.whatsapp.com/send?phone=55${props.attendance.user.contactNumber.replace(/\D/g, '')}`,
-    )
-  }, [props.attendance])
 
   return (
     <ListItem
@@ -66,7 +60,16 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
         }}
       />
 
-      <AttendanceActions openDialogWhatsapp={onOpenDialogWhatsapp} />
+      <Tooltip title="Adicionar na fila" placement="left" arrow>
+        <IconButton
+          size='small'
+          sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}10` }}
+          edge="end"
+          aria-label="adicioanr na fila"
+        >
+          <Icon fontSize="small">more_vert</Icon>
+        </IconButton>
+      </Tooltip>
     </ListItem>
   )
 }

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { Factories } from '@/main/factories/usecases'
 import { LoadUsersParams, LoadUsersResult } from '@/domain/usecases'
 import { PageContainer } from '@/presentation/components'
-import { UsersFilters, UserList, Totalizers, UserFormAction } from '@/presentation/pages/user-list/components'
-import { Factories } from '@/main/factories/usecases'
+import { UsersFilters, UserList, Totalizers } from '@/presentation/pages/user-list/components'
 import { State } from '@/presentation/pages/user-list/components/atoms'
 
 const UsersListPage: React.FC = () => {
@@ -54,8 +54,6 @@ const UsersListPage: React.FC = () => {
       <UsersFilters loadUsers={onLoadUsers} />
 
       <UserList loadUsers={onLoadUsers}/>
-
-      <UserFormAction />
     </PageContainer>
   )
 }

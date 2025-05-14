@@ -37,7 +37,7 @@ export const ServiceFilters: React.FC<ServiceFiltersProps> = (props) => {
   }, [])
 
   return (
-    <Stack sx={{ transition: 'height 0.3s ease' }}>
+    <Stack sx={{ transition: 'height 0.3s ease', mx: 2 }}>
       <Stack>
         <InputSearch
           showFilters

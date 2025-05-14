@@ -41,7 +41,7 @@ export const UserList: React.FC<UserListProps> = (props) => {
     })
     setUsersResult(usersResult)
     setLimit(newLimit)
-  }, [])
+  }, [search])
 
   const handleReload = React.useCallback(async () => {
     props.loadUsers({ search, limit })
@@ -71,7 +71,7 @@ export const UserList: React.FC<UserListProps> = (props) => {
           <Chip sx={{ backgroundColor: 'background.paper'}} variant="filled" label={`Total de ${usersResult?.data?.length} clientes`} size="small" />
         </Stack>
         }
-
+        style={{ minHeight: '30vh'}}
         refreshFunction={refreshList}
         pullDownToRefresh
         pullDownToRefreshThreshold={50}

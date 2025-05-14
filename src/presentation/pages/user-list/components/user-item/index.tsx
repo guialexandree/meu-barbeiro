@@ -1,6 +1,5 @@
 import React from 'react'
-import WhatsAppIcon from '@mui/icons-material/WhatsApp'
-import { Box, Icon, IconButton, ListItem, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, IconButton, Icon, ListItem, ListItemText, Stack, Tooltip, Typography } from '@mui/material'
 import { UserModel } from '@/domain/models'
 import { useFormat } from '@/presentation/hooks'
 import { useNavigate } from 'react-router-dom'
@@ -50,26 +49,14 @@ export const UserItem: React.FC<UserItemProps> = (props) => {
         <Tooltip title="Adicionar na fila" placement="left" arrow>
           <IconButton
             size={'small'}
-            sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}10` }}
-            edge="end"
-            aria-label="adicionar na fila"
+            color='primary'
+            sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}10`, boxShadow: 'none', color: 'primary.light' }}
             onClick={() => {
               setSelectedUser({ label: props.user.name.toUpperCase(), id: props.user.id })
               navigate('/fila/entrar')
             }}
           >
             <Icon>data_saver_on</Icon>
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Chamar o WhatsApp" placement="left" arrow>
-          <IconButton
-            size={'small'}
-            sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}10` }}
-            edge="end"
-            aria-label="whastapp"
-          >
-            <WhatsAppIcon />
           </IconButton>
         </Tooltip>
       </Stack>
