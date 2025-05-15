@@ -34,7 +34,7 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
           <Stack direction="row" alignItems="center" spacing={1}>
             {props.icon && <Icon sx={{ fontSize: 16 }}>{props.icon}</Icon>}
             <Typography
-              fontWeight={props.checked ? 600 : 400}
+              fontWeight={props.checked ? 500 : 400}
               color={props.checked ? 'text.primary' : 'text.secondary'}
             >
               {props.label}
