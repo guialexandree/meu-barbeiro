@@ -1,18 +1,19 @@
 import React from 'react'
 import { Box, Icon, Zoom } from '@mui/material'
 import checkMedia from '@/presentation/assets/check.gif'
+import { PanelStatusType } from '../..'
 
-type StatePanelProps = {
-  variant: 'success' | 'cancel' | 'default'
+type PanelStatusProps = {
+  status: PanelStatusType
 }
 
-export const StatePanel: React.FC<StatePanelProps> = (props) => {
-  if (props.variant === 'default') {
+export const PanelStatus: React.FC<PanelStatusProps> = (props) => {
+  if (!props.status) {
     return null
   }
 
   const icon = {
-    success: (
+    ending: (
       <Box
         sx={{ width: 80, height: 80, objectFit: 'contain' }}
         component="img"
@@ -20,7 +21,7 @@ export const StatePanel: React.FC<StatePanelProps> = (props) => {
         alt="icone com estado"
       />
     ),
-    cancel: (
+    reentry: (
       <Zoom in>
         <Icon
           sx={{
@@ -38,14 +39,33 @@ export const StatePanel: React.FC<StatePanelProps> = (props) => {
         </Icon>
       </Zoom>
     ),
+    cancelling: (
+      <Zoom in>
+        <Icon
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 60,
+            width: 60,
+            fontSize: 50,
+            backgroundColor: 'error.light',
+            borderRadius: 8,
+          }}
+        >
+          close
+        </Icon>
+      </Zoom>
+    ),
     default: null,
-  }[props.variant]
+  }[props.status || 'default']
 
   const color = {
-    success: 'success',
-    cancel: 'primary',
+    ending: 'success',
+    reentry: 'primary',
+    cancelling: 'error',
     default: 'success',
-  }[props.variant] as 'success' | 'error'
+  }[props.status || 'default'] as 'success' | 'error' | 'primary'
 
   return (
     <Box
@@ -61,7 +81,7 @@ export const StatePanel: React.FC<StatePanelProps> = (props) => {
         width: '100%',
       }}
     >
-      <Zoom in>{icon}</Zoom>
+      {icon && <Zoom in>{icon}</Zoom>}
     </Box>
   )
 }

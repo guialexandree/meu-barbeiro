@@ -1,13 +1,11 @@
 import React from 'react'
 import { Stack } from '@mui/material'
 import { AttendanceModel } from '@/domain/models'
-import { StartAttendanceAction, EndAttendanceAction, CancelAttendanceAction } from '@/presentation/pages/attendance-queue/components'
+import { StartAttendanceAction, EndAttendanceAction, CancelAttendanceAction, PanelStatusType } from '@/presentation/pages/attendance-queue/components'
 
 type Actions = {
   attendance: AttendanceModel | undefined
-  endSuccess: (attendanceId: string) => void
-  cancelSuccess: (attendanceId: string) => void
-  sendTo: (attendanceId: string) => void
+  setPanelStatus: (attendanceId: string, status: PanelStatusType) => void
 }
 
 export const Actions: React.FC<Actions> = (props) => {
@@ -18,18 +16,26 @@ export const Actions: React.FC<Actions> = (props) => {
   return (
     <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ width: '100%' }} mt={1} spacing={2}>
       <CancelAttendanceAction
-        attendanceId={props.attendance.id}
-        onSuccess={props.cancelSuccess}
-        status={props.attendance.status}
+        attendance={props.attendance}
+        onSuccess={attendanceId => {
+          props.setPanelStatus(attendanceId, 'reentry')
+        }}
+        hide={props.attendance.status !== 'current'}
       />
 
-      <StartAttendanceAction status={props.attendance.status} attendanceId={props.attendance.id} />
+      <StartAttendanceAction
+        hide={props.attendance.status !== 'current'}
+        attendanceId={props.attendance.id}
+      />
 
       <EndAttendanceAction
-        onSuccess={props.endSuccess}
+        onSuccess={attendanceId => {
+          props.setPanelStatus(attendanceId, 'ending')
+        }}
         startDate={props.attendance.startedAt!}
-        status={props.attendance.status}
+        hide={props.attendance.status !== 'attending'}
         attendanceId={props.attendance.id}
+        amount={props.attendance.services?.reduce((acc, service) => acc + +service.price, 0)}
       />
     </Stack>
   )

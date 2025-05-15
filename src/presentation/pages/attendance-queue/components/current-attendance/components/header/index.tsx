@@ -1,17 +1,17 @@
 import React from 'react'
 import { Chip, Grow, Icon, IconButton, Stack, Typography } from '@mui/material'
-import { AttendanceStatus } from '@/domain/models'
+import { AttendanceModel, AttendanceStatus } from '@/domain/models'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { GenericState } from '@/presentation/components/atoms'
 import { MenuActions } from '../menu-actions'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
+import { PanelStatusType } from '../..'
 
 type HeaderProps = {
-  attendanceId: string
+  attendance: AttendanceModel
   status: AttendanceStatus | undefined
-  startDate?: string | undefined
-  endSuccess: (attendanceId: string) => void
-  cancelSuccess: (attendanceId: string) => void
+  startDate: string | null
+  setPanelStatus: (attendanceId: string, status: PanelStatusType) => Promise<void>
 }
 
 export const Header: React.FC<HeaderProps> = (props) => {
@@ -88,9 +88,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
         id="menu-actions-header"
         anchorEl={anchorEl}
         onClose={handleClose}
-        attendanceId={props.attendanceId}
-        endSuccess={props.endSuccess}
-        cancelSuccess={props.cancelSuccess}
+        attendance={props.attendance}
+        setPanelStatus={props.setPanelStatus}
         setLoading={(loading) => { setLoading(loading) }}
       />
     </Stack>

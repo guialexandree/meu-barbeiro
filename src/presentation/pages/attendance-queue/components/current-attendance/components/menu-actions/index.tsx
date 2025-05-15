@@ -1,8 +1,13 @@
 import React from 'react'
+import { useSetRecoilState } from 'recoil'
 import { Icon, ListItemIcon, MenuItem } from '@mui/material'
 import { Factories } from '@/main/factories/usecases'
+import { AttendanceModel } from '@/domain/models'
 import { useNotify } from '@/presentation/hooks'
 import { Menu } from '@/presentation/components'
+import { State } from '@/presentation/pages/attendance-queue/components/atoms'
+import { State as TemplateState } from '@/presentation/templates/admin-template/components/atoms'
+import { PanelStatusType } from '../..'
 
 type MenuActionsProps = {
   id: string
@@ -10,35 +15,53 @@ type MenuActionsProps = {
     horizontal: number | 'left' | 'center' | 'right'
     vertical: number | 'top' | 'bottom'
   }
-  attendanceId: string
+  attendance: AttendanceModel
   setLoading: (loading: boolean) => void
-  endSuccess: (attendanceId: string) => void
-  cancelSuccess: (attendanceId: string) => void
+  setPanelStatus: (attendanceId: string, status: PanelStatusType) => Promise<void>
   onClose: VoidFunction
   anchorEl: HTMLElement | null
 }
 
 export const MenuActions: React.FC<MenuActionsProps> = (props) => {
   const { notify } = useNotify()
+  const setInfoResult = useSetRecoilState(TemplateState.attendancesInfoResultState)
+  const setHistory = useSetRecoilState(State.History.doneAttendancesState)
+  const setAttendances = useSetRecoilState(State.List.attendancesResultState)
 
   const cancelAttendance = React.useMemo(() => Factories.makeRemoteCancelAttendance(), [])
   const reAddAttendanceInQueue = React.useMemo(() => Factories.makeRemoteReAddAttendanceInQueue(), [])
 
-  const handleClose = () => {
-    props.onClose()
+  const onSuccess = async (attendance: AttendanceModel, status: PanelStatusType) => {
+    await props.setPanelStatus(attendance.id, status)
+    setAttendances(currentState => ({
+      ...currentState,
+      data: [...currentState.data, attendance]
+    }))
+    setHistory((currentState) => [
+      {
+        ...props.attendance,
+        status: 'canceled',
+        timeService: 0,
+        finishedAt: new Date().toISOString(),
+        amount: 0,
+        canceledAt: new Date().toISOString(),
+        startedAt: null,
+      },
+      ...currentState,
+    ])
   }
 
-  const handleAddAttendanceInQueue = () => {
+  const handleAddAttendanceInQueue = async () => {
     props.setLoading(true)
-    handleClose()
-    reAddAttendanceInQueue
+    props.onClose()
+    return reAddAttendanceInQueue
       .reAdd({
         position: 'last',
-        id: props.attendanceId,
-       })
+        id: props.attendance.id,
+      })
       .then((result) => {
         if (result.success) {
-          props.endSuccess(result.data.id)
+          onSuccess(result.data, 'reentry')
           return
         }
 
@@ -49,18 +72,18 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
       })
       .finally(() => {
         props.setLoading(false)
-        handleClose()
       })
   }
 
-  const handleCancelAttendance = () => {
+  const handleCancelAttendance = async () => {
     props.setLoading(true)
-    handleClose()
-    cancelAttendance
-      .cancel({ attendanceId: props.attendanceId, reason: 'PERDEU A VEZ' })
+    props.onClose()
+    return cancelAttendance
+      .cancel({ attendanceId: props.attendance.id, reason: 'PERDEU A VEZ' })
       .then((result) => {
         if (result.success) {
-          props.cancelSuccess(props.attendanceId)
+          setInfoResult((currentState) => ({ ...currentState, inQueue: currentState.inQueue - 1 }))
+          onSuccess(props.attendance, 'cancelling')
           return
         }
 
@@ -71,14 +94,13 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
       })
       .finally(() => {
         props.setLoading(false)
-        handleClose()
       })
   }
 
   return (
-    <Menu anchorOrigin={props.anchorOrigin} id={props.id} anchorEl={props.anchorEl} onClose={handleClose}>
+    <Menu anchorOrigin={props.anchorOrigin} id={props.id} anchorEl={props.anchorEl} onClose={props.onClose}>
       <MenuItem onClick={handleAddAttendanceInQueue}>
-        <ListItemIcon >
+        <ListItemIcon>
           <Icon sx={{ color: 'grey.900' }} fontSize="small">
             south
           </Icon>

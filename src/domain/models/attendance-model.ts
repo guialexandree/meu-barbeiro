@@ -5,8 +5,8 @@ export type AttendanceStatus = 'attending' | 'current' | 'in_queue' | 'canceled'
 export type AttendanceModel = {
   id: string
   createdAt: string
-  startedAt: string
-  finishedAt: string
+  startedAt: string | null
+  finishedAt: string | null
   startPrevision: string
   services: AttendanceServiceModel[]
   user: UserModel
@@ -32,8 +32,8 @@ export type AttendanceDone = {
   status: AttendanceStatus
   timeService: number
   amount: number
-  startedAt: string
-  finishedAt: string
+  startedAt: string | null
+  finishedAt: string | null
   canceledAt: string | null
   user: {
     id: string

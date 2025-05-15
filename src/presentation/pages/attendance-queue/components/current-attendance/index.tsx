@@ -2,118 +2,120 @@ import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Grow, Paper, Skeleton, Slide, Stack, useTheme } from '@mui/material'
 import { AttendanceModel } from '@/domain/models'
+import { Action } from '@/infra'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
-import { useActions, useSocket } from '@/presentation/hooks'
-import { Actions, Attendance, Header, StatePanel } from './components'
+import { useSocket } from '@/presentation/hooks'
+import { Actions, Attendance, Header, PanelStatus } from './components'
 
-type CurrentAttendanceProps = {
-  onCloseAttendace: (attendanceId: string) => void
-}
+export type PanelStatusType = null | 'cancelling' | 'reentry' | 'ending'
 
-export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
+export const CurrentAttendance: React.FC = () => {
   const theme = useTheme()
-  const { removeAction, getAction } = useActions()
   const company = useRecoilValue(GenericState.companyState)
   const currentAttendance = useRecoilValue(State.List.currentAttendanceState)
-  const { getSocket } = useSocket()
+  const { getSocket, getActions } = useSocket()
   const [attendanceResult, setAttendancesResult] = useRecoilState(State.List.attendancesResultState)
-  const [success, setSuccess] = React.useState(false)
+  const [panelStatus, setPanelStatus] = React.useState<PanelStatusType>(null)
   const [closeAttendance, setCloseAttendance] = React.useState(false)
-  const [passTheTurn, setPassTheTurn] = React.useState(false)
 
-  const endSuccess = React.useCallback((attendanceId: string) => {
-    setSuccess(true)
-    setTimeout(() => {
-      setSuccess(false)
-      setCloseAttendance(true)
-      setTimeout(() => {
-        props.onCloseAttendace(attendanceId)
-        setCloseAttendance(false)
-      }, 500)
-    }, 1200)
+  const setCurrentAttendance = React.useCallback((attendances: AttendanceModel[]): AttendanceModel[] => {
+    return attendances.map((attendance, index) => {
+      if (index === 0) {
+        return {
+          ...attendance,
+          status: 'current',
+        }
+      }
+      return attendance
+    })
   }, [])
 
-  const cancelSuccess = React.useCallback((attendanceId: string) => {
-    setPassTheTurn(true)
-    setTimeout(() => {
-      setPassTheTurn(false)
-      setCloseAttendance(true)
+  const onCloseAttendance = React.useCallback((attendanceId: string) => {
+    setAttendancesResult((currentState) => {
+      let pendingsAttendances = currentState.data.filter((attendance) => attendance.id !== attendanceId)
+      pendingsAttendances = setCurrentAttendance(pendingsAttendances)
+
+      return {
+        ...currentState,
+        data: pendingsAttendances,
+      }
+    })
+  }, [])
+
+  const setStatus = React.useCallback(async (attendanceId: string, status: PanelStatusType) => {
+    return await new Promise<void>(resolve => {
+      setPanelStatus(status)
       setTimeout(() => {
-        props.onCloseAttendace(attendanceId)
-        setCloseAttendance(false)
-      }, 500)
-    }, 1200)
+        setCloseAttendance(true)
+        setPanelStatus(null)
+        setTimeout(() => {
+          onCloseAttendance(attendanceId)
+          setCloseAttendance(false)
+          resolve()
+        }, 700)
+      }, 1200)
+    })
   }, [])
 
   React.useEffect(() => {
-    const socket = getSocket()
+    // const socket = getSocket()
+    // const actions = getActions()
 
-    socket.on('queue/entry_in_queue', (attendance: AttendanceModel) => {
-      const action = getAction(attendance.id, 'inQueue')
-      if (action) {
-        removeAction(action)
-        return
-      }
+    // socket.on('queue/finish_attendance', (attendance: AttendanceModel) => {
+    //   const action: Action = { attendanceId: attendance.id, type: 'finished' }
+    //   const hasAction = actions.hasAction(action)
+    //   if (hasAction) {
+    //     actions.removeAction(action)
+    //     return
+    //   }
 
-      setAttendancesResult((currentState) => ({
-        ...currentState,
-        data: currentState.data.length ? [...currentState.data, attendance] : [{ ...attendance, status: 'current' }],
-      }))
-    })
+    //   setStatus(attendance.id, 'ending')
+    // })
 
-    socket.on('queue/finish_attendance', (attendance: AttendanceModel) => {
-      const action = getAction(attendance.id, 'finished')
-      if (action) {
-        removeAction(action)
-        return
-      }
+    // socket.on('queue/cancel_attendance', (attendance: AttendanceModel) => {
+    //   const action: Action = { attendanceId: attendance.id, type: 'cancel' }
+    //   const hasAction = actions.hasAction(action)
+    //   if (hasAction) {
+    //     actions.removeAction(action)
+    //     return
+    //   }
 
-      endSuccess(attendance.id)
-    })
-    socket.on('queue/cancel_attendance', (attendance: AttendanceModel) => {
-      const action = getAction(attendance.id, 'cancel')
-      if (action) {
-        removeAction(action)
-        return
-      }
+    //   setStatus(attendance.id, 'cancelling')
+    // })
 
-      cancelSuccess(attendance.id)
-    })
+    // socket.on('queue/start_attendance', (attendance: AttendanceModel) => {
+    //   const action: Action = { attendanceId: attendance.id, type: 'start' }
+    //   const hasAction = actions.hasAction(action)
+    //   if (hasAction) {
+    //     actions.removeAction(action)
+    //     return
+    //   }
 
-    socket.on('queue/start_attendance', (attendance: AttendanceModel) => {
-      setAttendancesResult((currentState) => ({
-        ...currentState,
-        data: currentState.data.map((item) => (item.id === attendance.id ? attendance : item)),
-      }))
-    })
+    //   setAttendancesResult((currentState) => ({
+    //     ...currentState,
+    //     data: currentState.data.map((item) => (item.id === attendance.id ? attendance : item)),
+    //   }))
+    // })
 
     return () => {
-      socket.off('queue/entry_in_queue')
-      socket.off('queue/finish_attendance')
-      socket.off('queue/cancel_attendance')
-      socket.off('queue/start_attendance')
+      // socket.off('queue/entry_in_queue')
+      // socket.off('queue/finish_attendance')
+      // socket.off('queue/cancel_attendance')
+      // socket.off('queue/start_attendance')
     }
   }, [])
 
-  const colorStatus = React.useMemo(() => {
-    if (success || attendanceResult?.data?.at(0)?.status === 'attending') {
-      return 'success'
-    }
-
-    return 'primary'
-  }, [attendanceResult, success]) as 'primary' | 'success'
-
-  if (!company) {
+  if (!company || !attendanceResult) {
     return <Skeleton variant="rounded" width="100%" height={157} sx={{ borderRadius: 2, mt: 1 }} />
   }
 
-  const bgStatusColor: string = {
+  const borderStatusColor: string = {
     in_queue: `${theme.palette.grey[400]}20`,
-    current: `${theme.palette.grey[400]}20`,
-    attending: `${theme.palette.success.light}30`,
-    finished: `${theme.palette.success.light}20`,
-    canceled: `${theme.palette.error.light}20`,
+    current: theme.palette.info.main,
+    attending: theme.palette.success.main,
+    finished: theme.palette.success.main,
+    canceled: theme.palette.error.main,
   }[currentAttendance?.status || 'in_queue']
 
   return (
@@ -132,22 +134,27 @@ export const CurrentAttendance: React.FC<CurrentAttendanceProps> = (props) => {
           py: 1,
           mt: 1,
           height: 157,
-          backgroundColor: (theme) => (success || passTheTurn ? `${theme.palette[colorStatus].main}90` : bgStatusColor),
+          backgroundColor:
+            currentAttendance?.status === 'attending' ? `${theme.palette.success.main}40` : 'background.paper',
           transition: 'all 0.5s ease',
-          borderColor: `${colorStatus}.light`,
+          borderColor: borderStatusColor,
           position: 'relative',
         }}
       >
-        {passTheTurn && <StatePanel variant={'cancel'} />}
-        {success && <StatePanel variant={'success'} />}
+        <PanelStatus status={panelStatus} />
 
         <Slide direction={closeAttendance ? 'left' : 'up'} in={!closeAttendance} timeout={100}>
           <Stack>
-            <Header attendanceId={currentAttendance?.id} startDate={currentAttendance?.startedAt} status={currentAttendance?.status} endSuccess={endSuccess} cancelSuccess={cancelSuccess} />
+            <Header
+              attendance={currentAttendance!}
+              startDate={currentAttendance?.startedAt}
+              status={currentAttendance?.status}
+              setPanelStatus={setStatus}
+            />
 
             <Attendance attendance={currentAttendance} />
 
-            <Actions attendance={currentAttendance} endSuccess={endSuccess} cancelSuccess={cancelSuccess} sendTo={cancelSuccess} />
+            <Actions setPanelStatus={setStatus} attendance={currentAttendance} />
           </Stack>
         </Slide>
       </Paper>

@@ -1,22 +1,24 @@
 import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Factories } from '@/main/factories/usecases'
-import { AttendanceModel } from '@/domain/models'
 import { Button, Icon, Slide } from '@mui/material'
-import { useActions, useNotify } from '@/presentation/hooks'
-import { State } from '@/presentation/pages/attendance-form/components/atoms'
+import { AttendanceModel } from '@/domain/models'
 import { PageLoader } from '@/presentation/components'
+import { useNotify, useSocket } from '@/presentation/hooks'
+import { State } from '@/presentation/pages/attendance-form/components/atoms'
+import { State as TemplateState } from '@/presentation/templates/admin-template/components/atoms'
 
 type SaveFormActionProps = {
   onReset: VoidFunction
 }
 
 export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
-  const { notify } = useNotify()
   const navigate = useNavigate()
-  const actions = useActions()
+  const { notify } = useNotify()
+  const { getActions } = useSocket()
   const newAttendance = useRecoilValue(State.newAttendandeState)
+  const setInfoResult = useSetRecoilState(TemplateState.attendancesInfoResultState)
   const [loading, setLoading] = useRecoilState(State.loadingState)
 
   const { id } = useParams<{ id: string }>()
@@ -26,6 +28,8 @@ export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
   const onSuccess = (attendance: AttendanceModel): void => {
     navigate('/')
     notify(`${attendance.user.name.toUpperCase()} foi adicionado na fila`, { type: 'info' })
+    setInfoResult((currentState) => ({ ...currentState, inQueue: currentState.inQueue + 1 }))
+    const actions = getActions()
     actions.addAction({
       attendanceId: attendance.id,
       type: 'inQueue',
