@@ -53,45 +53,45 @@ export const QueueInfo: React.FC = () => {
   React.useEffect(() => {
     onLoad()
 
-    const socket = getSocket()
+    // const socket = getSocket()
 
-    socket.on('connect', () => {
-      if (pollingInterval.current) {
-        clearInterval(pollingInterval.current)
-      }
-    })
+    // socket.on('connect', () => {
+    //   if (pollingInterval.current) {
+    //     clearInterval(pollingInterval.current)
+    //   }
+    // })
 
-    socket.on('disconnect', () => {
-      pollingInterval.current = setInterval(() => {
-        onLoadAttendancesInfoToday()
-      }, 30000)
-    })
+    // socket.on('disconnect', () => {
+    //   pollingInterval.current = setInterval(() => {
+    //     onLoadAttendancesInfoToday()
+    //   }, 30000)
+    // })
 
-    socket.on('queue_info/entry_in_queue', () => {
-      setAttendancesInfo((currentState) => ({
-        ...currentState,
-        inQueue: currentState.inQueue  + 1,
-      }))
-    })
-    socket.on('queue_info/cancel_attendance', () => {
-      setAttendancesInfo((currentState) => ({
-        ...currentState,
-        inQueue: currentState.inQueue  - 1,
-      }))
-    })
+    // socket.on('queue_info/entry_in_queue', () => {
+    //   setAttendancesInfo((currentState) => ({
+    //     ...currentState,
+    //     inQueue: currentState.inQueue  + 1,
+    //   }))
+    // })
+    // socket.on('queue_info/cancel_attendance', () => {
+    //   setAttendancesInfo((currentState) => ({
+    //     ...currentState,
+    //     inQueue: currentState.inQueue  - 1,
+    //   }))
+    // })
 
-    socket.on('queue_info/finish_attendance', (attendance: AttendanceModel) => {
-      setAttendancesInfo((currentState) => ({
-        inQueue: currentState.inQueue - 1,
-        amount: currentState.amount + attendance?.services?.reduce((acc, service) => acc + +service.price, 0),
-        finished: currentState.finished + 1,
-      }))
-    })
+    // socket.on('queue_info/finish_attendance', (attendance: AttendanceModel) => {
+    //   setAttendancesInfo((currentState) => ({
+    //     inQueue: currentState.inQueue - 1,
+    //     amount: currentState.amount + attendance?.services?.reduce((acc, service) => acc + +service.price, 0),
+    //     finished: currentState.finished + 1,
+    //   }))
+    // })
 
     return () => {
-      socket.off('queue_info/entry_in_queue')
-      socket.off('queue_info/cancel_attendance')
-      socket.off('queue_info/finish_attendance')
+      // socket.off('queue_info/entry_in_queue')
+      // socket.off('queue_info/cancel_attendance')
+      // socket.off('queue_info/finish_attendance')
       if (pollingInterval.current) {
         clearInterval(pollingInterval.current)
       }
