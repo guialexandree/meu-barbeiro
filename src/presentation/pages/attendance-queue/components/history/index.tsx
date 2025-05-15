@@ -6,16 +6,16 @@ import {
   AccordionDetails,
   AccordionSummary,
   Icon,
-  Fade,
+  Grow,
   Stack,
   Typography,
   Chip,
   CircularProgress,
-  Grow,
+  Skeleton,
 } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { Factories } from '@/main/factories/usecases'
-import { useNotify, useSocket } from '@/presentation/hooks'
+import { useNotify } from '@/presentation/hooks'
 import {
   Timeline,
   TimelineItem,
@@ -27,11 +27,9 @@ import {
   TimelineConnector,
 } from '@mui/lab'
 import { GenericState } from '@/presentation/components/atoms'
-import { AttendanceModel } from '@/domain/models'
 
 export const HistoryToday: React.FC = () => {
   const { notify } = useNotify()
-  const { getSocket } = useSocket()
   const dateAdapter = useRecoilValue(GenericState.dateAdapterState)
   const [expanded, setExpanded] = useRecoilState(State.expandHistoryState)
   const [loading, setLoading] = useRecoilState(State.History.loadingState)
@@ -57,41 +55,47 @@ export const HistoryToday: React.FC = () => {
   React.useEffect(() => {
     onLoadDoneAttendances()
 
-    const socket = getSocket()
-    socket.on('queue/finish_attendance', (attendance: AttendanceModel) => {
-      setDoneAttendances((currentState) => [
-        {
-          ...attendance,
-          amount: attendance.services.reduce((acc, service) => acc + +service.price, 0),
-          timeService: dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt!),
-        },
-        ...currentState,
-      ])
-    })
+    // const socket = getSocket()
+    // socket.on('queue/finish_attendance', (attendance: AttendanceModel) => {
+    //   setDoneAttendances((currentState) => [
+    //     {
+    //       ...attendance,
+    //       amount: attendance.services.reduce((acc, service) => acc + +service.price, 0),
+    //       timeService: dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt!),
+    //     },
+    //     ...currentState,
+    //   ])
+    // })
 
-    socket.on('queue/cancel_attendance', (attendance: AttendanceModel) => {
-      setDoneAttendances((currentState) => [
-        {
-          ...attendance,
-          amount: 0,
-          timeService: dateAdapter.diffInMinutes(attendance.startedAt, attendance.canceledAt!),
-        },
-        ...currentState,
-      ])
-    })
+    // socket.on('queue/cancel_attendance', (attendance: AttendanceModel) => {
+    //   setDoneAttendances((currentState) => [
+    //     {
+    //       ...attendance,
+    //       amount: 0,
+    //       timeService: dateAdapter.diffInMinutes(attendance.startedAt, attendance.canceledAt!),
+    //     },
+    //     ...currentState,
+    //   ])
+    // })
 
     return () => {
-      socket.off('queue/finish_attendance')
-      socket.off('queue/cancel_attendance')
+      // socket.off('queue/finish_attendance')
+      // socket.off('queue/cancel_attendance')
     }
   }, [])
+
+  if (loading) {
+    return <Grow  in>
+      <Skeleton variant="rounded" width="100%" height={48} sx={{ borderRadius: 1 }} />
+    </Grow>
+  }
 
   if (!doneAttendances.length) {
     return null
   }
 
   return (
-    <Fade in timeout={500} mountOnEnter unmountOnExit style={{ transitionDelay: '250ms' }}>
+    <Grow in timeout={500} mountOnEnter unmountOnExit style={{ transitionDelay: '250ms' }}>
       <Stack justifyContent="center" mt={1}>
         <Accordion
           variant="outlined"
@@ -217,6 +221,6 @@ export const HistoryToday: React.FC = () => {
           </AccordionDetails>
         </Accordion>
       </Stack>
-    </Fade>
+    </Grow>
   )
 }

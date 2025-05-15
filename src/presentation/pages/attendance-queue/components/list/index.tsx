@@ -1,19 +1,21 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { AttendanceModel } from '@/domain/models'
+import { Factories } from '@/main/factories/usecases'
+import { Action } from '@/infra'
 import { List } from '@/presentation/components'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
 import { Box, Button, Fade, Icon, Paper, Stack, Typography, Zoom } from '@mui/material'
 import { AttendanceItem } from '../attendance-item'
-import { Factories } from '@/main/factories/usecases'
 import { useSocket } from '@/presentation/hooks'
 import barberImg from '@/presentation/assets/logo.png'
 
 export const AttendanceQueueList: React.FC = () => {
   const navigate = useNavigate()
-  const { getSocket } = useSocket()
-  const [attendancesResult, setAttendanceResult] = useRecoilState(State.List.attendancesResultState)
+  const { getSocket, getActions } = useSocket()
+  const [attendancesResult, setAttendancesResult] = useRecoilState(State.List.attendancesResultState)
   const setPageState = useSetRecoilState(State.listState)
   const setOpenWhatsAppDialog = useSetRecoilState(State.List.openDialogWhatsAppState)
   const company = useRecoilValue(GenericState.companyState)
@@ -24,7 +26,7 @@ export const AttendanceQueueList: React.FC = () => {
   const onLoadAttendances = React.useCallback(async () => {
     try {
       const result = await loadAttendances.load()
-      setAttendanceResult(result)
+      setAttendancesResult(result)
     } catch (error: any) {
       console.error(error)
     }
@@ -32,11 +34,26 @@ export const AttendanceQueueList: React.FC = () => {
 
   React.useEffect(() => {
     const socket = getSocket()
+    const actions = getActions()
 
     socket.on('connect', () => {
       if (pollingInterval.current) {
         clearInterval(pollingInterval.current)
       }
+    })
+
+    socket.on('queue/entry_in_queue', (attendance: AttendanceModel) => {
+      const action: Action = { attendanceId: attendance.id, type: 'inQueue' }
+      const hasAction = actions.hasAction(action)
+      if (hasAction) {
+        actions.removeAction(action)
+        return
+      }
+
+      setAttendancesResult((currentState) => ({
+        ...currentState,
+        data: currentState.data.length ? [...currentState.data, attendance] : [{ ...attendance, status: 'current' }],
+      }))
     })
 
     socket.on('disconnect', () => {
@@ -50,6 +67,7 @@ export const AttendanceQueueList: React.FC = () => {
       if (pollingInterval.current) {
         clearInterval(pollingInterval.current)
       }
+      socket.off('queue/entry_in_queue')
     }
   }, [])
 
@@ -57,7 +75,7 @@ export const AttendanceQueueList: React.FC = () => {
     try {
       setPageState({ loading: true, noResults: false, error: '' })
       const result = await loadAttendances.load()
-      setAttendanceResult(result)
+      setAttendancesResult(result)
       setPageState({ loading: false, noResults: false, error: '' })
     } catch (error: any) {
       console.error(error)
@@ -69,7 +87,7 @@ export const AttendanceQueueList: React.FC = () => {
     onLoad()
   }, [])
 
-  if (company?.statusAttendance !== 'serving') {
+  if (company?.statusAttendance === 'closed' && attendancesResult?.data?.length == 1) {
     return null
   }
 
@@ -90,7 +108,7 @@ export const AttendanceQueueList: React.FC = () => {
             borderTopRightRadius: 8,
           }}
         >
-          <Stack spacing={2} alignItems='center'>
+          <Stack spacing={2} alignItems="center">
             <Stack spacing={1} direction="row" alignItems="center" justifyContent="center">
               <Icon color="info" sx={{ color: 'info.light' }}>
                 info_outline
@@ -107,7 +125,7 @@ export const AttendanceQueueList: React.FC = () => {
             </Stack>
 
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              <Box component="img" height={110} width={110} src={barberImg}  sx={{ opacity: 0.3}} />
+              <Box component="img" height={110} width={110} src={barberImg} sx={{ opacity: 0.3 }} />
             </Zoom>
 
             <Button
@@ -153,7 +171,7 @@ export const AttendanceQueueList: React.FC = () => {
       >
         {attendancesResult?.data?.slice(1)?.map((attendance, index) => (
           <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={attendance.id}>
-            <Box sx={{ width: '100%'}}>
+            <Box sx={{ width: '100%' }}>
               <AttendanceItem
                 position={index + 1}
                 openDialogWhatsapp={() => {

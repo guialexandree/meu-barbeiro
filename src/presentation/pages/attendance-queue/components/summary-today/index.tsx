@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import {Fade, Paper, Typography } from '@mui/material'
+import { Fade, Grow, Paper, Typography } from '@mui/material'
 import { GenericState } from '@/presentation/components/atoms'
 
 export const SummaryToday: React.FC = () => {
@@ -12,12 +12,11 @@ export const SummaryToday: React.FC = () => {
 
   return (
     <>
-      <Fade in unmountOnExit style={{ transitionDelay: '100ms' }}>
+      <Grow in unmountOnExit style={{ transitionDelay: '100ms' }}>
         <Paper
           id="status-queue-form"
           component="form"
-          variant="elevation"
-          elevation={0}
+          variant="outlined"
           onSubmit={(event) => {
             event.preventDefault()
           }}
@@ -28,19 +27,20 @@ export const SummaryToday: React.FC = () => {
             mb: 1,
             display: 'flex',
             flexDirection: 'row',
-            backgroundColor: (theme) => `${theme.palette.primary.dark}20`,
+            backgroundColor: (theme) => `${theme.palette.primary.main}20`,
             justifyContent: 'space-between',
             alignItems: 'center',
+            backgroundImage: 'none'
           }}
         >
           <Fade in unmountOnExit>
-            <Typography mt={1} variant="h6" fontWeight={900} fontFamily="Inter" letterSpacing={1}>
-              Resumo de hoje
+            <Typography mt={1} variant="h1" >
+              RESUMO DE HOJE
             </Typography>
 
           </Fade>
         </Paper>
-      </Fade>
+      </Grow>
     </>
   )
 }
