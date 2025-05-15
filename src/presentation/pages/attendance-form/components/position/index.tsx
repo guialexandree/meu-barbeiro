@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { Chip, Slide, Stack, Typography } from '@mui/material'
+import { Slide, Stack, Typography } from '@mui/material'
 import { InputRadio } from '@/presentation/components'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
@@ -66,18 +66,9 @@ export const Position: React.FC = () => {
           onChange={handleChange}
           description="Padrão, adiciona no final da fila de atendimento"
         >
-          <Chip
-            size="small"
-            sx={{
-              mt: 0.5,
-              fontSize: 12,
-              bgcolor: 'primary.light',
-              color: 'grey.900',
-              textTransform: 'uppercase',
-              fontWeight: '800',
-            }}
-            label="Previsão de atendimento às 19:40"
-          />
+          <Typography color='primary' sx={{ textTransform: 'uppercase', fontSize: 16, fontWeight: 500 }}>
+            Previsão de atendimento às 19:40
+          </Typography>
         </InputRadio>
         <InputRadio<'first' | 'last'>
           label="ADICIONAR NO INÍCIO"

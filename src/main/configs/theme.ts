@@ -21,20 +21,18 @@ export const theme = createTheme({
   components: {
     MuiTypography: {
       styleOverrides: {
-        h1: {
+        h1: ({ theme }) => ({
           fontFamily: 'Inter',
-          fontWeight: 900,
+          fontWeight: 600,
+          fontSize: 24,
+          color: theme.palette.text.secondary,
+        }),
+         h2: ({ theme }) => ({
+          fontFamily: 'Inter',
+          fontWeight: 600,
           fontSize: 20,
-          lineHeight: 1,
-          letterSpacing: 0.5,
-        },
-        h2: {
-          fontFamily: 'Inter',
-          fontWeight: 900,
-          fontSize: 18,
-          lineHeight: 1,
-          letterSpacing: 0.5,
-        },
+          color: theme.palette.text.secondary,
+        }),
       },
     },
     MuiChip: {

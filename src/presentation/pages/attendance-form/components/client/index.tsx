@@ -12,7 +12,7 @@ export const Client: React.FC = () => {
   return (
     <Stack spacing={1.5}>
       <Slide direction="right" in mountOnEnter unmountOnExit style={{ transitionDelay: '50ms' }}>
-        <Typography variant="h1">ADICIONAR NA FILA</Typography>
+        <Typography variant='h1' >ADICIONAR NA FILA</Typography>
       </Slide>
 
       <Grow in mountOnEnter unmountOnExit style={{ transitionDelay: '100ms' }}>
@@ -23,18 +23,26 @@ export const Client: React.FC = () => {
           value={selectedUser}
           options={options}
           sx={{
-            backgroundColor: (theme) => `${theme.palette.primary.light}20`,
+            backgroundColor: (theme) => `${theme.palette.primary.main}10`,
+            borderRadius: 3,
           }}
           popupIcon={<Icon>arrow_drop_down</Icon>}
           slotProps={{
+            popper: {
+              sx: {
+                borderRadius: 4
+              }
+            },
             popupIndicator: {
               sx: {
+                mr: 1,
                 backgroundColor: (theme) => `${theme.palette.primary.light}40`,
               },
             },
             paper: {
               sx: {
-                mt: -0.5,
+                mt: -1.2,
+                borderRadius: 3,
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
                 border: 'solid 2px',
@@ -45,7 +53,7 @@ export const Client: React.FC = () => {
             },
             listbox: {
               sx: {
-                backgroundColor: (theme) => `${theme.palette.primary.light}20`,
+                backgroundColor: (theme) => `${theme.palette.primary.main}10`,
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
                 '& .MuiAutocomplete-option': {
@@ -69,17 +77,22 @@ export const Client: React.FC = () => {
           onChange={(_, newValue) => {
             setSelectedUser(newValue!)
           }}
+          forcePopupIcon={false}
           renderInput={(params) => (
             <TextField
               slotProps={{
                 input: {
                   ...params.InputProps,
+                  sx: {
+                    borderRadius: 3,
+                    fontSize: 18,
+                    fontWeight: selectedUser ? 500 : 300,
+                    fontFamily: 'Inter',
+                  },
                   startAdornment: selectedUser ? (
-                    <Icon fontSize="small" color="success">
-                      check_outline
-                    </Icon>
+                   <Icon color='primary' sx={{mx: 1, fontSize: 30 }}>person</Icon>
                   ) : (
-                    <Icon>person_outline</Icon>
+                    <Icon sx={{ color: 'text.secondary', mx: 1, fontSize: 30 }}>person</Icon>
                   ),
                 },
               }}

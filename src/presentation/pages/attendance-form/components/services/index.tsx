@@ -1,8 +1,7 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Fade, Grow, Icon, IconButton, Skeleton, Slide, Stack, Typography } from '@mui/material'
+import { Fade, Grow, Icon, IconButton, Paper, Skeleton, Slide, Stack, Typography } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
-import { ServiceQueueItem } from '../services-queue-item'
 
 export const Services: React.FC = () => {
   const selectedServices = useRecoilValue(State.selectedServicesState)
@@ -15,21 +14,43 @@ export const Services: React.FC = () => {
           <Slide direction="right" in mountOnEnter unmountOnExit style={{ transitionDelay: '100ms' }}>
             <Typography variant="h2">SERVIÇOS A REALIZAR</Typography>
           </Slide>
-          <IconButton size="small" color="info" sx={{ backgroundColor: (theme) => `${theme.palette.info.light}20` }}>
-            <Icon fontSize="small">add</Icon>
-          </IconButton>
         </Stack>
 
-        {loading ||
-          (!selectedServices.length && (
-            <Grow in>
-              <Skeleton variant="rounded" height={50} width={'100%'} sx={{ borderRadius: 2 }} />
-            </Grow>
-          ))}
+        {(loading || !selectedServices.length) && (
+          <Grow in>
+            <Skeleton variant="rounded" height={50} width={'100%'} sx={{ borderRadius: 2 }} />
+          </Grow>
+        )}
 
-        {selectedServices?.map((service) => (
-          <ServiceQueueItem service={service} />
-        ))}
+        <Paper
+          variant="outlined"
+          sx={{
+            borderRadius: 3,
+            py: 1.5,
+            backgroundColor: (theme) => `${theme.palette.primary.main}10`,
+          }}
+        >
+           {!!selectedServices.length &&
+              <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
+                <Typography variant="body1" sx={{ flex: 1, fontSize: 18, fontFamily: 'Inter', ml: 2 }}>
+                  {selectedServices.map((service) => service.name.toUpperCase()).join(', ')}
+                </Typography>
+
+                <Stack justifyContent='center' alignItems='center' sx={{ px: 1}}>
+                  <Typography sx={{ fontSize: 20, fontFamily: 'Inter', lineHeight: 1 }}>
+                    {`R$ ${selectedServices.reduce((acc, service) => acc + +service.price, 0).toFixed(0)}`}
+                  </Typography>
+                  <Typography sx={{ fontFamily: 'Inter', fontSize: 16, fontWeight: 300, color: 'text.secondary'  }}>
+                    {`${selectedServices.reduce((acc, service) => acc + service.timeExecution, 0).toFixed(0)} min`}
+                  </Typography>
+                </Stack>
+
+                <IconButton size="small" sx={{ color: 'text.secondary'}}>
+                  <Icon fontSize="small" sx={{ fontSize: 14, mx: 1.5 }}>arrow_forward_ios</Icon>
+                </IconButton>
+              </Stack>
+            }
+        </Paper>
       </Stack>
     </Fade>
   )

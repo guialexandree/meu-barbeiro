@@ -21,10 +21,11 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
           alignItems: 'flex-start',
           px: 3,
           py: 1.5,
-          pr: 4,
+          pr: 5,
           transition: 'all 0.3s ease',
           backgroundColor: props.checked ? 'background.paper' : 'background.default',
           borderColor: props.checked ? 'grey.500' : 'grey.800',
+          borderRadius: 3,
           position: 'relative',
         }}
         onClick={() => props.onChange(props.value)}
@@ -33,7 +34,6 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
           <Stack direction="row" alignItems="center" spacing={1}>
             {props.icon && <Icon sx={{ fontSize: 16 }}>{props.icon}</Icon>}
             <Typography
-              variant="body2"
               fontWeight={props.checked ? 600 : 400}
               color={props.checked ? 'text.primary' : 'text.secondary'}
             >
@@ -42,7 +42,7 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
           </Stack>
           <Radio
             checked={props.checked}
-            color="success"
+            color="primary"
             onChange={() => {
               props.onChange(props.value)
             }}
