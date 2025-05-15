@@ -86,6 +86,7 @@ export const SaveFormAction: React.FC<SaveFormActionProps> = (props) => {
         type="submit"
         size='large'
         fullWidth
+        sx={{ height: 50, borderRadius: 3, fontSize: 18,  }}
         endIcon={<Icon  fontSize='small'>done_outline</Icon>}
         id="save-service-button"
         href="#"

@@ -16,7 +16,7 @@ export const CancelAction: React.FC<CancelActionProps> = (props) => {
         color="inherit"
         size='large'
         variant="outlined"
-        sx={{ borderColor: 'grey.700', backgroundColor: 'background.default' }}
+        sx={{ fontSize: 18, borderColor: 'grey.700', backgroundColor: 'background.default', height: 50, borderRadius: 3 }}
         onClick={props.onCancel}
       >
         Cancelar
