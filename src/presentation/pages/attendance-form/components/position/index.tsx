@@ -50,7 +50,7 @@ export const Position: React.FC = () => {
   }, [])
 
   return (
-    <Stack spacing={2} justifyContent="space-between">
+    <Stack spacing={1} justifyContent="space-between">
       <Slide direction="right" in mountOnEnter unmountOnExit style={{ transitionDelay: '50ms' }}>
         <Typography variant="h2">
           POSIÇÃO NA FILA

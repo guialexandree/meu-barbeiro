@@ -20,7 +20,7 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
           flexDirection: 'column',
           alignItems: 'flex-start',
           px: 3,
-          py: 1.5,
+          py: 1.2,
           pr: 5,
           transition: 'all 0.3s ease',
           backgroundColor: props.checked ? 'background.paper' : 'background.default',
@@ -55,7 +55,7 @@ export const InputRadio = <T,>(props: InputRadioProps<T>) => {
             }}
           />
         </Stack>
-        <Typography variant="caption" color="text.disabled" letterSpacing={1}>
+        <Typography variant="caption" color="text.disabled" letterSpacing={1} lineHeight={1}>
           {props.description}
         </Typography>
         {props.children}

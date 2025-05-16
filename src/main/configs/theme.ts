@@ -24,13 +24,13 @@ export const theme = createTheme({
         h1: ({ theme }) => ({
           fontFamily: 'Inter',
           fontWeight: 600,
-          fontSize: 24,
+          fontSize: 22,
           color: theme.palette.text.secondary,
         }),
          h2: ({ theme }) => ({
           fontFamily: 'Inter',
           fontWeight: 600,
-          fontSize: 20,
+          fontSize: 18,
           color: theme.palette.text.secondary,
         }),
       },
