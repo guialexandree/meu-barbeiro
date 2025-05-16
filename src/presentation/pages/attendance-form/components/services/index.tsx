@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Fade, Grow, Icon, IconButton, Paper, Skeleton, Slide, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, Fade, Grow, Icon, IconButton, Paper, Skeleton, Slide, Stack, Tooltip, Typography } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
 
 export const Services: React.FC = () => {
@@ -16,11 +16,11 @@ export const Services: React.FC = () => {
           </Slide>
         </Stack>
 
-        {(loading || !selectedServices.length) && (
+        {/* {(loading || !selectedServices.length) && (
           <Grow in>
             <Skeleton variant="rounded" height={50} width={'100%'} sx={{ borderRadius: 2 }} />
           </Grow>
-        )}
+        )} */}
 
         <Paper
           variant="outlined"
@@ -30,30 +30,43 @@ export const Services: React.FC = () => {
             backgroundColor: (theme) => `${theme.palette.primary.main}10`,
           }}
         >
-          {!!selectedServices.length && (
-            <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
+          <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
+            {loading ? (
+              <Box flex={1}>
+                <Skeleton variant="rounded" height={27} width={80} sx={{ ml: 2 }} />
+              </Box>
+            ) : (
               <Typography variant="body1" sx={{ flex: 1, fontSize: 18, fontFamily: 'Inter', ml: 2 }}>
                 {selectedServices.map((service) => service.name.toUpperCase()).join(', ')}
               </Typography>
+            )}
 
-              <Stack justifyContent="center" alignItems="center" sx={{ px: 1 }}>
+            <Stack justifyContent="center" alignItems="center" sx={{ px: 1 }}>
+              {loading ? (
+                <Skeleton variant="rounded" height={18} width={52} sx={{ ml: 2, mb: 0.3 }} />
+              ) : (
                 <Typography sx={{ fontSize: 18, fontFamily: 'Inter', lineHeight: 1 }}>
                   {`R$ ${selectedServices.reduce((acc, service) => acc + +service.price, 0).toFixed(0)}`}
                 </Typography>
+              )}
+
+              {loading ? (
+                <Skeleton variant="rounded" height={20} width={52} sx={{ ml: 2 }} />
+              ) : (
                 <Typography sx={{ fontFamily: 'Inter', fontSize: 16, fontWeight: 300, color: 'text.secondary' }}>
                   {`${selectedServices.reduce((acc, service) => acc + service.timeExecution, 0).toFixed(0)} min`}
                 </Typography>
-              </Stack>
-
-              <Tooltip title="Editar serviços" placement="top" arrow>
-                <IconButton size="small" sx={{ color: 'text.secondary', mx: 1.5 }}>
-                  <Icon fontSize="small" sx={{ fontSize: 14 }}>
-                    arrow_forward_ios
-                  </Icon>
-                </IconButton>
-              </Tooltip>
+              )}
             </Stack>
-          )}
+
+            <Tooltip title="Editar serviços" placement="top" arrow>
+              <IconButton size="small" sx={{ color: 'text.secondary', mx: 1.5 }}>
+                <Icon fontSize="small" sx={{ fontSize: 14 }}>
+                  arrow_forward_ios
+                </Icon>
+              </IconButton>
+            </Tooltip>
+          </Stack>
         </Paper>
       </Stack>
     </Fade>

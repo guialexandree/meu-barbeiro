@@ -4,43 +4,44 @@ import { Stack } from '@mui/material'
 import { PageContainer } from '@/presentation/components'
 import { Factories } from '@/main/factories/usecases'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
-import { State as ServiceState } from '@/presentation/pages/service-list/components/atoms'
 import { Actions, Client, Position, Services } from './components'
 
 const UserFormPage: React.FC = () => {
   const setSelectedServices = useSetRecoilState(State.selectedServicesState)
-  const setLoading = useSetRecoilState(State.loadingUsersState)
-  const setServices = useSetRecoilState(ServiceState.List.servicesState)
+  const setLoadingUsers = useSetRecoilState(State.loadingUsersState)
+  const setLoadingService = useSetRecoilState(State.loadingServicesState)
   const setUsers = useSetRecoilState(State.usersState)
 
-  const loadServices = React.useMemo(() => Factories.makeRemoteLoadServices(), [])
+  const loadDefaultService = React.useMemo(() => Factories.makeRemoteLoadDefaultService(), [])
   const loadAvailablesUsers = React.useMemo(() => Factories.makeRemoteLoadAvailablesUsers(), [])
 
   const onLoad = React.useCallback(async () => {
     try {
-      setLoading(true)
-      const result = await loadAvailablesUsers.load()
-      setUsers(result.data)
-      setLoading(false)
+      setLoadingUsers(true)
+      setLoadingService(true)
+
+      const usersPromise = loadAvailablesUsers.load()
+      const defaultServicePromise = loadDefaultService.load()
+
+      const [usersResult, serviceResult] = await Promise.all([usersPromise, defaultServicePromise])
+
+      if (usersResult.success) {
+        setUsers(usersResult.data)
+      }
+
+      if (serviceResult.success) {
+        setSelectedServices([serviceResult.data])
+      }
     } catch (error: any) {
       console.error(error)
-      setLoading(false)
+    } finally {
+      setLoadingUsers(false)
+      setLoadingService(false)
     }
   }, [])
 
   React.useEffect(() => {
     onLoad()
-
-    loadServices
-      .load({ search: '' })
-      .then((result) => {
-        if (result.data.length) {
-          setServices(result.data)
-          const defaultService = result.data.find((service) => service.name.toUpperCase().includes('CORTE'))!
-          setSelectedServices([defaultService])
-        }
-      })
-      .catch(console.error)
   }, [])
 
   return (

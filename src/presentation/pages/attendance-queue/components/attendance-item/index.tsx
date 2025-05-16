@@ -60,7 +60,7 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
           primary: {
             textTransform: 'uppercase',
             id: 'user-name',
-            sx: { lineHeight: 1, fontWeight: 500, fontFamily: 'Inter' },
+            sx: { lineHeight: 1, fontWeight: 500, fontFamily: 'Inter', fontSize: 16 },
           },
         }}
       />

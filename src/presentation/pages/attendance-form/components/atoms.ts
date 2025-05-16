@@ -9,12 +9,12 @@ const loadingState = atom({
 
 const loadingUsersState = atom({
   key: 'loadingSimpleUsersState',
-  default: false,
+  default: true,
 })
 
 const loadingServicesState = atom({
   key: 'loadingSimpleServicesQueueState',
-  default: false,
+  default: true,
 })
 
 const usersState = atom<SimpleUser[]>({
