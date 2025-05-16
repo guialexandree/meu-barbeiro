@@ -37,7 +37,7 @@ export const Services: React.FC = () => {
               </Typography>
 
               <Stack justifyContent="center" alignItems="center" sx={{ px: 1 }}>
-                <Typography sx={{ fontSize: 20, fontFamily: 'Inter', lineHeight: 1 }}>
+                <Typography sx={{ fontSize: 18, fontFamily: 'Inter', lineHeight: 1 }}>
                   {`R$ ${selectedServices.reduce((acc, service) => acc + +service.price, 0).toFixed(0)}`}
                 </Typography>
                 <Typography sx={{ fontFamily: 'Inter', fontSize: 16, fontWeight: 300, color: 'text.secondary' }}>

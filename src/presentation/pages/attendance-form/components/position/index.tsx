@@ -66,7 +66,7 @@ export const Position: React.FC = () => {
           onChange={handleChange}
           description="Padrão, adiciona no final da fila de atendimento"
         >
-          <Typography color='primary' sx={{ textTransform: 'uppercase', fontSize: 16, fontWeight: 500, mt: 1 }}>
+          <Typography color='primary' sx={{ textTransform: 'uppercase', fontSize: 14, fontWeight: 500, mt: 1 }}>
             Previsão de atendimento às 19:40
           </Typography>
         </InputRadio>
