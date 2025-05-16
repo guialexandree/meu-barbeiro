@@ -49,16 +49,6 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }} spacing={1}>
-      <Grow in unmountOnExit>
-        <Chip
-          variant="filled"
-          color={statusColor}
-          label={statusLabel}
-          size="small"
-          sx={{ fontSize: 14, fontWeight: 800, letterSpacing: 1 }}
-        />
-      </Grow>
-
       {props.startDate && (
         <Stack direction="row" alignItems="center" justifyContent="flex-end" spacing={0.5} sx={{ flex: 1 }}>
           <Icon fontSize="small" sx={{ color: 'grey.500' }}>
@@ -70,7 +60,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
         </Stack>
       )}
 
-      <IconButton
+      {/* <IconButton
         size="small"
         aria-controls={open ? 'menu-actions-header' : undefined}
         aria-haspopup="true"
@@ -78,7 +68,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
         onClick={handleClick}
       >
         <Icon fontSize="small">more_vert</Icon>
-      </IconButton>
+      </IconButton> */}
 
       <MenuActions
         anchorOrigin={{

@@ -74,7 +74,7 @@ export const PanelStatus: React.FC<PanelStatusProps> = (props) => {
         inset: 0,
         backgroundColor: (theme) => `${theme.palette[color].main}90`,
         zIndex: 1,
-        borderRadius: 1,
+        borderRadius: 3,
         alignItems: 'center',
         justifyContent: 'center',
         display: 'flex',

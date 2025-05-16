@@ -73,7 +73,7 @@ export const CancelAttendanceAction: React.FC<CancelAttendanceActionProps> = (pr
         loadingPosition="end"
         color="inherit"
         size="small"
-        sx={{ fontSize: 13, boxShadow: 0, fontWeight: '600', borderColor: 'grey.400', color: 'grey.400' }}
+        sx={{ fontSize: 13, px: 2, boxShadow: 0, fontWeight: '600', borderColor: 'grey.700', color: 'grey.400' }}
         endIcon={<Icon>redo</Icon>}
       >
         PASSAR A VEZ

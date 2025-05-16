@@ -51,7 +51,7 @@ export const Attendance: React.FC<AttendanceProps> = (props) => {
         <Typography variant="h6" lineHeight={1} fontSize={16} fontFamily="Inter" textTransform="uppercase">
           {props.attendance.user.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary" fontSize={11} fontFamily="Inter">
+        <Typography variant="body2" color="text.disabled" fontSize={11} fontFamily="Inter">
           {props.attendance.services
             .map((attendanceService) => attendanceService.service.name.toUpperCase())
             .join(' + ')}

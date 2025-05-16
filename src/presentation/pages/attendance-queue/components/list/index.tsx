@@ -101,33 +101,27 @@ export const AttendanceQueueList: React.FC = () => {
             my: 3,
             mt: 1,
             mx: 2,
-            backgroundColor: (theme) => `${theme.palette.primary.dark}20`,
             borderBottomLeftRadius: 30,
             borderBottomRightRadius: 30,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
+            border: 'none',
+            backgroundColor: 'background.default',
           }}
         >
-          <Stack spacing={2} alignItems="center">
-            <Stack spacing={1} direction="row" alignItems="center" justifyContent="center">
-              <Icon color="info" sx={{ color: 'info.light' }}>
-                info_outline
-              </Icon>
-              <Typography
-                mt={2}
-                sx={{ color: 'info.light', fontSize: 14 }}
-                variant="h6"
-                fontWeight={600}
-                fontFamily="Inter"
-              >
-                NENHUM CLIENTE NA FILA
-              </Typography>
-            </Stack>
-
+          <Stack spacing={3} alignItems="center">
             <Zoom in style={{ transitionDelay: '200ms' }} unmountOnExit>
-              <Box component="img" height={110} width={110} src={barberImg} sx={{ opacity: 0.3 }} />
+              <Box component="img" height={120} width={120} src={barberImg} sx={{ opacity: 0.3 }} />
             </Zoom>
-
+            <Typography
+              mt={2}
+              sx={{ color: 'info.main', fontSize: 18 }}
+              variant="h6"
+              fontWeight={600}
+              fontFamily="Inter"
+            >
+              Nenhum cliente na fila
+            </Typography>
             <Button
               color="primary"
               id="user-create-action"
@@ -141,12 +135,12 @@ export const AttendanceQueueList: React.FC = () => {
                 borderRadius: 8,
                 border: 'solid 1px',
                 borderColor: 'primary.dark',
-                fontSize: 14,
-                fontWeight: 800,
+                fontSize: 16,
+                fontWeight: 600,
               }}
               startIcon={<Icon sx={{ mr: 1, fontSize: 24, color: 'primary.dark' }}>data_saver_on</Icon>}
             >
-              adicionar
+              adicionar cliente
             </Button>
           </Stack>
         </Paper>
@@ -156,7 +150,7 @@ export const AttendanceQueueList: React.FC = () => {
 
   return (
     <Stack justifyContent="center">
-      <Typography mx={2} mt={2} mb={2} variant="h1">
+      <Typography mx={2} mt={2} mb={1} variant="h2">
         PRÓXIMOS NA FILA
       </Typography>
 

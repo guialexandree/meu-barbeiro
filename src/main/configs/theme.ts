@@ -45,8 +45,8 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-           fontFamily: 'Inter',
-           borderRadius: 8,
+          fontFamily: 'Inter',
+          borderRadius: 12,
         },
       },
     },

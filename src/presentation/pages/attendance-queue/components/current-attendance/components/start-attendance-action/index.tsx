@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
-import { Button, Icon } from '@mui/material'
+import { Button } from '@mui/material'
 import { AttendanceModel } from '@/domain/models'
 import { Factories } from '@/main/factories/usecases'
 import { useNotify } from '@/presentation/hooks'
@@ -61,10 +61,8 @@ export const StartAttendanceAction: React.FC<StartAttendanceActionProps> = (prop
       onClick={handleStartAttendance}
       loading={loading}
       loadingPosition="end"
-      color="success"
       size="small"
-      sx={{ fontSize: 14, boxShadow: 0 }}
-      endIcon={<Icon>content_cut</Icon>}
+      sx={{ fontSize: 14, boxShadow: 0, px: 3,  }}
     >
       INICIAR
     </Button>

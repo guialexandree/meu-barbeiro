@@ -112,7 +112,7 @@ export const CurrentAttendance: React.FC = () => {
 
   const borderStatusColor: string = {
     in_queue: `${theme.palette.grey[400]}20`,
-    current: theme.palette.info.main,
+    current: `${theme.palette.grey[400]}50` ,
     attending: theme.palette.success.main,
     finished: theme.palette.success.main,
     canceled: theme.palette.error.main,
@@ -133,12 +133,13 @@ export const CurrentAttendance: React.FC = () => {
           px: 1,
           py: 1,
           mt: 1,
-          height: 157,
+          borderRadius: 3,
           backgroundColor:
-            currentAttendance?.status === 'attending' ? `${theme.palette.success.main}40` : 'background.paper',
+            currentAttendance?.status === 'attending' ? `${theme.palette.success.main}40` : 'transparent',
           transition: 'all 0.5s ease',
           borderColor: borderStatusColor,
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
         <PanelStatus status={panelStatus} />

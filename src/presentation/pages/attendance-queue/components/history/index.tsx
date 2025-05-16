@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { GridExpandMoreIcon } from '@mui/x-data-grid'
 import {
   Accordion,
   AccordionDetails,
@@ -12,6 +11,7 @@ import {
   Chip,
   CircularProgress,
   Skeleton,
+  Divider,
 } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { Factories } from '@/main/factories/usecases'
@@ -97,27 +97,33 @@ export const HistoryToday: React.FC = () => {
   return (
     <Grow in timeout={500} mountOnEnter unmountOnExit style={{ transitionDelay: '250ms' }}>
       <Stack justifyContent="center" mt={1}>
+        <Divider sx={{ backgroundColor: 'grey.900' }} />
         <Accordion
           variant="outlined"
           expanded={expanded}
+          sx={{
+            border: 'none',
+            borderRadius: 0,
+            backgroundColor: 'transparent',
+          }}
           onChange={() => {
             setExpanded((currentState) => !currentState)
           }}
         >
           <AccordionSummary
             sx={{ fontSize: 12 }}
-            expandIcon={<GridExpandMoreIcon fontSize="small" />}
+            expandIcon={<Icon sx={{ fontSize: 14, color: "text.secondary" }}>arrow_forward_ios</Icon>}
             aria-controls="panel2-content"
             id="panel2-header"
           >
             <Icon fontSize="small" color="action" sx={{ mr: 1, color: 'grey.300' }}>
               content_cut
             </Icon>
-            <Typography color="grey.200" variant="body2" fontWeight={500} fontFamily="Inter">
+            <Typography color="text.secondary" variant="body2" fontWeight={300} fontFamily="Inter">
               Atendimentos
             </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ pb: 0 }}>
+          <AccordionDetails sx={{ py: 0 }}>
             <Timeline
               sx={{
                 [`& .${timelineOppositeContentClasses.root}`]: {
@@ -178,7 +184,7 @@ export const HistoryToday: React.FC = () => {
 
                         {attendance.status === 'finished' && (
                           <Chip
-                            label={`${dateAdapter.diffInMinutes(attendance.startedAt, attendance.finishedAt)} min`}
+                            label={`${dateAdapter.diffInMinutes(attendance.startedAt!, attendance.finishedAt!)} min`}
                             variant="outlined"
                             color='success'
                             size="small"
