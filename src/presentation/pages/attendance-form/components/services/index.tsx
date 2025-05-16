@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Box, Fade, Grow, Icon, IconButton, Paper, Skeleton, Slide, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, Fade, Icon, IconButton, Paper, Skeleton, Slide, Stack, Tooltip, Typography } from '@mui/material'
 import { State } from '@/presentation/pages/attendance-form/components/atoms'
 
 export const Services: React.FC = () => {
