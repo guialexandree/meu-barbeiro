@@ -107,7 +107,7 @@ export const CurrentAttendance: React.FC = () => {
   }, [])
 
   if (!company || !attendanceResult) {
-    return <Skeleton variant="rounded" width="100%" height={157} sx={{ borderRadius: 2, mt: 1 }} />
+    return <Skeleton variant="rounded" width="100%" height={125} sx={{ borderRadius: 2, mt: 1 }} />
   }
 
   const borderStatusColor: string = {
