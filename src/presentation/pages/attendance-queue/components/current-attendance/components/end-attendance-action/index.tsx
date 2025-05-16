@@ -64,7 +64,7 @@ export const EndAttendanceAction: React.FC<EndAttendanceActionProps> = (props) =
       loadingPosition="end"
       color="success"
       size="small"
-      sx={{ fontSize: 13, boxShadow: 0, fontWeight: '600', px: 2 }}
+      sx={{ fontSize: 13, boxShadow: 0, fontWeight: '600', px: 2, minWidth: 168 }}
     >
       FINALIZAR
       {props.startDate && (

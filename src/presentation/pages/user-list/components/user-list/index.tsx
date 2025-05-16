@@ -63,24 +63,48 @@ export const UserList: React.FC<UserListProps> = (props) => {
         hasMore={(usersResult?.data?.length || 0) < (usersTotalizer?.data?.total || 0)}
         loader={
           <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
-            <Chip sx={{ backgroundColor: 'background.paper'}} variant="filled" label="Buscando clientes..." size="small" />
+            <Chip
+              sx={{ backgroundColor: 'background.paper' }}
+              variant="filled"
+              label="Buscando clientes..."
+              size="small"
+            />
           </Stack>
         }
         endMessage={
           <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
-          <Chip sx={{ backgroundColor: 'background.paper'}} variant="filled" label={`Total de ${usersResult?.data?.length} clientes`} size="small" />
-        </Stack>
+            <Chip
+              sx={{ backgroundColor: 'background.paper' }}
+              variant="filled"
+              label={`Total de ${usersResult?.data?.length} clientes`}
+              size="small"
+            />
+          </Stack>
         }
-        style={{ minHeight: '30vh'}}
+        style={{ minHeight: '30vh' }}
         refreshFunction={refreshList}
         pullDownToRefresh
         pullDownToRefreshThreshold={50}
-        pullDownToRefreshContent={<Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
-        <Chip color='default' icon={<Icon sx={{ mr: 1 }}>south</Icon>} sx={{ backgroundColor: 'background.paper'}} variant="filled" label="Arraste para baixo para atualizar" size="small" />
-      </Stack>}
+        pullDownToRefreshContent={
+          <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
+            <Chip
+              color="default"
+              icon={<Icon sx={{ mr: 1 }}>south</Icon>}
+              sx={{ backgroundColor: 'background.paper' }}
+              variant="filled"
+              label="Arraste para baixo para atualizar"
+              size="small"
+            />
+          </Stack>
+        }
         releaseToRefreshContent={
           <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', p: 2 }}>
-            <Chip sx={{ backgroundColor: 'background.paper'}} variant="filled" label="Atualizando clientes..." size="small" />
+            <Chip
+              sx={{ backgroundColor: 'background.paper' }}
+              variant="filled"
+              label="Atualizando clientes..."
+              size="small"
+            />
           </Stack>
         }
       >

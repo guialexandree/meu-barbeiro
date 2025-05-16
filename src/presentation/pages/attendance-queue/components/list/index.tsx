@@ -12,11 +12,14 @@ import { AttendanceItem } from '../attendance-item'
 import { useSocket } from '@/presentation/hooks'
 import barberImg from '@/presentation/assets/logo.png'
 
-export const AttendanceQueueList: React.FC = () => {
+type AttendanceQueueListProps = {
+  onReload: VoidFunction
+}
+
+export const AttendanceQueueList: React.FC<AttendanceQueueListProps> = (props) => {
   const navigate = useNavigate()
   const { getSocket, getActions } = useSocket()
   const [attendancesResult, setAttendancesResult] = useRecoilState(State.List.attendancesResultState)
-  const setPageState = useSetRecoilState(State.listState)
   const setOpenWhatsAppDialog = useSetRecoilState(State.List.openDialogWhatsAppState)
   const company = useRecoilValue(GenericState.companyState)
 
@@ -69,22 +72,6 @@ export const AttendanceQueueList: React.FC = () => {
       }
       socket.off('queue/entry_in_queue')
     }
-  }, [])
-
-  const onLoad = React.useCallback(async () => {
-    try {
-      setPageState({ loading: true, noResults: false, error: '' })
-      const result = await loadAttendances.load()
-      setAttendancesResult(result)
-      setPageState({ loading: false, noResults: false, error: '' })
-    } catch (error: any) {
-      console.error(error)
-      setPageState({ loading: false, noResults: false, error: error.message })
-    }
-  }, [])
-
-  React.useEffect(() => {
-    onLoad()
   }, [])
 
   if (company?.statusAttendance === 'closed' && attendancesResult?.data?.length == 1) {
@@ -156,7 +143,7 @@ export const AttendanceQueueList: React.FC = () => {
 
       <List
         id="attendance-queue-list"
-        onReload={onLoad}
+        onReload={props.onReload}
         listState={State.listState}
         messagesStates={{
           noResults: `Nenhum cliente na fila`,
