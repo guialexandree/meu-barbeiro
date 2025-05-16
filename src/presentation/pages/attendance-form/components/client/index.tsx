@@ -25,6 +25,7 @@ export const Client: React.FC = () => {
           sx={{
             backgroundColor: (theme) => `${theme.palette.primary.main}10`,
             borderRadius: 3,
+            py: 0.2,
           }}
           popupIcon={<Icon>arrow_drop_down</Icon>}
           slotProps={{
@@ -97,6 +98,7 @@ export const Client: React.FC = () => {
                 },
               }}
               value={12}
+              sx={{ '.MuiInputBase-root': { py: 0.8 } }}
               placeholder="Informe o cliente"
               name="client"
               {...params}

@@ -181,9 +181,9 @@ export const QueueInfo: React.FC = () => {
 
             <Zoom in unmountOnExit>
               <Stack direction="row" alignItems="center" spacing={0.5}>
-                {!!attendancesInfo.amount && !loading && <TextZoom text={attendancesInfo.finished} />}
+                {!loading && <TextZoom text={attendancesInfo.finished} />}
 
-                {!!attendancesInfo.amount && !loading && (
+                {!loading && (
                   <Typography variant="subtitle1" sx={{ lineHeight: 1, fontWeight: '500', fontSize: 14 }}>
                     realizados
                   </Typography>
@@ -204,7 +204,7 @@ export const QueueInfo: React.FC = () => {
               R$
             </Typography>
             {!attendancesInfo.amount && loading && <Skeleton variant="rounded" width={30} height={14} />}
-            {!!attendancesInfo.amount && !loading && <TextZoom text={showAmount ? attendancesInfo.amount?.toFixed(0) || 0 : '****'} />}
+            {!loading && <TextZoom text={showAmount ? attendancesInfo.amount?.toFixed(0) || 0 : '****'} />}
           </Stack>
         </Stack>
       </Paper>
