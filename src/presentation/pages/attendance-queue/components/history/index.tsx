@@ -116,7 +116,7 @@ export const HistoryToday: React.FC = () => {
             aria-controls="panel2-content"
             id="panel2-header"
           >
-            <Icon fontSize="small" color="action" sx={{ mr: 1, color: 'grey.300' }}>
+            <Icon fontSize="small" color="action" sx={{ mr: 2, color: 'text.disabled' }}>
               content_cut
             </Icon>
             <Typography color="text.secondary" variant="body2" fontWeight={300} fontFamily="Inter">

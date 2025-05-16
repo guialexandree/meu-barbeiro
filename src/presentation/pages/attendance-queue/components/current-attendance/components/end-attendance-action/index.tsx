@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { Factories } from '@/main/factories/usecases'
 import { Timer } from '@/presentation/components'
 import { useNotify } from '@/presentation/hooks'
@@ -64,8 +64,7 @@ export const EndAttendanceAction: React.FC<EndAttendanceActionProps> = (props) =
       loadingPosition="end"
       color="success"
       size="small"
-      sx={{ fontSize: 13, boxShadow: 0, fontWeight: '600' }}
-      endIcon={<Icon>done_outlined</Icon>}
+      sx={{ fontSize: 13, boxShadow: 0, fontWeight: '600', px: 2 }}
     >
       FINALIZAR
       {props.startDate && (

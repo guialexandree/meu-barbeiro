@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
-import { Icon, ListItemIcon, MenuItem } from '@mui/material'
+import { Box, Icon, IconButton, ListItemIcon, MenuItem } from '@mui/material'
 import { Factories } from '@/main/factories/usecases'
 import { AttendanceModel } from '@/domain/models'
 import { useNotify } from '@/presentation/hooks'
@@ -10,16 +10,8 @@ import { State as TemplateState } from '@/presentation/templates/admin-template/
 import { PanelStatusType } from '../..'
 
 type MenuActionsProps = {
-  id: string
-  anchorOrigin: {
-    horizontal: number | 'left' | 'center' | 'right'
-    vertical: number | 'top' | 'bottom'
-  }
   attendance: AttendanceModel
-  setLoading: (loading: boolean) => void
   setPanelStatus: (attendanceId: string, status: PanelStatusType) => Promise<void>
-  onClose: VoidFunction
-  anchorEl: HTMLElement | null
 }
 
 export const MenuActions: React.FC<MenuActionsProps> = (props) => {
@@ -27,6 +19,8 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
   const setInfoResult = useSetRecoilState(TemplateState.attendancesInfoResultState)
   const setHistory = useSetRecoilState(State.History.doneAttendancesState)
   const setAttendances = useSetRecoilState(State.List.attendancesResultState)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
 
   const cancelAttendance = React.useMemo(() => Factories.makeRemoteCancelAttendance(), [])
   const reAddAttendanceInQueue = React.useMemo(() => Factories.makeRemoteReAddAttendanceInQueue(), [])
@@ -52,8 +46,7 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
   }
 
   const handleAddAttendanceInQueue = async () => {
-    props.setLoading(true)
-    props.onClose()
+    setAnchorEl(null)
     return reAddAttendanceInQueue
       .reAdd({
         position: 'last',
@@ -71,13 +64,11 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
         notify(error, { type: 'error' })
       })
       .finally(() => {
-        props.setLoading(false)
       })
   }
 
   const handleCancelAttendance = async () => {
-    props.setLoading(true)
-    props.onClose()
+    setAnchorEl(null)
     return cancelAttendance
       .cancel({ attendanceId: props.attendance.id, reason: 'PERDEU A VEZ' })
       .then((result) => {
@@ -93,28 +84,45 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
         notify(error, { type: 'error' })
       })
       .finally(() => {
-        props.setLoading(false)
       })
   }
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
   return (
-    <Menu anchorOrigin={props.anchorOrigin} id={props.id} anchorEl={props.anchorEl} onClose={props.onClose}>
-      <MenuItem onClick={handleAddAttendanceInQueue}>
-        <ListItemIcon>
-          <Icon sx={{ color: 'grey.900' }} fontSize="small">
-            south
-          </Icon>
-        </ListItemIcon>
-        Enviar para o final da fila
-      </MenuItem>
-      <MenuItem onClick={handleCancelAttendance}>
-        <ListItemIcon sx={{ boxShadow: 'none' }}>
-          <Icon sx={{ color: 'grey.900' }} fontSize="small">
-            close
-          </Icon>
-        </ListItemIcon>
-        Remover da fila
-      </MenuItem>
-    </Menu>
+    <Box sx={{ position: 'absolute', top: 12, right: 12 }}>
+      <IconButton
+        size="small"
+        aria-controls={open ? "menu-actions-header" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        <Icon fontSize="small">more_vert</Icon>
+      </IconButton>
+      <Menu anchorOrigin={{
+          horizontal: 'left',
+          vertical: 30,
+        }} id={"menu-actions-header"} anchorEl={anchorEl} onClose={() => { setAnchorEl(null) }}>
+        <MenuItem onClick={handleAddAttendanceInQueue}>
+          <ListItemIcon>
+            <Icon sx={{ color: 'grey.900' }} fontSize="small">
+              south
+            </Icon>
+          </ListItemIcon>
+          Enviar para o final da fila
+        </MenuItem>
+        <MenuItem onClick={handleCancelAttendance}>
+          <ListItemIcon sx={{ boxShadow: 'none' }}>
+            <Icon sx={{ color: 'grey.900' }} fontSize="small">
+              close
+            </Icon>
+          </ListItemIcon>
+          Remover da fila
+        </MenuItem>
+      </Menu>
+    </Box>
   )
 }

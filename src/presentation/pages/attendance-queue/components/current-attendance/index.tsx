@@ -6,7 +6,7 @@ import { Action } from '@/infra'
 import { State } from '@/presentation/pages/attendance-queue/components/atoms'
 import { GenericState } from '@/presentation/components/atoms'
 import { useSocket } from '@/presentation/hooks'
-import { Actions, Attendance, Header, PanelStatus } from './components'
+import { Actions, Attendance, MenuActions, PanelStatus } from './components'
 
 export type PanelStatusType = null | 'cancelling' | 'reentry' | 'ending'
 
@@ -146,18 +146,12 @@ export const CurrentAttendance: React.FC = () => {
 
         <Slide direction={closeAttendance ? 'left' : 'up'} in={!closeAttendance} timeout={100}>
           <Stack>
-            <Header
-              attendance={currentAttendance!}
-              startDate={currentAttendance?.startedAt}
-              status={currentAttendance?.status}
-              setPanelStatus={setStatus}
-            />
-
             <Attendance attendance={currentAttendance} />
-
             <Actions setPanelStatus={setStatus} attendance={currentAttendance} />
           </Stack>
         </Slide>
+
+        <MenuActions attendance={currentAttendance} setPanelStatus={setStatus} />
       </Paper>
     </Grow>
   )
