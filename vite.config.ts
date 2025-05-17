@@ -26,9 +26,6 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000,
   },
-  define: {
-    'process.env': process.env,
-  },
   plugins: [
     react(),
     EnvironmentPlugin(['API_URL', 'NODE_ENV', 'CLARITY_KEY']),
