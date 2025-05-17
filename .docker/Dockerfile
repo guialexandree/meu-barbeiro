@@ -8,7 +8,7 @@ COPY vite.config.* ./
 COPY . .
 
 # Instala as dependências e faz o build
-RUN npm ci
+RUN npm install
 RUN npm run build
 
 # Etapa 2: Servir com nginx
