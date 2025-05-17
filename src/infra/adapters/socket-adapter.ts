@@ -15,16 +15,16 @@ export class SocketAdapter {
     if (!SocketAdapter.instance) {
       SocketAdapter.actions = new SocketActionsAdapter()
 
-      SocketAdapter.instance = io(process.env.API_URL, {
-        transports: ['websocket']
-      })
+      // SocketAdapter.instance = io(process.env.API_URL, {
+      //   transports: ['websocket']
+      // })
 
-      SocketAdapter.instance.on('connect', () => {
-        console.log('Socket connected')
-      })
-      SocketAdapter.instance.on('disconnect', () => {
-        console.log('Socket disconnected')
-      })
+      // SocketAdapter.instance.on('connect', () => {
+      //   console.log('Socket connected')
+      // })
+      // SocketAdapter.instance.on('disconnect', () => {
+      //   console.log('Socket disconnected')
+      // })
     }
 
     return SocketAdapter.instance
