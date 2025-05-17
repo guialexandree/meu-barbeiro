@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import { Button, Icon, Slide, Stack } from '@mui/material'
 
 export const UserActions: React.FC = () => {

@@ -51,13 +51,13 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
       </Typography>
 
       <Stack sx={{ minWidth: 50, flex: 1 }} justifyContent="center" spacing={0.5}>
-        <Typography variant="caption" color="text.disabled" fontSize={11} lineHeight={1} fontFamily="Inter">
-          INICIOU ÀS
+        <Typography variant="caption" color="text.disabled" fontSize={10} lineHeight={1} fontFamily="Inter">
+          INICIOU
         </Typography>
         <Typography
           variant="body2"
           letterSpacing={1}
-          fontSize={14}
+          fontSize={15}
           fontWeight="500"
           lineHeight={1}
           fontFamily="Inter"
@@ -68,13 +68,13 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
 
       {props.attendance.finishedAt && (
         <Stack sx={{ minWidth: 50, flex: 1 }} justifyContent="center" spacing={0.5}>
-          <Typography variant="caption" color="text.disabled" fontSize={11} lineHeight={1} fontFamily="Inter">
+          <Typography variant="caption" color="text.disabled" fontSize={10} lineHeight={1} fontFamily="Inter">
             FINALIZOU
           </Typography>
           <Typography
             variant="body2"
             letterSpacing={1}
-            fontSize={14}
+            fontSize={15}
             fontWeight="500"
             lineHeight={1}
             fontFamily="Inter"
@@ -86,13 +86,13 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
 
       {props.attendance.status === 'attending' && (
         <Stack sx={{ minWidth: 50, flex: 1 }} justifyContent="center" spacing={0.5}>
-          <Typography variant="caption" color="text.disabled" fontSize={11} lineHeight={1} fontFamily="Inter">
+          <Typography variant="caption" color="text.disabled" fontSize={10} lineHeight={1} fontFamily="Inter">
             DURAÇÃO
           </Typography>
           <Typography
             variant="body2"
             letterSpacing={0.8}
-            fontSize={14}
+            fontSize={15}
             fontWeight="500"
             lineHeight={1}
             fontFamily="Inter"
