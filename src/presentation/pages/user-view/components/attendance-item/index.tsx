@@ -20,7 +20,7 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
         minHeight: 46,
         pr: 1.5,
         pl: 1,
-        pb: 1,
+        pb: 1.5,
         gap: 2,
         overflow: 'hidden',
         display: 'flex',
@@ -31,7 +31,7 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
       <Stack
         alignItems="center"
         justifyContent="center"
-        sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}30`, p: 0.8, borderRadius: 2 }}
+        sx={{ backgroundColor: (theme) => `${theme.palette.primary.light}20`, p: 0.8, borderRadius: 2 }}
       >
         <Typography sx={{ fontSize: 10, letterSpacing: 0.3, fontWeight: '700', lineHeight: 1 }}>
           {dateAdapter.format(props.attendance.createdAt, 'MMM').toUpperCase()}
