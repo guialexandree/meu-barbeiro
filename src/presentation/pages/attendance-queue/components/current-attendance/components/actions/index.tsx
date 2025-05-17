@@ -18,7 +18,7 @@ export const Actions: React.FC<Actions> = (props) => {
   }
 
   return (
-    <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ width: '100%' }} mt={1} spacing={2}>
+    <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ width: '100%' }} mt={1} spacing={1.5}>
       {props.attendance.startedAt && (
         <Stack direction="row" alignItems="center" spacing={0.5} sx={{ ml: 1 }}>
           <Icon fontSize="small" sx={{ color: 'text.disabled' }}>

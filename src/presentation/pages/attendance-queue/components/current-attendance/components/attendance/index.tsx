@@ -28,9 +28,9 @@ export const Attendance: React.FC<AttendanceProps> = (props) => {
       direction="row"
       alignItems="flex-start"
       justifyContent="space-between"
-      sx={{ width: '100%' }}
+      sx={{ width: '100%', ml: 1 }}
       mt={1}
-      spacing={1}
+      spacing={2}
     >
       <Zoom in>
         <Avatar

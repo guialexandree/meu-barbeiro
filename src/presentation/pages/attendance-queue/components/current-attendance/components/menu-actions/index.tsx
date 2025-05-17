@@ -92,7 +92,7 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
   }
 
   return (
-    <Box sx={{ position: 'absolute', top: 12, right: 12 }}>
+    <Box sx={{ position: 'absolute', top: 4, right: 4 }}>
       <IconButton
         size="small"
         aria-controls={open ? "menu-actions-header" : undefined}
@@ -100,7 +100,7 @@ export const MenuActions: React.FC<MenuActionsProps> = (props) => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Icon fontSize="small">more_vert</Icon>
+        <Icon fontSize="small" sx={{ color: 'text.disabled' }}>more_vert</Icon>
       </IconButton>
       <Menu anchorOrigin={{
           horizontal: 'left',
