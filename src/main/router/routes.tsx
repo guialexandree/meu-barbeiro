@@ -15,7 +15,6 @@ const UserFormPage = lazy(() => import('@/presentation/pages/user-form/user-form
 const UsersListPage = lazy(() => import('@/presentation/pages/user-list/user-list-page'))
 const UsersViewPage = lazy(() => import('@/presentation/pages/user-view/user-view-page'))
 const AlertsPage = lazy(() => import('@/presentation/pages/alerts/alerts-page'))
-const FinancialPage = lazy(() => import('@/presentation/pages/financial'))
 
 const router = createBrowserRouter([
   {
@@ -41,10 +40,6 @@ const router = createBrowserRouter([
       {
         path: '/clientes/criar-novo',
         element: <Loadable children={<UserFormPage />} />,
-      },
-      {
-        path: '/relatorios',
-        element: <Loadable children={<FinancialPage />} />,
       },
       {
         path: '/servicos',
