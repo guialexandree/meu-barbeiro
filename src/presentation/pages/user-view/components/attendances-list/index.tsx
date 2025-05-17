@@ -1,28 +1,24 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import {
-  Box,
-  Button,
-  Icon,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Divider, Fade, List, Stack, Typography } from '@mui/material'
 import { PageLoader } from '@/presentation/components'
 import { State } from '@/presentation/pages/user-view/components/atoms'
 import emptyListImg from '@/presentation/assets/empty-list.svg'
 import errorListImg from '@/presentation/assets/error-list.svg'
+import { AttendanceItem } from '../attendance-item'
 
-export const AttendancesList: React.FC = () => {
+type AttendanceListProps = {
+  userId: string
+  onReload: (id: string) => Promise<void>
+}
+
+export const AttendancesList: React.FC<AttendanceListProps> = (props) => {
   const [error, setError] = useRecoilState(State.List.errorState)
   const noResults = useRecoilValue(State.List.noResultsState)
   const loading = useRecoilValue(State.loadingState)
+  const attendancesUser = useRecoilValue(State.List.attendancesUserState)
 
-  if (loading) {
+  if (loading || !props.userId) {
     return <PageLoader loading />
   }
 
@@ -44,6 +40,7 @@ export const AttendancesList: React.FC = () => {
           color="primary"
           id="reload-attendances-by-user"
           onClick={() => {
+            props.onReload(props.userId)
             setError('')
           }}
         >
@@ -69,73 +66,30 @@ export const AttendancesList: React.FC = () => {
 
   return (
     <Stack mt={2} width="100%">
-      <Typography variant="h6" fontSize={16} color="primary.main" fontWeight={600} lineHeight={1}>
+      <Typography variant="h2" fontSize={16} color="primary.main">
         HISTÓRICO DE ATENDIMENTOS
       </Typography>
 
-      <List dense disablePadding id="attendances-by-user-list" sx={{ width: '100%', mt: 1 }}>
-        <ListItem
-          sx={{ m: 0, mt: 1, pl: 2, backgroundColor: (theme) => `${theme.palette.primary.light}10`, borderRadius: 2 }}
-          disablePadding
-        >
-          <ListItemText
-            sx={{ flex: 1 }}
-            primary={'BARBA'}
-            secondary={'BARBA'}
-            slotProps={{
-              primary: { sx: { fontSize: 13 } },
-              secondary: { sx: { fontSize: 11 } },
-            }}
-          />
-          <ListItemText
-            primary={'JANEIRO'}
-            secondary={'09:30'}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-              pr: 2,
-            }}
-          />
-
-          <ListItemIcon sx={{ minWidth: 40 }}>
-            <IconButton size="small" sx={{ backgroundColor: 'background.paper' }}>
-              <Icon>navigate_next</Icon>
-            </IconButton>
-          </ListItemIcon>
-        </ListItem>
-        <ListItem
-          sx={{ display: 'flex', m: 0,mt: 1,  pl: 2, backgroundColor: (theme) => `${theme.palette.primary.light}10`, borderRadius: 2 }}
-          disablePadding
-        >
-          <ListItemText
-            sx={{ flex: 1 }}
-            primary={'CORTE'}
-            secondary={'CORTE + HIDRATAÇÃO'}
-            slotProps={{
-              primary: { sx: { fontSize: 13 } },
-              secondary: { sx: { fontSize: 11 } },
-            }}
-          />
-          <ListItemText
-            primary={'FEVEREIRO'}
-            secondary={'12:35'}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-              pr: 2,
-            }}
-          />
-
-          <ListItemIcon sx={{ minWidth: 40 }}>
-            <IconButton size="small" sx={{ backgroundColor: 'background.paper' }}>
-              <Icon>navigate_next</Icon>
-            </IconButton>
-          </ListItemIcon>
-        </ListItem>
+      <List
+        dense
+        disablePadding
+        id="attendances-by-user-list"
+        sx={{
+          width: '100%',
+          mt: 1,
+          py: 0.5,
+          backgroundColor: (theme) => `${theme.palette.primary.light}10`,
+          borderRadius: 3,
+        }}
+      >
+        {attendancesUser.map((attendance, index) => (
+          <Fade in timeout={700} style={{ transitionDelay: `${index * 100}ms` }} key={attendance.id}>
+            <span>
+              <AttendanceItem attendance={attendance} />
+              <Divider sx={{ borderColor: 'background.default' }} orientation="horizontal" flexItem />
+            </span>
+          </Fade>
+        ))}
       </List>
     </Stack>
   )

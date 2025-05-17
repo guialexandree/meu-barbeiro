@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { LoadUserByIdResult } from '@/domain/usecases'
+import { UserModel } from '@/domain/models'
 import * as List from './attendances-list/atoms'
 
 const loadingState = atom({
@@ -7,9 +7,9 @@ const loadingState = atom({
   default: true,
 })
 
-export const userResultState = atom<LoadUserByIdResult>({
+export const userState = atom<UserModel & { inQueue: boolean }>({
   key: 'userByIdResultState',
-  default: null as unknown as LoadUserByIdResult,
+  default: null as unknown as UserModel & { inQueue: boolean },
 })
 
 const errorUserState = atom({
@@ -19,7 +19,7 @@ const errorUserState = atom({
 
 export const State = {
   loadingState,
-  userResultState,
+  userState,
   errorUserState,
   List
 }

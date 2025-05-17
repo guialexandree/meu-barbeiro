@@ -48,7 +48,7 @@ const UserFormPage: React.FC = () => {
     <PageContainer>
       <Stack
         component="form"
-        sx={{ height: '100%', display: 'flex', justifyContent: 'space-between' }}
+        sx={{ height: '100%', display: 'flex', justifyContent: 'space-between', pt: 2 }}
         onSubmit={(event) => {
           event.preventDefault()
         }}

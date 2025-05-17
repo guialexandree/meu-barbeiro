@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { Stack } from '@mui/material'
 import { Factories } from '@/main/factories/usecases'
@@ -10,57 +10,68 @@ import { AttendancesList, UserActions, UserHeader, UserInfo } from '@/presentati
 import { useNotify } from '@/presentation/hooks'
 
 const UsersViewPage: React.FC = () => {
-  const notify = useNotify()
+  const { notify } = useNotify()
   const navigate = useNavigate()
   const setLoading = useSetRecoilState(State.loadingState)
-  const setUserResult = useSetRecoilState(State.userResultState)
+  const setUserResult = useSetRecoilState(State.userState)
   const setError = useSetRecoilState(State.errorUserState)
+  const setAttendancesUser = useSetRecoilState(State.List.attendancesUserState)
 
   const { id } = useParams()
   const loadUserById = React.useMemo(() => Factories.makeRemoteLoadUserById(), [])
+  const loadAttendancesByUser = React.useMemo(() => Factories.makeRemoteLoadAttendancesByUser(), [])
 
-  const onLoadUser = React.useCallback((id: string) => {
+  const onLoad = React.useCallback(async (id: string) => {
     setLoading(true)
     setError('')
 
-    loadUserById
-      .load({ id })
-      .then((userResult) => {
-        if (userResult.data) {
-          setUserResult(userResult)
-        }
-      })
-      .catch((error) => {
-        if (error instanceof NotfoundError) {
-          notify.notify(error.message, { type: 'error' })
-          navigate('/clientes')
-          return
-        }
-        setError((error as Error).message)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    try {
+      const userPromise = loadUserById.load({ id })
+      const attendancesPromise = loadAttendancesByUser.load({ userId: id })
+
+      const [userResult, attendancesResult] = await Promise.all([userPromise, attendancesPromise])
+
+      if (!userResult.success || !attendancesResult.success) {
+        notify(userResult.error, { type: 'error' })
+        return
+      }
+
+      setUserResult(userResult.data)
+      setAttendancesUser(attendancesResult.data)
+    } catch (error) {
+      if (error instanceof NotfoundError) {
+        notify(error.message, { type: 'error' })
+        navigate('/clientes')
+        return
+      }
+      setError((error as Error).message)
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
   React.useEffect(() => {
     if (id) {
-      onLoadUser(id)
+      onLoad(id)
     } else {
       setUserResult(null as any)
     }
   }, [id])
 
+  if (!id) {
+    <Navigate to="/clientes" />
+  }
+
   return (
     <PageContainer>
-      <Stack alignItems="flex-start" justifyContent="center" px={2}>
+      <Stack alignItems="flex-start" justifyContent="center" px={2} pt={2}>
         <UserHeader />
 
         <UserInfo />
 
         <UserActions />
 
-        <AttendancesList />
+        <AttendancesList userId={id!} onReload={onLoad} />
       </Stack>
     </PageContainer>
   )

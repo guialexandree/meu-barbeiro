@@ -53,7 +53,7 @@ export const AppBar: React.FC = () => {
   return (
     <Slide direction="down" in={true} mountOnEnter unmountOnExit>
       <AppBarMUI
-        position="sticky"
+        position="fixed"
         variant="outlined"
         sx={{
           maxWidth: '100vw',
@@ -62,7 +62,6 @@ export const AppBar: React.FC = () => {
           minHeight: 90,
           borderRadius: 0,
           alignItems: 'flex-start',
-          position: 'relative',
         }}
       >
         <Toolbar sx={{ width: '100%', mt: 1 }}>

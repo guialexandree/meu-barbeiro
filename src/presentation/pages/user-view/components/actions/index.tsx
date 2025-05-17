@@ -13,13 +13,14 @@ export const UserActions: React.FC = () => {
   }, [])
 
   return (
-    <Stack direction="row" alignItems="center" width="100%" spacing={1} mt={1}>
-      <Slide in={true} direction="right" unmountOnExit mountOnEnter>
+    <Stack direction="row" alignItems="center" width="100%" spacing={1}>
+      <Slide in direction="right" unmountOnExit mountOnEnter>
         <Button
           fullWidth
           id="go-to-list-action"
           startIcon={<Icon>arrow_back</Icon>}
           color="inherit"
+          size='large'
           variant="outlined"
           sx={{ borderColor: 'grey.700' }}
           onClick={() => {
@@ -30,18 +31,19 @@ export const UserActions: React.FC = () => {
         </Button>
       </Slide>
 
-      <Slide in={true} direction="left" unmountOnExit mountOnEnter>
+      <Slide in direction="left" unmountOnExit mountOnEnter>
         <Button
           fullWidth
           id="go-to-list-action"
-          variant="outlined"
+          variant="contained"
+          size='large'
           onClick={() => {
             onOpenDialogWhatsapp()
           }}
-          endIcon={<WhatsAppIcon />}
-          color="success"
+          sx={{ boxShadow: 0 }}
+          color="primary"
         >
-          WhatsApp
+          Adicionar
         </Button>
       </Slide>
     </Stack>

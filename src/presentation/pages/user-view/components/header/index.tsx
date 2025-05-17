@@ -2,18 +2,16 @@ import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { Avatar, Chip, Icon, IconButton, Skeleton, Slide, Stack, Typography, Zoom } from '@mui/material'
 import { State } from '@/presentation/pages/user-view/components/atoms'
-import { GenericState } from '@/presentation/components/atoms'
 
 export const UserHeader: React.FC = () => {
   const loading = useRecoilValue(State.loadingState)
-  const dateAdapter = useRecoilValue(GenericState.dateAdapterState)
-  const userResult = useRecoilValue(State.userResultState)
+  const userResult = useRecoilValue(State.userState)
 
   if (loading || !userResult) {
     return (
       <Stack direction="row" spacing={2} width={'100%'}>
         <Zoom in mountOnEnter unmountOnExit>
-          <Skeleton variant="circular" width={80} height={80} />
+          <Skeleton variant="circular" width={100} height={100} />
         </Zoom>
 
         <Slide direction="down" in mountOnEnter unmountOnExit>
@@ -38,44 +36,45 @@ export const UserHeader: React.FC = () => {
   return (
     <Stack
       component="header"
-      direction="row"
       justifyContent="space-between"
       alignItems="center"
       width={'100%'}
-      spacing={2}
+      spacing={1}
+      position="relative"
     >
       <Avatar
         alt="Imagem do usuário"
         src={`/public/img/avataaars${Math.floor(Math.random() * 7) + 1}.svg`}
         sx={{
-          width: 80,
-          height: 80,
-          border: 'solid 3px',
+          width: 100,
+          height: 100,
+          border: 'solid 2px',
           borderColor: 'grey.400',
           backgroundColor: '#111111',
           color: 'text.primary',
         }}
       />
 
-      <Stack alignItems="flex-start" spacing={0.7} flex={1}>
+      <Stack direction="row" alignItems="center" spacing={0.7} flex={1}>
+        {userResult.role === 'barber' && (
+          <Chip
+            size="small"
+            sx={{ borderRadius: 2, fontSize: 12 }}
+            label={userResult.role === 'barber' ? 'BARBEIRO' : 'CLIENTE'}
+            color="secondary"
+          />
+        )}
         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={0.5} width="100%">
-          <Typography variant="h5" fontWeight={600} lineHeight={1}>
-            {userResult.data.name?.toUpperCase()?.split(' ')?.at?.(0)}
-          </Typography>
-          <IconButton sx={{ backgroundColor: 'background.default' }} edge="end" aria-label="editar">
-            <Icon sx={{ fontSize: 16 }}>edit</Icon>
-          </IconButton>
+          <Typography variant="h1">{userResult.name.toUpperCase()?.split(' ')?.at?.(0)}</Typography>
         </Stack>
-        <Chip
-          size="small"
-          sx={{ borderRadius: 2, fontSize: 12, color: 'text.secondary' }}
-          label={userResult.data.role === 'barber' ? 'BARBEIRO' : 'CLIENTE'}
-        />
-
-        <Typography variant="caption" color="text.disabled" lineHeight={1}>
-          cadastrado {dateAdapter.format(userResult.data?.createdAt?.toString(), 'DD/MM/YYYY HH:mm')}
-        </Typography>
       </Stack>
+      <IconButton
+        sx={{ backgroundColor: 'background.default', position: 'absolute', top: 0, right: 0 }}
+        edge="end"
+        aria-label="editar"
+      >
+        <Icon sx={{ fontSize: 16 }}>edit</Icon>
+      </IconButton>
     </Stack>
   )
 }

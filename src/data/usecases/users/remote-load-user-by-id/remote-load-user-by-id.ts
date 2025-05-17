@@ -5,17 +5,11 @@ import { LoadUserById, LoadUserByIdParams, LoadUserByIdResult } from '@/domain/u
 export class RemoteLoadUserById implements LoadUserById {
   constructor(private readonly url: string, private readonly httpClient: HttpClient<LoadUserByIdResult>) {}
 
-  async load (params: LoadUserByIdParams): Promise<LoadUserByIdResult> {
+  async load(params: LoadUserByIdParams): Promise<LoadUserByIdResult> {
     const { statusCode, body } = await this.httpClient.request({
       url: `${this.url}/api/users/${params.id}`,
       method: 'get',
     })
-
-    if (import.meta.env.DEV) {
-      // return new Promise<LoadServicesResult>((resolve) => {
-      //   setTimeout(() => resolve(_mockClients), 1500)
-      // })
-    }
 
     if (statusCode === HttpStatusCode.unauthorized) {
       throw new AccessDeniedError()

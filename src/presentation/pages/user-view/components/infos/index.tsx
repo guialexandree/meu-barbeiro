@@ -1,47 +1,59 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Fade, Icon, IconButton, Skeleton, Stack, Typography } from '@mui/material'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
+import { Fade, Icon, IconButton, Paper, Skeleton, Slide, Stack, Typography } from '@mui/material'
 import { State } from '@/presentation/pages/user-view/components/atoms'
 import { useFormat } from '@/presentation/hooks'
 
 export const UserInfo: React.FC = () => {
   const { formatPhoneNumber } = useFormat()
-  const userResult = useRecoilValue(State.userResultState)
+  const userResult = useRecoilValue(State.userState)
 
   return (
     <Fade in timeout={1000}>
-      <Stack sx={{ backgroundColor: 'transparent', width: '100%', mt: 2, py: 2 }}>
-        <Typography variant="h6" fontSize={16} color="primary.main" fontWeight={600} lineHeight={1}>
+      <Stack sx={{ backgroundColor: 'transparent', width: '100%', py: 2 }} spacing={1}>
+        <Typography color="primary.main" variant="h2" lineHeight={1} fontSize={14}>
           INFORMAÇÕES
         </Typography>
-        <Stack alignItems="flex-start" mt={1}>
-          <Stack direction="column" alignItems="flex-start" spacing={0.5} mt={1}>
-            <Stack direction="row" alignItems="center" spacing={0.6}>
-              <Icon sx={{ fontSize: 14 }}>phone</Icon>
-              <Typography variant="body2" fontSize={14} fontWeight={600} lineHeight={1}>
-                Telefone
-              </Typography>
-            </Stack>
-            <Stack direction="row" alignItems="center" spacing={0.4}>
-              {userResult ? (
-                <Typography variant="body2" fontSize={14} color="text.secondary" lineHeight={1}>
-                  {formatPhoneNumber(userResult?.data.contactNumber.slice(-11))}
-                </Typography>
-              ) : (
-                <Skeleton variant="text" width={132} height={21} sx={{ borderRadius: 4 }} />
-              )}
+        <Paper
+          elevation={0}
+          sx={{
+            flex: 1,
+            mt: 1,
+            p: 2,
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            gap: 2,
+            justifyContent: 'space-between',
+          }}
+        >
+          <Icon sx={{ fontSize: 24, color: 'text.disabled' }} >
+            phone
+          </Icon>
+          {userResult?.contactNumber ? (
+            <Typography fontSize={18} fontWeight={'400'} mr="auto" color="text.secondary" lineHeight={1}>
+              {formatPhoneNumber(userResult?.contactNumber?.slice(-11))}
+            </Typography>
+          ) : (
+            <Skeleton variant="rounded" width={135} height={18} sx={{ mr: 'auto' }} />
+          )}
 
-              <IconButton
-                size="small"
-                sx={{ p: 0.4, backgroundColor: 'background.default' }}
-                edge="end"
-                aria-label="copiar"
-              >
-                <Icon sx={{ fontSize: 16 }}>content_copy</Icon>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Slide in direction="left" unmountOnExit mountOnEnter>
+              <IconButton sx={{ p: 0.4 }} edge="end" aria-label="copiar">
+                <Icon sx={{ fontSize: 18 }} color="action">
+                  content_copy
+                </Icon>
               </IconButton>
-            </Stack>
+            </Slide>
+            <Slide in direction="left" unmountOnExit mountOnEnter>
+              <IconButton sx={{ p: 0.4 }} id="go-to-list-action">
+                <WhatsAppIcon />
+              </IconButton>
+            </Slide>
           </Stack>
-        </Stack>
+        </Paper>
       </Stack>
     </Fade>
   )

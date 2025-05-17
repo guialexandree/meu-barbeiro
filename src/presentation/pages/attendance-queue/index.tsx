@@ -86,7 +86,7 @@ const AttendanceQueuePage: React.FC = () => {
         style={{ minHeight: '100vh' }}
       >
         <>
-          <Stack sx={{ px: 2 }} spacing={2}>
+          <Stack sx={{ px: 2 }} spacing={2} pt={2}>
             <StatusSwitch />
 
             <CurrentAttendance />
