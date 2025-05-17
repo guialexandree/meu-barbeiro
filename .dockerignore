@@ -1,0 +1,17 @@
+node_modules
+
+# Ignore as configurações do editor local 
+.vscode
+
+# Ignore os arquivos do repositório Git 
+.git
+
+# Ignore a pasta de compilação 
+dist
+build
+
+# Ignore os arquivos de configuração ESLint, Prettier e outros que não são necessários na imagem final 
+.eslint*
+.prettier*
+.editorconfig
+.DS_Store

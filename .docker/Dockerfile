@@ -8,11 +8,11 @@ COPY vite.config.* ./
 COPY . .
 
 # Instala as dependências e faz o build
-RUN npm install
+RUN npm ci
 RUN npm run build
 
 # Etapa 2: Servir com nginx
-FROM nginx:alpine
+FROM nginx:stable-alpine
 
 # Remove configuração default do nginx
 RUN rm -rf /usr/share/nginx/html/*
