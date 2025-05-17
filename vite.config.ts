@@ -41,17 +41,17 @@ export default defineConfig({
         theme_color: '#2c82d8',
         icons: [
           {
-            src: 'favicon.png',
+            src: 'barber-icons/susuzeira/favicon.png',
             sizes: '64x64',
             type: 'image/png',
           },
           {
-            src: 'favicon_192x192.png',
+            src: 'barber-icons/susuzeira/favicon_192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'favicon_512x512.png',
+            src: 'barber-icons/susuzeira/favicon_512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
