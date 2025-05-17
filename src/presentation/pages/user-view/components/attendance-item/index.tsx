@@ -54,21 +54,21 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
         <Typography variant="caption" color="text.disabled" fontSize={10} lineHeight={1} fontFamily="Inter">
           INICIOU
         </Typography>
-        <Typography
-          variant="body2"
-          letterSpacing={1}
-          fontSize={15}
-          fontWeight="500"
-          lineHeight={1}
-          fontFamily="Inter"
-        >
+        <Typography variant="body2" letterSpacing={1} fontSize={15} fontWeight="500" lineHeight={1} fontFamily="Inter">
           {dateAdapter.format(props.attendance.startPrevision, 'HH:mm')}
         </Typography>
       </Stack>
 
       {props.attendance.finishedAt && (
-        <Stack sx={{ minWidth: 50, flex: 1 }} justifyContent="center" spacing={0.5}>
-          <Typography variant="caption" color="text.disabled" fontSize={10} lineHeight={1} fontFamily="Inter">
+        <Stack sx={{ minWidth: 90, flex: 1 }} justifyContent="center" spacing={0.5}>
+          <Typography
+            letterSpacing={0.1}
+            variant="caption"
+            color="text.disabled"
+            fontSize={10}
+            lineHeight={1}
+            fontFamily="Inter"
+          >
             FINALIZOU
           </Typography>
           <Typography
@@ -85,8 +85,15 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
       )}
 
       {props.attendance.status === 'attending' && (
-        <Stack sx={{ minWidth: 50, flex: 1 }} justifyContent="center" spacing={0.5}>
-          <Typography variant="caption" color="text.disabled" fontSize={10} lineHeight={1} fontFamily="Inter">
+        <Stack sx={{ minWidth: 90, flex: 1 }} justifyContent="center" spacing={0.5}>
+          <Typography
+            letterSpacing={0.1}
+            variant="caption"
+            color="text.disabled"
+            fontSize={10}
+            lineHeight={1}
+            fontFamily="Inter"
+          >
             DURAÇÃO
           </Typography>
           <Typography
@@ -98,7 +105,6 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
             fontFamily="Inter"
           >
             <Timer play startDate={new Date(props.attendance.startedAt!)} />
-            {/* {dateAdapter.format(props.attendance.finishedAt!, 'HH:mm')} */}
           </Typography>
         </Stack>
       )}
@@ -106,6 +112,23 @@ export const AttendanceItem: React.FC<AttendanceItemProps> = (props) => {
       <ListItemText
         sx={{ flex: 0.7, textAlign: 'right' }}
         primary={`R$ ${props.attendance.services.reduce((acc, service) => acc + +service.price, 0)}`}
+        secondary={
+          props.attendance.status === 'finished' && dateAdapter.diffInMinutes(props.attendance.startedAt!, props.attendance.finishedAt!) > 0 && (
+            <Stack sx={{flex: 1 }} justifyContent="center" spacing={0.5}>
+              <Typography
+                variant="caption"
+                letterSpacing={0.8}
+                fontSize={10}
+                fontWeight="500"
+                lineHeight={1}
+                fontFamily="Inter"
+              >
+                {dateAdapter.diffInMinutes(props.attendance.startedAt!, props.attendance.finishedAt!)}{' '}
+                min
+              </Typography>
+            </Stack>
+          )
+        }
         slotProps={{
           primary: {
             textTransform: 'uppercase',
