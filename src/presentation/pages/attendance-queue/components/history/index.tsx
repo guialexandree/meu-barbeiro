@@ -173,10 +173,10 @@ export const HistoryToday: React.FC = () => {
                             color="error"
                             size="small"
                             sx={{
-                              fontSize: 10,
+                              fontSize: 9,
                               py: 0.4,
                               height: 'auto',
-                              minWidth: 84,
+                              minWidth: 78,
                               backgroundColor: (theme) => `${theme.palette.error.light}20`,
                             }}
                           />
@@ -189,10 +189,10 @@ export const HistoryToday: React.FC = () => {
                             color='success'
                             size="small"
                             sx={{
-                              fontSize: 10,
+                              fontSize: 9,
                               py: 0.4,
                               height: 'auto',
-                              minWidth: 84,
+                              minWidth: 78,
                               backgroundColor: (theme) => `${theme.palette.success.light}20`,
                             }}
                           />
